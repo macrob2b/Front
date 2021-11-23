@@ -19,12 +19,16 @@ export default {
     ]
   },
 
+  ssr : true,
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    {src: 'plugins/vee-validate.js', ssr: true},
+    {src: 'plugins/persistedState.client.js'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -40,13 +44,31 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/i18n',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
+
+  auth: {},
+
+  router: {
+    middleware: ['auth']
+  },
+
+  i18n: {
+    locales      : [
+      {code: 'en', file: 'en.js'},
+    ],
+    lazy         : true,
+    langDir      : 'lang/',
+    defaultLocale: 'en',
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -63,5 +85,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: ["vee-validate"]
   }
 }
