@@ -7,6 +7,11 @@
 </template>
 <script>
 export default {
-  auth: false,
+  auth: 'guest',
+  head () {
+    return {
+      title: this.$t(`HOME`)
+    };
+  }
 }
 </script>

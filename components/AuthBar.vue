@@ -1,14 +1,17 @@
 <template>
   <v-card>
     <v-card-title>
-      {{ $t(`MYACCOUNT`) }}
+      {{ this.$auth.loggedIn ? this.$auth.user : $t(`MYACCOUNT`) }}
     </v-card-title>
     <v-card-text>
-      <v-btn to="login" color="primary" block class="mb-2">
+      <v-btn to="login" v-if="!this.$auth.loggedIn" color="primary" block class="mb-2">
         {{ $t(`LOGIN`) }}
       </v-btn>
-      <v-btn to="register" color="primary" block>
+      <v-btn to="register" v-if="!this.$auth.loggedIn" color="primary" block class="mb-2">
         {{ $t(`REGISTER`) }}
+      </v-btn>
+      <v-btn to="register" @click="logout()" v-if="this.$auth.loggedIn" color="primary" block>
+        {{ $t(`LOGOUT`) }}
       </v-btn>
     </v-card-text>
   </v-card>
@@ -17,7 +20,12 @@
 
 <script>
 export default {
-  name: "AuthBar"
+  name   : "AuthBar",
+  methods: {
+    logout() {
+      this.$auth.logout()
+    }
+  }
 }
 </script>
 
