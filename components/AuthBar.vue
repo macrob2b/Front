@@ -7,10 +7,10 @@
       <v-btn to="login" v-if="!this.$auth.loggedIn" color="primary" block class="mb-2">
         {{ $t(`LOGIN`) }}
       </v-btn>
-      <v-btn to="register" v-if="!this.$auth.loggedIn" color="primary" block class="mb-2">
-        {{ $t(`REGISTER`) }}
+      <v-btn to="signup" v-if="!this.$auth.loggedIn" color="primary" block class="mb-2">
+        {{ $t(`SIGN_UP`) }}
       </v-btn>
-      <v-btn to="register" @click="logout()" v-if="this.$auth.loggedIn" color="primary" block>
+      <v-btn @click="logout()" v-if="this.$auth.loggedIn" color="primary" block>
         {{ $t(`LOGOUT`) }}
       </v-btn>
     </v-card-text>

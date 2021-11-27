@@ -8,7 +8,7 @@
             <validation-provider v-slot="{ errors }" name="email" rules="required|email">
               <v-text-field
                 v-model="email"
-                prepend-inner-icon="mdi-account"
+                prepend-inner-icon="mdi-email"
                 :error-messages="errors"
                 :label="$t(`E_MAIL`)"
                 required>
