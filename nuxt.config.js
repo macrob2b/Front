@@ -47,7 +47,8 @@ export default {
   modules: [
     '@nuxtjs/i18n',
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    'nuxt-leaflet',
   ],
 
   auth: {

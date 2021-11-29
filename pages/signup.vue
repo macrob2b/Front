@@ -28,6 +28,34 @@
         <validation-observer ref="observer" v-slot="{ invalid }">
           <form @submit.prevent="submit">
 
+            <!--     Business Location Map Dialog       -->
+            <v-dialog
+              fullscreen
+              hide-overlay
+              transition="dialog-bottom-transition"
+              v-model="businessLocationDialog">
+              <v-card>
+                <v-toolbar
+                  color="primary"
+                  outlined
+                  dark>
+                  <v-toolbar-title>{{ $t(`SELECT_BUSINESS_LOCATION`) }}</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-toolbar-items>
+                    <v-btn
+                      text
+                      color="white"
+                      @click="businessLocationDialog = false">
+                      {{ $t(`SELECT`) }}
+                    </v-btn>
+                  </v-toolbar-items>
+                </v-toolbar>
+
+                <LeafletMap @locationSelected="selectLocation"/>
+
+              </v-card>
+            </v-dialog>
+
             <v-row>
 
               <!--     First Name       -->
@@ -118,6 +146,7 @@
                     item-value="value"
                     prepend-inner-icon="mdi-handshake-outline"
                     :label="$t(`I_AM_A`)"
+                    multiple
                     outlined>
                   </v-select>
                 </validation-provider>
@@ -142,14 +171,14 @@
                   <v-text-field
                     v-model="businessLocation"
                     append-icon="mdi-crosshairs-gps"
-                    @click:append="selectLocation()"
+                    @click:append="businessLocationDialog = !businessLocationDialog"
                     :error-messages="errors"
                     :label="$t(`MY_BUSINESS_LOCATION`)"
-                    outlined>
+                    outlined
+                    readonly>
                   </v-text-field>
                 </validation-provider>
               </v-col>
-
 
               <!--     Password       -->
               <v-col cols="12" md="6" lg="6" xl="6" class="ma-0">
@@ -242,11 +271,13 @@
 <script>
 
 import {ValidationObserver, ValidationProvider} from "vee-validate";
+import LeafletMap                               from "../components/LeafletMap";
 
 export default {
   name      : "signup",
   auth      : 'guest',
   components: {
+    LeafletMap,
     ValidationProvider,
     ValidationObserver,
   },
@@ -257,19 +288,21 @@ export default {
   },
   data() {
     return {
-      email           : '',
-      password        : '',
-      confirmPassword : '',
-      gender          : '',
-      firstName       : '',
-      lastName        : '',
-      companyName     : '',
-      phoneCode       : '',
-      phoneNumber     : '',
-      businessLocation: '',
-      businessType    : '',
-      acceptTerms     : false,
-      showPassword    : false,
+      email                 : '',
+      password              : '',
+      confirmPassword       : '',
+      gender                : '',
+      firstName             : '',
+      lastName              : '',
+      companyName           : '',
+      phoneCode             : '',
+      phoneNumber           : '',
+      businessLocation      : '',
+      businessType          : '',
+      searchLocationValue   : '',
+      acceptTerms           : false,
+      showPassword          : false,
+      businessLocationDialog: false,
     };
   },
   computed: {
@@ -298,8 +331,11 @@ export default {
     submit() {
       this.$refs.observer.validate();
     },
-    selectLocation() {
-
+    searchLocation() {
+      console.log(this.searchLocationValue);
+    },
+    selectLocation(position) {
+        this.businessLocation = position.lat + ',' + position.lng;
     },
     loginWithGoogle() {
       this.$auth.loginWith('google', {params: {prompt: "select_account"}})
