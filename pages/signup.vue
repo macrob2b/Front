@@ -182,7 +182,7 @@
 
               <!--     Password       -->
               <v-col cols="12" md="6" lg="6" xl="6" class="ma-0">
-                <validation-provider v-slot="{errors}" name="password" rules="required">
+                <validation-provider v-slot="{errors}" name="password" rules="required|min:8">
                   <v-text-field
                     v-model="password"
                     type="password"
@@ -199,7 +199,7 @@
 
               <!--     Confirm Password       -->
               <v-col cols="12" md="6" lg="6" xl="6" class="ma-0">
-                <validation-provider name="confirmPassword" v-slot="{errors}" rules="required|confirmed:password">
+                <validation-provider name="confirmPassword" v-slot="{errors}" rules="required|min:8|confirmed:password">
                   <v-text-field
                     v-model="confirmPassword"
                     type="password"
@@ -213,6 +213,7 @@
 
             </v-row>
 
+            <!--     Accept Terms       -->
             <validation-provider v-slot="{errors}" name="acceptTerms" :rules="{ required: { allowFalse: false } }">
               <v-checkbox v-model="acceptTerms"
                           :label="$t(`ACCEPT_TERMS`)">
@@ -299,7 +300,6 @@ export default {
       phoneNumber           : '',
       businessLocation      : '',
       businessType          : '',
-      searchLocationValue   : '',
       acceptTerms           : false,
       showPassword          : false,
       businessLocationDialog: false,
@@ -308,8 +308,8 @@ export default {
   computed: {
     genders      : () => {
       return [
-        {name: 'Male', value: 1},
-        {name: 'Female', value: 0},
+        {name: 'Male', value: 'male'},
+        {name: 'Female', value: 'female'},
       ];
     },
     phoneCodes   : () => {
@@ -328,14 +328,27 @@ export default {
     }
   },
   methods : {
-    submit() {
+    async submit() {
       this.$refs.observer.validate();
-    },
-    searchLocation() {
-      console.log(this.searchLocationValue);
+      let checkRegister = await this.$axios.post('register', {
+        "first_name"       : this.firstName,
+        "last_name"        : this.lastName,
+        "mobile_num"       : this.phoneCode + this.phoneNumber,
+        "email"            : this.email,
+        "password"         : this.password,
+        "gender"           : this.gender,
+        "role"             : this.businessType.join(),
+        "business_location": this.businessLocation
+      });
+
+      // Handler of signup api
+      if (checkRegister.status == 200) {
+        await this.$auth.setUserToken(checkRegister.data.token);
+      }
+
     },
     selectLocation(position) {
-        this.businessLocation = position.lat + ',' + position.lng;
+      this.businessLocation = position.lat + ',' + position.lng;
     },
     loginWithGoogle() {
       this.$auth.loginWith('google', {params: {prompt: "select_account"}})

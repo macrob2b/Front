@@ -1,12 +1,13 @@
-import {extend, localize}           from "vee-validate";
-import {required, email, confirmed} from "vee-validate/dist/rules";
+import {extend, localize}                from "vee-validate";
+import {required, email, confirmed, min} from "vee-validate/dist/rules";
 
 const dictionary = {
   en: {
     messages: {
-      required : () => 'This field is required',
-      email    : () => 'Enter a valid email',
-      confirmed: () => 'Password does not match',
+      required : () => `This field is required`,
+      email    : () => `Enter a valid email`,
+      confirmed: () => `Password does not match`,
+      min      : (_, {length}) => `This field must be at least ${length} characters`,
     },
   },
 };
@@ -14,6 +15,7 @@ const dictionary = {
 extend("required", required);
 extend("email", email);
 extend("confirmed", confirmed);
+extend("min", min);
 
 
 localize(dictionary);
