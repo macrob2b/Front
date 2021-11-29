@@ -29,7 +29,8 @@ export default {
   plugins: [
     {src: 'plugins/vee-validate.js', ssr: true},
     {src: 'plugins/persistedState.client.js'},
-    {src: 'plugins/vueFlags.js'}
+    {src: 'plugins/vueFlags.js'},
+    {src: 'plugins/axios.js'}
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -51,6 +52,10 @@ export default {
     'nuxt-leaflet',
   ],
 
+  axios: {
+    baseURL: 'https://api.macrob2b.com/api/',
+  },
+
   auth: {
     strategies: {
       google  : {
@@ -59,8 +64,8 @@ export default {
         responseType       : 'code',
         grantType          : 'google',
         endpoints          : {
-          token   : 'http://localhost:8000/api/auth',
-          userInfo: 'http://localhost:8000/api/user/'
+          token   : 'https://api.macrob2b.com/api/google_login',
+          userInfo: 'https://api.macrob2b.com/api/user'
         },
       },
       facebook: {
@@ -70,8 +75,8 @@ export default {
         grantType          : 'facebook',
         scope              : ['public_profile', 'email'],
         endpoints          : {
-          token   : 'http://localhost:8000/api/auth',
-          userInfo: 'http://localhost:8000/api/user/'
+          token   : 'https://api.macrob2b.com/api/facebook_login',
+          userInfo: 'https://api.macrob2b.com/api/user'
         },
       },
       linkedin: {
@@ -79,8 +84,8 @@ export default {
         clientId           : config.linkedinClientId,
         endpoints          : {
           authorization: 'https://www.linkedin.com/oauth/v2/authorization',
-          token        : 'http://localhost:8000/api/auth',
-          userInfo     : 'http://localhost:8000/api/user/'
+          token        : 'https://api.macrob2b.com/api/linkedin_login',
+          userInfo     : 'https://api.macrob2b.com/api/user'
         },
         responseType       : 'code',
         scope              : ['r_liteprofile', 'r_emailaddress'],
