@@ -1,0 +1,70 @@
+<template>
+  <v-text-field
+    v-model="phoneNumber"
+    type="number"
+    height="55"
+    :error-messages="errors"
+    :label="$t(`PHONE_NUMBER`)"
+    outlined>
+    <template slot="prepend-inner">
+      <v-select class="phoneCodeSelect"
+                v-model="phoneCode"
+                :items="phoneCodes"
+                :label="$t(`COUNTRY_CODE`)"
+                item-text="name"
+                item-value="dialCode"
+                flat
+                solo
+                dense>
+        <template slot="selection" slot-scope="data">
+          <gb-flag :code="data.item.iso2" class="mr-2"/>
+          +{{ data.item.dialCode }}
+        </template>
+        <template slot="item" slot-scope="data">
+          <gb-flag :code="data.item.iso2" class="mr-2"/>
+          {{ data.item.name }}
+        </template>
+      </v-select>
+    </template>
+  </v-text-field>
+</template>
+
+<script>
+
+import {countries} from 'assets/countriesList';
+
+export default {
+  name : "phoneNumberInput",
+  props: ['errors'],
+  data() {
+    return {
+      phoneCode  : '',
+      phoneNumber: '',
+      finalNumber: '',
+      phoneCodes : countries,
+    };
+  },
+  methods: {
+    inputChanged() {
+      this.$emit('numberEntered',  '+' + this.phoneCode + ' ' + this.phoneNumber);
+    }
+  },
+  watch  : {
+    phoneNumber: function (val) {
+      this.inputChanged();
+    },
+    phoneCode  : function (val) {
+      this.inputChanged();
+    }
+  }
+}
+</script>
+
+<style scoped>
+.phoneCodeSelect {
+  margin-top: -8px !important;
+  min-width: 150px !important;
+  max-width: 150px !important;
+  overflow: hidden !important;
+}
+</style>

@@ -86,27 +86,12 @@
             </v-col>
 
             <!--     Phone Number       -->
-            <v-col cols="12" md="6" lg="6" xl="6" class="mb-8 pt-0 pb-0">
-              <validation-provider v-slot="{errors}" name="companyName" rules="required">
-                <v-text-field
-                  v-model="phoneNumber"
-                  :error-messages="errors"
-                  :label="$t(`PHONE_NUMBER`)"
-                  :height="55"
-                  hide-details
-                  outlined>
-                  <template slot="prepend-inner">
-                    <v-select class="phoneCodeSelect"
-                              v-model="phoneCode"
-                              :items="phoneCodes"
-                              item-text="name"
-                              item-value="code"
-                              flat
-                              solo
-                              dense>
-                    </v-select>
-                  </template>
-                </v-text-field>
+            <v-col cols="12" md="6" lg="6" xl="6" class="pt-0 pb-0">
+              <validation-provider v-slot="{errors}" ref="phoneNumberProvider" name="phoneNumber"
+                                   rules="required|phone">
+                <!--       Hidden field for validation         -->
+                <input hidden v-model="phoneNumber">
+                <PhoneNumberInput @numberEntered="changePhoneNumber" :model="phoneNumber" :errors="errors"/>
               </validation-provider>
             </v-col>
 
@@ -254,13 +239,15 @@
 
 <script>
 
-import {ValidationObserver, ValidationProvider} from "vee-validate";
-import LeafletMap                               from "../components/LeafletMap";
+import {ValidationObserver, ValidationProvider, validate} from "vee-validate";
+import LeafletMap                                         from "../components/LeafletMap";
+import PhoneNumberInput                                   from "../components/phoneNumberInput";
 
 export default {
   name      : "signup",
   auth      : 'guest',
   components: {
+    PhoneNumberInput,
     LeafletMap,
     ValidationProvider,
     ValidationObserver,
@@ -279,7 +266,6 @@ export default {
       firstName             : '',
       lastName              : '',
       companyName           : '',
-      phoneCode             : '',
       phoneNumber           : '',
       businessLocation      : '',
       businessType          : '',
@@ -293,13 +279,6 @@ export default {
       return [
         {name: 'Male', value: 'male'},
         {name: 'Female', value: 'female'},
-      ];
-    },
-    phoneCodes   : () => {
-      return [
-        '+98',
-        '+70',
-        '+4589',
       ];
     },
     businessTypes: () => {
@@ -340,14 +319,16 @@ export default {
     },
     loginWithLinkedIn() {
       this.$auth.loginWith('linkedin')
+    },
+    changePhoneNumber(event) {
+      this.phoneNumber = event;
+      const field      = this.$refs.phoneNumberProvider;
+      field.validate();
     }
   },
 }
 </script>
 
 <style scoped>
-.phoneCodeSelect {
-  width: 90px !important;
-  margin-top: -8px !important;
-}
+
 </style>
