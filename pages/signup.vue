@@ -4,13 +4,13 @@
 
       <v-col class="d-md-flex d-lg-flex d-none">
         <v-img
-          :src="`https://picsum.photos/500/300?image=165`"
-          :lazy-src="`https://picsum.photos/10/6?image=165`"
+          :src="require('../assets/img/44-01.jpg')"
+          style="height: 570px;width: 546px"
+          :lazy-src="require('../assets/img/44-01.jpg')"
           aspect-ratio="1"
-          class="grey lighten-2">
+          class="lighten-2">
           <template v-slot:placeholder>
             <v-row
-              class="fill-height ma-0"
               align="center"
               justify="center">
               <v-progress-circular
@@ -74,6 +74,7 @@
               <v-col cols="12" md="6" lg="6" xl="6" class="ma-0">
                 <validation-provider v-slot="{errors}" name="fullName" rules="required">
                   <v-text-field
+                    dense
                     v-model="lastName"
                     prepend-inner-icon="mdi-account"
                     :error-messages="errors"
