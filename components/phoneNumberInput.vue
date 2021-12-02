@@ -1,7 +1,6 @@
 <template>
   <v-text-field
-    v-model="phoneNumber"
-    type="number"
+    v-model.number="phoneNumber"
     height="55"
     :error-messages="errors"
     :label="$t(`PHONE_NUMBER`)"
@@ -10,7 +9,6 @@
       <v-select class="phoneCodeSelect"
                 v-model="phoneCode"
                 :items="phoneCodes"
-                :label="$t(`COUNTRY_CODE`)"
                 item-text="name"
                 item-value="dialCode"
                 flat
@@ -38,7 +36,7 @@ export default {
   props: ['errors'],
   data() {
     return {
-      phoneCode  : '',
+      phoneCode  : '93',
       phoneNumber: '',
       finalNumber: '',
       phoneCodes : countries,
@@ -46,7 +44,7 @@ export default {
   },
   methods: {
     inputChanged() {
-      this.$emit('numberEntered',  '+' + this.phoneCode + ' ' + this.phoneNumber);
+      this.$emit('numberEntered', '+' + this.phoneCode + ' ' + this.phoneNumber);
     }
   },
   watch  : {
@@ -63,8 +61,6 @@ export default {
 <style scoped>
 .phoneCodeSelect {
   margin-top: -8px !important;
-  min-width: 150px !important;
-  max-width: 150px !important;
-  overflow: hidden !important;
+  width: 130px !important;
 }
 </style>
