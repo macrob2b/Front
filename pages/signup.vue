@@ -240,7 +240,7 @@
 <script>
 
 import {ValidationObserver, ValidationProvider, validate} from "vee-validate";
-import LeafletMap                                         from "../components/LeafletMap";
+import LeafletMap                                         from "../components/leafletMap/LeafletMap";
 import PhoneNumberInput                                   from "../components/phoneNumberInput";
 
 export default {
