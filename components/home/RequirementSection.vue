@@ -54,7 +54,12 @@
 import RequirementCard from "./RequirementCard.vue";
 import ContainerCard from "./ContainerCard.vue";
 
-export default {};
+export default {
+  components:{
+    RequirementCard,
+    ContainerCard
+  }
+};
 </script>
 <style scoped>
 .image-container {
