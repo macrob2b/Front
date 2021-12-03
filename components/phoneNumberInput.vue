@@ -1,8 +1,9 @@
 <template>
   <v-text-field
-    v-model="phoneNumber"
-    type="number"
+    class="phoneNumberInput"
+    v-model.number="phoneNumber"
     height="55"
+    type="number"
     :error-messages="errors"
     :label="$t(`PHONE_NUMBER`)"
     outlined>
@@ -10,7 +11,6 @@
       <v-select class="phoneCodeSelect"
                 v-model="phoneCode"
                 :items="phoneCodes"
-                :label="$t(`COUNTRY_CODE`)"
                 item-text="name"
                 item-value="dialCode"
                 flat
@@ -38,7 +38,7 @@ export default {
   props: ['errors'],
   data() {
     return {
-      phoneCode  : '',
+      phoneCode  : '93',
       phoneNumber: '',
       finalNumber: '',
       phoneCodes : countries,
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     inputChanged() {
-      this.$emit('numberEntered',  '+' + this.phoneCode + ' ' + this.phoneNumber);
+      this.$emit('numberEntered', '+' + this.phoneCode + ' ' + this.phoneNumber);
     }
   },
   watch  : {
@@ -61,10 +61,21 @@ export default {
 </script>
 
 <style scoped>
+
 .phoneCodeSelect {
   margin-top: -8px !important;
-  min-width: 150px !important;
-  max-width: 150px !important;
-  overflow: hidden !important;
+  width: 130px !important;
 }
+
+.phoneNumberInput >>> input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.phoneNumberInput >>> input::-webkit-outer-spin-button,
+.phoneNumberInput >>> input::-webkit-inner-spin-button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
 </style>
