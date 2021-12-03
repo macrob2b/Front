@@ -5,7 +5,7 @@
         <img src="card_img.png" />
       </div>
       <div class="text-center">Product Name</div>
-      <div class="text-center" style="color: green; font-size: 26px">
+      <div class="text-center" style="color: greenyellow; font-size: 26px">
         250 <span style="font-size: 13px">$</span>
       </div>
       <div class="pb-3 pa-4">

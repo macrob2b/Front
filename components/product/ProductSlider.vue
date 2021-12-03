@@ -3,6 +3,7 @@
     <v-slide-group class="pa-2" show-arrows>
       <v-slide-item v-for="n in 15" :key="n">
         <ProductCard1 />
+        <!-- <ProductCard2 /> -->
       </v-slide-item>
     </v-slide-group>
     <div class="d-flex justify-end px-5">
@@ -26,8 +27,9 @@
 <script>
 import ProductCard1 from "./ProductCard1.vue";
 import _ from "lodash";
+import ProductCard2 from './ProductCard2.vue';
 export default {
-  components: { ProductCard1 },
+  components: { ProductCard1, ProductCard2 },
   data() {
     return {
       previousButton: "",
