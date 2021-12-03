@@ -1,6 +1,6 @@
 export default {
   name            : 'config',
-  googleClientId  : '178191436539-up697ebl19jfairso3ieke4krgngs7ft.apps.googleusercontent.com',
-  facebookClientId: '587247419175229',
+  googleClientId  : '644417708985-94iape8bj10nohoc594sfsvaofhf06a2.apps.googleusercontent.com',
+  facebookClientId: '1248928938925724',
   linkedinClientId: '7801lgsdau9o6l',
 }
