@@ -1,7 +1,6 @@
 <template>
   <!-- <Tutorial/> -->
   <div>
-    <v-app>
       <div class="px-5 py-5">
         <v-card class="card">
           <v-row class="justify-between">
@@ -47,7 +46,6 @@
             <HeaderBottom />
         </v-card>
       </div>
-    </v-app>
   </div>
 </template>
 

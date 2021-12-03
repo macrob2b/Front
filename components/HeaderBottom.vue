@@ -3,10 +3,10 @@
   <v-row class="justify-between">
     <v-col class="pb-0">
       <v-tabs background-color="transparent" class="mt-5" slider-color="transparent">
-        <v-tab> category name </v-tab>
-        <v-tab> category name </v-tab>
-        <v-tab> category name </v-tab>
-        <v-tab> category name </v-tab>
+        <v-tab> <span style="font-weight:300;text-transform: lowercase !important;"> category name </span> </v-tab>
+        <v-tab> <span style="font-weight:300;text-transform: lowercase !important;"> category name </span> </v-tab>
+        <v-tab> <span style="font-weight:300;text-transform: lowercase !important;"> category name </span> </v-tab>
+        <v-tab> <span style="font-weight:300;text-transform: lowercase !important;"> category name </span> </v-tab>
         <v-tab> All </v-tab>
       </v-tabs>
     </v-col>
