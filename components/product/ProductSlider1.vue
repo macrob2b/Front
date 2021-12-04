@@ -1,5 +1,5 @@
 <template>
-  <div :class="'slider' + id">
+  <div class="slider2">
     <v-slide-group class="pa-2" show-arrows>
       <v-slide-item v-for="n in 15" :key="n">
         <ProductCard1 />
@@ -46,9 +46,9 @@ export default {
   },
   methods: {
     checkNavBtnStatus() {
-      this.previousButton = document.querySelector(`.slider${this.$props.id} div.v-slide-group__prev`);
-      console.log(this.previousButton,'slider' + this.$props.id + ' div.v-slide-group__prev');
-      this.nextButton = document.querySelector(`.slider${this.$props.id} div.v-slide-group__next`);
+      this.previousButton = document.querySelector(".slider2 div.v-slide-group__prev");
+      console.log(this.previousButton);
+      this.nextButton = document.querySelector(".slider2 div.v-slide-group__next");
       console.log(this.nextButton);
       this.isPreviousBtnDisable =
         this.previousButton?.className.includes("disabled");

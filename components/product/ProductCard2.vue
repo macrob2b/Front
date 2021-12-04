@@ -1,8 +1,8 @@
 <template>
   <div class="mx-2">
-    <v-card>
+    <v-card elevation="12">
       <div class="pa-2">
-        <img src="card_img.png" />
+        <img src="card_img.png" width="100%" />
       </div>
       <div class="px-2">Product name</div>
       <div class="d-flex justify-space-between py-3">

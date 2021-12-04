@@ -6,22 +6,24 @@
       <Requirement />
       <ContainerCard>
         <ProductContainer title="New products">
-          <ProductSection1 />
+          <ProductSection1 :id="1" />
         </ProductContainer>
       </ContainerCard>
       <Ads />
-      <v-row>
-        <v-col>
-          <ContainerCard width="100%">
-            <ProductContainer title="New products"> </ProductContainer>
-          </ContainerCard>
-        </v-col>
-        <v-col>
-          <ContainerCard width="100%">
-            <ProductContainer title="New products"> </ProductContainer>
-          </ContainerCard>
-        </v-col>
-      </v-row>
+      <ProductSection2 />
+      <br />
+      <div class="pa-2 ma-5">
+        <ProductSection3 />
+      </div>
+      <div class="pa-9 ma-5">
+        <img src="banner3.png" width="100%" />
+      </div>
+      <Ads />
+      <ContainerCard>
+        <ProductContainer title="Similar to searched before">
+          <ProductSection1 :id="3" />
+        </ProductContainer>
+      </ContainerCard>
     </v-app>
   </div>
 </template>
@@ -34,6 +36,9 @@ import Requirement from "../components/home/RequirementSection.vue";
 import ProductSection1 from "../components/home/ProductSection1.vue";
 import ProductSlider from "../components/product/ProductSlider.vue";
 import Ads from "../components/home/Ads.vue";
+import ProductCard2 from "../components/product/ProductCard2.vue";
+import ProductSection2 from "../components/home/ProductSection2.vue";
+import ProductSection3 from "../components/home/ProductSection3.vue";
 
 export default {
   components: {
@@ -44,6 +49,9 @@ export default {
     ProductSection1,
     ProductSlider,
     Ads,
+    ProductCard2,
+    ProductSection2,
+    ProductSection3,
   },
 };
 </script>

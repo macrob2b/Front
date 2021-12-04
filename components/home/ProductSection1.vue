@@ -4,7 +4,7 @@
       <img src="banner2.png" />
     </div>
     <div class="slider-sheet">
-        <ProductSlider />
+        <ProductSlider :id="id" />
     </div>
     
   </div>
@@ -13,6 +13,9 @@
 <script>
 import ProductSlider from '../product/ProductSlider.vue';
 export default {
+  props:{
+    id : 'number'
+  },
   components: {  ProductSlider },
 };
 </script>
