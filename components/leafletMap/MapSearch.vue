@@ -2,16 +2,26 @@
   <div class="mapSearch">
     <v-text-field
       class="mapSearchInput rounded-0"
-      prepend-inner-icon="mdi-magnify"
-      append-icon="mdi-close"
       v-model="searchValue"
       :items="items"
       :label="$t(`SEARCH`)"
       @keydown="inputChanged"
-      @click:append="clear"
       single-line
       solo
       flat>
+      <template slot="append">
+        <v-btn @click="clear"
+               icon>
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+      <template slot="prepend-inner">
+        <v-btn @click="searchLocation"
+               :loading="searchLoader"
+               icon>
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+      </template>
     </v-text-field>
     <v-list class="listSearchInput" v-if="items.length > 0" dense>
       <v-list-item-group>
@@ -30,24 +40,30 @@ export default {
   name: "MapSearch",
   data() {
     return {
-      selected   : '',
-      searchValue: '',
-      items      : []
+      selected    : '',
+      searchValue : '',
+      items       : [],
+      searchLoader: false
     };
   },
   methods: {
     async inputChanged(event) {
       if (event.key == 'Enter') {
-        let geoSearchResult = await this.$axios.get('https://nominatim.openstreetmap.org/search', {
-          params: {
-            q     : this.searchValue,
-            format: 'json',
-          }
-        });
-
-        if (geoSearchResult.status == 200) {
-          this.items = geoSearchResult.data;
+        await this.searchLocation();
+      }
+    },
+    async searchLocation() {
+      this.searchLoader   = true;
+      let geoSearchResult = await this.$axios.get('https://nominatim.openstreetmap.org/search', {
+        params: {
+          q     : this.searchValue,
+          format: 'json',
         }
+      });
+
+      if (geoSearchResult.status == 200) {
+        this.items        = geoSearchResult.data;
+        this.searchLoader = false;
       }
     },
     centeredLocation(lon, lat) {
@@ -68,7 +84,8 @@ export default {
   margin-left: 50px;
   z-index: 1005 !important;
   position: absolute !important;
-  max-width: 25vw;
+  max-width: 350px;
+  min-width: 350px;
 }
 
 .listSearchInput {
