@@ -38,7 +38,24 @@ export default {
     selectLocation(event) {
       let pos                 = this.$L.latLng(event.latlng.lat, event.latlng.lng);
       this.map.markerLocation = pos;
-      this.$emit('locationSelected', pos);
+      this.getNameOfLocation({lng: pos.lng, lat: pos.lat});
+    },
+    async getNameOfLocation(location) {
+      let nameSearchResult = await this.$axios.get('https://nominatim.openstreetmap.org/reverse', {
+        params: {
+          lat   : location.lat,
+          lon   : location.lng,
+          format: 'json',
+        }
+      });
+
+      if (nameSearchResult.status == 200) {
+        this.$emit('locationSelected', {
+          lat         : location.lat,
+          lng         : location.lng,
+          locationName: nameSearchResult.data.display_name
+        });
+      }
     },
     goToSearchLocation(event) {
       this.map.center = [event.lat, event.lon];

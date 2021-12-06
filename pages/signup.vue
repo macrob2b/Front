@@ -140,7 +140,7 @@
             <v-col cols="12" md="6" lg="6" xl="6" class="ma-0 pt-0 pb-0">
               <validation-provider v-slot="{ errors }" name="businessLocation" rules="required">
                 <v-text-field
-                  v-model="businessLocation"
+                  v-model="businessLocationName"
                   append-icon="mdi-crosshairs-gps"
                   @click:append="businessLocationDialog = !businessLocationDialog"
                   :error-messages="errors"
@@ -268,6 +268,7 @@ export default {
       companyName           : '',
       phoneNumber           : '',
       businessLocation      : '',
+      businessLocationName  : '',
       businessType          : '',
       acceptTerms           : false,
       showPassword          : false,
@@ -308,8 +309,9 @@ export default {
       }
 
     },
-    selectLocation(position) {
-      this.businessLocation = position.lat + ',' + position.lng;
+    selectLocation(location) {
+      this.businessLocation     = location.lat + ',' + location.lng;
+      this.businessLocationName = location.locationName;
     },
     loginWithGoogle() {
       this.$auth.loginWith('google', {params: {prompt: "select_account"}})
