@@ -87,6 +87,7 @@ export default {
           token        : 'https://api.macrob2b.com/api/linkedin_login',
           userInfo     : 'https://api.macrob2b.com/api/user'
         },
+        redirectUri:    "https://localhost:3000",
         responseType       : 'code',
         scope              : ['r_liteprofile', 'r_emailaddress'],
         codeChallengeMethod: '',
@@ -96,7 +97,7 @@ export default {
   },
 
   router: {
-    middleware: ['auth']
+    // middleware: ['auth']
   },
 
   i18n: {
@@ -117,7 +118,7 @@ export default {
         dark: {
           primary  : colors.blue.darken2,
           accent   : colors.grey.darken3,
-          secondary: colors.amber.darken3,
+          secondary: "#FB641E",
           info     : colors.teal.lighten1,
           warning  : colors.amber.base,
           error    : colors.deepOrange.accent4,
@@ -132,7 +133,7 @@ export default {
     transpile: ["vee-validate"]
   },
   server: {
-     host:'0.0.0.0',
-     port:3000
+     // host:'0.0.0.0',
+     // port:3000
   }
 }
