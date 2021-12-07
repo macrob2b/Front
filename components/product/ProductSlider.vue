@@ -7,11 +7,11 @@
       </v-slide-item>
     </v-slide-group>
     <div class="d-flex justify-end px-5">
-      <v-btn color="#98CB00" @click="clickLeft" medium width="40" min-width="0">
+      <v-btn color="#165048" @click="clickLeft" medium width="40" min-width="0">
         <v-icon color="white"> mdi-chevron-left </v-icon>
       </v-btn>
       <v-btn
-        color="#98CB00"
+        color="#165048"
         @click="clickRight"
         class="mx-2"
         medium

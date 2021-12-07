@@ -7,7 +7,7 @@ Vue.use(Vuetify, {
     primary: '#5F30FE', // #E53935
     secondary: '#EB3535', // #FFCDD2
     typography: '#3E3E3E', // #3F51B5
-    header: '#6633CC'
+    header: '#00394D'
   }
 })
 
@@ -16,7 +16,7 @@ const vuetify = new Vuetify({
     primary: '#5F30FE', // #E53935
     secondary: '#EB3535', // #FFCDD2
     typography: '#3E3E3E', // #3F51B5
-    header: '#6633CC'
+    header: '#00394D'
   },
   icons: {
     iconfont: 'mdiSvg', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'

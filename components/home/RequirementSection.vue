@@ -36,9 +36,9 @@
       </v-col>
 
       <v-col cols="3">
-        <div class="d-flex-column image-container">
-          <img src="bannerImage.png" />
-          <img src="bannerImage.png" />
+        <div class="d-flex-column image-container" style="display:flex;flex-direction:column">
+          <img src="bannerImage.png" style="height:80%" />
+          <img src="bannerImage.png" style="height:80%"/>
         </div>
       </v-col>
 

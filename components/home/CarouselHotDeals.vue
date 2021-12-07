@@ -1,6 +1,6 @@
 <template>
   <div class="ma-2 pa-2">
-    <v-card color="#6633CC">
+    <v-card color="#00394D">
       <div class="d-flex justify-space-between">
         <div class="d-flex justify-center align-items-center px-3 py-2">
           <div class="box mx-2"></div>
@@ -59,7 +59,7 @@ export default {
   height: 20px;
 }
 .cont {
-  background-color: blueviolet !important;
+  background-color: #00394D !important;
 }
 .v-carousel >>> .v-carousel__controls {
     bottom: -5px;

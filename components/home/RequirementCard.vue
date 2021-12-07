@@ -9,7 +9,7 @@
           <v-progress-linear
             value="15"
             height="1.5px"
-            class=""
+            color="#00394D"
           ></v-progress-linear>
         </div>
         <div class="px-5 py-1">
@@ -25,7 +25,7 @@
           <v-text-field label="Company product" outlined dense></v-text-field>
         </div>
         <div class="px-5 pt-1 pb-10">
-          <v-btn color="#6633CC" width="100%"><span style="color:white"> Submit </span> </v-btn>
+          <v-btn color="#00394D" width="100%"><span style="color:white"> Submit </span> </v-btn>
         </div>
         <!-- <div style="height: 80px"></div> -->
       </div>
@@ -39,7 +39,7 @@ export default {};
 
 <style scoped>
 .header span span {
-  color: blueviolet;
+  color: #00394D;
 }
 .header {
   display: flex;

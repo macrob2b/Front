@@ -16,7 +16,7 @@
     <div class="px-2 my-5">
       <v-progress-linear
         value="10"
-        color="#6633CC"
+        color="#00394D"
         height="1.5px"
         class=""
       ></v-progress-linear>
@@ -41,9 +41,9 @@ export default {
 .box {
   height: 20px;
   width: 20px;
-  background-color: blueviolet;
+  background-color: #00394D;
 }
 button span {
-  color: blueviolet;
+  color: #00394D;
 }
 </style>
