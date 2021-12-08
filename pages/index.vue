@@ -15,9 +15,7 @@
       <div class="pa-2 ma-5">
         <ProductSection3 />
       </div>
-      <div class="pa-9 ma-5">
-        <img src="banner3.png" width="100%" />
-      </div>
+      <Banner />
       <Ads />
       <ContainerCard>
         <ProductContainer title="Similar to searched before">
@@ -54,6 +52,7 @@ import ProductSection2 from "../components/home/ProductSection2.vue";
 import ProductSection3 from "../components/home/ProductSection3.vue";
 import Logo from "../components/home/Logo.vue";
 import Footer from '../components/common/Footer.vue';
+import Banner from '../components/home/Banner.vue';
 
 export default {
   components: {
@@ -69,7 +68,8 @@ export default {
     ProductSection2,
     ProductSection3,
     Logo,
-    Footer
+    Footer,
+    Banner
   },
 };
 

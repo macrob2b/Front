@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex justify-space-between">
-    <div class="">
+    <div class="" v-show="!$vuetify.breakpoint.xs">
       <div class="tit">Title goes here</div>
-      <div class="banner-container">
+      <div class="banner-container" >
         <img src="banner-bg.png" />
       </div>
     </div>
