@@ -1,57 +1,95 @@
 <template>
-  <v-col sm="12" md="6" lg="4" offset-lg="4" offset-md="3">
-    <validation-observer ref="observer" v-slot="{ invalid }">
-      <v-card>
-        <v-card-title>{{ $t(`LOGIN`) }}</v-card-title>
-        <v-card-text>
-          <form @submit.prevent="submit">
-            <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-              <v-text-field
-                v-model="email"
-                prepend-inner-icon="mdi-email"
-                :error-messages="errors"
-                :label="$t(`E_MAIL`)"
-                required>
-              </v-text-field>
-            </validation-provider>
-            <validation-provider v-slot="{errors}" name="password" rules="required">
-              <v-text-field
-                v-model="password"
-                type="password"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="showPassword ? 'text' : 'password'"
-                prepend-inner-icon="mdi-lock"
-                @click:append="showPassword = !showPassword"
-                :error-messages="errors"
-                :label="$t(`PASSWORD`)">
-              </v-text-field>
-            </validation-provider>
-            <v-btn
-              color="primary"
-              block
-              type="submit"
-              :disabled="invalid">
-              {{ $t(`LOGIN`) }}
-            </v-btn>
+  <v-row>
+    <v-col class="d-md-flex d-lg-flex d-none">
+      <v-img
+        :src="`Designs/signup.svg`"
+        aspect-ratio="1">
+        <template v-slot:placeholder>
+          <v-row class="fill-height ma-0" align="center" justify="center">
+            <v-progress-circular indeterminate></v-progress-circular>
+          </v-row>
+        </template>
+      </v-img>
+    </v-col>
+    <v-col>
+      <validation-observer ref="observer" v-slot="{ invalid }">
+        <h2>{{ $t(`LOGIN`) }}</h2>
+        <v-divider class="mt-2 mb-6"></v-divider>
+        <form @submit.prevent="submit">
+          <v-row>
 
-            <v-divider class="mt-5 mb-2"></v-divider>
+            <!--     Email     -->
+            <v-col cols="12" md="6" lg="6" xl="6" class="ma-0 pt-0 pb-0">
+              <validation-provider v-slot="{ errors }" name="emailOrPhone" rules="required">
+                <v-text-field
+                  v-model="emailOrPhone"
+                  :error-messages="errors"
+                  :label="$t(`E_MAIL`) + ' ' + $t(`OR`) + ' ' + $t(`PHONE_NUMBER`)"
+                  outlined
+                  required>
+                </v-text-field>
+              </validation-provider>
+            </v-col>
 
-            <p>{{ $t(`SIGN_IN_WITH`) + ':' }}</p>
+            <!-- Password  -->
+            <v-col cols="12" md="6" lg="6" xl="6" class="ma-0 pt-0 pb-0">
+              <validation-provider v-slot="{errors}" name="password" rules="required">
+                <v-text-field
+                  v-model="password"
+                  type="password"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  :type="showPassword ? 'text' : 'password'"
+                  @click:append="showPassword = !showPassword"
+                  :error-messages="errors"
+                  :label="$t(`PASSWORD`)"
+                  outlined>
+                </v-text-field>
+              </validation-provider>
+            </v-col>
+
+          </v-row>
+
+          <v-row class="mt-0">
+            <v-col cols="12" md="4" lg="4" xl="4">
+              <v-btn
+                class="rounded-lg"
+                color="primary"
+                type="submit"
+                :disabled="invalid"
+                large
+                block>
+                {{ $t(`LOGIN`) }}
+              </v-btn>
+            </v-col>
+            <v-col cols="12" md="4" lg="4" xl="4">
+              <v-btn
+                to="register"
+                class="rounded-lg"
+                large
+                block
+                nuxt>
+                {{ $t(`SIGN_UP`) }}
+              </v-btn>
+            </v-col>
+          </v-row>
+
+          <div class="mt-5">
+            <p class="d-inline-block">{{ $t(`SIGN_IN_WITH`) + ':' }}</p>
             <v-btn icon class="ml-2 mr-2" @click="loginWithGoogle()">
-              <v-icon x-large color="red">mdi-google</v-icon>
+              <v-icon large color="red">mdi-google</v-icon>
             </v-btn>
             <v-btn icon class="ml-2 mr-2" @click="loginWithFacebook()">
-              <v-icon x-large color="blue">mdi-facebook</v-icon>
+              <v-icon large color="blue">mdi-facebook</v-icon>
             </v-btn>
             <v-btn icon class="ml-2 mr-2" @click="loginWithLinkedIn()">
-              <v-icon x-large color="blue">mdi-linkedin</v-icon>
+              <v-icon large color="blue">mdi-linkedin</v-icon>
             </v-btn>
+          </div>
 
-          </form>
-        </v-card-text>
-      </v-card>
-    </validation-observer>
-  </v-col>
+        </form>
+      </validation-observer>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -70,13 +108,27 @@ export default {
     ValidationObserver,
   },
   data      : () => ({
-    email       : '',
+    emailOrPhone: '',
     password    : '',
     showPassword: false,
   }),
   methods   : {
-    submit() {
-      this.$refs.observer.validate();
+    async submit() {
+      try {
+        await this.$auth.loginWith('local', {
+          data   : {
+            username: this.emailOrPhone,
+            password: this.password
+          },
+          headers: {
+            'Content-type': 'application/json'
+          }
+        }).then(response => {
+          console.log(response);
+        });
+      } catch (e) {
+        console.log(e);
+      }
     },
     loginWithGoogle() {
       this.$auth.loginWith('google', {params: {prompt: "select_account"}})

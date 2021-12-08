@@ -91,6 +91,20 @@ export default {
         scope              : ['r_liteprofile', 'r_emailaddress'],
         codeChallengeMethod: '',
         grantType          : 'linkedin',
+      },
+      local   : {
+        token    : {
+          property: 'token',
+          global  : true,
+        },
+        user     : {
+          property : 'user',
+          autoFetch: true
+        },
+        endpoints: {
+          login: {url: 'https://api.macrob2b.com/api/login'},
+          user : {url: 'https://api.macrob2b.com/api/user'}
+        }
       }
     }
   },

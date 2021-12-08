@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mt-2 mb-2">
+  <v-row>
 
     <v-col class="d-md-flex d-lg-flex d-none">
       <v-img
@@ -190,7 +190,7 @@
           </validation-provider>
 
           <v-row>
-            <v-col cols="12" md="6" lg="6" xl="6" class="ma-0">
+            <v-col cols="12" md="4" lg="4" xl="4" class="mx-md-10 mx-lg-2">
               <v-btn
                 class="rounded-lg"
                 large
@@ -201,7 +201,7 @@
                 {{ $t(`CREATE_MY_ACCOUNT`) }}
               </v-btn>
             </v-col>
-            <v-col cols="12" md="6" lg="6" xl="6" class="ma-0">
+            <v-col cols="12" md="4" lg="4" xl="4" class="mx-md-10 mx-lg-2">
               <v-btn
                 to="login"
                 class="rounded-lg"
