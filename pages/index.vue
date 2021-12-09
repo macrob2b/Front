@@ -53,6 +53,11 @@ import Logo from "../components/home/Logo.vue";
 import Banner from '../components/home/Banner.vue';
 
 export default {
+  head() {
+    return {
+      title: this.$t('Largest online B2B marketplace')
+    }
+  },
   components: {
     Requirement,
     ContainerCard,

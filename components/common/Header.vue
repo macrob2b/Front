@@ -78,7 +78,7 @@
 
             <div class="d-flex justify-start py-3">
               <div class="mx-2">
-                <v-btn color="#005270" min-width="0" width="40">
+                <v-btn to="/login" color="#005270" min-width="0" width="40">
                   <v-icon color="white"> mdi-account </v-icon>
                 </v-btn>
               </div>

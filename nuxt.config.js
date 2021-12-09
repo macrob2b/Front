@@ -4,8 +4,8 @@ import config from './config'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - macrob2bApp',
-    title        : 'macrob2bApp',
+    titleTemplate: '%s | MacroB2B',
+    title        : 'MacroB2B',
     htmlAttrs    : {
       lang: 'en'
     },
@@ -147,7 +147,7 @@ export default {
     transpile: ["vee-validate"]
   },
   server: {
-     // host:'0.0.0.0',
-     // port:3000
+     host:'0.0.0.0',
+     port:3000
   }
 }
