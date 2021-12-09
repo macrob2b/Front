@@ -6,8 +6,8 @@
         <!-- <ProductCard2 /> -->
       </v-slide-item>
     </v-slide-group>
-    <div class="d-flex justify-end px-5">
-      <v-btn color="#165048" @click="clickLeft" medium width="40" min-width="0">
+    <div class="d-flex justify-end px-5" >
+      <v-btn color="#165048" @click="clickLeft" medium width="40" min-width="0" v-show="!$vuetify.breakpoint.xs">
         <v-icon color="white"> mdi-chevron-left </v-icon>
       </v-btn>
       <v-btn
@@ -17,6 +17,7 @@
         medium
         width="40"
         min-width="0"
+        v-show="!$vuetify.breakpoint.xs"
       >
         <v-icon color="white"> mdi-chevron-right </v-icon>
       </v-btn>
