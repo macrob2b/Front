@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="pa-2 section-one ma-5"> -->
   <ContainerCard>
-    <v-row>
+    <v-row v-show="!$vuetify.breakpoint.xs">
       <v-col cols="6" class="px-5">
         <v-carousel
           hide-delimiter-background
@@ -36,9 +36,12 @@
       </v-col>
 
       <v-col cols="3">
-        <div class="d-flex-column image-container">
-          <img src="bannerImage.png" />
-          <img src="bannerImage.png" />
+        <div
+          class="d-flex-column image-container"
+          style="display: flex; flex-direction: column"
+        >
+          <img src="bannerImage.png" style="height: 80%" />
+          <img src="bannerImage.png" style="height: 80%" />
         </div>
       </v-col>
 
@@ -46,6 +49,19 @@
         <RequirementCard />
       </v-col>
     </v-row>
+    <div v-show="$vuetify.breakpoint.xs" class="d-flex-column">
+      <div class="banner1 pa-2">
+        <img src="lorem-ipsum.png" style="width: 100%" />
+      </div>
+      <div class="d-flex justify-center pa-2">
+        <div class="mx-2">
+          <img src="lorem-ipsum.png" style="width: 100%" />
+        </div>
+        <div class="mx-2">
+          <img src="lorem-ipsum.png" style="width: 100%" />
+        </div>
+      </div>
+    </div>
     <!-- </div> -->
   </ContainerCard>
 </template>
@@ -55,10 +71,10 @@ import RequirementCard from "./RequirementCard.vue";
 import ContainerCard from "./ContainerCard.vue";
 
 export default {
-  components:{
+  components: {
     RequirementCard,
-    ContainerCard
-  }
+    ContainerCard,
+  },
 };
 </script>
 <style scoped>
