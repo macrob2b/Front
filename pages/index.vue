@@ -2,38 +2,38 @@
   <!-- <Tutorial/> -->
   <div>
     <v-app>
-      <Header />
-      <Requirement />
+      <Header/>
+      <Requirement/>
       <ContainerCard>
         <ProductContainer title="New products">
-          <ProductSection1 :id="1" />
+          <ProductSection1 :id="1"/>
         </ProductContainer>
       </ContainerCard>
-      <Ads />
-      <ProductSection2 />
-      <br />
-      <div class="pa-2 ma-5">
-        <ProductSection3 />
+      <Ads/>
+      <ProductSection2/>
+      <br/>
+      <div className="pa-2 ma-5">
+        <ProductSection3/>
       </div>
-      <Banner />
-      <Ads />
+      <Banner/>
+      <Ads/>
       <ContainerCard>
         <ProductContainer title="Similar to searched before">
-          <ProductSection1 :id="3" />
+          <ProductSection1 :id="3"/>
         </ProductContainer>
       </ContainerCard>
 
       <ContainerCard>
         <ProductContainer title="Similar to searched before">
-          <ProductSlider1 :id="4" />
+          <ProductSlider1 :id="4"/>
         </ProductContainer>
       </ContainerCard>
 
-      <div class="pa-2 ma-5">
-        <Logo />
+      <div className="pa-2 ma-5">
+        <Logo/>
       </div>
 
-      <Footer />
+      <Footer/>
     </v-app>
   </div>
 </template>
