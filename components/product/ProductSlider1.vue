@@ -1,6 +1,6 @@
 <template>
   <div class="slider2">
-    <v-slide-group class="pa-2" show-arrows>
+    <v-slide-group class="pa-2" center-active show-arrows>
       <v-slide-item v-for="n in 15" :key="n">
         <ProductCard1 />
         <!-- <ProductCard2 /> -->
@@ -27,10 +27,10 @@
 <script>
 import ProductCard1 from "./ProductCard1.vue";
 import _ from "lodash";
-import ProductCard2 from './ProductCard2.vue';
+import ProductCard2 from "./ProductCard2.vue";
 export default {
-  props:{
-    id:'Number'
+  props: {
+    id: 0,
   },
   components: { ProductCard1, ProductCard2 },
   data() {
@@ -45,24 +45,24 @@ export default {
     setTimeout(() => this.checkNavBtnStatus(), 1000);
   },
   methods: {
-  //   checkNavBtnStatus() {
-  //     this.previousButton = document.querySelector(".slider2 div.v-slide-group__prev");
-  //     console.log(this.previousButton);
-  //     this.nextButton = document.querySelector(".slider2 div.v-slide-group__next");
-  //     console.log(this.nextButton);
-  //     this.isPreviousBtnDisable =
-  //       this.previousButton?.className.includes("disabled");
-  //     this.isNextBtnDisable = this.nextButton?.className.includes("disabled");
-  //   },
-  //   clickLeft() {
-  //     console.log();
-  //     this.previousButton.click();
-  //     this.checkNavBtnStatus();
-  //   },
-  //   clickRight() {
-  //     this.nextButton.click();
-  //     this.checkNavBtnStatus();
-  //   },
+    //   checkNavBtnStatus() {
+    //     this.previousButton = document.querySelector(".slider2 div.v-slide-group__prev");
+    //     console.log(this.previousButton);
+    //     this.nextButton = document.querySelector(".slider2 div.v-slide-group__next");
+    //     console.log(this.nextButton);
+    //     this.isPreviousBtnDisable =
+    //       this.previousButton?.className.includes("disabled");
+    //     this.isNextBtnDisable = this.nextButton?.className.includes("disabled");
+    //   },
+    //   clickLeft() {
+    //     console.log();
+    //     this.previousButton.click();
+    //     this.checkNavBtnStatus();
+    //   },
+    //   clickRight() {
+    //     this.nextButton.click();
+    //     this.checkNavBtnStatus();
+    //   },
   },
 };
 </script>
@@ -70,11 +70,24 @@ export default {
 .v-item-group >>> .v-slide-group__wrapper {
   padding-top: 10px;
   padding-bottom: 10px;
-}/*
+} /*
 .v-item-group >>> .v-slide-group__prev{
   display: none;
 }
 .v-item-group >>> .v-slide-group__next {
   display: none;
 }*/
+@media screen and (max-width: 600px) and (min-width: 320px) {
+  .v-item-group >>> .v-slide-group__prev {
+    display: flex;
+    min-width: 0 !important;
+    padding-right: 5px;
+  }
+  .v-item-group >>> .v-slide-group__next {
+    display: flex;
+    min-width: 0 !important;
+    padding-left: 5px;
+  }
+
+}
 </style>

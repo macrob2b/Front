@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div v-show="!$vuetify.breakpoint.xs" >
         <v-row>
             <v-col
                 cols="3"

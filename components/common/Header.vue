@@ -1,7 +1,7 @@
 <template>
   <!-- <Tutorial/> -->
-  <div>
-    <div v-show="!$vuetify.breakpoint.xs" class="px-5 py-5">
+  <div class="header">
+    <div v-show="!$vuetify.breakpoint.xs" class="px-1 pb-2 pt-0 ">
       <v-card class="card">
         <v-row class="justify-between">
           <v-col class="pt-0">
@@ -23,7 +23,12 @@
             <div class="d-flex justify-end">
               <!-- <div class="pa-1 px-2 mx-3"> -->
               <div class="pa-1 px-2 mx-1">
-                <v-btn color="#005270" min-width="0" width="40">
+                <v-btn
+                  color="#005270"
+                  min-width="0"
+                  width="40"
+                  @click="activeSearch"
+                >
                   <v-icon color="white"> mdi-magnify </v-icon>
                 </v-btn>
               </div>
@@ -55,18 +60,23 @@
     <!-- responsive -->
 
     <div v-show="$vuetify.breakpoint.xs">
-      <div class="pa-7">
+      <div class="">
         <v-card class="card">
           <div class="d-flex justify-space-between px-3">
             <div class="d-flex justify-start py-3">
-              <div class="mx-2">
-                <v-btn color="#005270" min-width="0" width="40">
-                  <v-icon color="white"> mdi-menu </v-icon>
+              <div class="mx-1">
+                <v-btn color="#005270" min-width="0" width="20">
+                  <v-icon color="white" small> mdi-menu </v-icon>
                 </v-btn>
               </div>
-              <div class="mx-2">
-                <v-btn color="#005270" min-width="0" width="40">
-                  <v-icon color="white"> mdi-magnify </v-icon>
+              <div class="mx-1">
+                <v-btn
+                  color="#005270"
+                  min-width="0"
+                  width="20"
+                  @click="activeSearch"
+                >
+                  <v-icon color="white" small> mdi-magnify </v-icon>
                 </v-btn>
               </div>
             </div>
@@ -75,14 +85,14 @@
             </div>
 
             <div class="d-flex justify-start py-3">
-              <div class="mx-2">
-                <v-btn color="#005270" min-width="0" width="40">
-                  <v-icon color="white"> mdi-account </v-icon>
+              <div class="mx-1">
+                <v-btn color="#005270" min-width="0" width="20">
+                  <v-icon color="white" small> mdi-account </v-icon>
                 </v-btn>
               </div>
-              <div class="mx-2">
-                <v-btn color="#005270" min-width="0" width="40">
-                  <v-icon color="white"> mdi-earth </v-icon>
+              <div class="mx-1">
+                <v-btn color="#005270" min-width="0" width="20">
+                  <v-icon color="white" small> mdi-earth </v-icon>
                 </v-btn>
               </div>
             </div>
@@ -92,23 +102,63 @@
         </v-card>
       </div>
     </div>
+    <SearchModal v-on:toggle="clicked" v-show="searchActive" />
   </div>
 </template>
 
 <script>
 import HeaderBottom from "./HeaderBottom.vue";
-import HeaderBottomResponsive from './HeaderBottomResponsive.vue';
+import HeaderBottomResponsive from "./HeaderBottomResponsive.vue";
+import SearchModal from "./SearchModal.vue";
 export default {
+  data() {
+    return {
+      searchActive: false,
+    };
+  },
   components: {
     HeaderBottom,
     HeaderBottomResponsive,
+    SearchModal,
+  },
+  methods: {
+    clicked: function () {
+      if (this.searchActive) {
+        this.searchActive = false;
+      }
+    },
+
+    activeSearch: function () {
+      this.searchActive = !this.searchActive;
+    },
   },
 };
 </script>
 
 <style scoped>
+.header {
+  position: fixed;
+  right: 0;
+  left: 0;
+  top:10px;
+  max-width: 100%;
+  z-index: 100;
+}
+@media screen and (max-width: 600px) and (min-width: 320px) {
+  .card {
+    border-radius: 0 !important;
+  }
+  .header{
+    top:0px;
+  }
+}
+@media screen and (min-width: 601px) {
+  .card {
+    border-radius: 10px !important;
+  }
+}
 .card {
-  border-radius: 10px !important;
+  /* border-radius: 10px !important; */
   background-color: #00394d !important;
 }
 .v-tab {
