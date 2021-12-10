@@ -111,7 +111,7 @@ export default {
   },
 
   router: {
-    // middleware: ['auth']
+    middleware: ['is_admin']
   },
 
   i18n: {
