@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex justify-space-around">
+  <div class="d-flex justify-space-around"  >
     <div>
-      <img src="Ads2.png" />
+      <img src="Ads2.png" v-show="!$vuetify.breakpoint.xs"  />
       <span class="chevron-btn">
         <v-btn fab elevation="8" small color="white">
           <v-icon color="red"> mdi-chevron-right </v-icon>

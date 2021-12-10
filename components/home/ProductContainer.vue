@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cont">
     <div class="d-flex justify-space-between">
       <div class="d-flex justify-start align-end">
         <div>
@@ -32,8 +32,8 @@ import ProductSlider from '../product/ProductSlider.vue';
 export default {
   components: { ProductSlider },
     props : {
-        title : String, 
-    }
+        title : String,
+    },
 };
 </script>
 
@@ -46,4 +46,5 @@ export default {
 button span {
   color: #00394D;
 }
+
 </style>

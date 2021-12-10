@@ -26,4 +26,10 @@ export default {};
 </script>
 
 <style scoped>
+@media screen and (max-width: 600px) and (min-width: 320px) {
+  img{
+    width: 126px;
+    height: auto;
+  }
+}
 </style>

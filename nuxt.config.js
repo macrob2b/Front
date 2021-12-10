@@ -111,7 +111,7 @@ export default {
   },
 
   router: {
-    middleware: ['is_admin']
+    // middleware: ['auth']
   },
 
   i18n: {
@@ -147,7 +147,7 @@ export default {
     transpile: ["vee-validate"]
   },
   server: {
-     host:'0.0.0.0',
-     port:3000
+     // host:'0.0.0.0',
+     // port:3000
   }
 }

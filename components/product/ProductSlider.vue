@@ -1,13 +1,22 @@
 <template>
   <div :class="'slider' + id">
-    <v-slide-group class="pa-2" show-arrows>
-      <v-slide-item v-for="n in 15" :key="n">
-        <ProductCard1 />
-        <!-- <ProductCard2 /> -->
-      </v-slide-item>
-    </v-slide-group>
-    <div class="d-flex justify-end px-5" >
-      <v-btn color="#165048" @click="clickLeft" medium width="40" min-width="0" v-show="!$vuetify.breakpoint.xs">
+    <v-row>
+      <v-slide-group class="pa-2" center-active show-arrows>
+        <v-slide-item v-for="n in 15" :key="n">
+          <ProductCard1 />
+          <!-- <ProductCard2 /> -->
+        </v-slide-item>
+      </v-slide-group>
+    </v-row>
+    <div class="d-flex justify-end px-5">
+      <v-btn
+        color="#165048"
+        @click="clickLeft"
+        medium
+        width="40"
+        min-width="0"
+        v-show="!$vuetify.breakpoint.xs"
+      >
         <v-icon color="white"> mdi-chevron-left </v-icon>
       </v-btn>
       <v-btn
@@ -28,10 +37,10 @@
 <script>
 import ProductCard1 from "./ProductCard1.vue";
 import _ from "lodash";
-import ProductCard2 from './ProductCard2.vue';
+import ProductCard2 from "./ProductCard2.vue";
 export default {
-  props:{
-    id:'number'
+  props: {
+    id: 0,
   },
   components: { ProductCard1, ProductCard2 },
   data() {
@@ -43,13 +52,20 @@ export default {
     };
   },
   mounted() {
-    setTimeout(() => this.checkNavBtnStatus(), 1000);
+    setTimeout(() => this.checkNavBtnStatus(), 2000);
   },
   methods: {
     checkNavBtnStatus() {
-      this.previousButton = document.querySelector(`.slider${this.$props.id} div.v-slide-group__prev`);
-      console.log(this.previousButton,'slider' + this.$props.id + ' div.v-slide-group__prev');
-      this.nextButton = document.querySelector(`.slider${this.$props.id} div.v-slide-group__next`);
+      this.previousButton = document.querySelector(
+        `.slider${this.$props.id} div.v-slide-group__prev`
+      );
+      console.log(
+        this.previousButton,
+        "slider" + this.$props.id + " div.v-slide-group__prev"
+      );
+      this.nextButton = document.querySelector(
+        `.slider${this.$props.id} div.v-slide-group__next`
+      );
       console.log(this.nextButton);
       this.isPreviousBtnDisable =
         this.previousButton?.className.includes("disabled");
@@ -68,14 +84,27 @@ export default {
 };
 </script>
 <style scoped>
+
 .v-item-group >>> .v-slide-group__wrapper {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.v-item-group >>> .v-slide-group__prev{
+.v-item-group >>> .v-slide-group__prev {
   display: none;
 }
 .v-item-group >>> .v-slide-group__next {
   display: none;
+}
+
+@media screen and (max-width: 600px) and (min-width: 320px) {
+  .v-item-group >>> .v-slide-group__prev {
+    display: flex;
+    min-width: 10px !important;
+  }
+  .v-item-group >>> .v-slide-group__next {
+    display: flex;
+    min-width: 10px !important;
+  }
+
 }
 </style>
