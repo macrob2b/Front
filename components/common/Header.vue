@@ -44,7 +44,9 @@
                 </v-btn>
               </div>
               <div class="pa-1 px-2 mx-1 mr-3">
-                <v-btn min-width="0" width="100" color="#fb641e">
+                <v-btn
+                  to="/login"
+                  min-width="0" width="100" color="#fb641e">
                   <span style="font-size: 12px; color: white; font-weight: 350">
                     Sign In
                   </span>
@@ -137,7 +139,7 @@ export default {
 
 <style scoped>
 .header {
-  position: fixed;
+  position: relative;
   right: 0;
   left: 0;
   top:10px;

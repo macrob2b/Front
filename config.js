@@ -1,6 +1,13 @@
 export default {
-  name            : 'config',
-  googleClientId  : '644417708985-94iape8bj10nohoc594sfsvaofhf06a2.apps.googleusercontent.com',
-  facebookClientId: '1248928938925724',
-  linkedinClientId: '78a0o1ybd8ektx',
+  name             : 'config',
+  googleClientId   : '644417708985-94iape8bj10nohoc594sfsvaofhf06a2.apps.googleusercontent.com',
+  googleRedirectUri: 'http://localhost:3000/auth/callback/google',
+
+  // facebookClientId : '1248928938925724',
+  facebookClientId : '614093409837830',
+  facebookRedirectUri: 'http://localhost:3000/auth/callback/facebook',
+
+  linkedinClientId : '78a0o1ybd8ektx',
+  linkedinRedirectUri: 'http://localhost:3000/auth/callback/linkedin',
+
 }

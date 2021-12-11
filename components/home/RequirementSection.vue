@@ -1,6 +1,6 @@
 <template>
   <!-- <div class="pa-2 section-one ma-5"> -->
-  <div class="marg">
+  <div>
     <ContainerCard>
       <v-row v-show="!$vuetify.breakpoint.xs">
         <v-col cols="6" class="px-5">

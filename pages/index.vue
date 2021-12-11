@@ -1,5 +1,5 @@
 <template>
-  <!-- <Tutorial/> -->
+<!--   <Tutorial/> -->
   <div>
     <v-app>
       <Requirement />
@@ -31,7 +31,7 @@
         <Banner />
         <Ads />
       </div>
-      
+
       <div v-show="$vuetify.breakpoint.xs">
         <CarouselResponsive />
       </div>
@@ -90,5 +90,6 @@ export default {
     CarouselResponsive,
     Banner,
   },
+
 };
 </script>
