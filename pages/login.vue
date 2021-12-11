@@ -107,28 +107,36 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  data      : () => ({
+  data: () => ({
     emailOrPhone: '',
-    password    : '',
+    password: '',
     showPassword: false,
   }),
-  methods   : {
+  mounted() {
+  },
+  methods: {
     async submit() {
-      try {
-        await this.$auth.loginWith('local', {
-          data   : {
-            username: this.emailOrPhone,
-            password: this.password
-          },
-          headers: {
-            'Content-type': 'application/json'
-          }
-        }).then(response => {
-          console.log(response);
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      await this.$auth.loginWith('local', {
+        data: {
+          username: this.emailOrPhone,
+          password: this.password
+        },
+        headers: {
+          'Content-type': 'application/json'
+        }
+      }).then(response => {
+        this.$toast.success('You logged in successfully');
+
+        this.$router.push({
+          path:"/user_dashboard"
+        })
+      }).catch(({response}) => {
+        if (response.status==401){
+          this.$toast.error('The information entered is incorrect.');
+        }else if(response.status==500 || response.status==504){
+          this.$toast.error('An error occurred. Please try again.');
+        }
+      });
     },
     loginWithGoogle() {
       this.$auth.loginWith('google', {params: {prompt: "select_account"}})

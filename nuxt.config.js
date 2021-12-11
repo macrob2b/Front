@@ -50,6 +50,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     'nuxt-leaflet',
+    '@nuxtjs/toast',
   ],
 
   axios: {
@@ -60,6 +61,7 @@ export default {
     strategies: {
       google  : {
         clientId           : config.googleClientId,
+        redirectUri        : config.googleRedirectUri,
         codeChallengeMethod: '',
         responseType       : 'code',
         grantType          : 'google',
@@ -70,6 +72,7 @@ export default {
       },
       facebook: {
         clientId           : config.facebookClientId,
+        redirectUri        : config.facebookRedirectUri,
         responseType       : 'code',
         codeChallengeMethod: '',
         grantType          : 'facebook',
@@ -82,12 +85,12 @@ export default {
       linkedin: {
         scheme             : 'oauth2',
         clientId           : config.linkedinClientId,
+        redirectUri        : config.linkedinRedirectUri,
         endpoints          : {
           authorization: 'https://www.linkedin.com/oauth/v2/authorization',
           token        : 'https://api.macrob2b.com/api/linkedin_login',
           userInfo     : 'https://api.macrob2b.com/api/user'
         },
-        redirectUri:    "https://localhost:3000",
         responseType       : 'code',
         scope              : ['r_liteprofile', 'r_emailaddress'],
         codeChallengeMethod: '',
@@ -103,8 +106,8 @@ export default {
           autoFetch: true
         },
         endpoints: {
-          login: {url: 'https://api.macrob2b.com/api/login'},
-          user : {url: 'https://api.macrob2b.com/api/user'}
+          login: {url: 'https://api.macrob2b.com/api/login', method: 'post'},
+          user : {url: 'https://api.macrob2b.com/api/user', method: 'post'}
         }
       }
     }
@@ -146,8 +149,21 @@ export default {
   build: {
     transpile: ["vee-validate"]
   },
+  toast: {
+    position: 'top-center',
+    duration:3000,
+    register: [ // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error'
+        }
+      }
+    ]
+  },
   server: {
-     // host:'0.0.0.0',
-     // port:3000
-  }
+    host:'0.0.0.0',
+    port:3000
+  },
 }
