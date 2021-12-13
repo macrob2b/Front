@@ -50,7 +50,12 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     'nuxt-leaflet',
+    '@nuxtjs/toast',
   ],
+
+  toast:{
+    position: 'bottom-left',
+  },
 
   axios: {
     baseURL: 'https://api.macrob2b.com/api/',
@@ -67,6 +72,7 @@ export default {
           token   : 'https://api.macrob2b.com/api/google_login',
           userInfo: 'https://api.macrob2b.com/api/user'
         },
+        redirect_url:'http://localhost:3000'
       },
       facebook: {
         clientId           : config.facebookClientId,
@@ -78,6 +84,7 @@ export default {
           token   : 'https://api.macrob2b.com/api/facebook_login',
           userInfo: 'https://api.macrob2b.com/api/user'
         },
+        redirect_url:'http://localhost:3000'
       },
       linkedin: {
         scheme             : 'oauth2',
@@ -91,6 +98,7 @@ export default {
         scope              : ['r_liteprofile', 'r_emailaddress'],
         codeChallengeMethod: '',
         grantType          : 'linkedin',
+        redirect_url:'http://localhost:3000'
       },
       local   : {
         token    : {

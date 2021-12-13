@@ -127,7 +127,11 @@ export default {
           console.log(response);
         });
       } catch (e) {
-        console.log(e);
+        if(e.status === 401){
+          this.$toast.error('401');
+        }else{
+          console.log('status Code is :' + e.status);
+        }
       }
     },
     loginWithGoogle() {
