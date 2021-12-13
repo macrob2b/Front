@@ -1,7 +1,7 @@
 <template>
   <!-- <Tutorial/> -->
   <div class="header">
-    <div v-show="!$vuetify.breakpoint.xs" class="px-1 pb-2 pt-0 ">
+    <div v-show="!$vuetify.breakpoint.xs" class="px-1 pb-2 pt-0">
       <v-card class="card">
         <v-row class="justify-between">
           <v-col class="pt-0">
@@ -44,12 +44,8 @@
                 </v-btn>
               </div>
               <div class="pa-1 px-2 mx-1 mr-3">
-                <v-btn
-                  to="/login"
-                  min-width="0" width="100" color="#fb641e">
-                  <span style="font-size: 12px; color: white; font-weight: 350">
-                    Sign In
-                  </span>
+                <v-btn to="/login" min-width="0" width="100" color="#fb641e">
+                  <span  id="span1"> Sign In </span>
                 </v-btn>
               </div>
             </div>
@@ -118,6 +114,9 @@ export default {
       searchActive: false,
     };
   },
+  options: {
+    customProperties: true,
+  },
   components: {
     HeaderBottom,
     HeaderBottomResponsive,
@@ -142,7 +141,7 @@ export default {
   position: relative;
   right: 0;
   left: 0;
-  top:10px;
+  top: 10px;
   max-width: 100%;
   z-index: 100;
 }
@@ -150,8 +149,8 @@ export default {
   .card {
     border-radius: 0 !important;
   }
-  .header{
-    top:0px;
+  .header {
+    top: 0px;
   }
 }
 @media screen and (min-width: 601px) {
@@ -161,7 +160,7 @@ export default {
 }
 .card {
   /* border-radius: 10px !important; */
-  background-color: #00394d !important;
+  background-color: var(--v-primary-base) !important;
 }
 .v-tab {
   color: white !important;
@@ -186,5 +185,10 @@ export default {
 .vbtn-round-shadow {
   border-radius: 5px;
   box-shadow: black;
+}
+#span1 {
+  font-size: 12px;
+  color: white;
+  font-weight: 350;
 }
 </style>

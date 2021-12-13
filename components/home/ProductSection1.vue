@@ -17,12 +17,12 @@
   </div>
   <!-- <div class="pa-3">
     <div class="d-flex">
-      <div class="banner" style="">
+      <div class="banner" >
         <div class="tit"> 
           Title goes here
         </div>
       </div>
-      <div style="width:80%">
+      <div >
       <ProductSlider :id="id"/>
       </div>
     </div>

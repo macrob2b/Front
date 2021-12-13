@@ -5,18 +5,18 @@
         <div>
           <div class="box mx-2"></div>
         </div>
-        <div style="font-size: 14px; font-weight: 400">{{title}}</div>
+        <div  id="div1">{{title}}</div>
       </div>
       <div class="px-4 pt-2">
         <button color="transparent">
-          <span style="font-size: 13px; font-weight: 500"> View All </span>
+          <span  id="span1"> View All </span>
         </button>
       </div>
     </div>
     <div class="px-2 my-5">
       <v-progress-linear
         value="10"
-        color="#00394D"
+        color="primary"
         height="1.5px"
         class=""
       ></v-progress-linear>
@@ -41,10 +41,15 @@ export default {
 .box {
   height: 20px;
   width: 20px;
-  background-color: #00394D;
+  background-color: var(--v-primary-base);
 }
 button span {
-  color: #00394D;
+  color: primary;
 }
-
+#div1{
+  font-size: 14px; font-weight: 400
+}
+#span1{
+  font-size: 13px; font-weight: 500
+}
 </style>

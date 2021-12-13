@@ -5,12 +5,12 @@
         <img src="card_img.png" />
       </div>
       <div class="text-center">Product Name</div>
-      <div class="text-center" style="color: #165048; font-size: 26px">
-        250 <span style="font-size: 13px">$</span>
+      <div class="text-center"  id="div1">
+        250 <span  id="span1">$</span>
       </div>
       <div class="pb-3 pa-4 btn">
-        <v-btn color="#00394D" width="100%">
-          <span style="color: white">Button</span>
+        <v-btn color="primary" width="100%">
+          <span  id="span2">Button</span>
         </v-btn>
       </div>
     </v-card>
@@ -22,6 +22,15 @@ export default {};
 </script>
 
 <style scoped>
+#div1{
+  color: #165048; font-size: 26px
+}
+#span1{
+  font-size: 13px
+}
+#span2{
+  color: white
+}
 .card{
     z-index: 50;
 }

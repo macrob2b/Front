@@ -4,23 +4,23 @@
       <v-col
         cols="3"
         v-show="!$vuetify.breakpoint.xs"
-        v-for="cat in subCats"
-        :key="cat"
+        v-for="(cat,idx) in subCats"
+        :key="idx"
       >
         <div class="d-flex-column">
-          <h3 style="font-weight:400">{{ cat.cat }}</h3>
-          <div v-for="sub in cat.sub" :key="sub">{{ sub }}</div>
+          <h3  id="h1">{{ cat.cat }}</h3>
+          <div v-for="(sub,idx2) in cat.sub" :key="'A' + idx2">{{ sub }}</div>
         </div>
       </v-col>
       <v-col
         cols="5"
         v-show="$vuetify.breakpoint.xs"
-        v-for="cat in subCats"
-        :key="cat"
+        v-for="(cat,idx3) in subCats"
+        :key="'B'+ idx3"
       >
         <div class="d-flex-column">
           <h3>{{ cat.cat }}</h3>
-          <div v-for="sub in cat.sub" :key="sub">{{ sub }}</div>
+          <div v-for="(sub,idx4) in cat.sub" :key="'C'+ idx4">{{ sub }}</div>
         </div>
       </v-col>
     </v-row>
@@ -158,5 +158,8 @@ export default {
   left: 0;
   right: 0;
   background-color: #F3F3F3;
+}
+#h1{
+  font-weight:400
 }
 </style>

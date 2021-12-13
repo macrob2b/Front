@@ -9,7 +9,7 @@
           <v-progress-linear
             value="15"
             height="1.5px"
-            color="#00394D"
+            color="primary"
           ></v-progress-linear>
         </div>
         <div class="px-5 py-1">
@@ -25,9 +25,8 @@
           <v-text-field label="Company product" outlined dense></v-text-field>
         </div>
         <div class="px-5 pt-1 pb-10">
-          <v-btn color="#00394D" width="100%"><span style="color:white"> Submit </span> </v-btn>
+          <v-btn color="primary" width="100%"><span  id="span1"> Submit </span> </v-btn>
         </div>
-        <!-- <div style="height: 80px"></div> -->
       </div>
     </v-card>
   </div>
@@ -38,8 +37,11 @@ export default {};
 </script>
 
 <style scoped>
+#span1{
+  color:white
+}
 .header span span {
-  color: #00394D;
+  color: primary;
 }
 .header {
   display: flex;

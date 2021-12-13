@@ -1,7 +1,7 @@
 <template>
   <div class="my-4 pa-3">
     <v-carousel :show-arrows="false" height="auto">
-      <v-carousel-item v-for="item in slides" :key="item">
+      <v-carousel-item v-for="(item,idx) in slides" :key="idx">
         <img :srcset="item" width="100%" />
       </v-carousel-item>
     </v-carousel>
