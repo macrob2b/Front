@@ -15,7 +15,8 @@
                   <td>
                     <div class="d-flex justify-start ml-1 align-center">
                       <img
-                        style="width: auto; height: 48px"
+                        
+                        id="img1"
                         class="pa-2"
                         v-show="!$vuetify.breakpoint.xs"
                         :srcset="item.img"
@@ -25,11 +26,11 @@
                     </div>
                   </td>
 
-                  <td style="text-align: left">
+                  <td  id="td1">
                     {{ item.title }}
                   </td>
 
-                  <td style="text-align: right">
+                  <td  id="td2">
                     <div class="d-flex justify-end ml-5 align-center">
                       <v-divider class="mx-2" vertical> </v-divider>
                       <div>
@@ -59,7 +60,8 @@
                   <td>
                     <div class="d-flex justify-start ml-1 align-center">
                       <img
-                        style="width: auto; height: 48px"
+                      id="img1"
+                        
                         class="pa-2"
                         v-show="!$vuetify.breakpoint.xs"
                         :srcset="item.img"
@@ -69,11 +71,11 @@
                     </div>
                   </td>
 
-                  <td style="text-align: left">
+                  <td  id="td3">
                     {{ item.title }}
                   </td>
 
-                  <td style="text-align: right">
+                  <td  id="td4">
                     <div class="d-flex justify-end ml-5 align-center">
                       <v-divider class="mx-2" vertical> </v-divider>
                       <div>
@@ -181,6 +183,24 @@ export default {
 </script>
 
 <style scoped>
+#img1{
+  width: auto; height: 48px
+}
+#td1{
+  width: auto; height: 48px
+}
+#td2{
+  text-align: right
+}
+#td3{
+  text-align: left
+}
+#td4{
+  text-align: right
+}
+#span1{
+  text-align: left
+}
 tbody tr:nth-of-type(even) {
   background-color: rgba(0, 0, 0, 0.05);
 }

@@ -36,13 +36,13 @@
           </v-carousel>
         </v-col>
 
-        <v-col cols="3">
+        <v-col cols="3" id="col1">
           <div
             class="d-flex-column image-container"
-            style="display: flex; flex-direction: column"
+            id="div1"
           >
-            <img src="bannerImage.png" style="height: 80%" />
-            <img src="bannerImage.png" style="height: 80%" />
+            <img src="bannerImage.png"  id="img1" />
+            <img src="bannerImage.png"  id="img2" />
           </div>
         </v-col>
 
@@ -52,14 +52,14 @@
       </v-row>
       <div v-show="$vuetify.breakpoint.xs" class="d-flex-column">
         <div class="banner1 pa-2">
-          <img :srcset="responsive_img1" style="width: 100%" />
+          <img :srcset="responsive_img1"  id="img3" />
         </div>
         <div class="d-flex justify-center pa-2">
           <div class="mx-2">
-            <img :srcset="responsive_img2" style="width: 100%" />
+            <img :srcset="responsive_img2"  id="img4" />
           </div>
           <div class="mx-2">
-            <img :srcset="responsive_img3" style="width: 100%" />
+            <img :srcset="responsive_img3"  id="img5" />
           </div>
         </div>
       </div>
@@ -86,6 +86,24 @@ export default {
 };
 </script>
 <style scoped>
+#div1{
+  display: flex; flex-direction: column
+}
+#img1{
+  height: 80%
+}
+#img2{
+  height: 80%
+}
+#img3{
+  width: 100%
+}
+#img4{
+  width: 100%
+}
+#img5{
+  width: 100%
+}
 .marg {
   margin-top: 180px;
 }

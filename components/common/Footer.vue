@@ -8,24 +8,24 @@
               <img src="Logo.png" class="mb-10" />
 
               <div class="pr-10 mr-10">
-                <h3 style="color: #00394d" class="mb-2">Brand Name</h3>
-                <div class="my-2" style="width: 70%">
+                <h3  class="mb-2" id="h3">Brand Name</h3>
+                <div class="my-2" id="div1" >
                   <div class="pt-2 pb-3">
                     <v-progress-linear
                       value="25"
-                      color="#00394D"
+                      color="primary"
                       height="1.5px"
                       class=""
                     ></v-progress-linear>
                   </div>
-                  <p style="font-weight: 350">
+                  <p  id="#p1">
                     Our company has maintained low competitive prices, good
                     quality as well as timely deliveries. We are a gold supplier
                     and assessed.
                   </p>
                 </div>
-                <v-btn color="#00394D" width="55%">
-                  <span style="color: white"> SIGNIN </span>
+                <v-btn color="primary" width="55%">
+                  <span  id="span1"> SIGNIN </span>
                 </v-btn>
               </div>
             </div>
@@ -38,7 +38,7 @@
                     <h3 class="py-2">Contact Us</h3>
                     <v-progress-linear
                       value="25"
-                      color="#00394D"
+                      color="primary"
                       height="1.5px"
                       class=""
                     ></v-progress-linear>
@@ -56,20 +56,20 @@
             </div>
             <div class="mt-10 d-flex justify-space-between">
               <div class="d-flex justify-start">
-                <v-btn color="#00394D" min-width="0" width="40" class="mx-2">
+                <v-btn color="primary" min-width="0" width="40" class="mx-2">
                   <v-icon color="white"> mdi-facebook </v-icon>
                 </v-btn>
-                <v-btn color="#00394D" min-width="0" width="40" class="mx-2">
+                <v-btn color="primary" min-width="0" width="40" class="mx-2">
                   <v-icon color="white"> mdi-instagram </v-icon>
                 </v-btn>
-                <v-btn color="#00394D" min-width="0" width="40" class="mx-2">
+                <v-btn color="primary" min-width="0" width="40" class="mx-2">
                   <v-icon color="white"> mdi-linkedin </v-icon>
                 </v-btn>
-                <v-btn color="#00394D" min-width="0" width="40" class="mx-2">
+                <v-btn color="primary" min-width="0" width="40" class="mx-2">
                   <v-icon color="white"> mdi-pinterest </v-icon>
                 </v-btn>
               </div>
-              <div style="color: #999; font-size: 13px">
+              <div  id="div2">
                 Copyright (c)1997-2021. All Rights Reserved
               </div>
             </div>
@@ -96,36 +96,37 @@
         <div>
           <img srcset="Logo.png" width="50%" class="" />
         </div>
-        <div class="mt-2 mb-2" style="font-size: 15px; font-weight: 500">
+        <div class="mt-2 mb-2"  id="div3">
           {{ brand }}
         </div>
         <v-divider />
         <v-divider />
 
         <div class="mt-2">
-          <p style="font-size: smaller">
+          <p  id="p2">
             {{ description }}
           </p>
         </div>
         <div>
-          <v-btn min-width="0" color="#00394d" width="50%" height="40px">
-            <span style="font-size: 14px"> SIGN IN </span>
+          <v-btn min-width="0" color="primary" width="50%" height="40px">
+            <span  id="span2"> SIGN IN </span>
           </v-btn>
         </div>
-        <div class="d-flex mt-5" style="flex-wrap: wrap">
+        <div class="d-flex mt-5"  id="div4">
           <div
-            style="width: 47%; margin-left: 5px"
-            v-for="item in footerLinks"
-            :key="item"
+            
+            id="div5"
+            v-for="(item, idx2) in footerLinks"
+            :key="idx2"
           >
             <h4>{{ item.title }}</h4>
-            <div style="width: 100%">
-              <v-progress-linear value="40" color="#00394d" height="1.5px" />
+            <div  id="div6">
+              <v-progress-linear value="40" color="primary" height="1.5px" />
             </div>
 
             <div>
               <ul class="py-1">
-                <li class="py-2" v-for="link in item.links" :key="link">
+                <li class="py-2" v-for="(link, idx) in item.links" :key="idx">
                   {{ link }}
                 </li>
               </ul>
@@ -134,7 +135,7 @@
         </div>
         <div class="pa-3 d-flex justify-center">
           <v-btn
-            color="#00394D"
+            color="primary"
             min-width="0"
             width="20"
             height="30"
@@ -143,7 +144,7 @@
             <v-icon color="white" small> mdi-facebook </v-icon>
           </v-btn>
           <v-btn
-            color="#00394D"
+            color="primary"
             min-width="0"
             width="20"
             height="30"
@@ -152,7 +153,7 @@
             <v-icon color="white" small> mdi-instagram </v-icon>
           </v-btn>
           <v-btn
-            color="#00394D"
+            color="primary"
             min-width="0"
             width="20"
             height="30"
@@ -161,7 +162,7 @@
             <v-icon color="white" small> mdi-linkedin </v-icon>
           </v-btn>
           <v-btn
-            color="#00394D"
+            color="primary"
             min-width="0"
             width="20"
             height="30"
@@ -170,16 +171,20 @@
             <v-icon color="white" small> mdi-pinterest </v-icon>
           </v-btn>
         </div>
-        <div style="font-size: 12px; text-align: center" class="mt-2">
+        <div  id="div7" class="mt-2">
           Copyright (c)1997-2021. All Rights Reserved
         </div>
       </div>
 
-      <div class="foot" style="font-size:11px">
+      <div class="foot"  id="div8">
         <div class="pa-5 d-flex justify-center">
-          <div class="d-flex justify-center mx-1" v-for="lang in languages" :key="lang">
+          <div
+            class="d-flex justify-center mx-1"
+            v-for="(lang, idx) in languages"
+            :key="idx"
+          >
             <span class="mx-1">
-              {{lang}}
+              {{ lang }}
             </span>
             <v-divider vertical />
           </div>
@@ -197,13 +202,7 @@ export default {
       brand: "Brand Name",
       description:
         "Our company has maintained low competitive prices, good quality as well as timely deliveries. We are a gold supplier and assessed.",
-      languages: [
-        "Deutsch",
-        "Deutsch",
-        "Deutsch",
-        "Deutsch",
-        "Deutsch",
-      ],
+      languages: ["Deutsch", "Deutsch", "Deutsch", "Deutsch", "Deutsch"],
       footerLinks: [
         {
           title: "Contact us",
@@ -230,7 +229,7 @@ export default {
 
 <style scoped>
 .foot {
-  background-color: #00394d;
+  background-color: var(--v-primary-base);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
@@ -250,8 +249,50 @@ hr.v-divider--vertical {
   border-color: white !important;
 }
 .end-footer {
-  background-color: #00394d;
+  background-color: var(--v-primary-base);
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
+}
+#div1 {
+  width: 70%;
+}
+#div2 {
+  color: #999;
+  font-size: 13px;
+}
+#div3 {
+  font-size: 15px;
+  font-weight: 500;
+}
+#div4 {
+  flex-wrap: wrap;
+}
+#div5 {
+  width: 47%;
+  margin-left: 5px;
+}
+#div6{
+  width: 100%
+}
+#div7{
+  font-size: 12px; text-align: center
+}
+#div8{
+  font-size: 11px;
+}
+#h3 {
+  color: var(--v-primary-base);
+}
+#p1 {
+  font-weight: 350;
+}
+#p2 {
+  font-size: smaller;
+}
+#span1 {
+  color: white;
+}
+#span2 {
+  font-size: 14px;
 }
 </style>

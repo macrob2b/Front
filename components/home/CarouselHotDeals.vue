@@ -1,15 +1,10 @@
 <template>
   <div class="ma-2 pa-2">
-    <v-card color="#00394D">
+    <v-card color="primary">
       <div class="d-flex justify-space-between">
         <div class="d-flex justify-center align-items-center px-3 py-2">
           <div class="box mx-2"></div>
-          <div
-            class="py-1"
-            style="color: white; font-size: 14px; font-weight: 350"
-          >
-            Hot deals
-          </div>
+          <div class="py-1" id="div1" >Hot deals</div>
         </div>
       </div>
       <div class="px-3">
@@ -26,7 +21,7 @@
           height="450"
           hide-delimiter-background
         >
-        <!-- height="100%" -->
+          <!-- height="100%" -->
           <v-carousel-item>
             <ProductCard3 />
           </v-carousel-item>
@@ -59,9 +54,14 @@ export default {
   height: 20px;
 }
 .cont {
-  background-color: #00394D !important;
+  background-color: var(--v-primary-base) !important;
 }
 .v-carousel >>> .v-carousel__controls {
-    bottom: -5px;
+  bottom: -5px;
+}
+#div1 {
+  color: white;
+  font-size: 14px;
+  font-weight: 350;
 }
 </style>

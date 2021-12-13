@@ -17,7 +17,7 @@
 
 <script>
 
-import AuthBar from "../components/AuthBar";
+// import AuthBar from "../components/AuthBar";
 import Footer from '../components/common/Footer.vue';
 import Header from '../components/common/Header.vue';
 

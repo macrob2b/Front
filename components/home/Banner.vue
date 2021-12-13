@@ -12,17 +12,17 @@
   </div> -->
   <div class="pa-10">
     <div class="banner">
-      <div class="py-10" style="font-size: 32px; text-align: center">
+      <div class="py-10"  id="div1">
         {{ title }}
       </div>
       <div class="desc">
-        <div class="mt-5" style="font-size: 15px; text-align: center">
+        <div class="mt-5"  id="div2">
           {{ desc }}
         </div>
       </div>
-      <div style="color: white; text-align: center; margin-top: 20px">
+      <div  id="div3">
         <v-btn color="#EB3535" width="200px" height="45px">
-          <span style="color: white">
+          <span  id="span1">
             {{ button }}
           </span>
         </v-btn>
@@ -63,5 +63,21 @@ export default {
   background-position: center;
   background-size: cover;
   border-radius: 20px;
+}
+#div1 {
+  font-size: 32px;
+  text-align: center;
+}
+#div2 {
+  font-size: 15px;
+  text-align: center;
+}
+#div3 {
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+#span1 {
+  color: white;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-<!--   <Tutorial/> -->
+  <!-- <Tutorial/> -->
   <div>
     <v-app>
       <Requirement />
@@ -90,6 +90,5 @@ export default {
     CarouselResponsive,
     Banner,
   },
-
 };
 </script>
