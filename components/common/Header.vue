@@ -1,7 +1,7 @@
 <template>
   <!-- <Tutorial/> -->
   <div class="header">
-    <div v-show="!$vuetify.breakpoint.xs" class="px-1 pb-2 pt-0">
+    <div v-show="!$vuetify.breakpoint.xs" class="px-1 pb-2 pt-0" >
       <v-card class="card">
         <v-row class="justify-between">
           <v-col class="pt-0">
@@ -17,7 +17,10 @@
             </v-tabs>
           </v-col>
           <v-col class="d-flex justify-center">
-            <img src="Image1.png" />
+            <nuxt-link
+              tag="img"
+              class="pointer"
+              :src="require('../../assets/img/white-logo.png')" to="/" />
           </v-col>
           <v-col>
             <div class="d-flex justify-end">
@@ -79,7 +82,10 @@
               </div>
             </div>
             <div>
-              <img src="Image1.png" class="py-2" />
+              <nuxt-link
+                tag="img"
+
+                :src="require('../../assets/img/white-logo.png')"  to="/" class="py-2 pointer" />
             </div>
 
             <div class="d-flex justify-start py-3">
@@ -138,7 +144,7 @@ export default {
 
 <style scoped>
 .header {
-  position: relative;
+  position: fixed;
   right: 0;
   left: 0;
   top: 10px;

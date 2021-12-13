@@ -73,6 +73,11 @@ import Footer from "../components/common/Footer.vue";
 import Banner from "../components/home/Banner.vue";
 
 export default {
+  head() {
+    return {
+      title: this.$t('Largest online B2B marketplace')
+    }
+  },
   components: {
     Header,
     Requirement,

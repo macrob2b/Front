@@ -5,7 +5,9 @@
         <v-row>
           <v-col cols="5">
             <div class="pa-10">
-              <img src="Logo.png" class="mb-10" />
+              <nuxt-link
+                tag="img"
+                :src="require('../../assets/img/black-logo.png')" to="/" class="pointer mb-10" />
 
               <div class="pr-10 mr-10">
                 <h3  class="mb-2" id="h3">Brand Name</h3>
@@ -94,7 +96,9 @@
     <div v-show="$vuetify.breakpoint.xs" class="footer-mobile justify-start">
       <div class="pa-6">
         <div>
-          <img srcset="Logo.png" width="50%" class="" />
+          <nuxt-link
+            tag="img"
+            :src="require('../../assets/img/black-logo.png')" width="50%" class="pointer" to="/" />
         </div>
         <div class="mt-2 mb-2"  id="div3">
           {{ brand }}
@@ -114,7 +118,7 @@
         </div>
         <div class="d-flex mt-5"  id="div4">
           <div
-            
+
             id="div5"
             v-for="(item, idx2) in footerLinks"
             :key="idx2"

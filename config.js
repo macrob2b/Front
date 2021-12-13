@@ -3,7 +3,7 @@ export default {
   googleClientId   : '644417708985-94iape8bj10nohoc594sfsvaofhf06a2.apps.googleusercontent.com',
   googleRedirectUri: 'http://localhost:3000/auth/callback/google',
 
-  // facebookClientId : '1248928938925724',
+  // facebookClientId : 'out',
   facebookClientId : '614093409837830',
   facebookRedirectUri: 'http://localhost:3000/auth/callback/facebook',
 

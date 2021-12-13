@@ -2,15 +2,15 @@
   <!-- <div class="pa-2 section-one ma-5"> -->
   <div>
     <ContainerCard>
-      <v-row v-show="!$vuetify.breakpoint.xs">
-        <v-col cols="6" class="px-5">
+      <v-row >
+        <v-col cols="12" md="6" class="px-5">
           <v-carousel
             hide-delimiter-background
             :show-arrows="false"
             class="carousel"
             height="auto"
           >
-            <button class="nextBtn">
+            <button class="nextBtn" v-show="!$vuetify.breakpoint.xs">
               <img src="nextButton.png" />
             </button>
             <template v-slot:prev="{ on, attrs }">
@@ -36,7 +36,7 @@
           </v-carousel>
         </v-col>
 
-        <v-col cols="3" id="col1">
+        <v-col  cols="3"  id="col1" v-show="!$vuetify.breakpoint.xs">
           <div
             class="d-flex-column image-container"
             id="div1"
@@ -46,23 +46,10 @@
           </div>
         </v-col>
 
-        <v-col cols="3">
+        <v-col cols="3" v-show="!$vuetify.breakpoint.xs">
           <RequirementCard />
         </v-col>
       </v-row>
-      <div v-show="$vuetify.breakpoint.xs" class="d-flex-column">
-        <div class="banner1 pa-2">
-          <img :srcset="responsive_img1"  id="img3" />
-        </div>
-        <div class="d-flex justify-center pa-2">
-          <div class="mx-2">
-            <img :srcset="responsive_img2"  id="img4" />
-          </div>
-          <div class="mx-2">
-            <img :srcset="responsive_img3"  id="img5" />
-          </div>
-        </div>
-      </div>
     </ContainerCard>
   </div>
 </template>

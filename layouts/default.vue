@@ -4,7 +4,7 @@
   <v-app>
     <Header/>
 
-    <v-main>
+    <v-main style="margin-top: 140px">
       <v-container fluid>
         <Nuxt/>
       </v-container>
@@ -42,3 +42,10 @@ export default {
   }
 }
 </script>
+
+
+<style >
+.pointer{
+  cursor: pointer!important;
+}
+</style>
