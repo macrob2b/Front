@@ -10,7 +10,7 @@
               background-color="transparent"
               slider-color="white"
             >
-              <v-tab>By Now</v-tab>
+              <v-tab to="/product_list">Buy Now</v-tab>
               <v-tab>Sell Now</v-tab>
               <v-tab>Community</v-tab>
               <v-tab>Help</v-tab>

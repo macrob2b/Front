@@ -1,0 +1,309 @@
+@import "variables";
+@import "style";
+
+@media (max-width: 1263px) {
+/********************
+1.Search-bar CSS start
+*********************/
+  .search-bar {
+    .search-bar-container {
+      .column {
+        .icons {
+          width: 1rem;
+        }
+        .submit-btn {
+          background-color: $primary_color;
+          color: $white;
+        }
+        .v-text-field__details {
+          display: none;
+        }
+        .v-input__slot {
+          margin-bottom: 0 !important;
+          background-color: $box_background_color !important;
+        }
+      }
+    }
+    .grid-section {
+      padding: 0 !important;
+      .tabs {
+        display: flex;
+        justify-content: flex-end;
+        .v-tab {
+          border-radius: 10px !important;
+          min-width: 50px !important;
+          margin: 0 0.5rem;
+          background-color: $box_background_color;
+        }
+        .v-tab--active {
+          background-color: $primary_color;
+          color: $white;
+        }
+        .v-tabs-slider {
+          display: none;
+        }
+      }
+      .grid-btn {
+        padding: 20px 0 !important;
+        font-size: 24px;
+      }
+      .v-btn:not(.v-btn--round).v-size--default {
+        min-width: 45px !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 968px) {
+/************************
+1.Image-slider CSS start
+*************************/
+  .image-slider {
+    .slider-header {
+      .design-divider {
+        width: 30%;
+      }
+    }
+    .slider-static-img {
+      img {
+        width: 13rem;
+      }
+    }
+  }
+
+/*********************
+2.Search-bar CSS start
+*********************/
+  .search-bar {
+    .search-bar-mobile {
+      display: flex;
+      justify-content: space-between !important;
+      align-items: center;
+      margin: 1rem 0 1rem 0.5rem;
+      .v-btn:not(.v-btn--round).v-size--default {
+        height: 3rem !important;
+      }
+      .category-mobile {
+        background-color: $primary_color !important;
+        border-radius: 10px !important;
+        min-width: 3rem !important;
+        .category-mobile-icon {
+          width: 0.938rem;
+        }
+      }
+    }
+    .tabs {
+      display: flex;
+      justify-content: flex-end;
+      .v-tab {
+        border-radius: 10px !important;
+        min-width: 3rem !important;
+        height: 3rem;
+        margin: 0 0.5rem;
+        background-color: $box_background_color;
+      }
+      .v-tab--active {
+        background-color: $primary_color;
+        color: $white;
+      }
+      .v-tabs-slider {
+        display: none;
+      }
+    }
+    .tabs-item {
+      .v-card {
+        .v-card__text {
+          padding: 0 !important;
+        }
+      }
+    }
+    .search-bar-detail {
+      display: none;
+    }
+  }
+
+/**********************
+3.Product-Box CSS start
+**********************/
+  .product-box {
+    .product-box-detail {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 8.75rem;
+      max-width: 90%;
+      position: relative;
+      .product-img {
+        width: 8rem;
+        height: 5.25rem;
+      }
+      .product-name {
+        font-size: $content_font_size;
+        color: $typography_0;
+      }
+      .product-price {
+        font-size: $title_font_size;
+        color: $correct_color;
+      }
+      .v-btn {
+        min-width: 2rem !important;
+        height: 2rem !important;
+      }
+      .order-btn{
+        width: 2rem;
+        background-color: $primary_color !important;
+        color: $white !important;
+        position: absolute;
+        top: 180px;
+        .btn-text {
+          display: none;
+        }
+        .btn-text-mobile {
+          display: flex !important;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 960px) {
+/************************
+1.Image-slider CSS start
+*************************/
+  .image-slider {
+    .slider-static-img {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 845px) {
+  /**********************
+1.Main-banner CSS start
+***********************/
+  .main-banner {
+    display: none;
+  }
+
+  /**********************
+  2.Product-tab CSS start
+  ***********************/
+  .product-tab {
+    .slider {
+      display: block;
+    }
+  }
+
+  /************************
+  3.Small-banners CSS start
+  *************************/
+  .small-banners {
+    display: none;
+  }
+}
+
+//@media (max-width: 770px) {}
+
+@media (max-width: 650px) {
+/*********************
+4.Search-bar CSS start
+*********************/
+  .search-bar {
+    .search-bar-mobile {
+      display: flex;
+      justify-content: space-between !important;
+      align-items: center;
+      margin: 1rem 0 1rem 0.5rem;
+      .v-btn:not(.v-btn--round).v-size--default {
+        height: 2rem !important;
+      }
+      .category-mobile {
+        background-color: $primary_color !important;
+        border-radius: 10px !important;
+        min-width: 2rem !important;
+        padding: 0 !important;
+        .category-mobile-icon {
+          width: 0.938rem;
+        }
+      }
+    }
+    .tabs {
+      display: flex;
+      justify-content: flex-end;
+      .v-tab {
+        border-radius: 10px !important;
+        min-width: 2rem !important;
+        height: 2rem;
+        padding: 0 !important;
+        margin: 0 0.5rem;
+        background-color: $box_background_color;
+      }
+      .v-slide-group {
+        align-items: center;
+      }
+      .v-tab--active {
+        background-color: $primary_color;
+        color: $white;
+      }
+      .v-tabs-slider {
+        display: none;
+      }
+    }
+    .search-bar-detail {
+      display: none;
+    }
+  }
+}
+
+//@media (max-width: 480px) {}
+
+//@media (max-width: 420px) {}
+
+@media (max-width: 360px) {
+/**********************
+1.Product-Box CSS start
+**********************/
+  .product-box {
+    .product-box-detail {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 7.75rem;
+      max-width: 90%;
+      position: relative;
+      .product-img {
+        width: 7rem;
+        height: 4.25rem;
+      }
+      .product-name {
+        font-size: $content_font_size;
+        color: $typography_0;
+      }
+      .product-price {
+        font-size: $title_font_size;
+        color: $correct_color;
+      }
+      .v-btn {
+        min-width: 2rem !important;
+        height: 2rem !important;
+      }
+      .order-btn{
+        width: 2rem;
+        background-color: $primary_color !important;
+        color: $white !important;
+        position: absolute;
+        top: 160px;
+        .btn-text {
+          display: none;
+        }
+        .btn-text-mobile {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+//@media (max-width: 320px) {}

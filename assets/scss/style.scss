@@ -1,0 +1,490 @@
+@import "variables";
+
+/*******************
+1.Font CSS start
+********************/
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/Roboto/Roboto-Bold.ttf");
+  src: url("../fonts/Roboto/Roboto-Bold.ttf?#iefix") format('embedded-opentype'),
+  url("../fonts/Roboto/Roboto-Bold.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/Roboto/Roboto-Medium.ttf");
+  src: url("../fonts/../fonts/Roboto/Roboto-Medium.ttf?#iefix") format('embedded-opentype'),
+  url("../fonts/Roboto/Roboto-Medium.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/Roboto/Roboto-Light.ttf");
+  src: url("../fonts/Roboto/Roboto-Light.ttf?#iefix") format('embedded-opentype'),
+  url("../fonts/Roboto/Roboto-Light.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 200;
+  src: url("../fonts/Roboto/Roboto-Thin.ttf");
+  src: url("../fonts/Roboto/Roboto-Thin.ttf?#iefix") format('embedded-opentype'),
+  url("../fonts/Roboto/Roboto-Thin.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/Roboto/Roboto-Regular.ttf");
+  src: url("../fonts/Roboto/Roboto-Regular.ttf?#iefix") format('embedded-opentype'),
+  url("../fonts/Roboto/Roboto-Regular.ttf") format('truetype');
+}
+
+
+/*******************
+2.General CSS start
+********************/
+body {
+  font-family: $font_0 !important;
+  position: relative;
+  background-color: $white;
+  font-size: $content_font_size;
+}
+
+
+/*******************
+3.Product-Box CSS start
+********************/
+.product-box {
+  margin: 0.5rem 0;
+  display: flex;
+  justify-content: center;
+  .product-box-detail {
+    background-color: $white !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 17.571rem;
+    max-width: 90%;
+    .product-img {
+      width: 16.429rem;
+      height: 10.714rem;
+    }
+    .product-name {
+      font-size: $content_font_size;
+      color: $typography_0;
+    }
+    .product-price {
+      font-size: $title_font_size;
+      color: $correct_color;
+    }
+    .order-btn {
+      width: 15.571rem;
+      background-color: $primary_color !important;
+      color: $white !important;
+      .btn-text-mobile {
+        display: none;
+      }
+    }
+  }
+}
+
+/**********************
+4.Product-tab CSS start
+***********************/
+.product-tab {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .searchbar-pagination-container {
+    width: 100%;
+    background-color: $box_background_color2;
+    padding: 0 0 2rem 0;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    .v-pagination {
+      .v-pagination__item--active {
+        background-color: $primary_color !important;
+        border-color: $primary_color !important;
+      }
+    }
+  }
+  .box-margin {
+    margin: 3rem 0;
+  }
+  .slider {
+    display: none;
+  }
+  .v-pagination__navigation {
+    border-radius: 20px !important;
+  }
+}
+
+/********************
+5.Search-bar CSS start
+*********************/
+.search-bar {
+  width: 100%;
+  .search-bar-mobile {
+    display: none;
+    .theme--light.v-tabs > .v-tabs-bar {
+      background-color: transparent !important;
+    }
+  }
+  .search-bar-detail {
+    display: flex;
+    justify-content: space-between;
+    .theme--light.v-tabs > .v-tabs-bar {
+      background-color: transparent !important;
+    }
+    .detail-inner {
+      width: 85%;
+      margin-left: 0.5rem;
+      .search-bar-container {
+        display: flex;
+        align-items: center;
+        background-color: $box_background_color !important;
+        border-radius: 10px;
+        .column {
+          display: flex;
+          align-items: center;
+          .icons {
+            margin-right: 0.5rem;
+          }
+          .v-input {
+            margin-bottom: 0.7rem;
+            .v-icon {
+              margin-right: 1rem;
+            }
+          }
+          .v-autocomplete {
+            margin-bottom: 0 !important;
+          }
+          .v-text-field > .v-input__control > .v-input__slot::before {
+            border-style: none;
+          }
+          .v-text-field__details {
+            display: none;
+          }
+          .v-input__slot {
+            margin-bottom: 0 !important;
+            background-color: $box_background_color !important;
+          }
+        }
+        .submit-btn {
+          background-color: $primary_color !important;
+          color: $white;
+          min-width: 5rem !important;
+        }
+      }
+    }
+    .grid-section {
+      width: 15%;
+      padding: 0 !important;
+      .tabs {
+        display: flex;
+        justify-content: flex-end;
+        .theme--light.v-tabs > .v-tabs-bar {
+          background-color: transparent !important;
+        }
+        .v-tab {
+          border-radius: 10px !important;
+          min-width: 50px !important;
+          margin: 0 0.5rem;
+          background-color: $box_background_color;
+        }
+        .v-tab--active {
+          background-color: $primary_color;
+          color: $white;
+        }
+        .v-tabs-slider {
+          display: none;
+        }
+        .v-slide-group__content {
+          background-color: transparent !important;
+        }
+      }
+      .grid-btn {
+        padding: 20px 0 !important;
+        font-size: 24px;
+      }
+      .v-btn:not(.v-btn--round).v-size--default {
+        min-width: 45px !important;
+      }
+    }
+  }
+}
+
+/**********************
+6.Main-banner CSS start
+***********************/
+.main-banner {
+  .banner-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    position: relative;
+    .banner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: auto;
+    }
+    .banner-details-container {
+      position: absolute;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      .banner-details-row {
+        width: 100%;
+        height: 100%;
+        .col {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          .titles-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 80%;
+            .subtitle-container {
+              width: 60%;
+              display: flex;
+              justify-content: center;
+              p {
+                line-height: 2rem;
+              }
+            }
+            .btn-container1 {
+              button {
+                width: 13.5rem;
+                height: 3rem;
+                background-color: $secondary_color !important;
+                color: $white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .banner-img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/************************
+7.Small-banners CSS start
+*************************/
+.small-banners {
+  .small-banners-container {
+    display: flex;
+    justify-content: center;
+    .row {
+      margin: 0;
+    }
+    .small-banners-column {
+      display: flex;
+      justify-content: center;
+      .banner-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        position: relative;
+        .banner {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: auto;
+        }
+        .banner-details-container {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          .row {
+            height: 100%;
+            .col {
+              display: flex;
+              justify-content: center;
+              padding: 0;
+              .titles-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 90%;
+                height: auto;
+                .title-container {
+                  width: 40%;
+                  height: 45%;
+                  display: flex;
+                  padding: 0.5rem;
+                  p {
+                    color: $white;
+                    font-size: $subcontent_font_size;
+                  }
+                }
+                .btn-container1 {
+                  height: 80%;
+                  display: flex;
+                  align-items: flex-end;
+                  button {
+                    border-radius: 100%;
+                    min-width: 3rem !important;
+                    height: 3rem !important;
+                    padding: 0;
+                  }
+                  .first-btn {
+                    background-color: $white !important;
+                    color: $secondary_color;
+                  }
+                  .second-btn {
+                    background-color: $secondary_color !important;
+                    color: $white;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/************************
+8.Image-slider CSS start
+*************************/
+.image-slider {
+  background-color: $box_background_color;
+  .slider-header {
+    background-color: $box_background_color;
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .header-column {
+        .header-title {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          margin-bottom: 0.97rem;
+          .design-square {
+            border-radius: 0;
+            background-color: $primary_color;
+            margin-right: 0.5rem;
+            width: 20px;
+            height: 20px;
+          }
+        }
+        .btn-container {
+          display: flex;
+          justify-content: flex-end;
+          .more-btn {
+            color: $primary_color;
+          }
+        }
+      }
+    }
+    .design-divider {
+      border-color: $primary_color !important;
+      width: 10%;
+    }
+  }
+  .product-slider {
+    background-color: $box_background_color !important;
+    margin-bottom: 1.5rem;
+    .v-slide-group__prev {
+      position: absolute;
+      border-radius: 8px;
+      min-width: 30px !important;
+      background-color: $correct_color;
+      bottom: -1rem;
+      right: 5rem;
+    }
+    .v-slide-group__next {
+      position: absolute;
+      border-radius: 8px;
+      min-width: 30px !important;
+      background-color: $correct_color;
+      bottom: -1rem;
+      right: 2rem;
+    }
+  }
+}
+
+/************************
+8.Slider CSS start
+*************************/
+.slider-co {
+  .slider-img {
+    width: 18.5rem;
+    height: 8.938rem;
+  }
+}
+
+/**********************
+9.Market CSS start
+***********************/
+.market {
+  .v-card {
+    .v-tabs {
+      .v-item-group {
+        .v-slide-group__next, .v-slide-group__prev {
+          display: none !important;
+        }
+        .v-tabs-slider-wrapper {
+          display: none;
+        }
+        //.v-tab::before {
+        //  background-color: $box_background_color2 !important;
+        //  opacity: 0.1;
+        //}
+        .v-tab--active  {
+          color: $typography_0 !important;
+          background-color: $box_background_color2 !important;
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+        }
+      }
+    }
+  }
+  .market-items {
+    .v-window {
+      background-color: transparent !important;
+      .v-window__container {
+        .v-window-item {
+          border-top-right-radius: 8px;
+        }
+        .v-window-item--active {
+          background-color: transparent !important;
+          .theme--light.v-card {
+            background-color: transparent;
+          }
+          .v-card .v-card--flat{
+            background-color: transparent !important;
+          }
+        }
+      }
+    }
+  }
+}

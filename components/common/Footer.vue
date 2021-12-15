@@ -26,7 +26,7 @@
                     and assessed.
                   </p>
                 </div>
-                <v-btn color="primary" width="55%">
+                <v-btn to="/login" color="primary" width="55%">
                   <span  id="span1"> SIGNIN </span>
                 </v-btn>
               </div>
@@ -58,17 +58,28 @@
             </div>
             <div class="mt-10 d-flex justify-space-between">
               <div class="d-flex justify-start">
-                <v-btn color="primary" min-width="0" width="40" class="mx-2">
+                <v-btn href="https://facebook.com/macrob2b"
+                       target="_blank"
+                       color="primary" min-width="0" width="40" class="mx-2">
                   <v-icon color="white"> mdi-facebook </v-icon>
                 </v-btn>
-                <v-btn color="primary" min-width="0" width="40" class="mx-2">
+                <v-btn
+                  href="https://www.instagram.com/macrob2b"
+                  target="_blank"
+                  color="primary" min-width="0" width="40" class="mx-2">
                   <v-icon color="white"> mdi-instagram </v-icon>
                 </v-btn>
-                <v-btn color="primary" min-width="0" width="40" class="mx-2">
+                <v-btn
+                  href="https://www.linkedin.com/company/macrob2b"
+                  target="_blank"
+                  color="primary" min-width="0" width="40" class="mx-2">
                   <v-icon color="white"> mdi-linkedin </v-icon>
                 </v-btn>
-                <v-btn color="primary" min-width="0" width="40" class="mx-2">
-                  <v-icon color="white"> mdi-pinterest </v-icon>
+                <v-btn
+                  href="https://t.me/macrob2b"
+                  target="_blank"
+                  color="primary" min-width="0" width="40" class="mx-2">
+                  <v-icon color="white"> mdi-telegram </v-icon>
                 </v-btn>
               </div>
               <div  id="div2">
@@ -112,7 +123,7 @@
           </p>
         </div>
         <div>
-          <v-btn min-width="0" color="primary" width="50%" height="40px">
+          <v-btn to="/login" min-width="0" color="primary" width="50%" height="40px">
             <span  id="span2"> SIGN IN </span>
           </v-btn>
         </div>
@@ -139,6 +150,8 @@
         </div>
         <div class="pa-3 d-flex justify-center">
           <v-btn
+            href="https://facebook.com/macrob2b"
+            target="_blank"
             color="primary"
             min-width="0"
             width="20"
@@ -148,6 +161,8 @@
             <v-icon color="white" small> mdi-facebook </v-icon>
           </v-btn>
           <v-btn
+            href="https://www.instagram.com/macrob2b"
+            target="_blank"
             color="primary"
             min-width="0"
             width="20"
@@ -157,6 +172,8 @@
             <v-icon color="white" small> mdi-instagram </v-icon>
           </v-btn>
           <v-btn
+            href="https://www.linkedin.com/company/macrob2b"
+            target="_blank"
             color="primary"
             min-width="0"
             width="20"
@@ -166,13 +183,15 @@
             <v-icon color="white" small> mdi-linkedin </v-icon>
           </v-btn>
           <v-btn
+            href="https://t.me/macrob2b"
+            target="_blank"
             color="primary"
             min-width="0"
             width="20"
             height="30"
             class="mx-2"
           >
-            <v-icon color="white" small> mdi-pinterest </v-icon>
+            <v-icon color="white" small> mdi-telegram </v-icon>
           </v-btn>
         </div>
         <div  id="div7" class="mt-2">
