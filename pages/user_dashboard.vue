@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "userDashboard",
+  name: "user_dashboard",
   auth: true
 }
 </script>

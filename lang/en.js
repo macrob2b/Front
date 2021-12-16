@@ -35,6 +35,7 @@ let messages = {
   LOGIN_WRONG_DATA        : 'The information entered is incorrect',
   REQUEST_FAILED          : 'An error occurred. Please try again',
   LOGGING_IN              : 'Logging in',
+  Main_PAGE_TITLE         : 'Largest online B2B marketplace',
 };
 
 export default messages;
