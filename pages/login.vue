@@ -135,7 +135,7 @@ export default {
         this.$auth.setUserToken(response.data.token);
         this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
         this.$router.push({
-          path: "/userDashboard"
+          path: "/user_dashboard"
         })
       }).catch(({response}) => {
         this.formLoader = false;

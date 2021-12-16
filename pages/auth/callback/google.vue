@@ -24,7 +24,7 @@ export default {
         this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
         await this.$auth.fetchUser();
         await this.$router.push({
-          path: "/userDashboard"
+          path: "/user_dashboard"
         });
       });
 
