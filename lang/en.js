@@ -31,6 +31,10 @@ let messages = {
   SELECT                  : 'Select',
   SELECT_BUSINESS_LOCATION: 'Select your Business Location',
   SEARCH                  : 'Search',
+  LOGIN_SUCCESSFUL        : 'You logged in successfully',
+  LOGIN_WRONG_DATA        : 'The information entered is incorrect',
+  REQUEST_FAILED          : 'An error occurred. Please try again',
+  LOGGING_IN              : 'Logging in',
 };
 
 export default messages;

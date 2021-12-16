@@ -23,6 +23,7 @@
               <validation-provider v-slot="{ errors }" name="emailOrPhone" rules="required">
                 <v-text-field
                   v-model="emailOrPhone"
+                  :disabled="formLoader"
                   :error-messages="errors"
                   :label="$t(`E_MAIL`) + ' ' + $t(`OR`) + ' ' + $t(`PHONE_NUMBER`)"
                   outlined
@@ -37,6 +38,7 @@
                 <v-text-field
                   v-model="password"
                   type="password"
+                  :disabled="formLoader"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   :type="showPassword ? 'text' : 'password'"
                   @click:append="showPassword = !showPassword"
@@ -56,6 +58,7 @@
                 color="primary"
                 type="submit"
                 :disabled="invalid"
+                :loading="formLoader"
                 large
                 block>
                 {{ $t(`LOGIN`) }}
@@ -98,6 +101,7 @@ import {ValidationProvider, ValidationObserver} from "vee-validate";
 
 export default {
   name: 'login',
+  auth: 'guest',
   head() {
     return {
       title: this.$t('LOGIN')
@@ -107,17 +111,19 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  data: () => ({
+  data      : () => ({
     emailOrPhone: '',
-    password: '',
+    password    : '',
     showPassword: false,
+    formLoader  : false,
   }),
   mounted() {
   },
   methods: {
     async submit() {
+      this.formLoader = true;
       await this.$auth.loginWith('local', {
-        data: {
+        data   : {
           username: this.emailOrPhone,
           password: this.password
         },
@@ -125,16 +131,18 @@ export default {
           'Content-type': 'application/json'
         }
       }).then(response => {
-        this.$toast.success('You logged in successfully');
-
+        this.formLoader = false;
+        this.$auth.setUserToken(response.data.token);
+        this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
         this.$router.push({
-          path:"/user_dashboard"
+          path: "/userDashboard"
         })
       }).catch(({response}) => {
-        if (response.status==401){
-          this.$toast.error('The information entered is incorrect.');
-        }else if(response.status==500 || response.status==504){
-          this.$toast.error('An error occurred. Please try again.');
+        this.formLoader = false;
+        if (response.status == 401) {
+          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+        } else if (response.status == 500 || response.status == 504) {
+          this.$toast.error(this.$t(`REQUEST_FAILED`));
         }
       });
     },

@@ -36,7 +36,8 @@
 import productsTab from '../components/products-tab'
 
 export default {
-  name: 'product_list',
+  name      : 'product_list',
+  auth      : false,
   components: {
     productsTab
   },

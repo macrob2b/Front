@@ -117,7 +117,7 @@ export default {
   },
 
   router: {
-    // middleware: ['auth']
+    middleware: ['auth']
   },
 
   i18n: {
@@ -133,10 +133,10 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme          : {
-      options: { customProperties: true },
-      dark  : false,
-      themes: {
-        dark: {
+      options: {customProperties: true},
+      dark   : false,
+      themes : {
+        dark : {
           primary  : colors.blue.darken2,
           accent   : colors.grey.darken3,
           secondary: "#FB641E",
@@ -145,7 +145,7 @@ export default {
           error    : colors.deepOrange.accent4,
           success  : colors.green.accent3
         },
-        light : {
+        light: {
           primary  : '#00394D',
           accent   : '#fb641e',
           secondary: "#165048",
@@ -159,15 +159,15 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
+  build : {
     transpile: ["vee-validate"]
   },
-  toast: {
+  toast : {
     position: 'top-center',
-    duration:3000,
+    duration: 3000,
     register: [ // Register custom toasts
       {
-        name: 'my-error',
+        name   : 'my-error',
         message: 'Oops...Something went wrong',
         options: {
           type: 'error'
@@ -176,7 +176,7 @@ export default {
     ]
   },
   server: {
-    host:'0.0.0.0',
-    port:3000
+    host: '0.0.0.0',
+    port: 3000
   },
 }
