@@ -2,23 +2,19 @@
   <div class="market">
     <main_tabs/>
     <div class="market-items">
-      <productsTab></productsTab>
-
+       Selling leads content
     </div>
   </div>
 </template>
 
 <script>
-import productsTab from '../components/products-tab'
 import Main_tabs from "../components/main_tabs";
 
 export default {
-  name: 'product_list',
+  name: 'selling_leads',
   auth: false,
   components: {
     Main_tabs,
-    productsTab,
-
   }
 }
 </script>

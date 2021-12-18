@@ -13,7 +13,7 @@
         large
       >
         <span class="btn-text">order</span>
-        <span class="btn-text-mobile"><font-awesome-icon :icon="['fas', 'shopping-basket']"/></span>
+        <span class="btn-text-mobile"><v-icon>mdi-shopping-outline</v-icon></span>
       </v-btn>
     </v-card>
   </div>

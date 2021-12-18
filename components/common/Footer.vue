@@ -79,7 +79,7 @@
                   href="https://t.me/macrob2b"
                   target="_blank"
                   color="primary" min-width="0" width="40" class="mx-2">
-                  <v-icon color="white"> mdi-telegram </v-icon>
+                  <v-icon class="mdi-rotate-315"  color="white" > mdi-send </v-icon>
                 </v-btn>
               </div>
               <div  id="div2">
@@ -191,7 +191,7 @@
             height="30"
             class="mx-2"
           >
-            <v-icon color="white" small> mdi-telegram </v-icon>
+            <v-icon color="white" small> telegram</v-icon>
           </v-btn>
         </div>
         <div  id="div7" class="mt-2">

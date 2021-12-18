@@ -10,34 +10,39 @@
         ></v-pagination>
       </div>
     </div>
-    <div class="box-margin">
-      <mainBanner :links="mainBannerlinks"></mainBanner>
-      <div class="mt-5">
-        <smallBanners :links="smallBannerslinks"></smallBanners>
-      </div>
+<!--    <div class="box-margin">-->
+<!--      <mainBanner :links="mainBannerlinks"></mainBanner>-->
+<!--      <div class="mt-5">-->
+<!--        <smallBanners :links="smallBannerslinks"></smallBanners>-->
+<!--      </div>-->
 
-      <slider class="slider"></slider>
-    </div>
-    <imageSlider class="box-margin"></imageSlider>
-    <logoSlider></logoSlider>
+<!--      <slider class="slider"></slider>-->
+<!--    </div>-->
+<!--    <ContainerCard>-->
+<!--      <ProductContainer title="New products">-->
+<!--        <ProductSection1 :id="1"/>-->
+<!--      </ProductContainer>-->
+<!--    </ContainerCard>-->
+
+<!--    <imglider class="box-margin"></imglider>-->
+<!--    <logoSlider></logoSlider>-->
   </div>
 </template>
 
 <script>
   import searchBar from '../components/search-bar'
-  import mainBanner from '../components/main-banner'
-  import smallBanners from '../components/small-banners'
-  import imageSlider from '../components/image-slider'
-  import logoSlider from '../components/logo-slider'
-  import slider from '../components/slider'
+  import mainBanner from '../components/home/Banner'
+  import smallBanners from '../components/home/Ads'
+  import ProductContainer   from "../components/home/ProductContainer.vue"
+  import ProductSection1    from "../components/home/ProductSection1.vue";
+
   export default {
     components: {
       searchBar,
       mainBanner,
       smallBanners,
-      imageSlider,
-      logoSlider,
-      slider
+      ProductContainer,
+      ProductSection1,
     },
     data() {
       return {

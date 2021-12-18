@@ -48,7 +48,7 @@
               </div>
               <div class="pa-1 px-2 mx-1 mr-3">
                 <v-btn to="/login" min-width="0" width="100" color="#fb641e">
-                  <span  id="span1"> Sign In </span>
+                  <span  id="span1"> {{signin_btn}} </span>
                 </v-btn>
               </div>
             </div>
@@ -118,7 +118,12 @@ export default {
   data() {
     return {
       searchActive: false,
+      signin_btn: 'Sign In'
     };
+  },
+  mounted() {
+    if(this.$auth.loggedIn)
+      this.signin_btn="Dashboard";
   },
   options: {
     customProperties: true,

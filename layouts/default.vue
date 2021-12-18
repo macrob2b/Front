@@ -30,7 +30,7 @@ export default {
   data      : () => ({
     socialIcons: [
       'mdi-facebook',
-      'mdi-twitter',
+      'mdi-telegram',
       'mdi-linkedin',
       'mdi-instagram',
     ],

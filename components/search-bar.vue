@@ -67,12 +67,12 @@
           <v-tab
             class="tab"
           >
-            <font-awesome-icon :icon="['fas', 'border-all']"/>
+            <v-icon>mdi-border-all</v-icon>
           </v-tab>
           <v-tab
             class="tab"
           >
-            <font-awesome-icon :icon="['fas', 'list']"/>
+            <v-icon>mdi-format-list-bulleted</v-icon>
           </v-tab>
         </v-tabs>
       </div>
@@ -95,12 +95,12 @@
         <v-tab
           class="tab"
         >
-          <font-awesome-icon :icon="['fas', 'border-all']"/>
+          <v-icon>mdi-border-all</v-icon>
         </v-tab>
         <v-tab
           class="tab"
         >
-          <font-awesome-icon :icon="['fas', 'list']"/>
+          <v-icon>mdi-format-list-bulleted</v-icon>
         </v-tab>
       </v-tabs>
     </div>
