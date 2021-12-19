@@ -3,6 +3,8 @@
     <main_tabs/>
     <div class="market-items">
        Selling leads content
+
+
     </div>
   </div>
 </template>
