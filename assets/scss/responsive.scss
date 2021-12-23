@@ -2,9 +2,9 @@
 @import "style";
 
 @media (max-width: 1263px) {
-/********************
-1.Search-bar CSS start
-*********************/
+  /********************
+  1.Search-bar CSS start
+  *********************/
   .search-bar {
     .search-bar-container {
       .column {
@@ -55,9 +55,9 @@
 }
 
 @media (max-width: 968px) {
-/************************
-1.Image-slider CSS start
-*************************/
+  /************************
+  1.Image-slider CSS start
+  *************************/
   .image-slider {
     .slider-header {
       .design-divider {
@@ -71,9 +71,9 @@
     }
   }
 
-/*********************
-2.Search-bar CSS start
-*********************/
+  /*********************
+  2.Search-bar CSS start
+  *********************/
   .search-bar {
     .search-bar-mobile {
       display: flex;
@@ -122,9 +122,9 @@
     }
   }
 
-/**********************
-3.Product-Box CSS start
-**********************/
+  /**********************
+  3.Product-Box CSS start
+  **********************/
   .product-box {
     .product-box-detail {
       display: flex;
@@ -168,12 +168,28 @@
 }
 
 @media (max-width: 960px) {
-/************************
-1.Image-slider CSS start
-*************************/
+  /************************
+  1.Image-slider CSS start
+  *************************/
   .image-slider {
     .slider-static-img {
       display: none;
+    }
+  }
+
+  /**********************
+  2.Side-bar CSS start
+  ***********************/
+  .side-bar {
+    display: none;
+  }
+
+  /**********************
+  3.Company-profile CSS start
+  ***********************/
+  .company-profile {
+    .company-main {
+      width: 100%;
     }
   }
 }
@@ -203,12 +219,64 @@
   }
 }
 
-//@media (max-width: 770px) {}
+@media (max-width: 770px) {
+  /**********************
+  1.Profile-card CSS start
+  ***********************/
+  .profile-card {
+    .profile-card-header {
+      .profile-header-title {
+        .title {
+          margin-bottom: 0;
+        }
+      }
+      .premium {
+        .v-btn {
+          box-shadow: none !important;
+          background-color: $golden_color !important;
+        }
+      }
+    }
+    .profile-card-body {
+      display: flex;
+      flex-direction: column;
+      .edit-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start !important;
+        .v-btn {
+          padding: 0;
+        }
+      }
+      .strength-inner {
+        width: 100%;
+        p {
+          margin-top: 1rem;
+          margin-bottom: 0;
+        }
+        .v-input {
+          width: 70%;
+          .v-slider__track-background {
+            background-color: $typography_1 !important;
+          }
+          .v-slider__track-fill {
+            background-color: $primary_color !important;
+          }
+          .v-slider__thumb {
+            background-color: $primary_color !important;
+            border-color: $primary_color !important;
+            color: $primary_color !important;
+          }
+        }
+      }
+    }
+  }
+}
 
 @media (max-width: 650px) {
-/*********************
-4.Search-bar CSS start
-*********************/
+  /*********************
+  4.Search-bar CSS start
+  *********************/
   .search-bar {
     .search-bar-mobile {
       display: flex;
@@ -256,14 +324,136 @@
   }
 }
 
-//@media (max-width: 480px) {}
+@media (max-width: 448px) {
+  /**********************
+  1.Mobile-stepper CSS start
+  ***********************/
+  .v-stepper--vertical {
+    .v-stepper__content {
+      .v-stepper__wrapper {
+        a {
+          .submit {
+            margin-right: 0;
+            margin-bottom: 1rem;
+          }
+        }
+        .v-btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
 
-//@media (max-width: 420px) {}
+@media (max-width: 420px) {
+  /**********************
+  1.User-type CSS start
+  ***********************/
+  .user-type {
+    .user-type-body {
+      /* stylelint-disable */
+      .v-input {
+        .v-input__control {
+          .v-input__slot {
+            .v-input--radio-group__input {
+              margin: 0;
+              .v-radio {
+                margin-bottom: 0;
+                margin-right: 5%;
+              }
+            }
+          }
+        }
+      }
+      /* stylelint-enable */
+    }
+  }
+
+  /**********************
+  2.Mobile-stepper CSS start
+  ***********************/
+  .v-stepper--vertical {
+    .v-stepper__step {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    .v-stepper__content {
+      margin-left: 0 !important;
+      margin-right: -55px;
+    }
+  }
+}
+
+@media (max-width: 388px) {
+  /************************
+  1.Image-slider CSS start
+  *************************/
+  .image-slider {
+    background-color: $box_background_color;
+    .slider-header {
+      background-color: $box_background_color;
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .header-column {
+          .header-title {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 0.97rem;
+            .design-square {
+              border-radius: 0;
+              background-color: $primary_color;
+              margin-right: 0.5rem;
+              width: 20px;
+              height: 20px;
+            }
+            p {
+              font-size: $subcontent_font_size;
+            }
+          }
+          .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            .more-btn {
+              color: $primary_color;
+            }
+          }
+        }
+      }
+      .design-divider {
+        border-color: $primary_color !important;
+        width: 10%;
+      }
+    }
+    .product-slider {
+      background-color: $box_background_color !important;
+      margin-bottom: 1.5rem;
+      .v-slide-group__prev {
+        position: absolute;
+        border-radius: 8px;
+        min-width: 30px !important;
+        background-color: $correct_color;
+        bottom: -1rem;
+        right: 5rem;
+      }
+      .v-slide-group__next {
+        position: absolute;
+        border-radius: 8px;
+        min-width: 30px !important;
+        background-color: $correct_color;
+        bottom: -1rem;
+        right: 2rem;
+      }
+    }
+  }
+}
 
 @media (max-width: 360px) {
-/**********************
-1.Product-Box CSS start
-**********************/
+  /**********************
+  1.Product-Box CSS start
+  **********************/
   .product-box {
     .product-box-detail {
       display: flex;

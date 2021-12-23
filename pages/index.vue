@@ -49,7 +49,7 @@
       </ContainerCard>
 
       <div class="pa-2 ma-5" v-show="!$vuetify.breakpoint.xs">
-        <Logo/>
+        <Logo :itemsPerView="{ desktop: 7, mobile: 3 }"/>
       </div>
     </v-app>
   </div>

@@ -101,7 +101,7 @@ body {
 /**********************
 4.Product-tab CSS start
 ***********************/
-.product-tab {
+.products {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -436,6 +436,28 @@ body {
 8.Slider CSS start
 *************************/
 .slider-co {
+  width: 45rem;
+  display: flex;
+  justify-content: center;
+  .swiper {
+    height: 15rem;
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .swiper-pagination {
+      .swiper-pagination-bullet {
+        margin: 5px;
+        background-color: $typography_place_holder;
+      }
+      .swiper-pagination-bullet-active {
+        background-color: $primary_color !important;
+        width: 1rem;
+        border-radius: 8px !important;
+      }
+    }
+  }
   .slider-img {
     width: 18.5rem;
     height: 8.938rem;
@@ -455,10 +477,17 @@ body {
         .v-tabs-slider-wrapper {
           display: none;
         }
-        //.v-tab::before {
-        //  background-color: $box_background_color2 !important;
-        //  opacity: 0.1;
-        //}
+        a {
+          text-decoration: none;
+          .v-tab {
+            width: 100%;
+            height: 100%;
+          }
+          .v-tab::before {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+          }
+        }
         .v-tab--active  {
           color: $typography_0 !important;
           background-color: $box_background_color2 !important;
@@ -488,3 +517,450 @@ body {
     }
   }
 }
+
+/**********************
+10.logo-slider CSS start
+***********************/
+.logo-slider {
+  width: 100%;
+  .swiper {
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .logo {
+        width: 12.5rem;
+        height: 6.25rem;
+      }
+    }
+  }
+}
+
+
+/**********************
+11.Side-bar CSS start
+***********************/
+.side-bar {
+  background-color: $box_background_color;
+  border-radius: 8px;
+  .title {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+  }
+  .side-bar-container {
+    .v-expansion-panel::before {
+      box-shadow: none !important;
+
+    }
+    .v-expansion-panel {
+      background-color: transparent !important;
+      .v-expansion-panel-header {
+        background-color: transparent !important;
+      }
+      .v-expansion-panel-header--active {
+        background-color: $typography_place_holder !important;
+      }
+      .v-expansion-panel-content {
+        .v-expansion-panel-content__wrap {
+          padding: 0;
+          .v-btn::before {
+            background-color: $box_background_color !important;
+          }
+          .v-btn {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            border-radius: 0;
+            box-shadow: none !important;
+            text-transform: none;
+            background-color: $typography_place_holder !important;
+            font-weight: 400;
+            font-size: $content_font_size;
+            .dot {
+              border-radius: 100% !important;
+              width: 0.5rem;
+              height: 0.5rem;
+              margin-right: 0.5rem;
+              background-color: $primary_color;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**********************
+12.Profile-card CSS start
+***********************/
+/* stylelint-disable */
+.profile-card {
+  background-color: $box_background_color;
+  padding: 1rem;
+  border-radius: 8px;
+  .profile-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    .profile-header-title {
+      .title {
+        margin-bottom: 0;
+      }
+    }
+    .premium {
+      .v-btn {
+        box-shadow: none !important;
+        background-color: $golden_color !important;
+        color: $white;
+      }
+    }
+  }
+  .profile-card-body {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    .edit-menu {
+      display: flex;
+      flex-direction: column !important;
+      justify-content: center;
+      align-items: center;
+      .v-btn {
+        display: flex;
+        justify-content: flex-start;
+        box-shadow: none !important;
+        text-transform: none;
+        background-color: transparent;
+        font-weight: 400;
+        font-size: $content_font_size;
+        padding: 0.5rem !important;
+        border-radius: 8px;
+        white-space: unset !important;
+        min-width: 100%;
+        .v-btn__content {
+          flex: unset !important;
+          .dot {
+            border-radius: 100% !important;
+            width: 0.5rem;
+            height: 0.5rem;
+            margin-right: 0.5rem;
+            background-color: $primary_color;
+          }
+        }
+      }
+    }
+    .strength-inner {
+      width: 40%;
+      p {
+        margin-top: 1rem;
+        margin-bottom: 0;
+      }
+      .v-input {
+        width: 70%;
+        .v-slider__track-background {
+          background-color: $typography_1 !important;
+        }
+        .v-slider__track-fill {
+          background-color: $primary_color !important;
+        }
+        .v-slider__thumb {
+          background-color: $primary_color !important;
+          border-color: $primary_color !important;
+          color: $primary_color !important;
+        }
+      }
+    }
+  }
+}
+/* stylelint-enable */
+
+/**********************
+13.Company-profile CSS start
+***********************/
+.company-profile {
+  display: flex;
+  .company-side-bar {
+    padding-right: 1rem;
+    width: 25%;
+  }
+  .company-main {
+    width: 75%;
+    //stylelint-disable
+    .mobile-nav {
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      background-color: $box_background_color;
+      border-radius: 8px;
+      .v-btn {
+        box-shadow: none !important;
+        padding: 0 !important;
+        min-width: 2.813rem;
+        background-color: $primary_color;
+        color: $white;
+      }
+    }
+    //stylelint-enable
+  }
+}
+
+/**********************
+14.Stepper CSS start
+***********************/
+.stepper {
+  .v-stepper {
+    box-shadow: none !important;
+    .v-stepper__header {
+      box-shadow: none;
+      .v-stepper__step--active {
+        .v-stepper__step__step {
+          background-color: $primary_color !important;
+        }
+      }
+      .v-stepper__step {
+        .v-stepper__label {
+          text-align: center !important;
+        }
+      }
+    }
+    .v-stepper__items {
+      .v-stepper__content {
+        .v-stepper__wrapper {
+          .submit {
+            background-color: $primary_color;
+            color: $white;
+            margin-right: 1rem;
+          }
+          .v-btn {
+            width: 10rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+/**********************
+15.User-type CSS start
+***********************/
+.user-type {
+  background-color: $box_background_color;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  .v-divider {
+    border-color: $white !important;
+  }
+  .user-type-body {
+    /* stylelint-disable */
+    .v-input {
+      .v-input__control {
+        .v-input__slot {
+          .v-input--radio-group__input {
+            flex-direction: row;
+            margin: 0 0.5rem;
+            .v-radio {
+              margin-bottom: 0;
+              margin-right: 10%;
+              .v-input--selection-controls__input {
+                .mdi-radiobox-blank::before {
+                  content: "\F0131" !important;
+                }
+                .mdi-radiobox-marked::before {
+                  content: "\F0132" !important;
+                }
+                .primary--text {
+                  color: $primary_color !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    /* stylelint-enable */
+  }
+}
+
+/**********************
+16.Company-info CSS start
+***********************/
+.company-info {
+  background-color: $box_background_color;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  .v-divider {
+    border-color: $white !important;
+  }
+  .company-info-body {
+    .v-form {
+      .container {
+        /* stylelint-disable */
+        .row {
+          .v-input--is-focused {
+            color: $primary_color !important;
+            .primary--text {
+              color: $primary_color !important;
+            }
+          }
+        }
+        /* stylelint-enable */
+      }
+    }
+  }
+}
+
+/**********************
+17.Contact-info CSS start
+***********************/
+.contact-info {
+  background-color: $box_background_color;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  .v-divider {
+    border-color: $white !important;
+  }
+  .contact-info-body {
+    .v-form {
+      .container {
+        /* stylelint-disable */
+        .row {
+          .v-input--is-focused {
+            color: $primary_color !important;
+            .primary--text {
+              color: $primary_color !important;
+            }
+          }
+        }
+        /* stylelint-enable */
+      }
+    }
+  }
+}
+
+/**********************
+18.Media CSS start
+***********************/
+.media {
+  background-color: $box_background_color;
+  padding: 0.5em;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  .v-divider {
+    border-color: $white !important;
+  }
+  .media-body {
+    .v-form{
+      .container {
+        .v-input__prepend-outer {
+          display: none !important;
+        }
+      }
+    }
+  }
+}
+
+/**********************
+19.Mobile-stepper CSS start
+***********************/
+/* stylelint-disable */
+.v-stepper--vertical {
+  .v-stepper__step--active {
+    .v-stepper__step__step {
+      background-color: $primary_color !important;
+    }
+  }
+  .v-stepper__header {
+    box-shadow: none;
+    .v-stepper__step {
+      .v-stepper__label {
+        text-align: center !important;
+      }
+    }
+  }
+  .v-stepper__wrapper {
+    a {
+      .submit {
+        background-color: $primary_color;
+        color: $white;
+        margin-right: 1rem;
+        box-shadow: none !important;
+      }
+    }
+    .v-btn {
+      width: 10rem;
+      height: 2.813rem;
+    }
+  }
+}
+/* stylelint-enable */
+
+/**********************
+20.Navigation CSS start
+***********************/
+//stylelint-disable
+.navigation {
+  background-color: $box_background_color;
+  border-radius: 8px;
+  .v-navigation-drawer {
+    width: 100% !important;
+    .title {
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      .v-btn {
+        box-shadow: none !important;
+        border-radius: 100%;
+        padding: 0 !important;
+        min-width: 2.188rem;
+      }
+    }
+    .side-bar-container {
+      .v-expansion-panel::before {
+        box-shadow: none !important;
+
+      }
+      .v-expansion-panel {
+        background-color: transparent !important;
+        .v-expansion-panel-header {
+          background-color: transparent !important;
+        }
+        .v-expansion-panel-header--active {
+          background-color: $typography_place_holder !important;
+        }
+        .v-expansion-panel-content {
+          .v-expansion-panel-content__wrap {
+            padding: 0;
+            .v-btn::before {
+              background-color: $box_background_color !important;
+            }
+            .v-btn {
+              width: 100%;
+              display: flex;
+              justify-content: flex-start;
+              border-radius: 0;
+              box-shadow: none !important;
+              text-transform: none;
+              background-color: $typography_place_holder !important;
+              font-weight: 400;
+              font-size: $content_font_size;
+              .dot {
+                border-radius: 100% !important;
+                width: 0.5rem;
+                height: 0.5rem;
+                margin-right: 0.5rem;
+                background-color: $primary_color;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+//stylelint-enable
+
+
+
