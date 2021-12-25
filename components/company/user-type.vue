@@ -5,14 +5,18 @@
     </div>
     <v-divider></v-divider>
     <div class="user-type-body">
-      <v-radio-group v-model="radioGroup">
-        <v-radio
-          v-for="index in types"
-          :key="index"
-          :label="`${ index }`"
-          :value="index"
-        ></v-radio>
-      </v-radio-group>
+      <v-checkbox
+        v-model="buyer"
+        label="Buyer"
+      ></v-checkbox>
+      <v-checkbox
+        v-model="seller"
+        label="Seller"
+      ></v-checkbox>
+      <v-checkbox
+        v-model="agent"
+        label="Agent"
+      ></v-checkbox>
     </div>
   </div>
 </template>
@@ -21,12 +25,14 @@
   export default {
     data() {
       return {
-        radioGroup: 1,
         types: [
           'Buyer',
           'Seller',
           'Agent'
-        ]
+        ],
+        buyer: false,
+        seller: false,
+        agent: false
       }
     }
   }

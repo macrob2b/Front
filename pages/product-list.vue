@@ -13,7 +13,7 @@ import productsTab from '../components/products-tab'
 import Main_tabs from "../components/main_tabs";
 
 export default {
-  name: 'product_list',
+  name: 'product-list',
   auth: false,
   components: {
     Main_tabs,

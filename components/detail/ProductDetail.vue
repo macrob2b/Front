@@ -1,5 +1,5 @@
 <template>
-  <section class="product-info pa-5">
+  <section class="product-info pa-md-5">
     <h1>
       Product Name
     </h1>
@@ -24,6 +24,7 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+
 
     <!--Share-->
     <Share v-show="!$vuetify.breakpoint.xs"/>
@@ -51,14 +52,14 @@
     </v-row>
 
 
-    <v-row no-gutters align="center" class="ml-md-4 mt-8">
-      <v-col cols="12" lg="3" class="mb-5 mb-lg-0 mr-lg-8">
+    <v-row class="ml-md-4 mt-8 d-flex align-center justify-space-between justify-lg-start px-0">
+      <v-col cols="3" lg="4" class="px-lg-0 mb-lg-5 mb-lg-0 mr-lg-8" >
         <AddToCart/>
       </v-col>
-      <v-col cols="6" lg="2" class="mx-lg-2">
+      <v-col cols="5" lg="3" class="mx-lg-2 px-0" >
         <Count/>
       </v-col>
-      <v-col cols="6" lg="3" class="mx-lg-2 text--black font-weight-bold text-center">
+      <v-col cols="3" lg="3" class="mx-lg-2 text--black font-weight-bold text-center px-0 mt-lg-0 pt-lg-0">
         195.562 $
       </v-col>
     </v-row>

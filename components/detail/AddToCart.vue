@@ -1,19 +1,16 @@
 <template>
-  <section class="product-info">
-    <v-row>
+  <section class="product-info" >
       <v-btn
-        large
+       block
         color="grey darken-2 "
         dark
         elevation="1"
-        width="100%"
       >
         <v-icon>
           mdi-cart-plus
         </v-icon>
-        Add To Cart
+        <span class="d-none d-md-block">Add To Cart</span>
       </v-btn>
-    </v-row>
   </section>
 </template>
 

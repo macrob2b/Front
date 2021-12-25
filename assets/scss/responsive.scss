@@ -347,29 +347,6 @@
 
 @media (max-width: 420px) {
   /**********************
-  1.User-type CSS start
-  ***********************/
-  .user-type {
-    .user-type-body {
-      /* stylelint-disable */
-      .v-input {
-        .v-input__control {
-          .v-input__slot {
-            .v-input--radio-group__input {
-              margin: 0;
-              .v-radio {
-                margin-bottom: 0;
-                margin-right: 5%;
-              }
-            }
-          }
-        }
-      }
-      /* stylelint-enable */
-    }
-  }
-
-  /**********************
   2.Mobile-stepper CSS start
   ***********************/
   .v-stepper--vertical {
@@ -495,5 +472,19 @@
     }
   }
 }
+
+/**********************
+2.User-type CSS start
+***********************/
+.user-type {
+  .user-type-body {
+    /* stylelint-disable */
+    .v-input {
+      margin: 1rem 0.2rem 0 0.2rem;
+    }
+    /* stylelint-enable */
+  }
+}
+
 
 //@media (max-width: 320px) {}

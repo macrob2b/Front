@@ -6,12 +6,12 @@
       </div>
       <div class="company-main">
         <ProfileCard></ProfileCard>
-        <div v-if="mobileSize" class="mobile-nav">
-          <v-btn @click.stop="drawer = !drawer">
+        <div class="mobile-nav d-md-none">
+          <v-btn class="drawer-btn" @click.stop="drawer = !drawer">
             <v-icon>mdi-filter-variant</v-icon>
           </v-btn>
+          <Navigation :drawer="drawer" :items="items" @close="drawer = false"></Navigation>
         </div>
-        <Navigation :drawer="drawer" :items="items" @close="drawer = false"></Navigation>
         <Stepper></Stepper>
       </div>
     </v-row>
@@ -19,12 +19,12 @@
 </template>
 
 <script>
+/* eslint-disable */
 import SideBar from '../components/company/side-bar'
 import ProfileCard from '../components/company/profile-card'
 import Stepper from '../components/company/stepper'
 import Navigation from "~/components/navigation"
 export default {
-  name: "company-profile",
   components: {
     SideBar,
     ProfileCard,
@@ -33,7 +33,6 @@ export default {
   },
   data() {
     return {
-      mobileSize: false,
       drawer: null,
       items: [
         {name: 'My Inquiries', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},
@@ -44,26 +43,6 @@ export default {
         {name: 'My account', data: ['Add a New Buying Lead']}
       ],
     }
-  },
-  /* eslint-disable */
-  mounted: function () {
-    this.$nextTick(function () {
-      this.onResize();
-    });
-    window.addEventListener('resize', this.onResize)
-  },
-  methods: {
-    onResize() {
-      if (window.innerWidth <= 960) {
-        this.mobileSize = true;
-      } else if (window.innerWidth > 960) {
-        this.mobileSize = false;
-      }
-    }
-  },
+  }
 }
 </script>
-
-<style scoped>
-
-</style>

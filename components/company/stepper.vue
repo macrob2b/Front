@@ -1,7 +1,7 @@
 <template>
   <div class="stepper">
-    <DesktopStepper v-if="!mobileSize"></DesktopStepper>
-    <MobileStepper v-if="mobileSize"></MobileStepper>
+    <DesktopStepper class="d-none d-md-block"></DesktopStepper>
+    <MobileStepper class="d-md-none"></MobileStepper>
   </div>
 </template>
 
@@ -12,27 +12,6 @@
     components: {
       DesktopStepper,
       MobileStepper
-    },
-    data() {
-      return {
-        mobileSize: false
-      }
-    },
-    /* eslint-disable */
-    mounted: function () {
-      this.$nextTick(function () {
-        this.onResize();
-      });
-      window.addEventListener('resize', this.onResize)
-    },
-    methods: {
-      onResize() {
-        if (window.innerWidth <= 960) {
-          this.mobileSize = true;
-        } else if (window.innerWidth > 960) {
-          this.mobileSize = false;
-        }
-      }
-    },
+    }
   }
 </script>

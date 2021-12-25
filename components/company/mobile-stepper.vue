@@ -12,7 +12,7 @@
 
     <v-stepper-content step="1">
       <BasicInfo></BasicInfo>
-      <NuxtLink to="/company-profile/test">
+      <NuxtLink to="/company-profile/trade-info">
         <v-btn
           class="submit"
           @click="m1 = 2"
@@ -34,20 +34,21 @@
     </v-stepper-step>
 
     <v-stepper-content step="2">
-      <v-card
-        color="grey lighten-1"
-        class="mb-12"
-        height="200px"
-      ></v-card>
+      <TradeInfo></TradeInfo>
       <v-btn
         color="primary"
         @click="m1 = 3"
       >
         Continue
       </v-btn>
-      <v-btn text>
-        Cancel
-      </v-btn>
+      <NuxtLink to="/company-profile/basic-info">
+        <v-btn
+          outlined
+          @click="m1 = 1"
+        >
+          Cancel
+        </v-btn>
+      </NuxtLink>
     </v-stepper-content>
 
     <v-stepper-step
@@ -98,9 +99,11 @@
 
 <script>
   import BasicInfo from "~/pages/company-profile/basic-info"
+  import TradeInfo from "~/pages/company-profile/trade-info"
   export default {
     components: {
-      BasicInfo
+      BasicInfo,
+      TradeInfo
     },
     data() {
       return {
