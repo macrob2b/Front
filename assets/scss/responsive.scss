@@ -2,9 +2,9 @@
 @import "style";
 
 @media (max-width: 1263px) {
-  /********************
-  1.Search-bar CSS start
-  *********************/
+/********************
+1.Search-bar CSS start
+*********************/
   .search-bar {
     .search-bar-container {
       .column {
@@ -55,9 +55,9 @@
 }
 
 @media (max-width: 968px) {
-  /************************
-  1.Image-slider CSS start
-  *************************/
+/************************
+1.Image-slider CSS start
+*************************/
   .image-slider {
     .slider-header {
       .design-divider {
@@ -71,9 +71,9 @@
     }
   }
 
-  /*********************
-  2.Search-bar CSS start
-  *********************/
+/*********************
+2.Search-bar CSS start
+*********************/
   .search-bar {
     .search-bar-mobile {
       display: flex;
@@ -122,9 +122,9 @@
     }
   }
 
-  /**********************
-  3.Product-Box CSS start
-  **********************/
+/**********************
+3.Product-Box CSS start
+**********************/
   .product-box {
     .product-box-detail {
       display: flex;
@@ -168,25 +168,25 @@
 }
 
 @media (max-width: 960px) {
-  /************************
-  1.Image-slider CSS start
-  *************************/
+/************************
+1.Image-slider CSS start
+*************************/
   .image-slider {
     .slider-static-img {
       display: none;
     }
   }
 
-  /**********************
-  2.Side-bar CSS start
-  ***********************/
+/**********************
+2.Side-bar CSS start
+***********************/
   .side-bar {
     display: none;
   }
 
-  /**********************
-  3.Company-profile CSS start
-  ***********************/
+/**********************
+3.Company-profile CSS start
+***********************/
   .company-profile {
     .company-main {
       width: 100%;
@@ -220,9 +220,9 @@
 }
 
 @media (max-width: 770px) {
-  /**********************
-  1.Profile-card CSS start
-  ***********************/
+/**********************
+1.Profile-card CSS start
+***********************/
   .profile-card {
     .profile-card-header {
       .profile-header-title {
@@ -274,9 +274,9 @@
 }
 
 @media (max-width: 650px) {
-  /*********************
-  4.Search-bar CSS start
-  *********************/
+/*********************
+4.Search-bar CSS start
+*********************/
   .search-bar {
     .search-bar-mobile {
       display: flex;
@@ -325,9 +325,9 @@
 }
 
 @media (max-width: 448px) {
-  /**********************
-  1.Mobile-stepper CSS start
-  ***********************/
+/**********************
+1.Mobile-stepper CSS start
+***********************/
   .v-stepper--vertical {
     .v-stepper__content {
       .v-stepper__wrapper {
@@ -346,9 +346,9 @@
 }
 
 @media (max-width: 420px) {
-  /**********************
-  2.Mobile-stepper CSS start
-  ***********************/
+/**********************
+1.Mobile-stepper CSS start
+***********************/
   .v-stepper--vertical {
     .v-stepper__step {
       padding-left: 0 !important;
@@ -362,9 +362,9 @@
 }
 
 @media (max-width: 388px) {
-  /************************
-  1.Image-slider CSS start
-  *************************/
+/************************
+1.Image-slider CSS start
+*************************/
   .image-slider {
     background-color: $box_background_color;
     .slider-header {
@@ -428,9 +428,9 @@
 }
 
 @media (max-width: 360px) {
-  /**********************
-  1.Product-Box CSS start
-  **********************/
+/**********************
+1.Product-Box CSS start
+**********************/
   .product-box {
     .product-box-detail {
       display: flex;
@@ -471,20 +471,19 @@
       }
     }
   }
-}
 
 /**********************
 2.User-type CSS start
 ***********************/
-.user-type {
-  .user-type-body {
-    /* stylelint-disable */
-    .v-input {
-      margin: 1rem 0.2rem 0 0.2rem;
+  .user-type {
+    .user-type-body {
+      /* stylelint-disable */
+      .v-input {
+        margin: 1rem 0.2rem 0 0.2rem;
+      }
+      /* stylelint-enable */
     }
-    /* stylelint-enable */
   }
 }
-
 
 //@media (max-width: 320px) {}
