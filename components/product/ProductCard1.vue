@@ -1,8 +1,8 @@
 <template>
   <div class="mx-2 card">
-    <v-card min-width="0">
+    <v-card min-width="0" elevation="0">
       <div class="pa-2">
-        <img src="card_img.png" />
+        <img src="/card_img.png" />
       </div>
       <div class="text-center">Product Name</div>
       <div class="text-center"  id="div1">

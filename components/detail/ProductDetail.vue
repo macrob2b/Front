@@ -25,7 +25,6 @@
       </v-list-item>
     </v-list>
 
-
     <!--Share-->
     <Share v-show="!$vuetify.breakpoint.xs"/>
 
@@ -81,35 +80,35 @@
       Stars,
       Share
     },
-    data(){
-      return{
-        infos:[
+    data() {
+      return {
+        infos: [
           {
-            label : "Brand Name",
-            value : "AAA"
+            label: "Brand Name",
+            value: "AAA"
           },
           {
-            label : "Place Of Origin",
-            value : "AAA"
+            label: "Place Of Origin",
+            value: "AAA"
           },
           {
-            label : "Condition",
-            value : "AAA"
+            label: "Condition",
+            value: "AAA"
           },
           {
-            label : "Model Number",
-            value : "AAA"
+            label: "Model Number",
+            value: "AAA"
           },
           {
-            label : "Supply Type",
-            value : "AAA"
+            label: "Supply Type",
+            value: "AAA"
           },
           {
-            label : "Color",
-            value : "AAA"
+            label: "Color",
+            value: "AAA"
           },
         ],
-        price : "195.562 $"
+        price: "195.562 $"
       }
     }
   }

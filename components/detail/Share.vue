@@ -29,13 +29,14 @@
         lighten-2
       "
     >
-      <v-icon color="white" class="mx-1 pa-1 icons" small> mdi-phone </v-icon>
+
       contact supplier
     </v-col>
   </v-row>
 </template>
 
 <script>
+
 export default {};
 </script>
 <style scoped>
@@ -47,3 +48,4 @@ export default {};
 }
 
 </style>
+

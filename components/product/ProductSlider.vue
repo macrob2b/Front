@@ -1,5 +1,5 @@
 <template>
-  <div :class="'slider' + id">
+  <div :class="'slider py-5 ' + id" style="height: 100%">
     <v-row>
       <v-slide-group class="pa-2" center-active show-arrows>
         <v-slide-item v-for="n in 15" :key="n">
@@ -8,7 +8,7 @@
         </v-slide-item>
       </v-slide-group>
     </v-row>
-    <div class="d-flex justify-end px-5">
+    <div class="d-flex justify-end py-5">
       <v-btn
         color="#165048"
         @click="clickLeft"

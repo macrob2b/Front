@@ -1,14 +1,16 @@
 <template>
-  <v-col style="background-color: #f3f3f3" class="rounded-lg">
+  <v-col style="background-color: #f3f3f3;height: 100%;overflow:auto;" class="rounded-lg">
     <v-row justify="space-between" class="py-4 px-3">
-      <v-col> Description by Manufacturer </v-col>
+      <v-col class="font-weight-black"> Description by Manufacturer </v-col>
       <!--      If Have Rate prop-->
       <Stars />
+
     </v-row>
     <v-divider></v-divider>
     <!--    If have description prop  -->
     <v-col>
       <p class="text-grey">
+
         Our company has maintained low competitive prices, good quality as well
         as timely deliveries. We are a gold supplier and assessed.
       </p>
@@ -24,7 +26,7 @@
               <v-col cols="6">
                 <div>
                   <span v-for="(item,j) in info.items" :key="j">
-                    {{item}} , 
+                    {{item}} ,
                   </span>
                 </div>
               </v-col>
@@ -68,4 +70,5 @@ export default {
     };
   },
 };
+
 </script>

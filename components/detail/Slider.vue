@@ -8,7 +8,7 @@
     </hooper> -->
       <v-slide-group center-active show-arrows>
         <v-slide-item v-for="n in 15" :key="n">
-          <img src="lorem-ipsum.png" alt="lorem-ipsum" />
+          <img src="/lorem-ipsum.png" alt="lorem-ipsum" />
         </v-slide-item>
       </v-slide-group>
     </v-col>
@@ -20,7 +20,7 @@
     </hooper> -->
       <v-slide-group center-active show-arrows>
         <v-slide-item v-for="n in 15" :key="n">
-          <img src="lorem-ipsum.png" alt="lorem-ipsum" />
+          <img src="/lorem-ipsum.png" alt="lorem-ipsum" />
         </v-slide-item>
       </v-slide-group>
     </v-col>
