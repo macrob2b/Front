@@ -192,6 +192,26 @@
       width: 100%;
     }
   }
+
+/**********************
+21.Trade-info CSS start
+***********************/
+  .trade-info {
+    .company-history {
+      .company-history-body {
+        .container {
+          .row {
+            .year-col {
+              padding-bottom: 0;
+            }
+            .description-col {
+              padding-top: 0;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 845px) {

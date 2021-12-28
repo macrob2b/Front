@@ -61,6 +61,12 @@ body {
     .primary {
       background-color: $primary_color !important;
       border-color: $primary_color !important;
+      caret-color: $primary_color !important;
+    }
+    .primary--text {
+      border-color: $primary_color !important;
+      caret-color: $primary_color !important;
+      color: $primary_color !important;
     }
   }
 }
@@ -958,6 +964,165 @@ body {
   }
 }
 //stylelint-enable
+
+/**********************
+21.Trade-info CSS start
+***********************/
+.trade-info {
+  .trade-info-inner {
+    background-color: $box_background_color;
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    .add-history {
+      display: flex;
+      align-items: center;
+      //stylelint-disable
+      p {
+        margin-right: 0.5rem;
+      }
+      .v-input {
+        margin-top: 0 !important;
+        .v-input__control {
+          .v-input__slot {
+            .v-input--radio-group__input {
+              flex-direction: row;
+              .v-radio {
+                margin-bottom: 0 !important;
+                margin-right: 10%;
+              }
+            }
+          }
+        }
+      }
+      //stylelint-enable
+    }
+  }
+  .company-history {
+    background-color: $box_background_color;
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    .company-history-header {
+      padding: 0.5rem;
+    }
+    .v-divider {
+      border-color: $white;
+    }
+  }
+}
+
+/**********************
+22.Add-information CSS start
+***********************/
+.add-information {
+  background-color: $box_background_color;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  // stylelint-disable
+  .v-divider {
+    border-color: $white !important;
+  }
+  .add-information-body {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .info-list {
+      width: 100%;
+      .info1 {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+        border: 1px solid $typography_1;
+        border-radius: 8px;
+        margin: 0.5rem 0;
+        padding: 0.2rem;
+        span {
+          padding: 0.5rem;
+        }
+        .v-btn {
+          width: 30%;
+          box-shadow: none !important;
+        }
+      }
+    }
+    .add-btn {
+      width: 100% !important;
+      box-shadow: none !important;
+    }
+    // stylelint-enable
+  }
+}
+
+/**********************
+23.Add-factory CSS start
+***********************/
+.add-factory {
+  background-color: $box_background_color;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  //stylelint-disable
+  .btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    .v-btn {
+      margin: 0 1rem 1rem 0;
+      box-shadow: none !important;
+      background-color: $primary_color !important;
+      color: $white;
+    }
+  }
+}
+
+/**********************
+24.Add-branch CSS start
+***********************/
+.add-branch {
+  background-color: $box_background_color;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  .btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    .v-btn {
+      margin: 0 1rem 1rem 0;
+      box-shadow: none !important;
+      background-color: $primary_color !important;
+      color: $white;
+    }
+  }
+}
+
+/**********************
+25.Add-branch CSS start
+***********************/
+.add-certificate {
+  background-color: $box_background_color;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  .btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    .v-btn {
+      margin: 0 1rem 1rem 0;
+      box-shadow: none !important;
+      background-color: $primary_color !important;
+      color: $white;
+    }
+  }
+}
+
+
 
 
 

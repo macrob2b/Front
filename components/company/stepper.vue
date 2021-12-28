@@ -1,17 +1,22 @@
 <template>
   <div class="stepper">
-    <DesktopStepper class="d-none d-md-block"></DesktopStepper>
-    <MobileStepper class="d-md-none"></MobileStepper>
+    <DesktopStepper class="d-none d-md-block" :step1="step" @step="step = $event"></DesktopStepper>
+    <MobileStepper class="d-md-none" :step1="step" @step="step = $event"></MobileStepper>
   </div>
 </template>
 
 <script>
-  import DesktopStepper from "~/components/company/desktop-stepper"
-  import MobileStepper from "~/components/company/mobile-stepper"
-  export default {
-    components: {
-      DesktopStepper,
-      MobileStepper
+import DesktopStepper from "~/components/company/desktop-stepper"
+import MobileStepper from "~/components/company/mobile-stepper"
+export default {
+  components: {
+    DesktopStepper,
+    MobileStepper
+  },
+  data() {
+    return {
+      step: 1
     }
   }
+}
 </script>
