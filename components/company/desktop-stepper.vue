@@ -4,6 +4,7 @@
       <v-stepper-step
         :complete="e1 > 1"
         step="1"
+        editable
       >
         Basic info
       </v-stepper-step>
@@ -13,6 +14,7 @@
       <v-stepper-step
         :complete="e1 > 2"
         step="2"
+        editable
       >
         Trade info
       </v-stepper-step>
@@ -22,6 +24,7 @@
       <v-stepper-step
         :complete="e1 > 3"
         step="3"
+        editable
       >
         Factories & branches
       </v-stepper-step>
@@ -30,6 +33,7 @@
 
       <v-stepper-step
         step="4"
+        editable
       >
         Certification
       </v-stepper-step>
@@ -38,14 +42,12 @@
     <v-stepper-items>
       <v-stepper-content step="1">
         <BasicInfo></BasicInfo>
-        <NuxtLink to="/company-profile/trade-info">
           <v-btn
             class="submit"
             @click="e1 = 2"
           >
             Submit
           </v-btn>
-        </NuxtLink>
 
         <v-btn outlined>
           Cancel
@@ -54,7 +56,6 @@
 
       <v-stepper-content step="2">
         <TradeInfo></TradeInfo>
-        <NuxtLink to="/company-profile/factories-branches">
           <v-btn
             class="submit"
             color="primary"
@@ -62,21 +63,17 @@
           >
             Continue
           </v-btn>
-        </NuxtLink>
 
-        <NuxtLink to="/company-profile/basic-info">
           <v-btn
             outlined
             @click="e1 = 1"
           >
             Cancel
           </v-btn>
-        </NuxtLink>
       </v-stepper-content>
 
       <v-stepper-content step="3">
         <FactoriesBranches></FactoriesBranches>
-        <NuxtLink to="/company-profile/certifications">
           <v-btn
             class="submit"
             color="primary"
@@ -84,20 +81,16 @@
           >
             Continue
           </v-btn>
-        </NuxtLink>
-        <NuxtLink to="/company-profile/trade-info">
           <v-btn
             outlined
             @click="e1 = 2"
           >
             Cancel
           </v-btn>
-        </NuxtLink>
       </v-stepper-content>
 
       <v-stepper-content step="4">
         <Certifications></Certifications>
-        <NuxtLink to="/company-profile/basic-info">
           <v-btn
             class="submit"
             color="primary"
@@ -105,15 +98,12 @@
           >
             Continue
           </v-btn>
-        </NuxtLink>
-        <NuxtLink to="/company-profile/factories-branches">
           <v-btn
             outlined
             @click="e1 = 3"
           >
             Cancel
           </v-btn>
-        </NuxtLink>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -139,7 +129,7 @@ export default {
     }
   },
   watch: {
-    step1(val) {
+    step1() {
       this.e1 = this.step1;
     },
     e1(val) {

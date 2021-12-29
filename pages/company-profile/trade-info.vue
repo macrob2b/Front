@@ -221,8 +221,8 @@
               </v-col>
               <v-col
                 class="description-col"
-                cols="12"
-                md="10"
+                cols="10"
+                md="8"
               >
                 <v-text-field
                   label="Description"
@@ -244,8 +244,8 @@
               </v-col>
               <v-col
                 class="description-col"
-                cols="12"
-                md="10"
+                cols="10"
+                md="8"
               >
                 <v-text-field
                   label="Description"
@@ -267,15 +267,53 @@
               </v-col>
               <v-col
                 class="description-col"
-                cols="12"
-                md="10"
+                cols="10"
+                md="8"
               >
                 <v-text-field
                   label="Description"
                   outlined
                 ></v-text-field>
               </v-col>
+              <v-col
+                class="btn-group"
+                cols="2"
+              >
+                <v-btn @click="more++">+</v-btn>
+              </v-col>
             </v-row>
+            <div v-if="more !== 0">
+              <v-row v-for="index in more" :key="index">
+                <v-col
+                  class="year-col"
+                  cols="6"
+                  md="2"
+                >
+                  <v-select
+                    :items="years"
+                    label="Year"
+                    outlined
+                  ></v-select>
+                </v-col>
+                <v-col
+                  class="description-col"
+                  cols="10"
+                  md="8"
+                >
+                  <v-text-field
+                    label="Description"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  class="btn-group"
+                  cols="2"
+                >
+                  <v-btn @click="more++">+</v-btn>
+                  <v-btn @click="more--">-</v-btn>
+                </v-col>
+              </v-row>
+            </div>
           </v-container>
         </v-form>
       </div>
@@ -301,6 +339,7 @@
         radioGroup: 'No',
         ports: [],
         portItems: [],
+        more: 0,
         years: [
           '2019',
           '2018',

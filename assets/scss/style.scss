@@ -1009,6 +1009,26 @@ body {
     .v-divider {
       border-color: $white;
     }
+    .company-history-body {
+      .v-form {
+        .container {
+          .row {
+            .btn-group {
+              display: flex;
+              .v-btn {
+                background-color: $primary_color;
+                color: $white;
+                margin: 0.1rem;
+                box-shadow: none !important;
+                width: unset;
+                min-width: 2.4rem;
+                height: 2.4rem;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
