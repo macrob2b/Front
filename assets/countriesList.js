@@ -601,7 +601,7 @@ const allCountries = [
     '371'
   ],
   [
-    'Lebanon (‫لبنان‬‎)',
+    'Lebanon (‫لب96نان‬‎)',
     'lb',
     '961'
   ],

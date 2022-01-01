@@ -15,6 +15,9 @@
         <p>
           You can esay use this platform to sell or buy
         </p>
+        <v-btn @click="logout()">
+          Logout
+        </v-btn>
       </div>
     </v-row>
   </v-container>
@@ -49,6 +52,11 @@ export default {
         {name: 'My Products', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},
         {name: 'My account', data: ['Add a New Buying Lead']}
       ],
+    }
+  },
+  methods:{
+    logout(){
+      this.$auth.logout();
     }
   }
 }
