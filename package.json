@@ -9,6 +9,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@forked-prs/nuxt-infinite-scroll-module": "^1.0.2",
     "@growthbunker/vueflags": "^0.1.14",
     "@mdi/font": "^6.5.95",
     "@nuxtjs/auth-next": "5.0.0-1637333559.35dbd53",

@@ -54,6 +54,7 @@ export default {
     '@nuxtjs/auth-next',
     'nuxt-leaflet',
     '@nuxtjs/toast',
+    '@forked-prs/nuxt-infinite-scroll-module'
   ],
 
 
