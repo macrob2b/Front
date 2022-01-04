@@ -52,6 +52,13 @@
       }
     }
   }
+  .company-overview-tabs-content {
+    .company-image {
+      width: 100%;
+      height: 350px !important;
+    }
+  }
+
 }
 
 @media (max-width: 968px) {
@@ -294,6 +301,43 @@
 }
 
 @media (max-width: 650px) {
+  body {
+    .v-application {
+      .title,
+      .body-1,
+      .body-2 {
+        font-size: 12px !important;
+      }
+      .col-6 {
+        padding: 8px;
+      }
+      .mb-8 {
+        margin-bottom: 16px !important;
+      }
+      .pa-8 {
+        padding: 16px !important;
+      }
+      .pa-2 {
+        padding: 5px !important;
+      }
+    }
+  }
+  .v-application{
+    .company-overview-tabs-content.pa-8 {
+      //padding: 16px !important;
+    }
+    .performance-card-item {
+      .pa-2 {
+        //padding: 5px !important;
+      }
+      .card-header {
+        span {
+          padding: 3px 12px !important;
+        }
+      }
+    }
+  }
+
 /*********************
 4.Search-bar CSS start
 *********************/
@@ -363,6 +407,17 @@
       }
     }
   }
+
+  .company-overview-tabs-content {
+    .company-image {
+      width: 100%;
+      height: 203px !important;
+    }
+    .v-image__image {
+      width: 100%;
+      height: 203px !important;
+    }
+  }
 }
 
 @media (max-width: 420px) {
@@ -379,6 +434,52 @@
       margin-right: -55px;
     }
   }
+/**********************
+2. Company overview
+***********************/
+.company-overview-info {
+  .company-info-details {
+    .empty-logo {
+      width: 38px;
+      height: 38px;
+      display: block;
+      border-radius: 5px;
+      background-color: #FDB433;
+    }
+    .logo-container {
+      width: 38px;
+      height: 38px;
+      img {
+        width: 38px;
+        height: 38px;
+        border-radius: 5px;
+      }
+    }
+    .company-name-info {
+      .company-name {
+        font-size: $content_font_size;
+        font-weight: 700;
+        margin-bottom: 0;
+      }
+      .company-slogan {
+        font-size: $content_font_size;
+      }
+    }
+    .contact-info {
+      .phone {
+        .icon {
+          .v-icon {
+            border-radius: 5px;
+            background-color: #304FFE47;
+            padding: 0.2rem;
+            //opacity: 0.1;
+            color: $primary_color2;
+          }
+        }
+      }
+    }
+  }
+}
 }
 
 @media (max-width: 388px) {

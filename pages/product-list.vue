@@ -3,7 +3,6 @@
     <main_tabs/>
     <div class="market-items">
       <productsTab></productsTab>
-
     </div>
   </div>
 </template>

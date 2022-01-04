@@ -58,6 +58,12 @@ body {
   background-color: $white;
   font-size: $content_font_size;
   .v-application {
+    p {
+      margin-bottom: 0;
+    }
+    a {
+      text-decoration: none;
+    }
     .primary {
       background-color: $primary_color !important;
       border-color: $primary_color !important;
@@ -68,8 +74,23 @@ body {
       caret-color: $primary_color !important;
       color: $primary_color !important;
     }
+    .primary-color {
+      color: $primary_color2
+    }
+    .secondary-background {
+      background-color: $box_background_color2;
+    }
+    .correct-color {
+      color: $correct_color
+    }
+    .bg-correct-color {
+      background-color: $bg-correct_color;
+    }
+
   }
 }
+
+
 
 /*******************
 3.Product-Box CSS start
@@ -1142,6 +1163,109 @@ body {
   }
 }
 
+/**********************
+26. Company overview
+***********************/
+.company-overview-info {
+  display: flex;
+  .company-info-details {
+    display: flex;
+    align-items: center;
+    .empty-logo {
+      width: 4.375rem;
+      height: 4.375rem;
+      display: block;
+      border-radius: 8px;
+      background-color: #FDB433;
+    }
+    .logo-container {
+      width: 4.375rem;
+      height: 4.375rem;
+      img {
+        width: 4.375rem;
+        height: 4.375rem;
+        border-radius: 8px;
+      }
+    }
+    .company-name-info {
+      background-color: $white;
+      .company-name {
+        font-size: $big_title;
+        font-weight: 700;
+        margin-bottom: 0;
+      }
+      .company-slogan {
+        font-size: $title_font_size;
+        font-weight: 300;
+        margin-bottom: 0;
+      }
+    }
+    .contact-info {
+      background-color: $white;
+      .phone {
+        .icon {
+          .v-icon {
+            border-radius: 8px;
+            background-color: #304FFE47;
+            padding: 0.5rem;
+            //opacity: 0.1;
+            color: $primary_color2;
+          }
+        }
+      }
+    }
+  }
+}
+
+.company-overview-tabs {
+  .v-tabs-slider-wrapper {
+    width: 0 !important;
+  }
+  .v-tab.v-tab--active {
+    color: $primary_color2;
+    border-radius: 10px 10px 0 0;
+    background: $box_background_color2;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16);
+  }
+}
+
+.company-overview-tabs-content {
+  .theme--light.v-icon {
+    color: $primary_color2
+  }
+  .company-image {
+    width: 409px;
+    height: 472px !important;
+  }
+  .verify-logo {
+    width: 92px;
+    height: 21px;
+  }
+  .purchases {
+    .card-header {
+      span {
+        color: #6633CC;
+        background-color: #EFEAFA;
+      }
+    }
+  }
+  .satisfaction {
+    .card-header {
+      span {
+        color: #FDB433;
+        background-color: #FFF7EA;
+      }
+    }
+  }
+  .more-sales {
+    .card-header {
+      span {
+        color: #FF4D4D;
+        background-color: #FFEDED;
+      }
+    }
+  }
+}
 
 
 
