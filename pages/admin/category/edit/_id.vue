@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Edit {{ cateTitle }}</h3>
+    <h3>Edit</h3>
     <v-form
       ref="form"
       v-model="valid"
@@ -8,9 +8,8 @@
     >
 
       <v-text-field
-        v-model="voiceTitle"
+        v-model="cateTitle"
         :counter="10"
-        :rules="nameRules"
         label="Title"
         required
       ></v-text-field>
@@ -54,10 +53,17 @@ export default {
     }
   },
   mounted() {
-
+      this.loadCategory();
     },
   methods: {
+    loadCategory(event) {
+      const response = this.$axios.$post('https://api.macrob2b.com/api/find_category',{id:this.$route.params.id}).then(response => {
+        this.cateTitle=response.title
+      }).catch(e => {
+        this.$toast.error('Error on loading');
 
+      });
+    },
   }
 }
 </script>

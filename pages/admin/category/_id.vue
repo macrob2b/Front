@@ -87,7 +87,7 @@ export default {
       let categoryApiURL = `https://api.macrob2b.com/api/category_list`;
       await this.$axios.$post(categoryApiURL,
         {
-          "parent":this.$route.params.id,
+            "parent":this.$route.params.id,
           "paginate":true,
           "keyword":this.search,
           "page":this.page++
