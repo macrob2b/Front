@@ -57,39 +57,46 @@ body {
   position: relative;
   background-color: $white;
   font-size: $content_font_size;
+
   .v-application {
     p {
       margin-bottom: 0;
     }
+
     a {
       text-decoration: none;
     }
+
     .primary {
       background-color: $primary_color !important;
       border-color: $primary_color !important;
       caret-color: $primary_color !important;
     }
+
     .primary--text {
       border-color: $primary_color !important;
       caret-color: $primary_color !important;
       color: $primary_color !important;
     }
+
     .primary-color {
       color: $primary_color2
     }
+
     .secondary-background {
       background-color: $box_background_color2;
     }
+
     .correct-color {
       color: $correct_color
     }
+
     .bg-correct-color {
       background-color: $bg-correct_color;
     }
 
   }
 }
-
 
 
 /*******************
@@ -99,6 +106,7 @@ body {
   margin: 0.5rem 0;
   display: flex;
   justify-content: center;
+
   .product-box-detail {
     background-color: $white !important;
     display: flex;
@@ -107,22 +115,27 @@ body {
     align-items: center;
     min-width: 17.571rem;
     max-width: 90%;
+
     .product-img {
       width: 16.429rem;
       height: 10.714rem;
     }
+
     .product-name {
       font-size: $content_font_size;
       color: $typography_0;
     }
+
     .product-price {
       font-size: $title_font_size;
       color: $correct_color;
     }
+
     .order-btn {
       width: 15.571rem;
       background-color: $primary_color !important;
       color: $white !important;
+
       .btn-text-mobile {
         display: none;
       }
@@ -138,6 +151,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   .searchbar-pagination-container {
     width: 100%;
     background-color: $box_background_color2;
@@ -145,6 +159,7 @@ body {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
+
     .v-pagination {
       .v-pagination__item--active {
         background-color: $primary_color !important;
@@ -152,12 +167,15 @@ body {
       }
     }
   }
+
   .box-margin {
     margin: 3rem 0;
   }
+
   .slider {
     display: none;
   }
+
   .v-pagination__navigation {
     border-radius: 20px !important;
   }
@@ -168,52 +186,67 @@ body {
 *********************/
 .search-bar {
   width: 100%;
+
   .search-bar-mobile {
     display: none;
+
     .theme--light.v-tabs > .v-tabs-bar {
       background-color: transparent !important;
     }
   }
+
   .search-bar-detail {
     display: flex;
     justify-content: space-between;
+
     .theme--light.v-tabs > .v-tabs-bar {
       background-color: transparent !important;
     }
+
     .detail-inner {
       width: 85%;
       margin-left: 0.5rem;
+
       .search-bar-container {
         display: flex;
         align-items: center;
         background-color: $box_background_color !important;
         border-radius: 10px;
+
         .column {
           display: flex;
           align-items: center;
+
           .icons {
             margin-right: 0.5rem;
           }
+
           .v-input {
             margin-bottom: 0.7rem;
+
             .v-icon {
               margin-right: 1rem;
             }
           }
+
           .v-autocomplete {
             margin-bottom: 0 !important;
           }
+
           .v-text-field > .v-input__control > .v-input__slot::before {
             border-style: none;
           }
+
           .v-text-field__details {
             display: none;
           }
+
           .v-input__slot {
             margin-bottom: 0 !important;
             background-color: $box_background_color !important;
           }
         }
+
         .submit-btn {
           background-color: $primary_color !important;
           color: $white;
@@ -221,36 +254,45 @@ body {
         }
       }
     }
+
     .grid-section {
       width: 15%;
       padding: 0 !important;
+
       .tabs {
         display: flex;
         justify-content: flex-end;
+
         .theme--light.v-tabs > .v-tabs-bar {
           background-color: transparent !important;
         }
+
         .v-tab {
           border-radius: 10px !important;
           min-width: 50px !important;
           margin: 0 0.5rem;
           background-color: $box_background_color;
         }
+
         .v-tab--active {
           background-color: $primary_color;
           color: $white;
         }
+
         .v-tabs-slider {
           display: none;
         }
+
         .v-slide-group__content {
           background-color: transparent !important;
         }
       }
+
       .grid-btn {
         padding: 20px 0 !important;
         font-size: 24px;
       }
+
       .v-btn:not(.v-btn--round).v-size--default {
         min-width: 45px !important;
       }
@@ -268,6 +310,7 @@ body {
     width: 100%;
     height: auto;
     position: relative;
+
     .banner {
       display: flex;
       justify-content: center;
@@ -275,32 +318,39 @@ body {
       width: 100%;
       height: auto;
     }
+
     .banner-details-container {
       position: absolute;
       height: 100%;
       display: flex;
       align-items: center;
+
       .banner-details-row {
         width: 100%;
         height: 100%;
+
         .col {
           display: flex;
           align-items: center;
           height: 100%;
+
           .titles-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-around;
             height: 80%;
+
             .subtitle-container {
               width: 60%;
               display: flex;
               justify-content: center;
+
               p {
                 line-height: 2rem;
               }
             }
+
             .btn-container1 {
               button {
                 width: 13.5rem;
@@ -314,6 +364,7 @@ body {
       }
     }
   }
+
   .banner-img {
     width: 100%;
     height: auto;
@@ -327,77 +378,91 @@ body {
   .small-banners-container {
     display: flex;
     justify-content: center;
+
     .row {
       margin: 0;
     }
+
     .small-banners-column {
       display: flex;
       justify-content: center;
+
       .banner-container {
-         display: flex;
-         justify-content: center;
-         width: 100%;
-         height: auto;
-         position: relative;
-         .banner {
-           display: flex;
-           justify-content: center;
-           align-items: center;
-           width: 100%;
-           height: auto;
-         }
-         .banner-details-container {
-           position: absolute;
-           width: 100%;
-           height: 100%;
-           display: flex;
-           align-items: center;
-           .row {
-             height: 100%;
-             .col {
-               display: flex;
-               justify-content: center;
-               padding: 0;
-               .titles-container {
-                 display: flex;
-                 align-items: center;
-                 justify-content: space-between;
-                 width: 90%;
-                 height: auto;
-                 .title-container {
-                   width: 40%;
-                   height: 45%;
-                   display: flex;
-                   padding: 0.5rem;
-                   p {
-                     color: $white;
-                     font-size: $subcontent_font_size;
-                   }
-                 }
-                 .btn-container1 {
-                   height: 80%;
-                   display: flex;
-                   align-items: flex-end;
-                   button {
-                     border-radius: 100%;
-                     min-width: 3rem !important;
-                     height: 3rem !important;
-                     padding: 0;
-                   }
-                   .first-btn {
-                     background-color: $white !important;
-                     color: $secondary_color;
-                   }
-                   .second-btn {
-                     background-color: $secondary_color !important;
-                     color: $white;
-                   }
-                 }
-               }
-             }
-           }
-         }
-       }
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        position: relative;
+
+        .banner {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: auto;
+        }
+
+        .banner-details-container {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+
+          .row {
+            height: 100%;
+
+            .col {
+              display: flex;
+              justify-content: center;
+              padding: 0;
+
+              .titles-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 90%;
+                height: auto;
+
+                .title-container {
+                  width: 40%;
+                  height: 45%;
+                  display: flex;
+                  padding: 0.5rem;
+
+                  p {
+                    color: $white;
+                    font-size: $subcontent_font_size;
+                  }
+                }
+
+                .btn-container1 {
+                  height: 80%;
+                  display: flex;
+                  align-items: flex-end;
+
+                  button {
+                    border-radius: 100%;
+                    min-width: 3rem !important;
+                    height: 3rem !important;
+                    padding: 0;
+                  }
+
+                  .first-btn {
+                    background-color: $white !important;
+                    color: $secondary_color;
+                  }
+
+                  .second-btn {
+                    background-color: $secondary_color !important;
+                    color: $white;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -408,18 +473,22 @@ body {
 *************************/
 .image-slider {
   background-color: $box_background_color;
+
   .slider-header {
     background-color: $box_background_color;
+
     .header-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .header-column {
         .header-title {
           display: flex;
           justify-content: flex-start;
           align-items: center;
           margin-bottom: 0.97rem;
+
           .design-square {
             border-radius: 0;
             background-color: $primary_color;
@@ -428,23 +497,28 @@ body {
             height: 20px;
           }
         }
+
         .btn-container {
           display: flex;
           justify-content: flex-end;
+
           .more-btn {
             color: $primary_color;
           }
         }
       }
     }
+
     .design-divider {
       border-color: $primary_color !important;
       width: 10%;
     }
   }
+
   .product-slider {
     background-color: $box_background_color !important;
     margin-bottom: 1.5rem;
+
     .v-slide-group__prev {
       position: absolute;
       border-radius: 8px;
@@ -453,6 +527,7 @@ body {
       bottom: -1rem;
       right: 5rem;
     }
+
     .v-slide-group__next {
       position: absolute;
       border-radius: 8px;
@@ -471,18 +546,22 @@ body {
   width: 45rem;
   display: flex;
   justify-content: center;
+
   .swiper {
     height: 15rem;
+
     .swiper-slide {
       display: flex;
       justify-content: center;
       align-items: center;
     }
+
     .swiper-pagination {
       .swiper-pagination-bullet {
         margin: 5px;
         background-color: $typography_place_holder;
       }
+
       .swiper-pagination-bullet-active {
         background-color: $primary_color !important;
         width: 1rem;
@@ -490,6 +569,7 @@ body {
       }
     }
   }
+
   .slider-img {
     width: 18.5rem;
     height: 8.938rem;
@@ -506,21 +586,26 @@ body {
         .v-slide-group__next, .v-slide-group__prev {
           display: none !important;
         }
+
         .v-tabs-slider-wrapper {
           display: none;
         }
+
         a {
           text-decoration: none;
+
           .v-tab {
             width: 100%;
             height: 100%;
           }
+
           .v-tab::before {
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
           }
         }
-        .v-tab--active  {
+
+        .v-tab--active {
           color: $typography_0 !important;
           background-color: $box_background_color2 !important;
           border-top-left-radius: 8px;
@@ -529,19 +614,24 @@ body {
       }
     }
   }
+
   .market-items {
     .v-window {
       background-color: transparent !important;
+
       .v-window__container {
         .v-window-item {
           border-top-right-radius: 8px;
         }
+
         .v-window-item--active {
           background-color: transparent !important;
+
           .theme--light.v-card {
             background-color: transparent;
           }
-          .v-card .v-card--flat{
+
+          .v-card .v-card--flat {
             background-color: transparent !important;
           }
         }
@@ -555,11 +645,13 @@ body {
 ***********************/
 .logo-slider {
   width: 100%;
+
   .swiper {
     .swiper-slide {
       display: flex;
       justify-content: center;
       align-items: center;
+
       .logo {
         width: 12.5rem;
         height: 6.25rem;
@@ -575,29 +667,37 @@ body {
 .side-bar {
   background-color: $box_background_color;
   border-radius: 8px;
+
   .title {
     margin-bottom: 1rem;
     padding: 0.5rem;
   }
+
   .side-bar-container {
     .v-expansion-panel::before {
       box-shadow: none !important;
 
     }
+
     .v-expansion-panel {
       background-color: transparent !important;
+
       .v-expansion-panel-header {
         background-color: transparent !important;
       }
+
       .v-expansion-panel-header--active {
         background-color: $typography_place_holder !important;
       }
+
       .v-expansion-panel-content {
         .v-expansion-panel-content__wrap {
           padding: 0;
+
           .v-btn::before {
             background-color: $box_background_color !important;
           }
+
           .v-btn {
             width: 100%;
             display: flex;
@@ -608,6 +708,7 @@ body {
             background-color: $typography_place_holder !important;
             font-weight: 400;
             font-size: $content_font_size;
+
             .dot {
               border-radius: 100% !important;
               width: 0.5rem;
@@ -630,16 +731,19 @@ body {
   background-color: $box_background_color;
   padding: 1rem;
   border-radius: 8px;
+
   .profile-card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 0.5rem;
+
     .profile-header-title {
       .title {
         margin-bottom: 0;
       }
     }
+
     .premium {
       .v-btn {
         box-shadow: none !important;
@@ -648,15 +752,18 @@ body {
       }
     }
   }
+
   .profile-card-body {
     display: flex;
     justify-content: space-between;
     padding: 0.5rem;
+
     .edit-menu {
       display: flex;
       flex-direction: column !important;
       justify-content: center;
       align-items: center;
+
       .v-btn {
         display: flex;
         justify-content: flex-start;
@@ -669,8 +776,10 @@ body {
         border-radius: 8px;
         white-space: unset !important;
         min-width: 100%;
+
         .v-btn__content {
           flex: unset !important;
+
           .dot {
             border-radius: 100% !important;
             width: 0.5rem;
@@ -681,20 +790,26 @@ body {
         }
       }
     }
+
     .strength-inner {
       width: 40%;
+
       p {
         margin-top: 1rem;
         margin-bottom: 0;
       }
+
       .v-input {
         width: 70%;
+
         .v-slider__track-background {
           background-color: $typography_1 !important;
         }
+
         .v-slider__track-fill {
           background-color: $primary_color !important;
         }
+
         .v-slider__thumb {
           background-color: $primary_color !important;
           border-color: $primary_color !important;
@@ -704,6 +819,7 @@ body {
     }
   }
 }
+
 /* stylelint-enable */
 
 /**********************
@@ -711,10 +827,12 @@ body {
 ***********************/
 .company-profile {
   display: flex;
+
   .company-side-bar {
     padding-right: 1rem;
     width: 25%;
   }
+
   .company-main {
     width: 75%;
     //stylelint-disable
@@ -723,6 +841,7 @@ body {
       padding: 0.5rem;
       background-color: $box_background_color;
       border-radius: 8px;
+
       .drawer-btn {
         box-shadow: none !important;
         padding: 0 !important;
@@ -731,6 +850,7 @@ body {
         color: $white;
       }
     }
+
     //stylelint-enable
   }
 }
@@ -741,24 +861,29 @@ body {
 .stepper {
   .v-stepper {
     box-shadow: none !important;
+
     .v-stepper__header {
       box-shadow: none;
+
       .v-stepper__step--complete {
         .v-stepper__step__step {
           background-color: $primary_color !important;
         }
       }
+
       .v-stepper__step--active {
         .v-stepper__step__step {
           background-color: $primary_color !important;
         }
       }
+
       .v-stepper__step {
         .v-stepper__label {
           text-align: center !important;
         }
       }
     }
+
     .v-stepper__items {
       .v-stepper__content {
         .v-stepper__wrapper {
@@ -767,6 +892,7 @@ body {
             color: $white;
             margin-right: 1rem;
           }
+
           .v-btn {
             width: 10rem;
           }
@@ -784,15 +910,18 @@ body {
   padding: 0.5rem;
   margin: 0.5rem 0;
   border-radius: 8px;
+
   .v-divider {
     border-color: $white !important;
   }
+
   .user-type-body {
     display: flex;
     flex-direction: row;
     /* stylelint-disable */
     .v-input {
       margin: 1rem 0.5rem 0 0.5rem;
+
       .v-input__control {
         .v-input__slot {
           .primary--text {
@@ -801,6 +930,7 @@ body {
         }
       }
     }
+
     /* stylelint-enable */
   }
 }
@@ -813,9 +943,11 @@ body {
   padding: 0.5rem;
   margin: 0.5rem 0;
   border-radius: 8px;
+
   .v-divider {
     border-color: $white !important;
   }
+
   .company-info-body {
     .v-form {
       .container {
@@ -823,11 +955,13 @@ body {
         .row {
           .v-input--is-focused {
             color: $primary_color !important;
+
             .primary--text {
               color: $primary_color !important;
             }
           }
         }
+
         /* stylelint-enable */
       }
     }
@@ -842,9 +976,11 @@ body {
   padding: 0.5rem;
   border-radius: 8px;
   margin: 0.5rem 0;
+
   .v-divider {
     border-color: $white !important;
   }
+
   .contact-info-body {
     .v-form {
       .container {
@@ -852,11 +988,13 @@ body {
         .row {
           .v-input--is-focused {
             color: $primary_color !important;
+
             .primary--text {
               color: $primary_color !important;
             }
           }
         }
+
         /* stylelint-enable */
       }
     }
@@ -871,11 +1009,13 @@ body {
   padding: 0.5em;
   border-radius: 8px;
   margin: 0.5rem 0;
+
   .v-divider {
     border-color: $white !important;
   }
+
   .media-body {
-    .v-form{
+    .v-form {
       .container {
         .v-input__prepend-outer {
           display: none !important;
@@ -895,14 +1035,17 @@ body {
       background-color: $primary_color !important;
     }
   }
+
   .v-stepper__header {
     box-shadow: none;
+
     .v-stepper__step {
       .v-stepper__label {
         text-align: center !important;
       }
     }
   }
+
   .v-stepper__wrapper {
     a {
       .submit {
@@ -912,12 +1055,14 @@ body {
         box-shadow: none !important;
       }
     }
+
     .v-btn {
       width: 10rem;
       height: 2.813rem;
     }
   }
 }
+
 /* stylelint-enable */
 
 /**********************
@@ -927,13 +1072,16 @@ body {
 .navigation {
   background-color: $box_background_color;
   border-radius: 8px;
+
   .v-navigation-drawer {
     width: 100% !important;
+
     .title {
       margin-bottom: 1rem;
       padding: 0.5rem;
       display: flex;
       justify-content: space-between;
+
       .v-btn {
         box-shadow: none !important;
         border-radius: 100%;
@@ -941,25 +1089,32 @@ body {
         min-width: 2.188rem;
       }
     }
+
     .side-bar-container {
       .v-expansion-panel::before {
         box-shadow: none !important;
 
       }
+
       .v-expansion-panel {
         background-color: transparent !important;
+
         .v-expansion-panel-header {
           background-color: transparent !important;
         }
+
         .v-expansion-panel-header--active {
           background-color: $typography_place_holder !important;
         }
+
         .v-expansion-panel-content {
           .v-expansion-panel-content__wrap {
             padding: 0;
+
             .v-btn::before {
               background-color: $box_background_color !important;
             }
+
             .v-btn {
               width: 100%;
               display: flex;
@@ -970,6 +1125,7 @@ body {
               background-color: $typography_place_holder !important;
               font-weight: 400;
               font-size: $content_font_size;
+
               .dot {
                 border-radius: 100% !important;
                 width: 0.5rem;
@@ -984,6 +1140,7 @@ body {
     }
   }
 }
+
 //stylelint-enable
 
 /**********************
@@ -995,6 +1152,7 @@ body {
     border-radius: 8px;
     padding: 0.5rem;
     margin: 0.5rem 0;
+
     .add-history {
       display: flex;
       align-items: center;
@@ -1002,12 +1160,15 @@ body {
       p {
         margin-right: 0.5rem;
       }
+
       .v-input {
         margin-top: 0 !important;
+
         .v-input__control {
           .v-input__slot {
             .v-input--radio-group__input {
               flex-direction: row;
+
               .v-radio {
                 margin-bottom: 0 !important;
                 margin-right: 10%;
@@ -1016,26 +1177,32 @@ body {
           }
         }
       }
+
       //stylelint-enable
     }
   }
+
   .company-history {
     background-color: $box_background_color;
     border-radius: 8px;
     padding: 0.5rem;
     margin: 0.5rem 0;
+
     .company-history-header {
       padding: 0.5rem;
     }
+
     .v-divider {
       border-color: $white;
     }
+
     .company-history-body {
       .v-form {
         .container {
           .row {
             .btn-group {
               display: flex;
+
               .v-btn {
                 background-color: $primary_color;
                 color: $white;
@@ -1065,14 +1232,17 @@ body {
   .v-divider {
     border-color: $white !important;
   }
+
   .add-information-body {
     padding: 0.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     .info-list {
       width: 100%;
+
       .info1 {
         display: flex;
         justify-content: space-between;
@@ -1082,19 +1252,23 @@ body {
         border-radius: 8px;
         margin: 0.5rem 0;
         padding: 0.2rem;
+
         span {
           padding: 0.5rem;
         }
+
         .v-btn {
           width: 30%;
           box-shadow: none !important;
         }
       }
     }
+
     .add-btn {
       width: 100% !important;
       box-shadow: none !important;
     }
+
     // stylelint-enable
   }
 }
@@ -1112,6 +1286,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+
     .v-btn {
       margin: 0 1rem 1rem 0;
       box-shadow: none !important;
@@ -1129,10 +1304,12 @@ body {
   border-radius: 8px;
   padding: 0.5rem;
   margin: 0.5rem 0;
+
   .btn-container {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+
     .v-btn {
       margin: 0 1rem 1rem 0;
       box-shadow: none !important;
@@ -1150,10 +1327,12 @@ body {
   border-radius: 8px;
   padding: 0.5rem;
   margin: 0.5rem 0;
+
   .btn-container {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+
     .v-btn {
       margin: 0 1rem 1rem 0;
       box-shadow: none !important;
@@ -1166,11 +1345,13 @@ body {
 /**********************
 26. Company overview
 ***********************/
-.company-overview-info {
+.company-details-info {
   display: flex;
+
   .company-info-details {
     display: flex;
     align-items: center;
+
     .empty-logo {
       width: 4.375rem;
       height: 4.375rem;
@@ -1178,30 +1359,37 @@ body {
       border-radius: 8px;
       background-color: #FDB433;
     }
+
     .logo-container {
       width: 4.375rem;
       height: 4.375rem;
+
       img {
         width: 4.375rem;
         height: 4.375rem;
         border-radius: 8px;
       }
     }
+
     .company-name-info {
       background-color: $white;
+
       .company-name {
         font-size: $big_title;
         font-weight: 700;
         margin-bottom: 0;
       }
+
       .company-slogan {
         font-size: $title_font_size;
         font-weight: 300;
         margin-bottom: 0;
       }
     }
+
     .contact-info {
       background-color: $white;
+
       .phone {
         .icon {
           .v-icon {
@@ -1217,30 +1405,41 @@ body {
   }
 }
 
-.company-overview-tabs {
-  .v-tabs-slider-wrapper {
-    width: 0 !important;
-  }
-  .v-tab.v-tab--active {
-    color: $primary_color2;
-    border-radius: 10px 10px 0 0;
-    background: $box_background_color2;
-    box-shadow: 0 3px 6px rgba(0,0,0,.16);
+.v-application {
+  .company-details-tabs {
+    .v-tabs-slider-wrapper {
+      width: 0 !important;
+    }
+
+    .v-tab.v-tab--active {
+      color: $primary_color2;
+      border-radius: 10px 10px 0 0;
+      background: $box_background_color2;
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, .16);
+    }
+
+    .nuxt-link-exact-active.nuxt-link-active {
+      color: $primary_color2;
+    }
   }
 }
 
-.company-overview-tabs-content {
+
+.company-details-tabs-content {
   .theme--light.v-icon {
     color: $primary_color2
   }
+
   .company-image {
     width: 409px;
     height: 472px !important;
   }
+
   .verify-logo {
     width: 92px;
     height: 21px;
   }
+
   .purchases {
     .card-header {
       span {
@@ -1249,6 +1448,7 @@ body {
       }
     }
   }
+
   .satisfaction {
     .card-header {
       span {
@@ -1257,6 +1457,7 @@ body {
       }
     }
   }
+
   .more-sales {
     .card-header {
       span {
@@ -1266,6 +1467,35 @@ body {
     }
   }
 }
+
+.branch-tab-content {
+  aside.v-navigation-drawer {
+    width: 100% !important;
+
+    .v-list--nav {
+      padding: 0;
+    }
+
+    .v-list-item {
+      padding: 0 16px;
+      border-bottom: 1px solid $box_background_color2;
+      border-radius: 0;
+
+      .theme--light.v-icon {
+        color: #000000;
+      }
+    }
+
+    .v-list-item.selected {
+      border-left: 3px solid $primary_color2;
+
+      .v-icon {
+        color: $primary_color2
+      }
+    }
+  }
+}
+
 
 
 

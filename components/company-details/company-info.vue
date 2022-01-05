@@ -1,5 +1,5 @@
 <template>
-  <div class="py-8 company-overview-info">
+  <div class="py-8 company-details-info">
     <div class="d-flex align-center justify-space-between flex-wrap company-info-details">
       <div class="d-flex align-center flex-wrap pe-sm-16">
         <span v-if="logo === ''" class="me-4 empty-logo">&nbsp;</span>
