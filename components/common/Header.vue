@@ -47,8 +47,11 @@
                 </v-btn>
               </div>
               <div class="pa-1 px-2 mx-1 mr-3">
-                <v-btn to="/login" min-width="0" width="100" color="#fb641e">
+                <v-btn v-if="!this.$auth.loggedIn" to="/login" min-width="0" width="100" color="#fb641e">
                   <span  id="span1"> {{signin_btn}} </span>
+                </v-btn>
+                <v-btn v-else to="/user-dashboard" min-width="0" width="100" color="#fb641e">
+                  <span  id="span1"> Hi, {{$auth.user.first_name}} </span>
                 </v-btn>
               </div>
             </div>
@@ -122,8 +125,7 @@ export default {
     };
   },
   mounted() {
-    if(this.$auth.loggedIn)
-      this.signin_btn="Dashboard";
+
   },
   options: {
     customProperties: true,

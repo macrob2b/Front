@@ -26,8 +26,11 @@
                     and assessed.
                   </p>
                 </div>
-                <v-btn to="/login" color="primary" width="55%">
+                <v-btn v-if="!this.$auth.loggedIn" to="/login" color="primary" width="55%">
                   <span  id="span1"> SIGNIN </span>
+                </v-btn>
+                <v-btn v-else to="/user-dashboard" color="primary" width="55%">
+                  <span  id="span1"> Hi, {{$auth.user.first_name}} </span>
                 </v-btn>
               </div>
             </div>
