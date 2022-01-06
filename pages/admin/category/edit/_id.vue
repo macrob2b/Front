@@ -57,7 +57,7 @@ export default {
     },
   methods: {
     loadCategory(event) {
-      const response = this.$axios.$post('https://api.macrob2b.com/api/find_category',{id:this.$route.params.id}).then(response => {
+      const response = this.$axios.$post('/find_category',{id:this.$route.params.id}).then(response => {
         this.cateTitle=response.title
       }).catch(e => {
         this.$toast.error('Error on loading');

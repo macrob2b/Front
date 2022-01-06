@@ -84,7 +84,7 @@ export default {
     },
     async getData() {
       //Get brand list
-      let categoryApiURL = `https://api.macrob2b.com/api/category_list`;
+      let categoryApiURL = `/api/category_list`;
       await this.$axios.$post(categoryApiURL,
         {
             "parent":this.$route.params.id,
