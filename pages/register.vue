@@ -292,7 +292,7 @@ export default {
   },
   methods : {
     async submit() {
-      let checkRegister = await this.$axios.post('register', {
+      let checkRegister = await this.$axios.post('/api/register', {
         "first_name"       : this.firstName,
         "last_name"        : this.lastName,
         "mobile_num"       : this.phoneCode + this.phoneNumber,

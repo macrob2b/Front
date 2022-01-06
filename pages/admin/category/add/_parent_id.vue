@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Edit</h3>
+    <h3>Add new item</h3>
     <v-form
       ref="form"
       v-model="valid"
@@ -15,15 +15,12 @@
       ></v-text-field>
 
 
-
-
-
       <v-btn
         color="success"
         class="mr-4"
-        @click="updateCategory"
+        @click="addCategory"
       >
-        {{this.submit_btn}}
+        {{ this.submit_btn }}
       </v-btn>
 
       <v-btn
@@ -48,29 +45,20 @@ export default {
   layout: "admin",
   data() {
     return {
-       cateTitle:null,
-      submit_btn:'Update'
+      cateTitle: null,
+      submit_btn: 'Create'
     }
   },
   mounted() {
-      this.loadCategory();
-    },
+  },
   methods: {
-    loadCategory(event) {
-      const response = this.$axios.$post('/api/find_category',{id:this.$route.params.id}).then(response => {
-        this.cateTitle=response.title
-      }).catch(e => {
-        this.$toast.error('Error on loading');
-
-      });
-    },
-    updateCategory() {
-      const response = this.$axios.$put('/api/update_category',
-        {id: this.$route.params.id, title: this.cateTitle}).then(response => {
-        this.$toast.success('Updated successfully');
+    addCategory() {
+      const response = this.$axios.$post('/api/create_category',
+        {parent: this.$route.params.parent_id, title: this.cateTitle}).then(response => {
+        this.$toast.success('Created successfully');
         this.$router.go(-1);
       }).catch(e => {
-        this.$toast.error('Error on updating');
+        this.$toast.error('Error on creating');
 
       });
     },
