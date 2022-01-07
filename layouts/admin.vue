@@ -100,7 +100,6 @@ export default {
         this.$toast.success('Logout successfully')
       );
     },
-
   }
 }
 </script>

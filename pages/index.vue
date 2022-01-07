@@ -48,9 +48,9 @@
         </ProductContainer>
       </ContainerCard>
 
-      <div class="pa-2 ma-5" v-show="!$vuetify.breakpoint.xs">
-        <Logo :itemsPerView="{ desktop: 7, mobile: 3 }"/>
-      </div>
+<!--      <div class="pa-2 ma-5" v-show="!$vuetify.breakpoint.xs">-->
+<!--        <Logo />-->
+<!--      </div>-->
     </v-app>
   </div>
 </template>
@@ -67,7 +67,7 @@ import ProductCard2       from "../components/product/ProductCard2.vue";
 import ProductSection2    from "../components/home/ProductSection2.vue";
 import ProductSection3    from "../components/home/ProductSection3.vue";
 import CarouselResponsive from "../components/home/CarouselResponsive.vue";
-import Logo               from "../components/home/Logo.vue";
+// import Logo               from "../components/home/Logo.vue";
 import Banner             from "../components/home/Banner.vue";
 
 export default {
@@ -89,7 +89,7 @@ export default {
     ProductCard2,
     ProductSection2,
     ProductSection3,
-    Logo,
+    // Logo,
     CarouselResponsive,
     Banner,
   },

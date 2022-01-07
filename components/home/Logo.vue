@@ -1,20 +1,20 @@
 <template>
-  <div class="my-10">
-    <v-row>
-      <v-col v-for="n in !$vuetify.breakpoint.xs ? `itemsPerView`.desktop : itemsPerView.desktop" :key="n">
-        <v-card elevation="0">
-          <img src="lorem-ipsum.png" width="100%"/>
-        </v-card>
-      </v-col>
-    </v-row>
-  </div>
+<!--  <div class="my-10">-->
+<!--    <v-row>-->
+<!--      <v-col v-for="n in !$vuetify.breakpoint.xs ? `itemsPerView`.desktop : itemsPerView.desktop" :key="n">-->
+<!--        <v-card elevation="0">-->
+<!--          <img src="lorem-ipsum.png" width="100%"/>-->
+<!--        </v-card>-->
+<!--      </v-col>-->
+<!--    </v-row>-->
+<!--  </div>-->
 </template>
 
 <script>
 export default {
-  props: {
-    itemsPerView: 7,
-  },
+  // props: {
+  //   itemsPerView: 7,
+  // },
 };
 </script>
 
