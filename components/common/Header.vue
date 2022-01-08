@@ -11,10 +11,10 @@
               background-color="transparent"
               slider-color="white"
             >
-              <v-tab to="/product-list">Buy Now</v-tab>
-              <v-tab>Sell Now</v-tab>
-              <v-tab>Community</v-tab>
-              <v-tab>Help</v-tab>
+              <v-tab
+                v-for="(item,index) in main_items"
+                :to="item.to">{{item.title}}</v-tab>
+
             </v-tabs>
           </v-col>
           <v-col class="d-flex justify-center">
@@ -37,7 +37,7 @@
                 </v-btn>
               </div>
               <div class="pa-1 px-2 mx-1">
-                <v-btn color="#005270" min-width="0" width="40">
+                <v-btn color="#005270" min-width="0" width="40" to="/user-dashboard">
                   <v-icon color="white"> mdi-account </v-icon>
                 </v-btn>
               </div>
@@ -63,14 +63,13 @@
     </div>
 
     <!-- responsive -->
-
     <div class="d-flex d-sm-none" style="width: 100%">
       <div style="width: 100%">
         <v-card class="card" style="width: 100%">
           <div class="d-flex justify-space-between px-3" style="width: 100%">
             <div class="d-flex justify-start py-3">
               <div class="mx-1">
-                <v-btn color="#005270" min-width="0" width="20">
+                <v-btn color="#005270" min-width="0" width="20" @click.stop="drawer= !drawer">
                   <v-icon color="white" small> mdi-menu </v-icon>
                 </v-btn>
               </div>
@@ -94,7 +93,7 @@
 
             <div class="d-flex justify-start py-3">
               <div class="mx-1">
-                <v-btn color="#005270" min-width="0" width="20">
+                <v-btn color="#005270" min-width="0" width="20" to="/user-dashboard">
                   <v-icon color="white" small> mdi-account </v-icon>
                 </v-btn>
               </div>
@@ -106,23 +105,74 @@
             </div>
           </div>
 
-          <HeaderBottomResponsive />
+          <HeaderBottom />
         </v-card>
       </div>
     </div>
+
+    <v-navigation-drawer
+      v-model="drawer"
+      fixed
+
+    >
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="text-h6 text-center">
+            <nuxt-link tag="img" class="mr-3 pointer" :src="require('../../assets/img/black-logo.png')"  to="/" nuxt height="40px">
+            </nuxt-link>
+          </v-list-item-title>
+
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list>
+        <v-list-item
+          v-for="(item, i) in main_items"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+        >
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title"/>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
     <SearchModal v-on:toggle="clicked" v-show="searchActive" />
   </div>
 </template>
 
 <script>
 import HeaderBottom from "./HeaderBottom.vue";
-import HeaderBottomResponsive from "./HeaderBottomResponsive.vue";
 import SearchModal from "./SearchModal.vue";
 export default {
   data() {
     return {
+      drawer:false,
       searchActive: false,
-      signin_btn: 'Sign In'
+      signin_btn: 'Sign In',
+      main_items: [
+        {
+          title: 'Buy Now',
+          to: '/product-list'
+        },
+        {
+          title: 'Sell Now ',
+          to: '/sell'
+        },
+        {
+          title: 'Community',
+          to: '/community'
+        },
+        {
+          title: 'Help',
+          to: '/help'
+        }
+      ],
+
     };
   },
   mounted() {
@@ -133,7 +183,6 @@ export default {
   },
   components: {
     HeaderBottom,
-    HeaderBottomResponsive,
     SearchModal,
   },
   methods: {
