@@ -9,8 +9,15 @@
         :headers="headers"
         :items="trademark"
         item-key="name"
-        class="elevation-1"
-      ></v-data-table>
+        class="elevation-1 trade-table"
+      >
+        <template v-slot:item.Verified="{ item }">
+          <v-simple-checkbox
+            v-model="item.Verified"
+            disabled
+          ></v-simple-checkbox>
+        </template>
+      </v-data-table>
     </div>
   </div>
 </template>
@@ -21,20 +28,11 @@ export default {
 
   },
   data: () => ({
-    trademark: [
-      {
-        name: 'Example',
-        TrademarkNO: 'Example',
-        StartDate: 'Example',
-        TrademarkDescription: 'Example',
-        Verified: 'Example',
-      },
-    ],
     headers: [
       {
         text: 'TrademarkName',
         align: 'start',
-        sortable: false,
+        sortable: true,
         value: 'name',
       },
       { text: 'Trademark NO.', value: 'TrademarkNO' },
@@ -42,6 +40,23 @@ export default {
       { text: 'Trademark description', value: 'TrademarkDescription' },
       { text: 'Verified', value: 'Verified' },
     ],
+    trademark: [
+      {
+        name: 'Example',
+        TrademarkNO: 'Example',
+        StartDate: 'Example',
+        TrademarkDescription: 'Example',
+        Verified: true,
+      },
+      {
+        name: 'Example',
+        TrademarkNO: 'Example',
+        StartDate: 'Example',
+        TrademarkDescription: 'Example',
+        Verified: true,
+      },
+    ],
+
   }),
 }
 </script>

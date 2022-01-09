@@ -32,6 +32,7 @@ import Navigation from "~/components/navigation"
 
 export default {
   name:"user-dashboard",
+  middleware:'is_user',
   components: {
     SideBar,
     ProfileCard,

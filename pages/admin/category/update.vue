@@ -170,203 +170,24 @@ export default {
   layout: "admin",
   data() {
     return {
-      car_models:[],
-      productId: null,
-      voiceFile: null,
-      voiceTitle: null,
-      voice_uploaded_name:null,
-      submit_btn:'ثبت',
-      voiceCar: null,
-      product_details:null,
-      product_price:null,
-      price_by_discount:null,
-      product_id:null,
+      category_title:null,
 
-
-      product_title:null,
-      product_parent:null,
-      discount:0,
-
-      search: '',
-      headers: [
-        {
-          text: 'عنوان',
-          align: 'start',
-          sortable: false,
-          value: 'Title',
-        },
-        { text: 'صدا', value: 'voice_file', align: 'center' },
-        // { text: 'قیمت', value: 'price' },
-        { text: 'عملیات', value: 'actions', sortable: false },
-      ],
-      product_voices:[],
     }
   }, mounted() {
-    if (this.$route.params.productId){
-      this.productId = this.$route.params.productId;
-
-      //Get product general info
-      this.$axios.post('/api/get_product',{},
-        {
-          params:{
-            productId:this.productId
-          },
-          headers:{
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.$auth.strategy.token.get()
-          }
-        }).then(response=>{
-        this.product_details=response.data;
-        this.product_title=response.data.title;
-        this.product_price=response.data.price;
-        this.discount=response.data.discount;
-        this.product_parent=response.data.parent;
-        this.product_id=response.data.id;
-      })
-
-
-      this.$axios.post('/api/get_product_voice',{},
-        {
-          params:{
-            productId:this.productId
-          },
-          headers:{
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.$auth.strategy.token.get()
-          }
-        }).then(response=>{
-          this.product_voices=response.data;
-      })
-
-
-      //Get cluster list
-      let clusterApiURL = `/api/cars_list`;
-      this.$axios.$post(clusterApiURL).then(response => {
-        console.log(response);
-        this.car_models = response;
-      })
-        .catch(e => {
-          console.log('error');
-        })
-
-    }
-    else
-      this.$router.push({
-        path: '/admin/product/main_product'
-      })
+     this.loadCategory();
 
   },
-  watch: {
-    // whenever question changes, this function will run
-    discount: function (newDiscount,oldDiscount) {
-      // `this` points to the vm instance
-      this.price_by_discount= this.product_price-newDiscount*this.product_price/100;
-    }
-  },
+
   methods: {
-    uploadVoice(event) {
-      this.submit_btn="در حال آپلود فایل صدا منتظر بمانید...."
-      let formData = new FormData();
-      formData.append('voice', this.voiceFile);
-      const response = this.$axios.$post('/api/submit_voice',
-        formData, {
-          params: {
-            productId:this.$route.params.productId
-          },
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': 'Bearer ' + this.$auth.strategy.token.get()
-          }
-        }).then(response => {
-        if (response !== false)
-           this.voice_uploaded_name=response;
-        else
-          this.$toast.error('در فرآیند آپلود خطایی رخ داده است.');
+    loadCategory(event) {
+      const response = this.$axios.$post('/api/find_category',{id:this.$route.params.id}).then(response => {
+        this.category_title=response.title
       }).catch(e => {
-        this.$toast.error('در فرآیند ثبت خطایی رخ داده است.');
-
-      });
-      this.submit_btn="ثبت"
-
-
-    },
-    submit_voice() {
-      const response = this.$axios.$post('/api/submit_product_voice',
-        {
-          title: this.voiceTitle,
-          file:this.voice_uploaded_name,
-          productId:this.productId,
-          car:this.voiceCar
-        }
-        , {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.$auth.strategy.token.get()
-          }
-        }).then(response => {
-        this.$router.push({
-          path:'/admin/product'
-        });
-        this.$toast.success('با موفقیت ثبت شد');
-
-      }).catch(e => {
-        this.$toast.error('در فرآیند ثبت خطایی رخ داده است.');
-
-      });
-    },
-    deleteVoice(item_id) {
-      const response = this.$axios.$delete('/api/delete_product_voice'
-        , {
-          params:{
-            id : item_id
-          },
-          headers: {
-            // 'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.$auth.strategy.token.get()
-          }
-        }).then(response => {
-        this.$router.push({
-          path:'/admin/product'
-        });
-        this.$toast.success('با موفقیت حذف شد');
-
-      }).catch(e => {
-        this.$toast.error('در فرآیند حذف خطایی رخ داده است.');
+        this.$toast.error('Error on loading');
 
       });
     },
 
-
-    submit_discount(){
-      this.$toast.success(this.discount);
-
-      const response = this.$axios.$put('/api/update_product_discount'
-        , {
-
-          },{
-           params:{
-             id : this.product_id,
-             discount : this.discount
-           },
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + this.$auth.strategy.token.get()
-          }
-        }).then(response => {
-        this.$toast.success('با موفقیت اعمال شد');
-
-      }).catch(e => {
-        this.$toast.error('در فرآیند ایجاد تخفیف خطایی رخ داده است.');
-
-      });
-    },
-    getVoiceUrl(voice) {
-      var voice_url = 'https://dl.mycarlubs.com/product/voice/'+this.productId+"/"+voice;
-      return voice_url;
-    },
-    nameRules(){
-
-    }
   }
 }
 </script>

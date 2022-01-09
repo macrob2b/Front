@@ -1,6 +1,6 @@
 <template>
   <div class="container px-10">
-    <v-row>
+    <v-row v-if="subCats && subCats.length">
       <v-col
         cols="3"
         v-show="!$vuetify.breakpoint.xs"
@@ -8,8 +8,8 @@
         :key="idx"
       >
         <div class="d-flex-column">
-          <h3  id="h1">{{ cat.cat }}</h3>
-          <div v-for="(sub,idx2) in cat.sub" :key="'A' + idx2">{{ sub }}</div>
+          <h3 id="h1">{{ cat.title }}</h3>
+          <div v-for="(sub,idx2) in cat.grandchildren" :key="'A' + idx2">{{ sub.title }}</div>
         </div>
       </v-col>
       <v-col
@@ -24,127 +24,23 @@
         </div>
       </v-col>
     </v-row>
+    <v-row v-else>{{loading}}</v-row>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['subCats'],
   data() {
     return {
-      subCats: [
-        {
-          cat: "Media",
-          sub: [
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-          ],
-        },
-        {
-          cat: "Media",
-          sub: [
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-          ],
-        },
-        {
-          cat: "Media",
-          sub: [
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-          ],
-        },
-        {
-          cat: "Media",
-          sub: [
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-          ],
-        },
-        {
-          cat: "Media",
-          sub: [
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-          ],
-        },
-        {
-          cat: "Media",
-          sub: [
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-          ],
-        },
-        {
-          cat: "Media",
-          sub: [
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-          ],
-        },
-        {
-          cat: "Media",
-          sub: [
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-          ],
-        },
-        {
-          cat: "Media",
-          sub: [
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-          ],
-        },
-        {
-          cat: "Media",
-          sub: [
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-            "Smart TV",
-          ],
-        },
-      ],
+      loading: 'Loading ...'
     };
   },
+  mounted() {
+
+  },methods:{
+
+  }
 };
 </script>
 
@@ -153,13 +49,14 @@ export default {
   position: absolute;
   z-index: 50;
   height: auto;
-  top: 160px;
+  top: 145px;
   max-width: 100%;
   left: 0;
   right: 0;
   background-color: #F3F3F3;
 }
-#h1{
-  font-weight:400
+
+#h1 {
+  font-weight: 400
 }
 </style>

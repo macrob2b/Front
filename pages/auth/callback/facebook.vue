@@ -13,7 +13,7 @@ export default {
   name: "facebookCallBack",
   auth: 'guest',
   async mounted() {
-    await this.$axios.post('https://api.macrob2b.com/api/facebook_login',
+    await this.$axios.post('/api/facebook_login',
       {
         access_token: this.$route.query.code,
       }).then(response => {

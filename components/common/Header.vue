@@ -1,11 +1,12 @@
 <template>
   <!-- <Tutorial/> -->
-  <div class="header">
-    <div v-show="!$vuetify.breakpoint.xs" class="px-1 pb-2 pt-0" >
-      <v-card class="card">
-        <v-row class="justify-between">
+  <div  class="header">
+    <div  class="d-none d-sm-flex pb-2 pt-0 w-100 pa-0 ma-0 "  >
+      <v-card class="card pa-2 ma-0" style="width: 100%">
+        <v-row class="justify-between" >
           <v-col class="pt-0">
             <v-tabs
+              fluid
               fixed-tabs
               background-color="transparent"
               slider-color="white"
@@ -22,7 +23,7 @@
               class="pointer"
               :src="require('../../assets/img/white-logo.png')" to="/" />
           </v-col>
-          <v-col>
+          <v-col class="pr-0">
             <div class="d-flex justify-end">
               <!-- <div class="pa-1 px-2 mx-3"> -->
               <div class="pa-1 px-2 mx-1">
@@ -47,8 +48,11 @@
                 </v-btn>
               </div>
               <div class="pa-1 px-2 mx-1 mr-3">
-                <v-btn to="/login" min-width="0" width="100" color="#fb641e">
+                <v-btn v-if="!this.$auth.loggedIn" to="/login" min-width="0" width="100" color="#fb641e">
                   <span  id="span1"> {{signin_btn}} </span>
+                </v-btn>
+                <v-btn v-else to="/user-dashboard" min-width="0" width="100" color="#fb641e">
+                  <span  id="span1"> Hi, {{$auth.user.first_name}} </span>
                 </v-btn>
               </div>
             </div>
@@ -60,10 +64,10 @@
 
     <!-- responsive -->
 
-    <div v-show="$vuetify.breakpoint.xs">
-      <div class="">
-        <v-card class="card">
-          <div class="d-flex justify-space-between px-3">
+    <div class="d-flex d-sm-none" style="width: 100%">
+      <div style="width: 100%">
+        <v-card class="card" style="width: 100%">
+          <div class="d-flex justify-space-between px-3" style="width: 100%">
             <div class="d-flex justify-start py-3">
               <div class="mx-1">
                 <v-btn color="#005270" min-width="0" width="20">
@@ -122,8 +126,7 @@ export default {
     };
   },
   mounted() {
-    if(this.$auth.loggedIn)
-      this.signin_btn="Dashboard";
+
   },
   options: {
     customProperties: true,
@@ -152,7 +155,7 @@ export default {
   position: fixed;
   right: 0;
   left: 0;
-  top: 10px;
+  top: 0;
   max-width: 100%;
   z-index: 100;
 }
@@ -174,6 +177,7 @@ export default {
   background-color: var(--v-primary-base) !important;
 }
 .v-tab {
+  width: fit-content!important;
   color: white !important;
   padding-top: 10px;
 }

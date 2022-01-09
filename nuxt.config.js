@@ -5,17 +5,17 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s | MacroB2B',
-    title        : 'MacroB2B',
-    htmlAttrs    : {
+    title: 'MacroB2B',
+    htmlAttrs: {
       lang: 'en'
     },
-    meta         : [
+    meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
       {hid: 'description', name: 'description', content: ''},
       {name: 'format-detection', content: 'telephone=no'}
     ],
-    link         : [
+    link: [
       {rel: 'icon', type: 'image/x-icon', href: '/macrob2b.ico'}
     ]
   },
@@ -59,117 +59,135 @@ export default {
 
 
   axios: {
-    baseURL: 'https://api.macrob2b.com/api/',
+    proxy: true,
+    headers: {}
   },
 
   auth: {
     strategies: {
-      google  : {
-        clientId           : config.googleClientId,
-        redirectUri        : config.googleRedirectUri,
+      google: {
+        clientId: config.googleClientId,
+        redirectUri: config.googleRedirectUri,
         codeChallengeMethod: '',
-        responseType       : 'code',
-        grantType          : 'google',
-        endpoints          : {
-          token   : 'https://api.macrob2b.com/api/google_login',
-          userInfo: 'https://api.macrob2b.com/api/user'
+        responseType: 'code',
+        grantType: 'google',
+        endpoints: {
+          token: '/api/google_login',
+          userInfo: '/api/user'
         },
+        user: {
+          property: 'user',
+          autoFetch: false
+        }
       },
       facebook: {
-        clientId           : config.facebookClientId,
-        redirectUri        : config.facebookRedirectUri,
-        responseType       : 'code',
+        clientId: config.facebookClientId,
+        redirectUri: config.facebookRedirectUri,
+        responseType: 'code',
         codeChallengeMethod: '',
-        grantType          : 'facebook',
-        scope              : ['public_profile', 'email'],
-        endpoints          : {
-          token   : 'https://api.macrob2b.com/api/facebook_login',
-          userInfo: 'https://api.macrob2b.com/api/user'
+        grantType: 'facebook',
+        scope: ['public_profile', 'email'],
+        endpoints: {
+          token: '/api/facebook_login',
+          userInfo: '/api/user'
         },
+        user: {
+          property: 'user',
+          autoFetch: false
+        }
       },
       linkedin: {
-        scheme             : 'oauth2',
-        clientId           : config.linkedinClientId,
-        redirectUri        : config.linkedinRedirectUri,
-        endpoints          : {
+        scheme: 'oauth2',
+        clientId: config.linkedinClientId,
+        redirectUri: config.linkedinRedirectUri,
+        endpoints: {
           authorization: 'https://www.linkedin.com/oauth/v2/authorization',
-          token        : 'https://api.macrob2b.com/api/linkedin_login',
-          userInfo     : 'https://api.macrob2b.com/api/user'
+          token: '/api/linkedin_login',
+          userInfo: '/api/user'
         },
-        responseType       : 'code',
-        scope              : ['r_liteprofile', 'r_emailaddress'],
+        responseType: 'code',
+        scope: ['r_liteprofile', 'r_emailaddress'],
         codeChallengeMethod: '',
-        grantType          : 'linkedin',
+        grantType: 'linkedin',
+        user: {
+          property: 'user',
+          autoFetch: false
+        }
       },
-      local   : {
-        token    : {
+      local: {
+        token: {
           property: 'token',
-          global  : true,
+          global: true,
         },
-        user     : {
-          property : 'user',
+        user: {
+          property: 'user',
           autoFetch: true
         },
         endpoints: {
-          login: {url: 'https://api.macrob2b.com/api/login', method: 'post'},
-          user : {url: 'https://api.macrob2b.com/api/user'}
+          login: {url: '/api/login', method: 'post'},
+          user: {url: '/api/user'}
         }
       }
     }
   },
+
 
   router: {
     middleware: ['auth']
   },
 
   i18n: {
-    locales      : [
+    locales: [
       {code: 'en', file: 'en.js'},
     ],
-    lazy         : true,
-    langDir      : 'lang/',
+    lazy: true,
+    langDir: 'lang/',
     defaultLocale: 'en',
   },
+  proxy: {
+    '/api/': {target: "https://api.macrob2b.com", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
+  },
+
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
-    theme          : {
+    theme: {
       options: {customProperties: true},
-      dark   : false,
-      themes : {
-        dark : {
-          primary  : colors.blue.darken2,
-          accent   : colors.grey.darken3,
+      dark: false,
+      themes: {
+        dark: {
+          primary: colors.blue.darken2,
+          accent: colors.grey.darken3,
           secondary: "#FB641E",
-          info     : colors.teal.lighten1,
-          warning  : colors.amber.base,
-          error    : colors.deepOrange.accent4,
-          success  : colors.green.accent3
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3
         },
         light: {
-          primary  : '#00394D',
-          accent   : '#fb641e',
+          primary: '#00394D',
+          accent: '#fb641e',
           secondary: "#165048",
-          info     : colors.teal.lighten1,
-          warning  : colors.amber.base,
-          error    : colors.deepOrange.accent4,
-          success  : colors.green.accent3
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3
         }
       }
     }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build : {
+  build: {
     transpile: ["vee-validate"]
   },
-  toast : {
+  toast: {
     position: 'top-center',
     duration: 3000,
     register: [ // Register custom toasts
       {
-        name   : 'my-error',
+        name: 'my-error',
         message: 'Oops...Something went wrong',
         options: {
           type: 'error'

@@ -14,7 +14,7 @@ export default {
   name: "googleCallBack",
   auth: 'guest',
   async mounted() {
-    await this.$axios.post('https://api.macrob2b.com/api/google_login',
+    await this.$axios.post('/api/google_login',
       {
         code        : this.$route.query.code,
         redirect_uri: config.googleRedirectUri

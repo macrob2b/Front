@@ -22,7 +22,6 @@
     </v-app-bar>
 
 
-
     <v-navigation-drawer
       v-model="drawer"
       absolute
@@ -36,7 +35,7 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>{{user_first_name}}</v-list-item-title>
+            <v-list-item-title>{{ user_first_name }}</v-list-item-title>
             <v-list-item-subtitle class="pointer" @click="logout">Online | Logout</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -52,16 +51,16 @@
           active-class="deep-purple--text text--accent-4"
         >
           <v-list-item to="/admin/category">
-            <v-list-item-title >Category manage</v-list-item-title>
+            <v-list-item-title>Category manage</v-list-item-title>
           </v-list-item>
           <v-list-item to="/admin/company">
-            <v-list-item-title >Company manage</v-list-item-title>
+            <v-list-item-title>Company manage</v-list-item-title>
           </v-list-item>
           <v-list-item to="/admin/dashboard">
-            <v-list-item-title >Dashboard</v-list-item-title>
+            <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item>
           <v-list-item to="/" color="primary">
-            <v-list-item-title >Home page</v-list-item-title>
+            <v-list-item-title>Home page</v-list-item-title>
           </v-list-item>
 
         </v-list-item-group>
@@ -77,16 +76,15 @@
     </v-main>
 
 
-
   </v-app>
 </template>
 
 <script>
 export default {
-  name:"admin",
+  name: "admin",
   data() {
     return {
-      user_first_name:this.$auth.FirstName,
+      user_first_name: this.$auth.FirstName,
       drawer: false,
       fixed: false,
 
@@ -96,12 +94,12 @@ export default {
 
 
   }
-  ,methods: {
-    async logout(){
-      await this.$auth.logout().then(()=>
+  , methods: {
+    async logout() {
+      await this.$auth.logout().then(() =>
         this.$toast.success('Logout successfully')
-    );
-    }
+      );
+    },
   }
 }
 </script>

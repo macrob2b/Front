@@ -1,7 +1,7 @@
 <template>
   <div v-click-outside="onClickOutside">
     <v-row class="justify-between">
-      <v-col class="pb-0">
+      <v-col cols="9"  class="pb-0">
         <v-tabs
           background-color="transparent"
           class="mt-5"
@@ -12,16 +12,23 @@
             @mouseleave="mouseLeave"
             v-for="(n, idx) in tabs"
             :key="idx"
-            @click="showSubCat(idx)"
+            @click="showSubCat(idx,n._id)"
           >
-            <span id="span1" >
+            <span  >
               <!-- @mouseleave="mouseLeave" -->
               {{ n.title }}
             </span>
           </v-tab>
+          <v-tab
+          >
+            <span  >
+              <!-- @mouseleave="mouseLeave" -->
+              All
+            </span>
+          </v-tab>
         </v-tabs>
       </v-col>
-      <v-col class="d-flex justify-end">
+      <v-col cols="3" class="d-flex justify-end">
         <div class="px-3 mx-2 mt-3">
           <v-btn color="white" min-width="0" width="auto" height="45">
             <span  id="span2" class="my-10"> POST BUYING LEADS </span>
@@ -29,7 +36,7 @@
         </div>
       </v-col>
     </v-row>
-    <HeaderSubCat v-show="activeTab != -1" />
+    <HeaderSubCat :subCats="sub_cats" v-show="activeTab != -1" />
   </div>
 </template>
 
@@ -41,23 +48,8 @@ export default {
   components: { HeaderSubCat },
   data() {
     return {
-      tabs: [
-        {
-          title: "category name",
-        },
-        {
-          title: "category name",
-        },
-        {
-          title: "category name",
-        },
-        {
-          title: "category name",
-        },
-        {
-          title: "All",
-        },
-      ],
+      sub_cats:null,
+      tabs: [],
       activeTab: -1,
       subCatShow: false,
       directives: {
@@ -65,14 +57,51 @@ export default {
       },
     };
   },
+  mounted() {
+    this.getData();
+  },
   methods: {
+    async getData() {
+      //Get brand list
+      let categoryApiURL = `/api/cate_list_by_child`;
+      await this.$axios.$post(categoryApiURL,
+        {
+          "without_child": true,
+        }
+      ).then(response => {
+         this.tabs=response;
+      })
+        .catch(e => {
+          this.table_status = "Not found"
+          console.log('error');
+        })
+    },
+    async loadCatChild(parent) {
+      this.subCats=[];
+      //Get brand list
+      let categoryApiURL = `/api/cate_list_by_child`;
+      await this.$axios.$post(categoryApiURL,
+        {
+          "parent": parent
+        }
+      ).then(response => {
+        this.sub_cats=response;
+      })
+        .catch(e => {
+          this.table_status = "Not found"
+          console.log('error');
+        })
+    },
+
+
     mouseEnter: function () {
       this.subCatShow = true;
     },
     mouseLeave: function () {
       this.subCatShow = false;
     },
-    showSubCat: function (index) {
+    showSubCat: function (index,cat_id) {
+      this.loadCatChild(cat_id);
       console.log(index, this.activeTab);
       if (index == this.activeTab) {
         this.activeTab = -1;
@@ -83,15 +112,14 @@ export default {
     onClickOutside(event) {
       this.activeTab = -1;
     },
+
+
   },
 };
 </script>
 
 <style scoped>
-#span1 {
-  font-weight: 300;
-  text-transform: lowercase !important;
-}
+
 #span2 {
   color: var(--v-primary-base);
   font-size: 13px;
@@ -111,7 +139,10 @@ export default {
   font-size: 13px;
 }
 .v-tab {
+  font-weight: 300;
+  text-transform: none !important;
   color: white !important;
   padding-bottom: 10px;
 }
+
 </style>

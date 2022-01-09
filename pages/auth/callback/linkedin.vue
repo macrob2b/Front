@@ -14,7 +14,7 @@ export default {
   name: "linkedinCallBack",
   auth: 'guest',
   async mounted() {
-    await this.$axios.post('https://api.macrob2b.com/api/linkedin_login',
+    await this.$axios.post('/api/linkedin_login',
       {
         code        : this.$route.query.code,
         redirect_uri: config.linkedinRedirectUri,
