@@ -91,12 +91,29 @@ body {
       color: $correct_color
     }
 
+    .bg-white {
+      background-color: $white;
+    }
+
     .bg-correct-color {
       background-color: $bg-correct_color;
     }
 
+    .theme--light.v-btn.v-btn--has-bg.secondary-btn {
+      background-color: #FDB433;
+      border-radius: 8px;
+      color: #FFFFFF;
+    }
   }
 }
+
+.header {
+  .v-sheet.v-card,
+  v-card {
+    border-radius: 0 0 10px 10px;
+  }
+}
+
 
 
 /*******************
@@ -1470,6 +1487,7 @@ body {
 
 .branch-tab-content {
   aside.v-navigation-drawer {
+    transform: translateX(0%) !important;
     width: 100% !important;
 
     .v-list--nav {
@@ -1494,7 +1512,67 @@ body {
       }
     }
   }
+  aside.v-navigation-drawer.v-navigation-drawer--is-mobile {
+    transform: translateX(0%) !important;
+    width: 100% !important;
+  }
+  .v-navigation-drawer--close {
+    visibility: visible;
+  }
+  .location-map {
+    position: relative;
+    height: 600px;
+    .leaflet-container {
+      z-index: 1;
+    }
+    #map {
+      height: 600px;
+    }
+    .show-branch-details {
+      position: absolute;
+      z-index: 2;
+      width: 90%;
+      bottom: 10px;
+      left: 10px;
+    }
+  }
+  .v-list-item__title,
+  .v-list-item__subtitle {
+    white-space: unset;
+  }
 }
+
+.trade-tab-content {
+  .trade-table {
+    tr {
+      td:last-child {
+        .theme--light.v-icon--disabled {
+          color: #98CB00 !important;
+        }
+      }
+    }
+  }
+}
+
+.certificate-tab-content {
+  .certificate-table {
+    tr {
+      td:first-child {
+        display: flex;
+        align-items: center;
+        margin: 5px;
+      }
+
+      td:last-child {
+        .theme--light.v-icon--disabled {
+          color: #98CB00 !important;
+        }
+      }
+    }
+  }
+}
+
+
 
 
 

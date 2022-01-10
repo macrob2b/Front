@@ -61,6 +61,25 @@
 
 }
 
+@media screen and (max-width: 1006px) {
+  .desktop-header {
+    display: none;
+  }
+  .mobile-header {
+    display: flex;
+  }
+  .header {
+    .v-slide-group__prev {
+      display: none !important;
+    }
+    .v-btn:not(.v-btn--round).v-size--default {
+      height: 32px;
+      min-width: 32px;
+    }
+  }
+
+}
+
 @media (max-width: 968px) {
 /************************
 1.Image-slider CSS start
@@ -162,7 +181,7 @@
         background-color: $primary_color !important;
         color: $white !important;
         position: absolute;
-        top: 180px;
+        bottom: -13px;
         .btn-text {
           display: none;
         }
@@ -335,6 +354,9 @@
           padding: 3px 12px !important;
         }
       }
+    }
+    .v-list-item__title {
+      font-size: 12px;
     }
   }
 
@@ -546,6 +568,14 @@
       }
     }
   }
+
+  .header {
+    .mobile-header {
+      .bottom-tab-header {
+        max-width: 235px;
+      }
+    }
+  }
 }
 
 @media (max-width: 360px) {
@@ -607,4 +637,26 @@
   }
 }
 
-//@media (max-width: 320px) {}
+@media (max-width: 320px) {
+  body {
+    .v-application {
+      .main-product-tab-content {
+        .pa-8 {
+          padding: 2px !important;
+        }
+      }
+      .contact-us-tab-content {
+        .v-list-item__title {
+          font-size: .75rem;
+        }
+      }
+    }
+  }
+  .header {
+    .mobile-header {
+      .bottom-tab-header {
+        max-width: 175px;
+      }
+    }
+  }
+}
