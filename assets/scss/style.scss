@@ -107,6 +107,14 @@ body {
   }
 }
 
+.header {
+  .v-sheet.v-card,
+  v-card {
+    border-radius: 0 0 10px 10px;
+  }
+}
+
+
 
 /*******************
 3.Product-Box CSS start

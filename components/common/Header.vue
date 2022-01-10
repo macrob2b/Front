@@ -1,7 +1,7 @@
 <template>
   <!-- <Tutorial/> -->
   <div  class="header">
-    <div  class="d-none d-sm-flex pb-2 pt-0 w-100 pa-0 ma-0 "  >
+    <div  class="pb-2 pt-0 w-100 pa-0 ma-0 desktop-header"  >
       <v-card class="card pa-2 ma-0" style="width: 100%">
         <v-row class="justify-between" >
           <v-col class="pt-0">
@@ -52,7 +52,7 @@
                   <span  id="span1"> {{signin_btn}} </span>
                 </v-btn>
                 <v-btn v-else to="/user-dashboard" min-width="0" width="100" color="#fb641e">
-                  <span  id="span1"> Hi, {{$auth.user.first_name}} </span>
+                  <span  id="span2"> Hi, {{$auth.user.first_name}} </span>
                 </v-btn>
               </div>
             </div>
@@ -63,8 +63,7 @@
     </div>
 
     <!-- responsive -->
-
-    <div class="d-flex d-sm-none" style="width: 100%">
+    <div class="mobile-header" style="width: 100%">
       <div style="width: 100%">
         <v-card class="card" style="width: 100%">
           <div class="d-flex justify-space-between px-3" style="width: 100%">
@@ -158,6 +157,22 @@ export default {
   top: 0;
   max-width: 100%;
   z-index: 100;
+}
+
+.desktop-header {
+  display: flex;
+}
+.mobile-header {
+  display: none;
+}
+
+@media screen and (max-width: 1006px) {
+  .desktop-header {
+    display: none;
+  }
+  .mobile-header {
+    display: flex;
+  }
 }
 @media screen and (max-width: 600px) and (min-width: 320px) {
   .card {

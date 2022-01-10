@@ -1,14 +1,14 @@
 <template>
   <!-- class="d-flex justify-space-between align-center" -->
-  <div v-click-outside="onClickOutside">
-    <v-row justify="space-between">
-      <v-col cols="10" id="col1" >
+  <div v-click-outside="onClickOutside" class="px-3">
+    <div class="d-flex justify-space-between align-center  mx-0">
+      <div  id="col1" class="bottom-tab-header" >
         <div  id="div1">
           <v-tabs
             background-color="transparent"
             class="mt-1"
             slider-color="transparent"
-            show-arrows
+
           >
             <v-tab
               v-for="(item, idx) in tabs"
@@ -21,17 +21,17 @@
             </v-tab>
           </v-tabs>
         </div>
-      </v-col>
-      <v-col cols="2"  id="col2">
-        <div class="mr-2 pa-1 pl-0">
-          <v-btn color="#005270" min-width="0" width="20">
-            <span class="pa-9">
+      </div>
+      <div   id="col2" class="">
+        <div class="">
+          <v-btn color="#005270" class="px-0">
+            <span class="pa-0">
               <v-icon color="white" small> mdi-filter-variant </v-icon>
             </span>
           </v-btn>
         </div>
-      </v-col>
-    </v-row>
+      </div>
+    </div>
     <HeaderSubCat v-show="activeTab != -1" />
   </div>
 </template>
@@ -84,17 +84,12 @@ export default {
   color: white !important;
   padding-bottom: 10px;
 }
-#col1 {
-  padding-right: 0;
-  padding-left: 0;
-}
-#col2 {
-  padding-left: 0;
-}
+
 #span1 {
   font-size: 10px;
 }
 #div1 {
   width: 100%;
 }
+
 </style>
