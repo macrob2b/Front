@@ -1,6 +1,10 @@
 <template>
   <div>
-    <MapSearch @locationSelected="goToSearchLocation"/>
+
+    <LocationField :label="$t(`LOCATION`)"
+                   class="mapSearch"
+                   @locationSelected="goToSearchLocation"
+                   :solo="true"/>
 
     <div id="map-wrap">
       <client-only>
@@ -18,11 +22,11 @@
 
 <script>
 
-import MapSearch from "./MapSearch";
+import LocationField from "@/components/Form/LocationField";
 
 export default {
   name      : "LeafletMap",
-  components: {MapSearch},
+  components: {LocationField},
   data() {
     return {
       map: {
@@ -41,25 +45,45 @@ export default {
       this.getNameOfLocation({lng: pos.lng, lat: pos.lat});
     },
     async getNameOfLocation(location) {
-      let nameSearchResult = await this.$axios.get('https://nominatim.openstreetmap.org/reverse', {
-        params: {
-          lat   : location.lat,
-          lon   : location.lng,
-          format: 'json',
-        }
+      let nameSearchResult = await this.$axios.post('/api/reverse_location', {
+        lat: location.lat,
+        lng: location.lng
       });
 
       if (nameSearchResult.status == 200) {
+        let locationName =
+              (nameSearchResult.data.country ? (nameSearchResult.data.country + ',') : '') + // country
+              (nameSearchResult.data.state ? (nameSearchResult.data.state + ',') : '') + // state
+              (nameSearchResult.data.province ? (nameSearchResult.data.province + ',') : '') + // province
+              (nameSearchResult.data.region ? (nameSearchResult.data.region + ',') : '') + // region
+              (nameSearchResult.data.subdistrict ? (nameSearchResult.data.subdistrict + ',') : '') + // subdistrict
+              (nameSearchResult.data.county ? (nameSearchResult.data.county + ',') : '') + // county
+              (nameSearchResult.data.city ? (nameSearchResult.data.city + ',') : '') + // city
+              (nameSearchResult.data.suburb ? (nameSearchResult.data.suburb + ',') : '') + // suburb
+              (nameSearchResult.data.town ? (nameSearchResult.data.town + ',') : '') + // town
+              (nameSearchResult.data.road ? (nameSearchResult.data.road + ',') : '') + // road
+              (nameSearchResult.data.district ? (nameSearchResult.data.district + ',') : '') + // district
+              (nameSearchResult.data.village ? (nameSearchResult.data.village + ',') : '') + // village
+              (nameSearchResult.data.postcode ? nameSearchResult.data.postcode : ''); // postcode
+        locationName     = locationName[locationName.length - 1] === ',' ? locationName.substr(0, locationName.length - 1) : locationName;
+        // return data
         this.$emit('locationSelected', {
           lat         : location.lat,
           lng         : location.lng,
-          locationName: nameSearchResult.data.display_name
+          locationName: locationName
         });
       }
     },
     goToSearchLocation(event) {
-      this.map.center = [event.lat, event.lon];
+      this.map.center         = [event[0], event[1]];
+      this.map.markerLocation = [event[0], event[1]];
+      this.refreshMap();
     },
+    refreshMap() {
+      setTimeout(() => {
+        window.dispatchEvent(new Event("resize"));
+      }, 100);
+    }
   },
   mounted() {
     this.$nextTick(() => {
@@ -68,7 +92,7 @@ export default {
         window.dispatchEvent(new Event("resize"));
       }, 100);
     });
-  }
+  },
 }
 </script>
 
@@ -76,4 +100,14 @@ export default {
 #map-wrap {
   height: 90vh;
 }
+
+.mapSearch {
+  margin-top: 12px !important;
+  margin-left: 50px;
+  z-index: 1005 !important;
+  position: absolute !important;
+  width: 320px !important;
+  max-width: 320px;
+}
+
 </style>
