@@ -308,15 +308,20 @@ export default {
       }
 
     },
+
+
     selectLocation(location) {
       this.$refs.businessLocationField.toggleSearch(false);
       this.$refs.businessLocationField.addAndSetItem(location);
       this.businessLocation = location.lat + ',' + location.lng;
     },
+
     zoomOnLocation(location) {
       this.$refs.businessLocationMap.goToSearchLocation(location);
       this.businessLocationDialog = true;
     },
+
+
     loginWithGoogle() {
       this.$auth.loginWith('google', {params: {prompt: "select_account"}})
     },
