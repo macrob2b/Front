@@ -1,7 +1,7 @@
 <template>
   <div class="basic-info">
-    <UserType></UserType>
-    <CompanyInfo></CompanyInfo>
+    <UserType @updateData="updateRole"></UserType>
+    <CompanyInfo @updateData="updateCompanyinfo"></CompanyInfo>
     <ContactInfo></ContactInfo>
     <Media></Media>
   </div>
@@ -24,7 +24,6 @@
       await this.$axios.post('/api/export_percentage_list',
         {
         }).then(response => {
-
         console.log(response)
       }).catch(({response}) => {
         if (response.status == 401) {
@@ -33,6 +32,15 @@
           this.$toast.error(this.$t(`REQUEST_FAILED`));
         }
       });
+    },
+    methods: {
+      updateRole(roleType) {
+        alert('role:' + JSON.stringify(roleType))
+      },
+      updateCompanyinfo(companyInfo) {
+        // let employees_total = companyInfo.companyname
+        alert('companyInfo:' + JSON.stringify(companyInfo))
+      }
     }
   }
   // <UserType @updateData="update"></UserType>

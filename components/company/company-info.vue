@@ -178,15 +178,31 @@
           'item1',
           'item2',
           'item3'
-        ]
+        ],
+        companyInfo: {
+          company_name: '',
+          business_type: '',
+          location: '',
+          street_address: '',
+          phone: '',
+          employees_total: ''
+        }
       }
     },
     watch: {
       employeesTotal(val) {
         this.employeesTotal = this.spilitter(val);
+        this.companyInfo.employees_total = this.employeesTotal();
+        // this.$emit('updateData', this.companyInfo.employees_total)
       },
       revenue(val) {
         this.revenue = this.spilitter(val);
+      },
+      $data: {
+        handler: function(val, oldVal) {
+          this.$emit('updateData', this.$data)
+        },
+        deep: true
       }
     },
     methods: {

@@ -7,13 +7,13 @@
       lazy-validation
     >
 
-      <v-text-field
-        v-model="cateTitle"
-        :counter="10"
-        label="Title"
-        required
-      ></v-text-field>
 
+      <v-textarea
+        v-model="cateTitles"
+        name="input-7-1"
+        label="Cate titles (Separate by Enter)"
+        hint="Hint text"
+      ></v-textarea>
 
       <v-btn
         color="success"
@@ -45,17 +45,25 @@ export default {
   layout: "admin",
   data() {
     return {
-      cateTitle: null,
+      cateTitles: null,
+      final_cate_string:null,
       submit_btn: 'Create'
     }
   },
   mounted() {
   },
+  watch:{
+    cateTitles(newVal,oldVal){
+      this.final_cate_string=newVal.split('\n').join('|');
+    }
+  },
   methods: {
     addCategory() {
+      this.submit_btn='Creating, please wait...';
       const response = this.$axios.$post('/api/create_category',
-        {parent: this.$route.params.parent_id, title: this.cateTitle}).then(response => {
+        {parent: this.$route.params.parent_id, title: this.final_cate_string}).then(response => {
         this.$toast.success('Created successfully');
+        this.submit_btn='Created';
         this.$router.go(-1);
       }).catch(e => {
         this.$toast.error('Error on creating');
