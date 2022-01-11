@@ -1,12 +1,22 @@
 <template>
   <div v-click-outside="onClickOutside">
     <v-row class="justify-between">
-      <v-col cols="9"  class="pb-0">
+      <v-col cols="12" sm="9"  class="pb-0">
         <v-tabs
+          :show-arrows="true"
           background-color="transparent"
           class="mt-5"
+
           slider-color="transparent"
         >
+          <v-tab
+            to="/category-list"
+          >
+            <span  >
+              <!-- @mouseleave="mouseLeave" -->
+              All
+            </span>
+          </v-tab>
           <v-tab
             @mouseenter="mouseEnter"
             @mouseleave="mouseLeave"
@@ -19,16 +29,10 @@
               {{ n.title }}
             </span>
           </v-tab>
-          <v-tab
-          >
-            <span  >
-              <!-- @mouseleave="mouseLeave" -->
-              All
-            </span>
-          </v-tab>
+
         </v-tabs>
       </v-col>
-      <v-col cols="3" class="d-flex justify-end">
+      <v-col cols="3"  class="d-none d-sm-flex justify-end">
         <div class="px-3 mx-2 mt-3">
           <v-btn color="white" min-width="0" width="auto" height="45">
             <span  id="span2" class="my-10"> POST BUYING LEADS </span>
@@ -144,5 +148,6 @@ export default {
   color: white !important;
   padding-bottom: 10px;
 }
+
 
 </style>

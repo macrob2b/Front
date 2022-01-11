@@ -3,7 +3,7 @@
     <v-row v-if="subCats && subCats.length">
       <v-col
         cols="3"
-        v-show="!$vuetify.breakpoint.xs"
+        class="d-none d-sm-flex"
         v-for="(cat,idx) in subCats"
         :key="idx"
       >
@@ -13,14 +13,14 @@
         </div>
       </v-col>
       <v-col
-        cols="5"
-        v-show="$vuetify.breakpoint.xs"
+        cols="12"
+        class="d-flex d-sm-none"
         v-for="(cat,idx3) in subCats"
         :key="'B'+ idx3"
       >
         <div class="d-flex-column">
-          <h3>{{ cat.cat }}</h3>
-          <div v-for="(sub,idx4) in cat.sub" :key="'C'+ idx4">{{ sub }}</div>
+          <h3>{{ cat.title }}</h3>
+          <div v-for="(sub,idx4) in cat.grandchildren" :key="'C'+ idx4">{{ sub.title }}</div>
         </div>
       </v-col>
     </v-row>
@@ -53,7 +53,7 @@ export default {
   max-width: 100%;
   left: 0;
   right: 0;
-  background-color: #F3F3F3;
+  background-color: #e1e2e3;
 }
 
 #h1 {
