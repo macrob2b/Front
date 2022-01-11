@@ -36,6 +36,9 @@ let messages = {
   REQUEST_FAILED          : 'An error occurred. Please try again',
   LOGGING_IN              : 'Logging in',
   Main_PAGE_TITLE         : 'Largest online B2B marketplace',
+  SEARCH_FOR              : 'Search For',
+  BUSINESS_LOCATION       : 'Business Location',
+  LOCATION                : 'Location',
 };
 
 export default messages;
