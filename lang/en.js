@@ -39,6 +39,7 @@ let messages = {
   SEARCH_FOR              : 'Search For',
   BUSINESS_LOCATION       : 'Business Location',
   LOCATION                : 'Location',
+  REGISTER_SUCCESSFUL     : 'You have successfully registered',
 };
 
 export default messages;
