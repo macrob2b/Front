@@ -73,8 +73,8 @@ export default {
 
         // return data
         this.$emit('locationSelected', {
-          lat         : location.lat,
-          lng         : location.lng,
+          lat         : this.map.markerLocation[0],
+          lng         : this.map.markerLocation[1],
           locationName: locationName,
           country_code: nameSearchResult.data.country_code,
           country     : nameSearchResult.data.country,

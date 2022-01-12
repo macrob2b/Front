@@ -265,7 +265,7 @@ export default {
       let checkRegister = await this.$axios.post('/api/register', {
         "first_name"       : this.firstName,
         "last_name"        : this.lastName,
-        "mobile_num"       : this.phoneCode + this.phoneNumber,
+        "mobile_num"       : this.phoneNumber.replace(/\s/g, ''),
         "email"            : this.email,
         "password"         : this.password,
         "gender"           : this.gender,
