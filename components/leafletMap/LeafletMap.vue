@@ -1,10 +1,10 @@
 <template>
   <div>
 
-    <LocationField :label="$t(`LOCATION`)"
-                   class="mapSearch"
-                   @locationSelected="goToSearchLocation"
-                   :solo="true"/>
+    <LocationSearch :label="$t(`LOCATION`)"
+                    class="mapSearch"
+                    @locationSelected="goToSearchLocation"
+                    :solo="true"/>
 
     <div id="map-wrap">
       <client-only>
@@ -22,11 +22,11 @@
 
 <script>
 
-import LocationField from "@/components/Form/LocationField";
+import LocationSearch from "@/components/Form/LocationSearch";
 
 export default {
   name      : "LeafletMap",
-  components: {LocationField},
+  components: {LocationSearch},
   data() {
     return {
       map: {
@@ -66,11 +66,25 @@ export default {
               (nameSearchResult.data.village ? (nameSearchResult.data.village + ',') : '') + // village
               (nameSearchResult.data.postcode ? nameSearchResult.data.postcode : ''); // postcode
         locationName     = locationName[locationName.length - 1] === ',' ? locationName.substr(0, locationName.length - 1) : locationName;
+
+        let state = () => {
+          if (nameSearchResult.data.state) {
+            return nameSearchResult.data.state;
+          }
+          if (nameSearchResult.data.province) {
+            return nameSearchResult.data.province;
+          }
+          return '';
+        };
+
         // return data
         this.$emit('locationSelected', {
           lat         : location.lat,
           lng         : location.lng,
-          locationName: locationName
+          locationName: locationName,
+          country_code: nameSearchResult.data.country_code,
+          country     : nameSearchResult.data.country,
+          state       : state(),
         });
       }
     },

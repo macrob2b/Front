@@ -19,38 +19,6 @@
       <validation-observer ref="observer" v-slot="{ invalid }">
         <form @submit.prevent="submit">
 
-          <!--     Business Location Map Dialog       -->
-          <v-dialog
-            v-model="businessLocationDialog"
-            transition="dialog-bottom-transition"
-            fullscreen
-            hide-overlay
-            eager>
-            <v-card>
-              <v-toolbar
-                color="primary"
-                outlined
-                dark>
-                <v-toolbar-title>{{ $t(`SELECT_BUSINESS_LOCATION`) }}</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                  <v-btn
-                    text
-                    color="white"
-                    @click="businessLocationDialog = false">
-                    {{ $t(`SELECT`) }}
-                  </v-btn>
-                </v-toolbar-items>
-              </v-toolbar>
-
-              <LeafletMap
-                ref="businessLocationMap"
-                @locationSelected="selectLocation">
-              </LeafletMap>
-
-            </v-card>
-          </v-dialog>
-
           <v-row>
 
             <!--     First Name       -->
@@ -143,9 +111,7 @@
             <!--     MY Business Location       -->
             <v-col cols="12" md="6" lg="6" xl="6" class="ma-0 pt-0 pb-0">
               <validation-provider v-slot="{ errors }" name="businessLocation" rules="required">
-                <LocationField ref="businessLocationField"
-                               :label="$t(`BUSINESS_LOCATION`)"
-                               @locationSelected="zoomOnLocation"/>
+                <LocationField :label="$t(`BUSINESS_LOCATION`)" @locationSelected="selectLocation"/>
               </validation-provider>
             </v-col>
 
@@ -191,11 +157,12 @@
             <v-col cols="12" md="4" lg="4" xl="4" class="mx-md-10 mx-lg-2">
               <v-btn
                 class="rounded-lg"
-                large
                 color="primary"
                 type="submit"
                 :disabled="invalid"
-                block>
+                :loading="loading"
+                block
+                large>
                 {{ $t(`CREATE_MY_ACCOUNT`) }}
               </v-btn>
             </v-col>
@@ -238,7 +205,6 @@
 <script>
 
 import {ValidationObserver, ValidationProvider, validate} from "vee-validate";
-import LeafletMap                                         from "../components/leafletMap/LeafletMap";
 import PhoneNumberInput                                   from "../components/phoneNumberInput";
 import LocationField                                      from "../components/Form/LocationField";
 
@@ -248,7 +214,6 @@ export default {
   components: {
     LocationField,
     PhoneNumberInput,
-    LeafletMap,
     ValidationProvider,
     ValidationObserver,
   },
@@ -259,19 +224,24 @@ export default {
   },
   data() {
     return {
-      email                 : '',
-      password              : '',
-      confirmPassword       : '',
-      gender                : '',
-      firstName             : '',
-      lastName              : '',
-      companyName           : '',
-      phoneNumber           : '',
-      businessLocation      : '',
-      businessType          : '',
-      acceptTerms           : false,
-      showPassword          : false,
-      businessLocationDialog: false,
+      email           : '',
+      password        : '',
+      confirmPassword : '',
+      gender          : '',
+      firstName       : '',
+      lastName        : '',
+      companyName     : '',
+      phoneNumber     : '',
+      businessLocation: {
+        location    : '',
+        country_code: '',
+        country     : '',
+        state       : ''
+      },
+      businessType    : '',
+      acceptTerms     : false,
+      showPassword    : false,
+      loading         : false,
     };
   },
   computed: {
@@ -291,6 +261,7 @@ export default {
   },
   methods : {
     async submit() {
+      this.loading      = true;
       let checkRegister = await this.$axios.post('/api/register', {
         "first_name"       : this.firstName,
         "last_name"        : this.lastName,
@@ -299,23 +270,25 @@ export default {
         "password"         : this.password,
         "gender"           : this.gender,
         "role"             : this.businessType.join(),
-        "business_location": this.businessLocation
+        "business_location": this.businessLocation.location,
+        "country_code"     : this.businessLocation.country_code,
+        "country"          : this.businessLocation.country,
+        "state"            : this.businessLocation.state,
       });
 
       // Handler of signup api
       if (checkRegister.status == 200) {
         await this.$auth.setUserToken(checkRegister.data.token);
+        this.$toast.success(this.$t(`REGISTER_SUCCESSFUL`));
+        this.loading = false;
       }
 
     },
     selectLocation(location) {
-      this.$refs.businessLocationField.toggleSearch(false);
-      this.$refs.businessLocationField.addAndSetItem(location);
-      this.businessLocation = location.lat + ',' + location.lng;
-    },
-    zoomOnLocation(location) {
-      this.$refs.businessLocationMap.goToSearchLocation(location);
-      this.businessLocationDialog = true;
+      this.businessLocation.location     = location.lat + ',' + location.lng;
+      this.businessLocation.country_code = location.country_code;
+      this.businessLocation.country      = location.country;
+      this.businessLocation.state        = location.state;
     },
     loginWithGoogle() {
       this.$auth.loginWith('google', {params: {prompt: "select_account"}})
