@@ -10,8 +10,7 @@
       <client-only>
         <l-map ref="map"
                :zoom="map.zoom"
-               :center="map.center"
-               @click="selectLocation">
+               :center="map.center">
           <l-tile-layer :url="map.url"></l-tile-layer>
           <l-marker :lat-lng="map.markerLocation"></l-marker>
         </l-map>
@@ -39,15 +38,10 @@ export default {
     };
   },
   methods: {
-    selectLocation(event) {
-      let pos                 = this.$L.latLng(event.latlng.lat, event.latlng.lng);
-      this.map.markerLocation = pos;
-      this.getNameOfLocation({lng: pos.lng, lat: pos.lat});
-    },
-    async getNameOfLocation(location) {
+    async selectLocation() {
       let nameSearchResult = await this.$axios.post('/api/reverse_location', {
-        lat: location.lat,
-        lng: location.lng
+        lat: this.map.markerLocation[0],
+        lng: this.map.markerLocation[1]
       });
 
       if (nameSearchResult.status == 200) {
@@ -102,6 +96,10 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.map.object = this.$refs.map.mapObject;
+      this.map.object.on('drag', (e) => {
+        let center              = this.map.object.getCenter();
+        this.map.markerLocation = [center.lat, center.lng];
+      });
       setTimeout(() => {
         window.dispatchEvent(new Event("resize"));
       }, 100);
@@ -112,7 +110,7 @@ export default {
 
 <style scoped>
 #map-wrap {
-  height: 90vh;
+  height: 91vh;
 }
 
 .mapSearch {

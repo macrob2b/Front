@@ -13,6 +13,7 @@
       eager>
       <v-card>
         <v-toolbar
+          class="dialogToolbar"
           color="primary"
           outlined
           dark>
@@ -22,7 +23,8 @@
             <v-btn
               text
               color="white"
-              @click="locationDialog = false">
+              :loading="loading"
+              @click="emitLocation">
               {{ $t(`SELECT`) }}
             </v-btn>
           </v-toolbar-items>
@@ -41,7 +43,7 @@
 <script>
 
 import LocationSearch from "@/components/Form/LocationSearch";
-import LeafletMap    from "@/components/leafletMap/LeafletMap";
+import LeafletMap     from "@/components/leafletMap/LeafletMap";
 
 export default {
   name      : "LocationField",
@@ -50,6 +52,7 @@ export default {
   data() {
     return {
       locationDialog: false,
+      loading       : false,
     }
   },
   methods: {
@@ -67,6 +70,12 @@ export default {
         country     : location.country,
         state       : location.state,
       });
+      this.loading        = false;
+      this.locationDialog = false;
+    },
+    emitLocation() {
+      this.loading = true;
+      this.$refs.locationMap.selectLocation();
     }
   }
 }
