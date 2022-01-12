@@ -5,7 +5,7 @@
     </div>
     <v-divider></v-divider>
     <div class="contact-info-body">
-      <v-form v-model="valid">
+      <v-form>
         <v-container>
           <v-row>
             <v-col
@@ -81,14 +81,20 @@
   export default {
     data() {
       return {
-        valid: false,
         phone: null,
         email: '',
         fax: null,
         postalcode: null,
         companywebsite: '',
-
       }
-    }
+    },
+    watch: {
+      $data: {
+        handler: function(val, oldVal) {
+          this.$emit('updateData', this.$data)
+        },
+        deep: true
+      }
+    },
   }
 </script>
