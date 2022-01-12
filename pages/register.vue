@@ -21,10 +21,11 @@
 
           <!--     Business Location Map Dialog       -->
           <v-dialog
+            v-model="businessLocationDialog"
+            transition="dialog-bottom-transition"
             fullscreen
             hide-overlay
-            transition="dialog-bottom-transition"
-            v-model="businessLocationDialog">
+            eager>
             <v-card>
               <v-toolbar
                 color="primary"
@@ -42,7 +43,10 @@
                 </v-toolbar-items>
               </v-toolbar>
 
-              <LeafletMap @locationSelected="selectLocation"/>
+              <LeafletMap
+                ref="businessLocationMap"
+                @locationSelected="selectLocation">
+              </LeafletMap>
 
             </v-card>
           </v-dialog>
@@ -139,15 +143,9 @@
             <!--     MY Business Location       -->
             <v-col cols="12" md="6" lg="6" xl="6" class="ma-0 pt-0 pb-0">
               <validation-provider v-slot="{ errors }" name="businessLocation" rules="required">
-                <v-text-field
-                  v-model="businessLocationName"
-                  append-icon="mdi-crosshairs-gps"
-                  @click:append="businessLocationDialog = !businessLocationDialog"
-                  :error-messages="errors"
-                  :label="$t(`MY_BUSINESS_LOCATION`)"
-                  outlined
-                  readonly>
-                </v-text-field>
+                <LocationField ref="businessLocationField"
+                               :label="$t(`BUSINESS_LOCATION`)"
+                               @locationSelected="zoomOnLocation"/>
               </validation-provider>
             </v-col>
 
@@ -242,11 +240,13 @@
 import {ValidationObserver, ValidationProvider, validate} from "vee-validate";
 import LeafletMap                                         from "../components/leafletMap/LeafletMap";
 import PhoneNumberInput                                   from "../components/phoneNumberInput";
+import LocationField                                      from "../components/Form/LocationField";
 
 export default {
   name      : "signup",
   auth      : 'guest',
   components: {
+    LocationField,
     PhoneNumberInput,
     LeafletMap,
     ValidationProvider,
@@ -268,7 +268,6 @@ export default {
       companyName           : '',
       phoneNumber           : '',
       businessLocation      : '',
-      businessLocationName  : '',
       businessType          : '',
       acceptTerms           : false,
       showPassword          : false,
@@ -309,10 +308,20 @@ export default {
       }
 
     },
+
+
     selectLocation(location) {
-      this.businessLocation     = location.lat + ',' + location.lng;
-      this.businessLocationName = location.locationName;
+      this.$refs.businessLocationField.toggleSearch(false);
+      this.$refs.businessLocationField.addAndSetItem(location);
+      this.businessLocation = location.lat + ',' + location.lng;
     },
+
+    zoomOnLocation(location) {
+      this.$refs.businessLocationMap.goToSearchLocation(location);
+      this.businessLocationDialog = true;
+    },
+
+
     loginWithGoogle() {
       this.$auth.loginWith('google', {params: {prompt: "select_account"}})
     },
@@ -324,8 +333,7 @@ export default {
     },
     changePhoneNumber(event) {
       this.phoneNumber = event;
-      const field      = this.$refs.phoneNumberProvider;
-      field.validate();
+      this.$refs.phoneNumberProvider.validate();
     }
   },
 }

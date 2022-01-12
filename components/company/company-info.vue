@@ -5,7 +5,7 @@
     </div>
     <v-divider></v-divider>
     <div class="company-info-body">
-      <v-form v-model="valid">
+      <v-form>
         <v-container>
           <v-row>
             <v-col
@@ -29,7 +29,7 @@
             >
               <v-select
                 :items="BusinessItems"
-                label="Business name"
+                label="Business type"
                 outlined
               ></v-select>
             </v-col>
@@ -142,7 +142,6 @@
   export default {
     data() {
       return {
-        valid: false,
         companyname: '',
         businessloc: '',
         employeesTotal: '',
@@ -179,21 +178,11 @@
           'item2',
           'item3'
         ],
-        companyInfo: {
-          company_name: '',
-          business_type: '',
-          location: '',
-          street_address: '',
-          phone: '',
-          employees_total: ''
-        }
       }
     },
     watch: {
       employeesTotal(val) {
         this.employeesTotal = this.spilitter(val);
-        this.companyInfo.employees_total = this.employeesTotal();
-        // this.$emit('updateData', this.companyInfo.employees_total)
       },
       revenue(val) {
         this.revenue = this.spilitter(val);
