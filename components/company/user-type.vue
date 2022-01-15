@@ -38,20 +38,7 @@
         deep: true
       }
     },
-    // computed: {
-    //   checked: {
-    //     get() {
-    //       let buyer = this.buyer
-    //       let seller = this.seller
-    //       let agent = this.agent
-    //       let userType = [buyer,seller,agent]
-    //       return userType;
-    //     },
-    //     set(userType) {
-    //       this.$emit("updateData", userType);
-    //     }
-    //   }
-    // }
+
 
   }
 </script>

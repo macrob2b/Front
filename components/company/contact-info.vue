@@ -12,13 +12,14 @@
               cols="12"
               md="4"
             >
-              <v-text-field
-                v-model="phone"
-                :counter="10"
-                label="Phone"
-                required
-                outlined
-              ></v-text-field>
+<!--              <v-text-field-->
+<!--                v-model="phone"-->
+<!--                :counter="10"-->
+<!--                label="Phone"-->
+<!--                required-->
+<!--                outlined-->
+<!--              ></v-text-field>-->
+              <phone-number-input @numberEntered="phoneNumberEnterd"></phone-number-input>
             </v-col>
 
             <v-col
@@ -78,7 +79,10 @@
 </template>
 
 <script>
+  import PhoneNumberInput from "../phoneNumberInput";
+
   export default {
+    components: {PhoneNumberInput},
     data() {
       return {
         phone: null,
@@ -96,5 +100,11 @@
         deep: true
       }
     },
+    methods: {
+      phoneNumberEnterd (phoneEntered) {
+        this.phone = phoneEntered
+        alert(this.phone)
+      }
+    }
   }
 </script>

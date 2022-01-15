@@ -978,8 +978,20 @@ body {
             }
           }
         }
-
         /* stylelint-enable */
+      }
+      .v-text-field {
+        .v-input__control {
+          .v-input__slot {
+            .v-text-field__slot {
+              order: 1
+            }
+          }
+        }
+      }
+      .v-input__append-inner {
+        margin-right: auto;
+        padding-right: 4px;
       }
     }
   }

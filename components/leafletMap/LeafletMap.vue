@@ -1,17 +1,16 @@
 <template>
   <div>
 
-    <LocationField :label="$t(`LOCATION`)"
-                   class="mapSearch"
-                   @locationSelected="goToSearchLocation"
-                   :solo="true"/>
+    <LocationSearch :label="$t(`LOCATION`)"
+                    class="mapSearch"
+                    @locationSelected="goToSearchLocation"
+                    :solo="true"/>
 
     <div id="map-wrap">
       <client-only>
         <l-map ref="map"
                :zoom="map.zoom"
-               :center="map.center"
-               @click="selectLocation">
+               :center="map.center">
           <l-tile-layer :url="map.url"></l-tile-layer>
           <l-marker :lat-lng="map.markerLocation"></l-marker>
         </l-map>
@@ -22,11 +21,11 @@
 
 <script>
 
-import LocationField from "@/components/Form/LocationField";
+import LocationSearch from "@/components/Form/LocationSearch";
 
 export default {
   name      : "LeafletMap",
-  components: {LocationField},
+  components: {LocationSearch},
   data() {
     return {
       map: {
@@ -39,15 +38,10 @@ export default {
     };
   },
   methods: {
-    selectLocation(event) {
-      let pos                 = this.$L.latLng(event.latlng.lat, event.latlng.lng);
-      this.map.markerLocation = pos;
-      this.getNameOfLocation({lng: pos.lng, lat: pos.lat});
-    },
-    async getNameOfLocation(location) {
+    async selectLocation() {
       let nameSearchResult = await this.$axios.post('/api/reverse_location', {
-        lat: location.lat,
-        lng: location.lng
+        lat: this.map.markerLocation[0],
+        lng: this.map.markerLocation[1]
       });
 
       if (nameSearchResult.status == 200) {
@@ -66,11 +60,25 @@ export default {
               (nameSearchResult.data.village ? (nameSearchResult.data.village + ',') : '') + // village
               (nameSearchResult.data.postcode ? nameSearchResult.data.postcode : ''); // postcode
         locationName     = locationName[locationName.length - 1] === ',' ? locationName.substr(0, locationName.length - 1) : locationName;
+
+        let state = () => {
+          if (nameSearchResult.data.state) {
+            return nameSearchResult.data.state;
+          }
+          if (nameSearchResult.data.province) {
+            return nameSearchResult.data.province;
+          }
+          return '';
+        };
+
         // return data
         this.$emit('locationSelected', {
-          lat         : location.lat,
-          lng         : location.lng,
-          locationName: locationName
+          lat         : this.map.markerLocation[0],
+          lng         : this.map.markerLocation[1],
+          locationName: locationName,
+          country_code: nameSearchResult.data.country_code,
+          country     : nameSearchResult.data.country,
+          state       : state(),
         });
       }
     },
@@ -88,6 +96,10 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.map.object = this.$refs.map.mapObject;
+      this.map.object.on('drag', (e) => {
+        let center              = this.map.object.getCenter();
+        this.map.markerLocation = [center.lat, center.lng];
+      });
       setTimeout(() => {
         window.dispatchEvent(new Event("resize"));
       }, 100);
@@ -98,7 +110,7 @@ export default {
 
 <style scoped>
 #map-wrap {
-  height: 90vh;
+  height: 91vh;
 }
 
 .mapSearch {
