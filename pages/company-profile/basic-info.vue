@@ -22,8 +22,17 @@ export default {
         business_type: '',
         location: '',
         street_address: '',
+        employees_total: '',
+        year_established: '',
         phone: '',
-        employees_total: ''
+        fax: '',
+        email: '',
+        postalcode: '',
+        logo: '',
+        images: [],
+        brochure: [],
+        video: '',
+
       }
     }
   },
@@ -54,18 +63,25 @@ export default {
         }
       }
       this.companyInfo.userType = result
-      alert('result:' + result)
     },
     updateCompanyinfo(companyInfo) {
       this.companyInfo.company_name = companyInfo.company_name;
-      this.companyInfo.company_name = companyInfo.business_type;
-      this.companyInfo.company_name = companyInfo.location;
-      this.companyInfo.company_name = companyInfo.street_address;
-      alert('company_name:' + this.companyInfo.company_name )
+      this.companyInfo.business_type = companyInfo.business_type;
+      this.companyInfo.street_address = companyInfo.address;
+      this.companyInfo.country = companyInfo.country;
+      this.companyInfo.state = companyInfo.state;
+      this.companyInfo.city = companyInfo.city;
+      this.companyInfo.description = companyInfo.description;
+      this.companyInfo.employees_total = companyInfo.employeesTotal;
+      this.companyInfo.annual_revenue = companyInfo.revenue;
+      this.companyInfo.annual_revenue = companyInfo.annual_revenue;
+      this.companyInfo.year_established = companyInfo.yearEstablished;
     },
     updateContactInfo(contactInfo) {
       this.companyInfo.phone = contactInfo.phone;
-      alert('phone:' + this.companyInfo.phone )
+      this.companyInfo.fax = contactInfo.fax;
+      this.companyInfo.email = contactInfo.email;
+      this.companyInfo.postal_code = contactInfo.postalcode;
     }
   },
 
