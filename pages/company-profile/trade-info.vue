@@ -1,7 +1,7 @@
 <template>
   <div class="trade-info">
     <div class="trade-info-inner">
-      <v-form v-model="valid">
+      <v-form>
         <v-container>
           <v-row>
             <v-col
@@ -10,6 +10,7 @@
               sm="4"
             >
               <v-select
+                v-model="ePercentageSelected"
                 :items="ePercentage"
                 label="Export Percentage"
                 outlined
@@ -21,11 +22,13 @@
               cols="12"
               sm="4"
             >
-              <v-select
-                :items="yofe"
+              <v-text-field
+                v-model="yearFExport"
+                type="number"
                 label="Year of First Export"
+                :rules="yearFExportRule"
                 outlined
-              ></v-select>
+              ></v-text-field>
             </v-col>
 
             <v-col
@@ -34,6 +37,7 @@
               sm="4"
             >
               <v-select
+                v-model="annualExportSelected"
                 :items="annualExport"
                 label="Annual Export Value (USD)"
                 outlined
@@ -99,34 +103,6 @@
                 multiple
                 outlined
               >
-                <template v-slot:selection="data">
-                  <v-chip
-                    v-bind="data.attrs"
-                    :input-value="data.selected"
-                    close
-                    @click="data.select"
-                    @click:close="removeExportMarket(data.item, 'exportMarket')"
-                  >
-                    <v-avatar left>
-                      <v-img :src="data.item.avatar"></v-img>
-                    </v-avatar>
-                    {{ data.item.name }}
-                  </v-chip>
-                </template>
-                <template v-slot:item="data">
-                  <template v-if="typeof data.item !== 'object'">
-                    <v-list-item-content v-text="data.item"></v-list-item-content>
-                  </template>
-                  <template v-else>
-                    <v-list-item-avatar>
-                      <img :src="data.item.avatar">
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title v-html="data.item.name"></v-list-item-title>
-                      <v-list-item-subtitle v-html="data.item.group"></v-list-item-subtitle>
-                    </v-list-item-content>
-                  </template>
-                </template>
               </v-autocomplete>
             </v-col>
             <v-col
@@ -143,34 +119,6 @@
                 multiple
                 outlined
               >
-                <template v-slot:selection="data">
-                  <v-chip
-                    v-bind="data.attrs"
-                    :input-value="data.selected"
-                    close
-                    @click="data.select"
-                    @click:close="removeImportMarket(data.item)"
-                  >
-                    <v-avatar left>
-                      <v-img :src="data.item.avatar"></v-img>
-                    </v-avatar>
-                    {{ data.item.name }}
-                  </v-chip>
-                </template>
-                <template v-slot:item="data">
-                  <template v-if="typeof data.item !== 'object'">
-                    <v-list-item-content v-text="data.item"></v-list-item-content>
-                  </template>
-                  <template v-else>
-                    <v-list-item-avatar>
-                      <img :src="data.item.avatar">
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title v-html="data.item.name"></v-list-item-title>
-                      <v-list-item-subtitle v-html="data.item.group"></v-list-item-subtitle>
-                    </v-list-item-content>
-                  </template>
-                </template>
               </v-autocomplete>
             </v-col>
           </v-row>
@@ -194,7 +142,7 @@
       </div>
       <v-divider></v-divider>
       <div class="company-history-body">
-        <v-form v-model="valid">
+        <v-form>
           <v-container>
             <v-row>
               <v-col
@@ -207,70 +155,27 @@
                 ></v-textarea>
               </v-col>
             </v-row>
-            <v-row>
+            <v-row v-for="(item, index) in historyByYear" :key="index">
               <v-col
                 class="year-col"
                 cols="6"
                 md="2"
               >
-                <v-select
-                  :items="years"
-                  label="Year"
-                  outlined
-                ></v-select>
-              </v-col>
-              <v-col
-                class="description-col"
-                cols="10"
-                md="8"
-              >
                 <v-text-field
-                  label="Description"
+                  v-model="item.year"
+                  type="number"
+                  label="Year"
+                  :rules="yearFExportRule"
                   outlined
                 ></v-text-field>
               </v-col>
-            </v-row>
-            <v-row>
-              <v-col
-                class="year-col"
-                cols="6"
-                md="2"
-              >
-                <v-select
-                  :items="years"
-                  label="Year"
-                  outlined
-                ></v-select>
-              </v-col>
               <v-col
                 class="description-col"
                 cols="10"
                 md="8"
               >
                 <v-text-field
-                  label="Description"
-                  outlined
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col
-                class="year-col"
-                cols="6"
-                md="2"
-              >
-                <v-select
-                  :items="years"
-                  label="Year"
-                  outlined
-                ></v-select>
-              </v-col>
-              <v-col
-                class="description-col"
-                cols="10"
-                md="8"
-              >
-                <v-text-field
+                  v-model="item.description"
                   label="Description"
                   outlined
                 ></v-text-field>
@@ -279,41 +184,42 @@
                 class="btn-group"
                 cols="2"
               >
-                <v-btn @click="more++">+</v-btn>
+                <v-btn @click="deleteHistory(index)">-</v-btn>
               </v-col>
             </v-row>
-            <div v-if="more !== 0">
-              <v-row v-for="index in more" :key="index">
-                <v-col
-                  class="year-col"
-                  cols="6"
-                  md="2"
-                >
-                  <v-select
-                    :items="years"
-                    label="Year"
-                    outlined
-                  ></v-select>
-                </v-col>
-                <v-col
-                  class="description-col"
-                  cols="10"
-                  md="8"
-                >
-                  <v-text-field
-                    label="Description"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-                <v-col
-                  class="btn-group"
-                  cols="2"
-                >
-                  <v-btn @click="more++">+</v-btn>
-                  <v-btn @click="more--">-</v-btn>
-                </v-col>
-              </v-row>
-            </div>
+
+            <v-row>
+              <v-col
+                class="year-col"
+                cols="6"
+                md="2"
+              >
+                <v-text-field
+                  v-model="year"
+                  type="number"
+                  label="Year"
+                  :rules="yearFExportRule"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col
+                class="description-col"
+                cols="10"
+                md="8"
+              >
+                <v-text-field
+                  v-model="description"
+                  label="Description"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col
+                class="btn-group"
+                cols="2"
+              >
+                <v-btn @click="addNewHistory">+</v-btn>
+              </v-col>
+            </v-row>
           </v-container>
         </v-form>
       </div>
@@ -324,31 +230,13 @@
 <script>
   export default {
     data() {
-      const srcs = {
-        1: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png',
-        2: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png',
-        3: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/European_flag%2C_upside_down.svg/2700px-European_flag%2C_upside_down.svg.png',
-        4: 'https://cdn.britannica.com/78/6078-004-77AF7322/Flag-Australia.jpg',
-        5: 'https://cdn.britannica.com/27/4227-004-32423B42/Flag-South-Africa.jpg',
-        6: 'https://s.france24.com/media/display/9697cdea-1f82-11e9-a2c9-005056bff430/w:1280/p:16x9/en-access-asia-web_002.jpg'
-      }
       return {
-        valid: false,
-        leadTime: null,
+        leadTime: '',
         addHistory: false,
         radioGroup: 'No',
         ports: [],
         portItems: [],
         more: 0,
-        years: [
-          '2019',
-          '2018',
-          '2017',
-          '2016',
-          '2015',
-          '2014',
-          '2013'
-        ],
         search: null,
         leadTimeRules: [
           value => {
@@ -360,49 +248,47 @@
           'No',
           'Yes'
         ],
-        ePercentage: [
-          '1 ~ 10%',
-          '11 ~ 20%',
-          '21 ~ 30%',
-          '31 ~ 40%',
-          '41 ~ 50%',
-          '51 ~ 60%',
-          '61 ~ 70%',
-          '71 ~ 80%',
-          '81 ~ 90%',
-          '91 ~ 100%'
+        ePercentageSelected: '',
+        ePercentage: [],
+        yearFExport: '',
+        yearFExportRule: [
+          value => {
+            if (!value || !value.trim()) return true;
+            if (!isNaN(parseInt(value)) && value >= 1900) return true;
+            return 'The year entered must be after 1900';
+          },
         ],
-        yofe: [
-          '2020',
-          '2019',
-          '2018',
-          '2017',
-          '2016',
-          '2015',
-          '2014',
-          '2013',
-          '2012'
-        ],
-        annualExport: [
-          'Choose not to Disclose',
-          'US$ 1 Million ~ US$ 2 Million',
-          'US$ 2 Million ~ US$ 5 Million',
-          'US$ 5 Million ~ US$ 10 Million',
-          'US$ 10 Million ~ US$ 50 Million',
-          'US$ 50 Million ~ US$ 100 Million',
-          'Above US$ 100 Million'
-        ],
+        annualExportSelected: '',
+        annualExport: [],
         importMarket: [],
         exportMarket: [],
-        continents: [
-          { name: 'China (Mainland)', avatar: srcs[1] },
-          { name: 'Asia', avatar: srcs[6] },
-          { name: 'Europe', avatar: srcs[3] },
-          { name: 'South America', avatar: srcs[2] },
-          { name: 'North America', avatar: srcs[2] },
-          { name: 'Australia', avatar: srcs[4] },
-          { name: 'Africa', avatar: srcs[5] },
-        ]
+        continents: [],
+        year: null,
+        description: null,
+        yearCompanyHistoryRule: [
+          value => {
+            if (!value || !value.trim()) return true;
+            if (!isNaN(parseInt(value)) && value >= 1900) return true;
+            return 'The year entered must be after 1900';
+          }
+        ],
+        historyByYear: [
+          {year: null, description: null},
+          {year: null, description: null},
+        ],
+        tradeInfo: {
+          export_percentage: '',
+          nearest_port: '',
+          avg_lead_time: [],
+          first_export_year: '',
+          annual_export_value: '',
+          annual_import_value: '',
+          export_market: '',
+          import_market: '',
+          history_introduction: '',
+          history_by_year: [
+          ]
+        }
       }
     },
     watch: {
@@ -410,6 +296,8 @@
         if (val.length > 3) {
           this.$nextTick(() => this.model.pop())
         }
+        this.tradeInfo.nearest_port = val;
+        alert(val)
       },
       radioGroup (val) {
         if (val === 'Yes') {
@@ -417,17 +305,119 @@
         } else if (val === 'No') {
           this.addHistory = false;
         }
-      }
+      },
+      ePercentageSelected (val) {
+        this.tradeInfo.export_percentage = val;
+      },
+      yearFExport (val) {
+        this.tradeInfo.first_export_year = val;
+      },
+      annualExportSelected (val) {
+        this.tradeInfo.annual_export_value = val;
+      },
+      leadTime (val) {
+        this.tradeInfo.avg_lead_time = val;
+        console.log(val)
+      },
+      importMarket (val) {
+        this.tradeInfo.import_market = val;
+      },
+      exportMarket (val) {
+        this.tradeInfo.export_market = val;
+      },
+
     },
+
+    async mounted() {
+      // Get get_annual_trade_values
+      await this.$axios.post('/api/get_annual_trade_values',
+        {}).then(response => {
+        let result=[];
+        let item
+        for(let i in  response.data){
+          item = response.data[i].title
+          result.push(item)
+          console.log(result)
+        }
+        this.annualExport = result;
+      }).catch(({response}) => {
+        if (response.status == 401) {
+          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+        } else if (response.status == 400) {
+          this.$toast.error(this.$t(`Bad Request`));
+        } else if (response.status == 403) {
+          this.$toast.error(this.$t(`Forbidden`));
+        } else if (response.status == 404) {
+          this.$toast.error(this.$t(`not found`));
+        }
+      });
+
+      // Get export_percentage_list
+      await this.$axios.post('/api/export_percentage_list',
+        {}).then(response => {
+        let result=[];
+        let item
+        for(let i in  response.data){
+          item = response.data[i].title
+          result.push(item)
+        }
+        this.ePercentage = result;
+      }).catch(({response}) => {
+        if (response.status == 401) {
+          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+        } else if (response.status == 400) {
+          this.$toast.error(this.$t(`Bad Request`));
+        } else if (response.status == 403) {
+          this.$toast.error(this.$t(`Forbidden`));
+        } else if (response.status == 404) {
+          this.$toast.error(this.$t(`not found`));
+        }
+      });
+
+      // Get country list for import market & export market
+      await this.$axios.post('/api/search_country',
+        {}).then(response => {
+        let result=[];
+        let item
+        for(let i in  response.data){
+          item = response.data[i].title
+          result.push(item)
+        }
+        this.continents = result;
+      }).catch(({response}) => {
+        if (response.status == 401) {
+          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+        } else if (response.status == 400) {
+          this.$toast.error(this.$t(`Bad Request`));
+        } else if (response.status == 403) {
+          this.$toast.error(this.$t(`Forbidden`));
+        } else if (response.status == 404) {
+          this.$toast.error(this.$t(`not found`));
+        }
+      });
+    },
+
+
+
     methods: {
-      removeExportMarket (item) {
-        const index = this.exportMarket.indexOf(item.name)
-        if (index >= 0) this.exportMarket.splice(index, 1)
+      addNewHistory() {
+        this.historyByYear.push({year: this.year, description: this.description});
+        this.tradeInfo.history_by_year.push({year: this.year, description: this.description});
+        // alert(JSON.stringify(this.tradeInfo.history_by_year))
+        this.year = null;
+        this.description = null;
       },
-      removeImportMarket (item) {
-        const index = this.importMarket.indexOf(item.name)
-        if (index >= 0) this.importMarket.splice(index, 1)
-      },
+      deleteHistory(index) {
+        this.historyByYear.splice(index, 1);
+      }
+      // removeExportMarket (item) {
+      //   const index = this.exportMarket.indexOf(item.name)
+      //   if (index >= 0) this.exportMarket.splice(index, 1)
+      // },
+      // removeImportMarket (item) {
+      //   const index = this.importMarket.indexOf(item.name)
+      //   if (index >= 0) this.importMarket.splice(index, 1)
+      // },
     },
   }
 </script>
