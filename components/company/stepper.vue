@@ -1,7 +1,7 @@
 <template>
   <div class="stepper">
-    <DesktopStepper class="d-none d-md-block" :step1="step" @step="step = $event"></DesktopStepper>
-    <MobileStepper class="d-md-none" :step1="step" @step="step = $event"></MobileStepper>
+    <DesktopStepper class="d-none d-md-block" :step1="step" @step="currentStep"></DesktopStepper>
+    <MobileStepper class="d-md-none" :step1="step" @step="currentStep"></MobileStepper>
   </div>
 </template>
 
@@ -16,6 +16,11 @@ export default {
   data() {
     return {
       step: 1
+    }
+  },
+  methods: {
+    currentStep (currentStepNumber) {
+      alert(currentStepNumber)
     }
   }
 }
