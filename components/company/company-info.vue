@@ -28,7 +28,7 @@
               md="4"
             >
               <v-select
-                :items="BusinessItems"
+                :items="bussinessTypeArr"
                 label="Business type"
                 outlined
               ></v-select>
@@ -174,13 +174,13 @@
             return pattern.test(value) || 'Invalid value.'
           },
         ],
-        BusinessItems: [],
+        bussinessTypeArr: [],
         yearEstablished: '',
         yearEstablishedRule: [
           value => {
             if (!value.trim()) return true;
-            if (!isNaN(parseInt(value)) && value >= 1900) return true;
-            return 'The year entered must be after 1900';
+            if (!isNaN(parseInt(value)) && value >= 1900 && value <= new    Date().getFullYear()) return true;
+            return 'The year entered must be after 1900 to the present year';
           },
         ],
       }
@@ -208,7 +208,7 @@
           item = response.data[i].title
           result.push(item)
         }
-        this.BusinessItems = result;
+        this.bussinessTypeArr = result;
         }).catch(({response}) => {
         if (response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
