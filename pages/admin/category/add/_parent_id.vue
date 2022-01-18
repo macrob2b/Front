@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h3>Add new item</h3>
+  <div class="mt-16">
+    <h2>Add new item(s)</h2>
     <v-form
       ref="form"
       v-model="valid"
@@ -34,6 +34,7 @@
     </v-form>
 
 
+
   </div>
 </template>
 
@@ -46,24 +47,25 @@ export default {
   data() {
     return {
       cateTitles: null,
-      final_cate_string:null,
-      submit_btn: 'Create'
+      final_cate_string: null,
+      submit_btn: 'Create',
+
     }
   },
   mounted() {
   },
-  watch:{
-    cateTitles(newVal,oldVal){
-      this.final_cate_string=newVal.split('\n').join('|');
+  watch: {
+    cateTitles(newVal, oldVal) {
+      this.final_cate_string = newVal.split('\n').join('|');
     }
   },
   methods: {
     addCategory() {
-      this.submit_btn='Creating, please wait...';
+      this.submit_btn = 'Creating, please wait...';
       const response = this.$axios.$post('/api/create_category',
         {parent: this.$route.params.parent_id, title: this.final_cate_string}).then(response => {
         this.$toast.success('Created successfully');
-        this.submit_btn='Created';
+        this.submit_btn = 'Created';
         this.$router.go(-1);
       }).catch(e => {
         this.$toast.error('Error on creating');
