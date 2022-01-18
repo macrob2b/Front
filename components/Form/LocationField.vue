@@ -69,6 +69,7 @@ export default {
         country_code: location.country_code,
         country     : location.country,
         state       : location.state,
+        city        : location.city,
       });
       this.loading        = false;
       this.locationDialog = false;

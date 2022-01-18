@@ -180,7 +180,10 @@ export default {
           }
         }).then(response => {
         this.$toast.success('Deleted successfully');
-        this.$router.go(-1);
+        this.page = 1;
+        this.categories = [];
+        this.getData();
+        // this.$router.go(-1);
       }).catch(e => {
         this.$toast.error('Error on deleting');
 

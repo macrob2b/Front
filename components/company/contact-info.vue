@@ -1,3 +1,4 @@
+
 <template>
   <div class="contact-info">
     <div class="contact-info-header">
@@ -5,20 +6,21 @@
     </div>
     <v-divider></v-divider>
     <div class="contact-info-body">
-      <v-form v-model="valid">
+      <v-form>
         <v-container>
           <v-row>
             <v-col
               cols="12"
               md="4"
             >
-              <v-text-field
-                v-model="phone"
-                :counter="10"
-                label="Phone"
-                required
-                outlined
-              ></v-text-field>
+<!--              <v-text-field-->
+<!--                v-model="phone"-->
+<!--                :counter="10"-->
+<!--                label="Phone"-->
+<!--                required-->
+<!--                outlined-->
+<!--              ></v-text-field>-->
+              <phone-number-input @numberEntered="phoneNumberEnterd"></phone-number-input>
             </v-col>
 
             <v-col
@@ -78,16 +80,31 @@
 </template>
 
 <script>
+  import PhoneNumberInput from "../phoneNumberInput";
+
   export default {
+    components: {PhoneNumberInput},
     data() {
       return {
-        valid: false,
         phone: null,
         email: '',
         fax: null,
         postalcode: null,
         companywebsite: '',
-
+      }
+    },
+    watch: {
+      $data: {
+        handler: function(val, oldVal) {
+          this.$emit('updateData', this.$data)
+        },
+        deep: true
+      }
+    },
+    methods: {
+      phoneNumberEnterd (phoneEntered) {
+        this.phone = phoneEntered
+        alert(this.phone)
       }
     }
   }

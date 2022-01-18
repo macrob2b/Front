@@ -25,15 +25,20 @@
   export default {
     data() {
       return {
-        types: [
-          'Buyer',
-          'Seller',
-          'Agent'
-        ],
         buyer: false,
         seller: false,
         agent: false
       }
-    }
+    },
+    watch: {
+      $data: {
+        handler: function(val, oldVal) {
+          this.$emit('updateData', this.$data)
+        },
+        deep: true
+      }
+    },
+
+
   }
 </script>

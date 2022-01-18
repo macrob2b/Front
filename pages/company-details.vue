@@ -10,6 +10,7 @@ import companyInfo from '../components/company-details/company-info'
 import companyDetailsTabs from '../components/company-details/company-details-tabs'
 
 export default {
+  auth:false,
   components: {
     companyInfo,
     companyDetailsTabs

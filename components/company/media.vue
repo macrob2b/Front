@@ -13,9 +13,7 @@
               md="4"
             >
               <v-file-input
-                v-model="value"
                 small-chips
-                multiple
                 outlined
                 append-icon="mdi-cloud-upload"
                 label="Business Logo"
@@ -53,11 +51,11 @@
               cols="12"
               md="4"
             >
-              <v-text-field
-                v-model="video"
+              <v-file-input
                 label="Video"
                 outlined
-              ></v-text-field>
+                append-icon="mdi-cloud-upload"
+              ></v-file-input>
             </v-col>
           </v-row>
         </v-container>
@@ -68,17 +66,27 @@
 
 <script>
   export default {
+    inject: {
+      theme: {
+        default: { isDark: false },
+      },
+    },
     data() {
       return {
+        logo: '',
+        companyImage: '',
+        companyBrochure: '',
         video: '',
-        value: null
       }
     },
     watch: {
-      value (val) {
-        /* eslint-disable */
-        console.log(val[0].name);
-      }
+      // $data: {
+      //   handler: function(val, oldVal) {
+      //     this.$emit('updateData', this.$data)
+      //   },
+      //   deep: true
+      // }
     }
   }
 </script>
+
