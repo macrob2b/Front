@@ -79,6 +79,7 @@ export default {
           country_code: nameSearchResult.data.country_code,
           country     : nameSearchResult.data.country,
           state       : state(),
+          city        : nameSearchResult.data.city
         });
       }
     },

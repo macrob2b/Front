@@ -28,7 +28,7 @@
               md="4"
             >
               <v-select
-                :items="BusinessItems"
+                :items="bussinessTypeArr"
                 label="Business type"
                 outlined
               ></v-select>
@@ -155,6 +155,7 @@
         revenue: '',
         location_name: '',
         country: '',
+        country_code: '',
         state: '',
         city: '',
         description: '',
@@ -173,13 +174,13 @@
             return pattern.test(value) || 'Invalid value.'
           },
         ],
-        BusinessItems: [],
+        bussinessTypeArr: [],
         yearEstablished: '',
         yearEstablishedRule: [
           value => {
             if (!value.trim()) return true;
-            if (!isNaN(parseInt(value)) && value >= 1900) return true;
-            return 'The year entered must be after 1900';
+            if (!isNaN(parseInt(value)) && value >= 1900 && value <= new    Date().getFullYear()) return true;
+            return 'The year entered must be after 1900 to the present year';
           },
         ],
       }
@@ -207,7 +208,7 @@
           item = response.data[i].title
           result.push(item)
         }
-        this.BusinessItems = result;
+        this.bussinessTypeArr = result;
         }).catch(({response}) => {
         if (response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
@@ -223,21 +224,11 @@
         return str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       },
       locationSelected(location) {
-        this.country = location.country
-        this.state = location.state
-        this.location_name = location.name
-
-        let exp = this.location_name.split(',');
-        if(exp.length > 0) {
-          for(let i in exp) {
-            let item = exp[i];
-
-            if(item.substring(item.length - 6) === 'County') {
-              this.city = item.substring(0, item.length - 6).trim();
-              break;
-            }
-          }
-        }
+        this.country = location.country;
+        this.state = location.state;
+        this.city = location.city;
+        this.country_code = location.country_code;
+        this.location_name = location.name;
       }
     },
   }

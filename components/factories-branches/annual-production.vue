@@ -5,7 +5,7 @@
     </div>
     <v-divider></v-divider>
     <div class="annual-production-body">
-      <v-form v-model="valid">
+      <v-form>
         <v-container>
           <v-row>
             <v-col
@@ -62,6 +62,16 @@
                 outlined
               ></v-select>
             </v-col>
+            <v-col
+              cols="12"
+              sm="4"
+            >
+              <v-file-input
+                accept="image/*"
+                label="Image"
+                outlined
+              ></v-file-input>
+            </v-col>
           </v-row>
         </v-container>
       </v-form>
@@ -73,7 +83,6 @@
   export default {
     data() {
       return {
-        valid: false,
         productionName: '',
         unitsProduced: '',
         highestAnnual: null,
@@ -88,7 +97,7 @@
             const pattern = /^[-,0-9]+$/;
             return pattern.test(value) || 'Invalid value.'
           },
-        ]
+        ],
       }
     },
     watch: {
