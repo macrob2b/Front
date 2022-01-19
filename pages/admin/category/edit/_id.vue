@@ -1,12 +1,14 @@
 <template>
   <div>
+    <h1>Edit {{cateTitle}} category and its properties</h1>
+    <hr class="mt-5 mb-5">
     <v-tabs vertical
             background-color="deep-cyan accent-4" dark
             class="text-left"
     >
       <v-tab>
         <v-icon>mdi-plus</v-icon>
-        Add new item(s)
+        Edit title
       </v-tab>
       <v-tab>
         <v-icon>mdi-plus</v-icon>
@@ -121,16 +123,80 @@
               <th class="text-left">
                 Preview
               </th>
+              <th class="text-left">
+                Action
+              </th>
             </tr>
             </thead>
             <tbody>
             <tr
-              v-for="item in desserts"
+              v-for="item in propertyList"
               :key="item.name"
             >
-              <td>{{ item.name }}</td>
-              <td>{{ item.calories }}</td>
-              <td></td>
+              <td>{{ item.field_type }}</td>
+              <td>{{ item.label }}</td>
+              <td>
+                <span
+                  v-if="item.field_type=='Text'"
+                >
+                  <v-text-field
+                    :label="item.label"
+                  >
+                  </v-text-field>
+                </span>
+                <span
+                  v-else-if="item.field_type=='Select'"
+                >
+                  <v-select
+                    :items="item.values"
+                    :label="item.label"
+                  >
+                  </v-select>
+                </span>
+                <span
+                  v-else-if="item.field_type=='Radio'"
+                >
+                   <p>{{ item.label }}</p>
+                    <v-radio-group
+                      mandatory
+                    >
+                      <v-radio
+                        v-for="(radio_val,index) in item.values"
+                        :label="radio_val.label"
+                        :value="radio_val.val"
+                      ></v-radio>
+
+                    </v-radio-group>
+                </span>
+                <span
+                  v-else-if="item.field_type=='Checkbox'"
+                >
+                   <p>{{ item.label }}</p>
+                      <v-checkbox
+                        v-for="(checkbox_val,index) in item.values"
+                        :label="checkbox_val.label"
+                        :value="checkbox_val.val"
+                      ></v-checkbox>
+                </span>
+                <span
+                  v-else-if="item.field_type=='Textarea'"
+                >
+                   <v-textarea
+                     :label="item.label"
+                   ></v-textarea>
+                </span>
+
+
+              </td>
+              <td>
+                <v-btn icon
+                       @click="deleteProperty(item._id)"
+                >
+                  <v-icon small
+                          class="mr-2">mdi-delete
+                  </v-icon>
+                </v-btn>
+              </td>
             </tr>
             </tbody>
           </template>
@@ -148,6 +214,11 @@ export default {
   middleware: ['auth', 'is_admin'],
   name: "category.vue",
   layout: "admin",
+  head() {
+    return {
+      title: 'Edit '+this.cateTitle+' category and its properties'
+    }
+  },
   data() {
     return {
       cateTitle: null,
@@ -164,10 +235,12 @@ export default {
       field_type_val: "",
       optionValues: null,
       final_option_val_string: null,
+      propertyList: []
     }
   },
   mounted() {
     this.loadCategory();
+    this.getPropertyList();
   },
   watch: {
     optionValues(newVal, oldVal) {
@@ -203,13 +276,41 @@ export default {
           values: this.final_option_val_string
         }).then(response => {
         this.$toast.success('Property Created successfully');
-        this.label="";
-        this.field_type_val="";
-        this.optionValues="";
+        this.label = "";
+        this.field_type_val = "";
+        this.optionValues = "";
+        this.getPropertyList();
         this.property_submit_btn = 'Create';
       }).catch(e => {
         this.$toast.error('Error on creating');
         this.property_submit_btn = 'Create';
+
+      });
+    },
+    getPropertyList() {
+      this.propertyList = [];
+      const response = this.$axios.$post('/api/get_cate_property',
+        {
+          cate_id: this.$route.params.id
+        }).then(response => {
+        this.propertyList = response;
+      }).catch(e => {
+        this.$toast.error('Error on loading property');
+
+      });
+    },
+    deleteProperty(id) {
+      const response = this.$axios.$delete('/api/delete_cate_property',
+        {
+          params: {
+            id: id
+          }
+        }).then(response => {
+        this.$toast.success('Deleted successfully');
+        this.getPropertyList();
+        // this.$router.go(-1);
+      }).catch(e => {
+        this.$toast.error('Error on deleting');
 
       });
     },
