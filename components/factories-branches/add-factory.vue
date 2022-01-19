@@ -9,7 +9,7 @@
               md="4"
             >
               <v-text-field
-                v-model="factoryName"
+                v-model="factoryInfo.name"
                 label="Factory Name"
                 outlined
                 required
@@ -21,7 +21,7 @@
               md="4"
             >
               <v-text-field
-                v-model="contactNumber"
+                v-model="factoryInfo.contact_num"
                 :rules="contactRules"
                 label="Contact Number"
                 outlined
@@ -44,12 +44,6 @@
               cols="12"
             >
               <location-field label="Factory Address" @locationSelected="locationSelected"></location-field>
-              <!--              <v-text-field-->
-              <!--                v-model="factoryAddress"-->
-              <!--                label="Factory Address"-->
-              <!--                outlined-->
-              <!--                required-->
-              <!--              ></v-text-field>-->
             </v-col>
 
             <v-col
@@ -219,14 +213,6 @@
           </v-row>
         </v-container>
       </v-form>
-      <div class="add-information-body">
-        <div class="add-information-body">
-          <v-btn class="add-btn" @click="addFactoryProduct">+ Add Factory Information</v-btn>
-        </div>
-      </div>
-    </div>
-    <div class="btn-container">
-      <v-btn>Submit</v-btn>
     </div>
   </div>
 </template>
@@ -236,12 +222,14 @@ import AnnualProduction from "~/components/factories-branches/annual-production"
 import LocationField from "../Form/LocationField";
 
 export default {
+  props: ['value'],
   components: {
     AnnualProduction,
     LocationField
   },
   data() {
     return {
+      factoryInfo: null,
       factoryName: '',
       factoryAddress: '',
       contactNumber: null,
@@ -286,42 +274,22 @@ export default {
           highest_annual_output_val: '',
           highest_annual_output_unit: ''
         },
-      ],
-      factoryInfo: {
-        factory_id: '',
-        name: '',
-        location: '',
-        contact_num: '',
-        area_size: '',
-        production_staff_num: '',
-        qc_staff_num: '',
-        rd_staff_num: '',
-        production_line_num: '',
-        annual_output_val: '',
-        annual_production_capacity: [],
-        image: '',
-      }
+      ]
     }
   },
   watch: {
-    factoryName(val) {
-      this.factoryInfo.name = val;
+    value: {
+      handler: function(val) {
+        this.factoryInfo = val;
+      },
+      immediate: true
     },
-    factoryAddress(val) {
-      this.factoryInfo.location = val;
-    },
-    contactNumber(val) {
-      this.factoryInfo.contact_num = val;
-    },
-    factorySize(val) {
-      this.factoryInfo.area_size = val;
-    },
-    importMarket(val) {
-      this.factoryInfo.production_staff_num = val;
-    },
-    qc(val) {
-      this.factoryInfo.qc_staff_num = val;
-    },
+    $data: {
+      handler: function(val) {
+        this.$emit('value', val.factoryInfo)
+      },
+      deep: true
+    }
   },
   async mounted() {
     await this.$axios.post('/api/factory_size',

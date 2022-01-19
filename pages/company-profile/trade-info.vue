@@ -10,7 +10,7 @@
               sm="4"
             >
               <v-select
-                v-model="ePercentageSelected"
+                v-model="tradeInfo.export_percentage"
                 :items="ePercentage"
                 label="Export Percentage"
                 outlined
@@ -23,7 +23,7 @@
               sm="4"
             >
               <v-text-field
-                v-model="yearFExport"
+                v-model="tradeInfo.first_export_year"
                 type="number"
                 label="Year of First Export"
                 :rules="yearFExportRule"
@@ -162,7 +162,7 @@
                 md="2"
               >
                 <v-text-field
-                  v-model="item.year"
+                  v-model.number="item.year"
                   type="number"
                   label="Year"
                   :rules="yearFExportRule"
@@ -304,56 +304,11 @@
         } else if (val === 'No') {
           this.addHistory = false;
         }
-      },
-      ePercentageSelected (val) {
-        this.tradeInfo.export_percentage = val;
-      },
-      yearFExport (val) {
-        this.tradeInfo.first_export_year = val;
-      },
-      annualExportSelected (val) {
-        this.tradeInfo.annual_export_value = val;
-      },
-      leadTime (val) {
-        this.tradeInfo.avg_lead_time = val;
-      },
-      importMarket (val) {
-        this.tradeInfo.import_market = val;
-      },
-      exportMarket (val) {
-        this.tradeInfo.export_market = val;
-      },
-      historyByYear: {
-        handler: function(val) {
-          this.tradeInfo.history_by_year.push(val);
-        },
-        deep: true
       }
     },
 
     async mounted() {
-      // Get get_annual_trade_values
-      await this.$axios.post('/api/get_annual_trade_values',
-        {}).then(response => {
-        let result=[];
-        let item
-        for(let i in  response.data){
-          item = response.data[i].title
-          result.push(item)
-        }
-        this.annualExport = result;
-      }).catch(({response}) => {
-        if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
-        } else if (response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
-        } else if (response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
-        }
-      });
-
+      await this.getAnnualTradeValues();
       // Get export_percentage_list
       await this.$axios.post('/api/export_percentage_list',
         {}).then(response => {
@@ -399,19 +354,39 @@
       });
     },
 
-
-
     methods: {
       addNewHistory() {
         this.historyByYear.push({year: this.year, description: this.description});
-        this.tradeInfo.history_by_year.push({year: this.year, description: this.description});
-        alert(JSON.stringify(this.tradeInfo.history_by_year))
-        // console.log("trade method" +this.tradeInfo.history_by_year)
+        this.tradeInfo.history_by_year = this.historyByYear;
         this.year = '';
         this.description = '';
       },
       deleteHistory(index) {
         this.historyByYear.splice(index, 1);
+        this.tradeInfo.history_by_year = this.historyByYear;
+      },
+      getAnnualTradeValues() {
+        // Get get_annual_trade_values
+        return this.$axios.post('/api/get_annual_trade_values',
+          {}).then(response => {
+          let result=[];
+          let item
+          for(let i in  response.data){
+            item = response.data[i].title
+            result.push(item)
+          }
+          this.annualExport = result;
+        }).catch(({response}) => {
+          if (response.status == 401) {
+            this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          } else if (response.status == 400) {
+            this.$toast.error(this.$t(`Bad Request`));
+          } else if (response.status == 403) {
+            this.$toast.error(this.$t(`Forbidden`));
+          } else if (response.status == 404) {
+            this.$toast.error(this.$t(`not found`));
+          }
+        });
       }
       // removeExportMarket (item) {
       //   const index = this.exportMarket.indexOf(item.name)
