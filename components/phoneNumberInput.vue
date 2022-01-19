@@ -1,9 +1,11 @@
 <template>
   <v-text-field
+    v-if="render"
     class="phoneNumberInput"
     v-model.number="phoneNumber"
     height="55"
     type="number"
+    :loading="loading"
     :error-messages="errors"
     :label="$t(`PHONE_NUMBER`)"
     outlined>
@@ -11,18 +13,18 @@
       <v-select class="phoneCodeSelect"
                 v-model="phoneCode"
                 :items="phoneCodes"
-                item-text="name"
-                item-value="dialCode"
+                item-text="title"
+                item-value="code"
                 flat
                 solo
                 dense>
         <template slot="selection" slot-scope="data">
-          <gb-flag :code="data.item.iso2" class="mr-2"/>
-          +{{ data.item.dialCode }}
+          <gb-flag :code="data.item.flag" class="mr-2"/>
+          +{{ data.item.code }}
         </template>
         <template slot="item" slot-scope="data">
-          <gb-flag :code="data.item.iso2" class="mr-2"/>
-          {{ data.item.name }}
+          <gb-flag :code="data.item.flag" class="mr-2"/>
+          {{ data.item.title }}
         </template>
       </v-select>
     </template>
@@ -31,22 +33,28 @@
 
 <script>
 
-import {countries} from 'assets/countriesList';
-
 export default {
   name : "phoneNumberInput",
   props: ['errors'],
   data() {
     return {
-      phoneCode  : '93',
+      phoneCode  : '90',
       phoneNumber: '',
       finalNumber: '',
-      phoneCodes : countries,
+      phoneCodes : [],
+      render     : true,
+      loading    : false
     };
   },
   methods: {
     inputChanged() {
       this.$emit('numberEntered', '+' + this.phoneCode + ' ' + this.phoneNumber);
+    },
+    reRenderComponent() {
+      this.render = false;
+      this.$nextTick(() => {
+        this.render = true;
+      });
     }
   },
   watch  : {
@@ -55,6 +63,23 @@ export default {
     },
     phoneCode  : function (val) {
       this.inputChanged();
+    }
+  },
+  async mounted() {
+    this.loading  = true;
+    let countries = await this.$axios.post('/api/search_country', {
+      keyword: ''
+    });
+    if (countries.status == 200) {
+      for (let i = 0; i < countries.data.length; i++) {
+        this.phoneCodes[i] = {
+          title: countries.data[i].title,
+          code : countries.data[i].tel,
+          flag : countries.data[i].alpha2
+        };
+      }
+      this.loading = false;
+      this.reRenderComponent();
     }
   }
 }
@@ -69,6 +94,7 @@ export default {
 
 .phoneNumberInput >>> input[type="number"] {
   -moz-appearance: textfield;
+  text-align: left !important;
 }
 
 .phoneNumberInput >>> input::-webkit-outer-spin-button,
