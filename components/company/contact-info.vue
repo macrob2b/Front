@@ -41,6 +41,7 @@
             >
               <v-text-field
                 v-model="email"
+                :rules="emailRules"
                 label="Email"
                 required
                 outlined
@@ -55,7 +56,7 @@
               <v-text-field
                 v-model="companywebsite"
                 label="Company Website URL"
-                append-icon="mdi-crosshairs-gps"
+                append-icon="mdi-web"
                 required
                 outlined
               ></v-text-field>
@@ -88,6 +89,10 @@
       return {
         phone: null,
         email: '',
+        emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        ],
         fax: null,
         postalcode: null,
         companywebsite: '',

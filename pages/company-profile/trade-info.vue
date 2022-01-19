@@ -254,8 +254,8 @@
         yearFExportRule: [
           value => {
             if (!value || !value.trim()) return true;
-            if (!isNaN(parseInt(value)) && value >= 1900) return true;
-            return 'The year entered must be after 1900';
+            if (!isNaN(parseInt(value)) && value >= 1900 && value <= new Date().getFullYear()) return true;
+            return 'The year entered must be after 1900 to the present year';
           },
         ],
         annualExportSelected: '',
@@ -268,13 +268,13 @@
         yearCompanyHistoryRule: [
           value => {
             if (!value || !value.trim()) return true;
-            if (!isNaN(parseInt(value)) && value >= 1900) return true;
-            return 'The year entered must be after 1900';
+            if (!isNaN(parseInt(value)) && value >= 1900 && value <= new Date().getFullYear()) return true;
+            return 'The year entered must be after 1900 to the present year';
           }
         ],
         historyByYear: [
-          {year: null, description: null},
-          {year: null, description: null},
+          {year: '', description: ''},
+          {year: '', description: ''},
         ],
         tradeInfo: {
           export_percentage: '',
@@ -286,8 +286,7 @@
           export_market: '',
           import_market: '',
           history_introduction: '',
-          history_by_year: [
-          ]
+          history_by_year: []
         }
       }
     },
@@ -297,7 +296,7 @@
           this.$nextTick(() => this.model.pop())
         }
         this.tradeInfo.nearest_port = val;
-        alert(val)
+        // alert(val)
       },
       radioGroup (val) {
         if (val === 'Yes') {
@@ -317,7 +316,6 @@
       },
       leadTime (val) {
         this.tradeInfo.avg_lead_time = val;
-        console.log(val)
       },
       importMarket (val) {
         this.tradeInfo.import_market = val;
@@ -325,7 +323,12 @@
       exportMarket (val) {
         this.tradeInfo.export_market = val;
       },
-
+      historyByYear: {
+        handler: function(val) {
+          this.tradeInfo.history_by_year.push(val);
+        },
+        deep: true
+      }
     },
 
     async mounted() {
@@ -337,7 +340,6 @@
         for(let i in  response.data){
           item = response.data[i].title
           result.push(item)
-          console.log(result)
         }
         this.annualExport = result;
       }).catch(({response}) => {
@@ -403,9 +405,10 @@
       addNewHistory() {
         this.historyByYear.push({year: this.year, description: this.description});
         this.tradeInfo.history_by_year.push({year: this.year, description: this.description});
-        // alert(JSON.stringify(this.tradeInfo.history_by_year))
-        this.year = null;
-        this.description = null;
+        alert(JSON.stringify(this.tradeInfo.history_by_year))
+        // console.log("trade method" +this.tradeInfo.history_by_year)
+        this.year = '';
+        this.description = '';
       },
       deleteHistory(index) {
         this.historyByYear.splice(index, 1);
