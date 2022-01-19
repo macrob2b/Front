@@ -5,7 +5,15 @@
         <p>Factories</p>
       </div>
       <div>
-        <add-factory></add-factory>
+        <add-factory v-for="(item, index) in factories" v-model="factories[index]" @delete="deleteFactory(index)"></add-factory>
+      </div>
+      <div class="add-information-body">
+        <div class="add-information-body">
+          <v-btn class="add-btn" @click="addFactory">+ Add Factory Information</v-btn>
+        </div>
+      </div>
+      <div class="btn-container">
+        <v-btn>Submit</v-btn>
       </div>
     </div>
     <!--    <AddFactory-->
@@ -45,21 +53,46 @@ export default {
   data() {
     return {
       form: '',
+      factories: [],
       factoryData: '',
       branchData: '',
       factoryNames: [],
       branchNames: [],
-
+      factoryInfo: {
+        factory_id: '',
+        name: '',
+        location: '',
+        contact_num: '',
+        area_size: '',
+        production_staff_num: '',
+        qc_staff_num: '',
+        rd_staff_num: '',
+        production_line_num: '',
+        annual_output_val: '',
+        annual_production_capacity: [],
+        image: '',
+      }
     }
   },
+  created() {
+    this.addFactory();
+  },
   watch: {
-    factoryData(val) {
-      this.factoryNames.push(val);
-      this.form = '';
+    // factoryData(val) {
+    //   this.factoryNames.push(val);
+    //   this.form = '';
+    // },
+    // branchData(val) {
+    //   this.branchNames.push(val);
+    //   this.form = '';
+    // }
+  },
+  methods: {
+    addFactory() {
+      this.factories.push(this.factoryInfo);
     },
-    branchData(val) {
-      this.branchNames.push(val);
-      this.form = '';
+    deleteFactory(index) {
+      this.factories.splice(index, 1);
     }
   }
 }
