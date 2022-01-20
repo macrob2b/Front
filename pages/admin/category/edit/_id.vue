@@ -30,6 +30,8 @@
           ></v-text-field>
 
 
+
+
           <v-btn
             color="success"
             class="mr-4"
@@ -91,6 +93,19 @@
                 hint="Separate by enter"
               ></v-textarea>
             </v-col>
+
+            <v-col
+            cols="12"
+            >
+
+              <v-checkbox
+                label="Required field"
+                :value="true"
+                v-model="required_field"
+              ></v-checkbox>
+
+
+            </v-col>
           </v-row>
 
           <v-btn
@@ -115,10 +130,13 @@
             <thead>
             <tr>
               <th class="text-left">
-                Filed type
+                Field type
               </th>
               <th class="text-left">
                 Label
+              </th>
+              <th class="text-left">
+                Required
               </th>
               <th class="text-left">
                 Preview
@@ -135,6 +153,7 @@
             >
               <td>{{ item.field_type }}</td>
               <td>{{ item.label }}</td>
+              <td>{{ item.required_field==true ? "Yes" : "No" }}</td>
               <td>
                 <span
                   v-if="item.field_type=='Text'"
@@ -235,7 +254,8 @@ export default {
       field_type_val: "",
       optionValues: null,
       final_option_val_string: null,
-      propertyList: []
+      propertyList: [],
+      required_field:false
     }
   },
   mounted() {
@@ -273,12 +293,14 @@ export default {
           cate_id: this.$route.params.id,
           field_type: this.field_type_val,
           label: this.label,
-          values: this.final_option_val_string
+          values: this.final_option_val_string,
+          required_field: this.required_field
         }).then(response => {
         this.$toast.success('Property Created successfully');
         this.label = "";
         this.field_type_val = "";
         this.optionValues = "";
+        this.required_field = false;
         this.getPropertyList();
         this.property_submit_btn = 'Create';
       }).catch(e => {
