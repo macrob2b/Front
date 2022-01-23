@@ -18,11 +18,12 @@
                   md="4"
                 >
                   <v-select
-                    v-model="certificateType"
+                    v-model="certificateInfo.certificate_type"
                     :items="certificateTypeArr"
                     label="Certificate Name"
                     outlined
-                    required
+                    item-text="title"
+                    item-value="title"
                   ></v-select>
                 </v-col>
 
@@ -31,10 +32,11 @@
                   md="4"
                 >
                   <v-select
+                    v-model="certificateInfo.certificate_issuer"
                     :items="certificateIssuerArr"
                     label="Certificate Issuer"
                     outlined
-                    required
+
                   ></v-select>
                 </v-col>
 
@@ -58,7 +60,7 @@
                     :rules="exRules"
                     label="Expiry Date"
                     outlined
-                    required
+
                   ></v-text-field>
                 </v-col>
 
@@ -71,7 +73,6 @@
                     accept="image/*"
                     label="Image"
                     outlined
-                    required
                   ></v-file-input>
                 </v-col>
 
@@ -79,6 +80,7 @@
                   cols="12"
                 >
                   <v-textarea
+                    v-model="certificateInfo.description"
                     label="Description"
                     name="description"
                     outlined
@@ -100,113 +102,27 @@
           sort-by="calories"
           class="elevation-1 certificate-table"
         >
-
-          <template v-slot:top>
-            <v-toolbar
-              flat
+          <template
+            v-slot:body="{ items }"
+          >
+            <tbody>
+            <tr
+              v-for="(item, i) in items"
+              :key="i"
             >
-              <v-dialog
-                v-model="dialog"
-                max-width="500px"
-              >
+              <td>{{ item.certificate_type }}</td>
+              <td>{{ item.certificate_issuer }}</td>
+              <td>{{ item.certificate_id }}</td>
+              <td>{{ item.exDate }}</td>
+              <td>{{ item.image }}</td>
+              <td>{{ item.description }}</td>
+              <td>
 
-                <v-card>
-                  <v-card-title>
-                    <span class="text-h5">{{ formTitle }}</span>
-                  </v-card-title>
-
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col
-                          cols="12"
-                          sm="6"
-                          md="4"
-                        >
-                          <v-text-field
-                            v-model="editedItem.certificateName"
-                            label="certificateName"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col
-                          cols="12"
-                          sm="6"
-                          md="4"
-                        >
-                          <v-text-field
-                            v-model="editedItem.certificateIsuuer"
-                            label="certificateIsuuer"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col
-                          cols="12"
-                          sm="6"
-                          md="4"
-                        >
-                          <v-text-field
-                            v-model="editedItem.certificateID"
-                            label="certificateID"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col
-                          cols="12"
-                          sm="6"
-                          md="4"
-                        >
-                          <v-text-field
-                            v-model="editedItem.expiryDate"
-                            label="expiryDate"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col
-                          cols="12"
-                          sm="6"
-                          md="4"
-                        >
-                          <v-file-input
-                            v-model="editedItem.picture"
-                            accept="image/*"
-                            label="Image"
-                            outlined
-                            required
-                          ></v-file-input>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-card-text>
-
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      color="blue darken-1"
-                      text
-                      @click="close"
-                    >
-                      Cancel
-                    </v-btn>
-                    <v-btn
-                      color="blue darken-1"
-                      text
-                      @click="save"
-                    >
-                      Save
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-              <v-dialog v-model="dialogDelete" max-width="500px">
-                <v-card>
-                  <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
-                    <v-spacer></v-spacer>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </v-toolbar>
+              </td>
+            </tr>
+            </tbody>
           </template>
+
           <template v-slot:item.picture="{ item }">
             <img :src="require(`~/assets/img/${item.picture}`)" style="width: 50px; height: 40px"/>
           </template>
@@ -261,7 +177,9 @@ export default {
         certificate_issuer: '',
         certificate_id: '',
         exDate: '',
-        image: '',
+        image: null,
+        description:'',
+        index:null
       },
       dialog: false,
       dialogDelete: false,
@@ -270,42 +188,40 @@ export default {
           text: 'Certificate name',
           align: 'start',
           sortable: false,
-          value: 'certificateName',
+          value: 'certificate_type',
         },
-        {text: 'Certificate isuuer', value: 'certificateIsuuer'},
-        {text: 'Certificate ID', value: 'certificateID'},
-        {text: 'Expiry date', value: 'expiryDate'},
-        {text: 'Picture', value: 'picture'},
+        {text: 'Certificate isuuer', value: 'certificate_isuuer'},
+        {text: 'Certificate ID', value: 'certificate_id'},
+        {text: 'Expiry date', value: 'exDate'},
+        {text: 'Picture', value: 'image'},
         {text: 'Description', value: 'description'},
         {text: 'Actions', value: 'actions', sortable: false},
       ],
       certificateList: [],
       editedIndex: -1,
       editedItem: {
-        picture: '',
-        certificateName: '',
-        certificateIsuuer: '',
-        certificateID: '',
-        ExpiryDate: '',
+        image: null,
+        certificate_type: '',
+        certificate_isuuer: '',
+        certificate_id: '',
+        exDate: '',
+        description: ''
       },
       defaultItem: {
-        picture: '',
-        certificateName: '',
-        certificateIsuuer: '',
-        certificateID: '',
-        ExpiryDate: '',
+        image: null,
+        certificate_type: '',
+        certificate_isuuer: '',
+        certificate_id: '',
+        exDate: '',
+        description: ''
       },
     }
   },
-  created() {
-    this.initialize()
-  },
+  // created() {
+  //   this.initialize()
+  // },
   watch: {
-    certificateData(val) {
-      this.certificateNames.push(val);
-      this.form = '';
-    },
-    dialog(val) {
+   dialog(val) {
       val || this.close()
     },
     dialogDelete(val) {
@@ -325,14 +241,7 @@ export default {
     getCertificateType() {
       this.$axios.post('/api/certificate_type',
         {}).then(response => {
-        let result = [];
-        let item
-        for (let i in response.data) {
-          item = response.data[i].title
-          result.push(item)
-        }
-        this.certificateTypeArr = result;
-        this.editedItem.certificateName =result;
+        this.certificateTypeArr = response.data;
       }).catch(({response}) => {
         if (response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
@@ -374,47 +283,45 @@ export default {
     },
     submit() {
       // this.$emit('formData', this.certificateName);
-      this.certificateList = this.certificateInfo
+      this.certificateList.push(Object.assign({}, this.certificateInfo))
+      console.log("certificateInfo:" + JSON.stringify(this.certificateInfo))
+      console.log("certificateList:" + JSON.stringify(this.certificateList))
       this.showCertificateForm = false;
       this.addCertificateBtn = true;
     },
-    initialize () {
-      this.certificateList = [
-        {
-          picture: 'poster.png',
-          certificateName: 'Example',
-          certificateIsuuer: 'Example',
-          certificateID: 'Example',
-          ExpiryDate: 'Example',
-        },
-        // {
-        //   picture: 'poster.png',
-        //   certificateName: 'Example',
-        //   certificateIsuuer: 'Example',
-        //   certificateID: 'Example',
-        //   ExpiryDate: 'Example',
-        // },
-
-      ]
-    },
+    // initialize () {
+    //   this.certificateList = [
+    //     {
+    //       picture: 'poster.png',
+    //       certificateName: 'Example',
+    //       certificateIsuuer: 'Example',
+    //       certificateID: 'Example',
+    //       ExpiryDate: 'Example',
+    //     },
+    //     // {
+    //     //   picture: 'poster.png',
+    //     //   certificateName: 'Example',
+    //     //   certificateIsuuer: 'Example',
+    //     //   certificateID: 'Example',
+    //     //   ExpiryDate: 'Example',
+    //     // },
+    //   ]
+    // },
 
     editItem (item) {
       this.editedIndex = this.certificateList.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
-
     deleteItem (item) {
       this.editedIndex = this.certificateList.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
-
     deleteItemConfirm () {
       this.certificateList.splice(this.editedIndex, 1)
       this.closeDelete()
     },
-
     close () {
       this.dialog = false
       this.$nextTick(() => {
@@ -422,7 +329,6 @@ export default {
         this.editedIndex = -1
       })
     },
-
     closeDelete () {
       this.dialogDelete = false
       this.$nextTick(() => {
@@ -440,7 +346,5 @@ export default {
       this.close()
     },
   },
-
-
 }
 </script>
