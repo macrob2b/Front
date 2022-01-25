@@ -105,6 +105,9 @@ body {
       color: #FFFFFF;
     }
   }
+  .cancelBtn {
+    background-color: transparent;
+  }
 }
 
 .header {
@@ -1367,6 +1370,17 @@ body {
       box-shadow: none !important;
       background-color: $primary_color !important;
       color: $white;
+    }
+    .v-btn.cancelBtn {
+      background-color: transparent !important;
+      border: thin solid currentColor;
+      color: rgba(0, 0, 0, 0.87);;
+    }
+  }
+  .certificate-image{
+    img {
+      width: 40px;
+      height: 40px;
     }
   }
 }

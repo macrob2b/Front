@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div class="certification">
     <div class="add-information">
       <div class="add-information-header">
@@ -18,12 +18,12 @@
                   md="4"
                 >
                   <v-select
-                    v-model="certificateInfo.certificate_type"
+                    v-model="certificateInfo.name"
                     :items="certificateTypeArr"
-                    label="Certificate Name"
-                    outlined
                     item-text="title"
                     item-value="title"
+                    label="Certificate Name"
+                    outlined
                   ></v-select>
                 </v-col>
 
@@ -32,11 +32,10 @@
                   md="4"
                 >
                   <v-select
-                    v-model="certificateInfo.certificate_issuer"
+                    v-model="certificateInfo.issuer"
                     :items="certificateIssuerArr"
                     label="Certificate Issuer"
                     outlined
-
                   ></v-select>
                 </v-col>
 
@@ -45,7 +44,7 @@
                   md="4"
                 >
                   <v-text-field
-                    v-model="certificateInfo.certificate_id"
+                    v-model="certificateInfo.identify_num"
                     label="Certificate ID"
                     outlined
                   ></v-text-field>
@@ -56,11 +55,10 @@
                   md="6"
                 >
                   <v-text-field
-                    v-model="certificateInfo.exDate"
+                    v-model="certificateInfo.expiry_date"
                     :rules="exRules"
                     label="Expiry Date"
                     outlined
-
                   ></v-text-field>
                 </v-col>
 
@@ -70,9 +68,11 @@
                 >
                   <v-file-input
                     v-model="certificateInfo.image"
+                    class="certificate-image"
                     accept="image/*"
                     label="Image"
                     outlined
+                    @change="uploadImage"
                   ></v-file-input>
                 </v-col>
 
@@ -88,7 +88,26 @@
                 </v-col>
               </v-row>
               <div class="btn-container">
-                <v-btn @click="submit">Submit</v-btn>
+                <v-btn
+                  v-show="showSubmit"
+                  :disabled="isDisabled"
+                  @click="submit">
+                  Submit
+                </v-btn>
+                <v-btn
+                  v-show="showSave"
+                  @click="save"
+                >
+                  Save
+                </v-btn>
+                <v-btn
+                  v-show="showCancel"
+                  @click="cancel"
+                  outlined
+                  class="cancelBtn"
+                >
+                  cancel
+                </v-btn>
               </div>
             </v-container>
           </v-form>
@@ -99,7 +118,6 @@
         <v-data-table
           :headers="headers"
           :items="certificateList"
-          sort-by="calories"
           class="elevation-1 certificate-table"
         >
           <template
@@ -110,38 +128,32 @@
               v-for="(item, i) in items"
               :key="i"
             >
-              <td>{{ item.certificate_type }}</td>
-              <td>{{ item.certificate_issuer }}</td>
-              <td>{{ item.certificate_id }}</td>
-              <td>{{ item.exDate }}</td>
-              <td>{{ item.image }}</td>
-              <td>{{ item.description }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.issuer }}</td>
+              <td>{{ item.identify_num }}</td>
+              <td>{{ item.expiry_date }}</td>
+              <td class="certificate-table-image">
+                <img :src="`data:image/png;base64,` + item.image" style="width: 50px; height: 40px">
+              </td>
+              <td class="certificate-description">{{ item.description }}</td>
               <td>
-
+                <v-icon
+                  class="mr-2"
+                  small
+                  @click="editItem(item,i)"
+                >
+                  mdi-pencil
+                </v-icon>
+                <v-icon
+                  small
+                  @click="deleteItem(item,i)"
+                >
+                  mdi-delete
+                </v-icon>
               </td>
             </tr>
             </tbody>
           </template>
-
-          <template v-slot:item.picture="{ item }">
-            <img :src="require(`~/assets/img/${item.picture}`)" style="width: 50px; height: 40px"/>
-          </template>
-          <template v-slot:item.actions="{ item }">
-            <v-icon
-              small
-              class="mr-2"
-              @click="editItem(item)"
-            >
-              mdi-pencil
-            </v-icon>
-            <v-icon
-              small
-              @click="deleteItem(item)"
-            >
-              mdi-delete
-            </v-icon>
-          </template>
-
         </v-data-table>
       </div>
     </div>
@@ -161,7 +173,10 @@ export default {
   data() {
     return {
       addCertificateBtn: true,
-      showCertificateForm: true,
+      showCertificateForm: false,
+      showSubmit: true,
+      showSave: false,
+      showCancel: false,
       certificateType: '',
       exRules: [
         value => {
@@ -172,14 +187,15 @@ export default {
       ],
       certificateTypeArr: [],
       certificateIssuerArr: [],
+      certificateImage: null,
       certificateInfo: {
-        certificate_type: '',
-        certificate_issuer: '',
-        certificate_id: '',
-        exDate: '',
+        name: '',
+        issuer: '',
+        identify_num: '',
+        expiry_date: '',
         image: null,
-        description:'',
-        index:null
+        description: '',
+        index: null
       },
       dialog: false,
       dialogDelete: false,
@@ -188,11 +204,11 @@ export default {
           text: 'Certificate name',
           align: 'start',
           sortable: false,
-          value: 'certificate_type',
+          value: 'name',
         },
         {text: 'Certificate isuuer', value: 'certificate_isuuer'},
-        {text: 'Certificate ID', value: 'certificate_id'},
-        {text: 'Expiry date', value: 'exDate'},
+        {text: 'Certificate ID', value: 'identify_num'},
+        {text: 'Expiry date', value: 'expiry_date'},
         {text: 'Picture', value: 'image'},
         {text: 'Description', value: 'description'},
         {text: 'Actions', value: 'actions', sortable: false},
@@ -200,42 +216,27 @@ export default {
       certificateList: [],
       editedIndex: -1,
       editedItem: {
+        name: '',
+        issuer: '',
+        identify_num: '',
+        expiry_date: '',
         image: null,
-        certificate_type: '',
-        certificate_isuuer: '',
-        certificate_id: '',
-        exDate: '',
-        description: ''
-      },
-      defaultItem: {
-        image: null,
-        certificate_type: '',
-        certificate_isuuer: '',
-        certificate_id: '',
-        exDate: '',
-        description: ''
+        description: '',
+        index: null
       },
     }
   },
   // created() {
   //   this.initialize()
   // },
-  watch: {
-   dialog(val) {
-      val || this.close()
-    },
-    dialogDelete(val) {
-      val || this.closeDelete()
+  computed: {
+    isDisabled () {
+      return !(this.certificateInfo.name || this.certificateInfo.issuer || this.certificateInfo.identify_num || this.certificateInfo.image || this.certificateInfo.expiry_date || this.certificateInfo.description);
     },
   },
   async mounted() {
     await this.getCertificateType()
     await this.getCertificateIssuer()
-  },
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-    },
   },
   methods: {
     getCertificateType() {
@@ -282,69 +283,120 @@ export default {
       this.addCertificateBtn = false;
     },
     submit() {
-      // this.$emit('formData', this.certificateName);
       this.certificateList.push(Object.assign({}, this.certificateInfo))
+      this.submitCertificate();
+      // let imageLocation = document.querySelector('.certificate-table-image')
+      // imageLocation.insertAdjacentHTML('beforeend', '<img src="data:image/png;base64,' + this.certificateImage +'">');
+
       console.log("certificateInfo:" + JSON.stringify(this.certificateInfo))
       console.log("certificateList:" + JSON.stringify(this.certificateList))
+
+      this.certificateInfo.name = ''
+      this.certificateInfo.issuer = ''
+      this.certificateInfo.identify_num = ''
+      this.certificateInfo.image = null
+      this.certificateInfo.expiry_date = ''
+      this.certificateInfo.description = ''
       this.showCertificateForm = false;
       this.addCertificateBtn = true;
-    },
-    // initialize () {
-    //   this.certificateList = [
-    //     {
-    //       picture: 'poster.png',
-    //       certificateName: 'Example',
-    //       certificateIsuuer: 'Example',
-    //       certificateID: 'Example',
-    //       ExpiryDate: 'Example',
-    //     },
-    //     // {
-    //     //   picture: 'poster.png',
-    //     //   certificateName: 'Example',
-    //     //   certificateIsuuer: 'Example',
-    //     //   certificateID: 'Example',
-    //     //   ExpiryDate: 'Example',
-    //     // },
-    //   ]
-    // },
 
-    editItem (item) {
-      this.editedIndex = this.certificateList.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialog = true
     },
-    deleteItem (item) {
-      this.editedIndex = this.certificateList.indexOf(item)
-      this.editedItem = Object.assign({}, item)
-      this.dialogDelete = true
+    editItem(item, index) {
+      this.editedItem = item;
+      this.editedIndex = index;
+      this.showCertificateForm = true
+      this.certificateInfo = Object.assign({}, item);
+      this.showSubmit= false
+      this.showSave= true
+      this.showCancel= true
     },
-    deleteItemConfirm () {
+    save() {
+      Object.assign(this.certificateList[this.editedIndex], this.certificateInfo)
+      this.showCertificateForm = false;
+      this.addCertificateBtn = true;
+      this.showSubmit= true
+      this.showSave= false
+      this.showCancel= false
+      this.certificateInfo.name = ''
+      this.certificateInfo.issuer = ''
+      this.certificateInfo.identify_num = ''
+      this.certificateInfo.image = null
+      this.certificateInfo.expiry_date = ''
+      this.certificateInfo.description = ''
+    },
+    cancel() {
+      Object.assign(this.certificateList[this.editedIndex], this.editedItem)
+      this.showCertificateForm = false;
+      this.addCertificateBtn = true;
+      this.showSubmit= true
+      this.showSave= false
+      this.showCancel= false
+      this.certificateInfo.name = ''
+      this.certificateInfo.issuer = ''
+      this.certificateInfo.identify_num = ''
+      this.certificateInfo.image = null
+      this.certificateInfo.expiry_date = ''
+      this.certificateInfo.description = ''
+    },
+    deleteItem(item, index) {
+      console.log(JSON.stringify(item))
+      this.certificateList.splice(index, 1)
+    },
+    deleteItemConfirm() {
       this.certificateList.splice(this.editedIndex, 1)
       this.closeDelete()
     },
-    close () {
-      this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
-    },
-    closeDelete () {
-      this.dialogDelete = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
-    },
 
-    save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.certificateList[this.editedIndex], this.editedItem)
-      } else {
-        this.certificateList.push(this.editedItem)
-      }
-      this.close()
+    async uploadImage(e) {
+      let a = (await this.getFile(e)).base64StringFile;
+      var d1 = document.querySelector('.certificate-image');
+      d1.insertAdjacentHTML('beforeend', '<img  src="data:image/png;base64,' + a +'">');
+
+      this.certificateInfo.image = a;
     },
+    //take a single JavaScript File object
+    getFile(file) {
+      let reader = new FileReader();
+      return new Promise((resolve, reject) => {
+        reader.onerror = () => { reader.abort(); reject(new Error("Error parsing file"));}
+        reader.onload = function () {
+
+          //This will result in an array that will be recognized by C#.NET WebApi as a byte[]
+          let bytes = Array.from(new Uint8Array(this.result));
+
+          //if you want the base64encoded file you would use the below line:
+          let base64StringFile = btoa(bytes.map((item) => String.fromCharCode(item)).join(""));
+
+          //Resolve the promise with your custom file structure
+          resolve({
+            bytes: bytes,
+            base64StringFile: base64StringFile,
+            fileName: file.name,
+            fileType: file.type
+          });
+        }
+        reader.readAsArrayBuffer(file);
+  });
+},
+
+    async submitCertificate() {
+     await (this.$axios.post('/api/submit_certification_info',
+        this.certificateInfo).then(response => {
+        console.log("response" + JSON.stringify(response) );
+
+      }).catch(({response}) => {
+        if (response.status == 401) {
+          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+        } else if (response.status == 400) {
+          this.$toast.error(this.$t(`Bad Request`));
+        } else if (response.status == 403) {
+          this.$toast.error(this.$t(`Forbidden`));
+        } else if (response.status == 404) {
+          this.$toast.error(this.$t(`not found`));
+        }
+      })
+     );
+    }
   },
 }
 </script>

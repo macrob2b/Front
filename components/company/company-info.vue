@@ -13,8 +13,7 @@
               md="4"
             >
               <v-text-field
-                v-model="companyname"
-                :rules="nameRules"
+                v-model="company_name"
                 label="Company name"
                 append-icon="mdi-pencil"
                 required
@@ -28,6 +27,7 @@
               md="4"
             >
               <v-select
+                v-model="business_type"
                 :items="bussinessTypeArr"
                 label="Business type"
                 outlined
@@ -38,14 +38,11 @@
               cols="12"
               md="4"
             >
-<!--              <v-text-field-->
-<!--                v-model="businessloc"-->
-<!--                label="Business Location"-->
-<!--                append-icon="mdi-crosshairs-gps"-->
-<!--                required-->
-<!--                outlined-->
-<!--              ></v-text-field>-->
-              <location-field label="Business Location" @locationSelected="locationSelected"></location-field>
+              <location-field
+                v-model="address"
+                label="Business Location"
+                @locationSelected="locationSelected"
+              ></location-field>
             </v-col>
           </v-row>
           <v-row>
@@ -79,7 +76,6 @@
               <v-text-field
                 v-model="city"
                 label="City"
-                required
                 outlined
               ></v-text-field>
             </v-col>
@@ -102,7 +98,7 @@
               md="4"
             >
               <v-text-field
-                v-model="employeesTotal"
+                v-model="employees_total"
                 label="Employees Total"
                 :rules="totalRules"
                 outlined
@@ -114,7 +110,7 @@
               md="4"
             >
               <v-text-field
-                v-model="revenue"
+                v-model="annual_revenue"
                 label="Annual Revenue"
                 :rules="revenueRules"
                 append-icon="mdi-currency-usd"
@@ -149,19 +145,17 @@
     components: {LocationField},
     data() {
       return {
-        companyname: '',
-        businessloc: '',
-        employeesTotal: '',
-        revenue: '',
-        location_name: '',
+        company_name: '',
+        business_type: '',
+        address:'',
         country: '',
-        country_code: '',
         state: '',
         city: '',
         description: '',
-        nameRules: [
-          name => !!name || 'name is required'
-        ],
+        employees_total: '',
+        annual_revenue: '',
+        location_name: '',
+        country_code: '',
         totalRules: [
           value => {
             const pattern = /^[-,0-9]+$/;

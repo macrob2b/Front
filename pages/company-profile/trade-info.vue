@@ -253,7 +253,6 @@
         yearFExport: '',
         yearFExportRule: [
           value => {
-            if (!value || !value.trim()) return true;
             if (!isNaN(parseInt(value)) && value >= 1900 && value <= new Date().getFullYear()) return true;
             return 'The year entered must be after 1900 to the present year';
           },
@@ -304,54 +303,21 @@
         } else if (val === 'No') {
           this.addHistory = false;
         }
+      },
+      $tradeInfo: {
+        handler: function(val, oldVal) {
+          this.$emit('updateTradeInfoData', this.$tradeInfo)
+        },
+        deep: true
       }
     },
 
     async mounted() {
       await this.getAnnualTradeValues();
       // Get export_percentage_list
-      await this.$axios.post('/api/export_percentage_list',
-        {}).then(response => {
-        let result=[];
-        let item
-        for(let i in  response.data){
-          item = response.data[i].title
-          result.push(item)
-        }
-        this.ePercentage = result;
-      }).catch(({response}) => {
-        if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
-        } else if (response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
-        } else if (response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
-        }
-      });
-
+      await this.getExportPercentageList();
       // Get country list for import market & export market
-      await this.$axios.post('/api/search_country',
-        {}).then(response => {
-        let result=[];
-        let item
-        for(let i in  response.data){
-          item = response.data[i].title
-          result.push(item)
-        }
-        this.continents = result;
-      }).catch(({response}) => {
-        if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
-        } else if (response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
-        } else if (response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
-        }
-      });
+      await this.getCountryList();
     },
 
     methods: {
@@ -359,6 +325,7 @@
         this.historyByYear.push({year: this.year, description: this.description});
         this.tradeInfo.history_by_year = this.historyByYear;
         this.year = '';
+        console.log("tradeInfo: " + JSON.stringify( this.tradeInfo))
         this.description = '';
       },
       deleteHistory(index) {
@@ -376,6 +343,50 @@
             result.push(item)
           }
           this.annualExport = result;
+        }).catch(({response}) => {
+          if (response.status == 401) {
+            this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          } else if (response.status == 400) {
+            this.$toast.error(this.$t(`Bad Request`));
+          } else if (response.status == 403) {
+            this.$toast.error(this.$t(`Forbidden`));
+          } else if (response.status == 404) {
+            this.$toast.error(this.$t(`not found`));
+          }
+        });
+      },
+      getExportPercentageList() {
+        this.$axios.post('/api/export_percentage_list',
+          {}).then(response => {
+          let result=[];
+          let item
+          for(let i in  response.data){
+            item = response.data[i].title
+            result.push(item)
+          }
+          this.ePercentage = result;
+        }).catch(({response}) => {
+          if (response.status == 401) {
+            this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          } else if (response.status == 400) {
+            this.$toast.error(this.$t(`Bad Request`));
+          } else if (response.status == 403) {
+            this.$toast.error(this.$t(`Forbidden`));
+          } else if (response.status == 404) {
+            this.$toast.error(this.$t(`not found`));
+          }
+        });
+      },
+      getCountryList() {
+        this.$axios.post('/api/search_country',
+          {}).then(response => {
+          let result=[];
+          let item
+          for(let i in  response.data){
+            item = response.data[i].title
+            result.push(item)
+          }
+          this.continents = result;
         }).catch(({response}) => {
           if (response.status == 401) {
             this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));

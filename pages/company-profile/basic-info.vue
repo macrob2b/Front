@@ -1,9 +1,9 @@
 <template>
   <div class="basic-info">
     <UserType @updateData="updateRole"></UserType>
-    <CompanyInfo @updateData="updateCompanyinfo"></CompanyInfo>
+    <CompanyInfo @updateData="updateCompanyInfo"></CompanyInfo>
     <ContactInfo @updateData="updateContactInfo"></ContactInfo>
-    <Media></Media>
+    <Media @updateData="updateMediaInfo"></Media>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       companyInfo: {
-        userType: '',
+        role: '',
         company_name: '',
         business_type: '',
         location: '',
@@ -32,8 +32,16 @@ export default {
         images: [],
         brochure: [],
         video: '',
-
       }
+    }
+  },
+  watch: {
+    $data: {
+      handler: function(val, oldVal) {
+        console.log("companyInfo basic:", JSON.stringify(this.$data))
+        this.$emit('updateCompanyInfoData', this.$data.companyInfo)
+      },
+      deep: true
     }
   },
   components: {
@@ -42,29 +50,17 @@ export default {
     ContactInfo,
     Media
   },
-  async mounted() {
-    await this.$axios.post('/api/update_company_general_info',
-      {}).then(response => {
-      console.log(response)
-    }).catch(({response}) => {
-      if (response.status == 401) {
-        this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-      } else if (response.status == 500 || response.status == 504) {
-        this.$toast.error(this.$t(`REQUEST_FAILED`));
-      }
-    });
-  },
   methods: {
     updateRole(usertype) {
-      let result = [];
+      let result = "";
       for (let i in usertype) {
         if (usertype[i] === true) {
-          result.push(i);
+          result += i +",";
         }
       }
-      this.companyInfo.userType = result
+      this.companyInfo.role = result
     },
-    updateCompanyinfo(companyInfo) {
+    updateCompanyInfo(companyInfo) {
       this.companyInfo.company_name = companyInfo.company_name;
       this.companyInfo.business_type = companyInfo.business_type;
       this.companyInfo.street_address = companyInfo.address;
@@ -73,7 +69,6 @@ export default {
       this.companyInfo.city = companyInfo.city;
       this.companyInfo.description = companyInfo.description;
       this.companyInfo.employees_total = companyInfo.employeesTotal;
-      this.companyInfo.annual_revenue = companyInfo.revenue;
       this.companyInfo.annual_revenue = companyInfo.annual_revenue;
       this.companyInfo.year_established = companyInfo.yearEstablished;
     },
@@ -82,6 +77,12 @@ export default {
       this.companyInfo.fax = contactInfo.fax;
       this.companyInfo.email = contactInfo.email;
       this.companyInfo.postal_code = contactInfo.postalcode;
+    },
+    updateMediaInfo(mediaInfo) {
+      this.companyInfo.logo = mediaInfo.logo;
+      this.companyInfo.image = mediaInfo.image;
+      this.companyInfo.brochure = mediaInfo.brochure;
+      this.companyInfo.video = mediaInfo.video;
     }
   },
 
