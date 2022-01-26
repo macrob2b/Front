@@ -1,7 +1,7 @@
 <template>
   <div class="add-branch">
     <div class="add-branch-inner">
-      <v-form v-model="valid">
+      <v-form>
         <v-container>
           <v-row>
             <v-col
@@ -80,7 +80,6 @@
     },
     data() {
       return {
-        valid: false,
         branchName: '',
         branchAddress: '',
         contactNumber: null,

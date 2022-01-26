@@ -135,7 +135,8 @@
               <td class="certificate-table-image">
                 <img :src="`data:image/png;base64,` + item.image" style="width: 50px; height: 40px">
               </td>
-              <td class="certificate-description">{{ item.description }}</td>
+              <td>
+                <p class="certificate-description">{{ item.description }}</p></td>
               <td>
                 <v-icon
                   class="mr-2"
@@ -197,8 +198,6 @@ export default {
         description: '',
         index: null
       },
-      dialog: false,
-      dialogDelete: false,
       headers: [
         {
           text: 'Certificate name',
@@ -285,20 +284,18 @@ export default {
     submit() {
       this.certificateList.push(Object.assign({}, this.certificateInfo))
       this.submitCertificate();
-      // let imageLocation = document.querySelector('.certificate-table-image')
-      // imageLocation.insertAdjacentHTML('beforeend', '<img src="data:image/png;base64,' + this.certificateImage +'">');
-
       console.log("certificateInfo:" + JSON.stringify(this.certificateInfo))
       console.log("certificateList:" + JSON.stringify(this.certificateList))
 
-      this.certificateInfo.name = ''
-      this.certificateInfo.issuer = ''
-      this.certificateInfo.identify_num = ''
-      this.certificateInfo.image = null
-      this.certificateInfo.expiry_date = ''
-      this.certificateInfo.description = ''
+      // this.certificateInfo.name = ''
+      // this.certificateInfo.issuer = ''
+      // this.certificateInfo.identify_num = ''
+      // this.certificateInfo.image = null
+      // this.certificateInfo.expiry_date = ''
+      // this.certificateInfo.description = ''
       this.showCertificateForm = false;
       this.addCertificateBtn = true;
+      this.certificateInfo = {}
 
     },
     editItem(item, index) {

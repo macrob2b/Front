@@ -105,7 +105,7 @@ body {
       color: #FFFFFF;
     }
   }
-  .cancelBtn {
+   .cancelBtn {
     background-color: transparent;
   }
 }
@@ -1325,6 +1325,11 @@ body {
       background-color: $primary_color !important;
       color: $white;
     }
+    .v-btn.cancelBtn {
+      background-color: transparent !important;
+      border: thin solid currentColor;
+      color: rgba(0, 0, 0, 0.87);;
+    }
   }
 }
 
@@ -1383,8 +1388,14 @@ body {
       height: 40px;
     }
   }
-}
 
+}
+.certificate-description {
+  white-space: nowrap;
+  width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 /**********************
 26. Company Details
 ***********************/
@@ -1597,7 +1608,6 @@ body {
             align-items: center;
             margin: 5px;
           }
-
           td:last-child {
             .theme--light.v-icon--disabled {
               color: #98CB00 !important;
