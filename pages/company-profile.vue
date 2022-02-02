@@ -26,7 +26,7 @@
   import Navigation from "~/components/navigation"
   export default {
     components: {
-      SideBar,
+        SideBar,
       ProfileCard,
       Stepper,
       Navigation
