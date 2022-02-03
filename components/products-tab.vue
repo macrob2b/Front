@@ -1,71 +1,110 @@
 <template>
   <div class="product-tab">
+    <v-row class="mt-12 mb-12"  v-if="loading">
+      <v-col cols="12" class="text-center">
+        <v-progress-circular
+          :size="50"
+          :width="5"
+          color="orange"
+          indeterminate
+        ></v-progress-circular>
+      </v-col>
+    </v-row>
     <div class="searchbar-pagination-container">
-      <searchBar></searchBar>
+      <searchBar :productList="product_list"></searchBar>
       <div class="text-center mt-4">
         <v-pagination
-          v-model="pagination.page"
-          :length="pagination.length"
-          :total-visible="pagination.total"
+          v-model="page"
+          :length="length"
+          :total-visible="total"
         ></v-pagination>
       </div>
     </div>
-<!--    <div class="box-margin">-->
-<!--      <mainBanner :links="mainBannerlinks"></mainBanner>-->
-<!--      <div class="mt-5">-->
-<!--        <smallBanners :links="smallBannerslinks"></smallBanners>-->
-<!--      </div>-->
+    <!--    <div class="box-margin">-->
+    <!--      <mainBanner :links="mainBannerlinks"></mainBanner>-->
+    <!--      <div class="mt-5">-->
+    <!--        <smallBanners :links="smallBannerslinks"></smallBanners>-->
+    <!--      </div>-->
 
-<!--      <slider class="slider"></slider>-->
-<!--    </div>-->
-<!--    <ContainerCard>-->
-<!--      <ProductContainer title="New products">-->
-<!--        <ProductSection1 :id="1"/>-->
-<!--      </ProductContainer>-->
-<!--    </ContainerCard>-->
+    <!--      <slider class="slider"></slider>-->
+    <!--    </div>-->
+    <!--    <ContainerCard>-->
+    <!--      <ProductContainer title="New products">-->
+    <!--        <ProductSection1 :id="1"/>-->
+    <!--      </ProductContainer>-->
+    <!--    </ContainerCard>-->
 
-<!--    <imglider class="box-margin"></imglider>-->
-<!--    <logoSlider></logoSlider>-->
+    <!--    <imglider class="box-margin"></imglider>-->
+    <!--    <logoSlider></logoSlider>-->
   </div>
 </template>
 
 <script>
-  import searchBar from '../components/search-bar'
-  import mainBanner from '../components/home/Banner'
-  import smallBanners from '../components/home/Ads'
-  import ProductContainer   from "../components/home/ProductContainer.vue"
-  import ProductSection1    from "../components/home/ProductSection1.vue";
+import searchBar from '../components/search-bar'
+import mainBanner from '../components/home/Banner'
+import smallBanners from '../components/home/Ads'
+import ProductContainer from "../components/home/ProductContainer.vue"
+import ProductSection1 from "../components/home/ProductSection1.vue";
 
-  export default {
-    components: {
-      searchBar,
-      mainBanner,
-      smallBanners,
-      ProductContainer,
-      ProductSection1,
-    },
-    data() {
-      return {
-        pagination: {
-          page: 1,
-          length: 25,
-          total: 7
-        },
-        mainBannerlinks: {
-          imagePath: require('@/assets/img/Group-9606.png'),
-          title: 'title',
-          subtitle: 'the quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quarts, vex nymphs, walts, bad',
-          linkPath: '#'
-        },
-        smallBannerslinks: {
-          firstimagePath: require('~/assets/img/Group-9610.png'),
-          secondimagePath: require('~/assets/img/Group-9614.png'),
-          firstlinkPath: '#',
-          secondlinkPath: '#',
-          firstDescription: 'Description goes here',
-          secondDescription: 'Description goes here'
-        }
-      }
+export default {
+  components: {
+    searchBar,
+    mainBanner,
+    smallBanners,
+    ProductContainer,
+    ProductSection1,
+  },
+  data() {
+    return {
+      //Pagination
+      page: 1,
+      length: 1,
+      total: 8,
+      //End pagination
+
+      product_list: [],
+      mainBannerlinks: {
+        imagePath: require('@/assets/img/Group-9606.png'),
+        title: 'title',
+        subtitle: 'the quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quarts, vex nymphs, walts, bad',
+        linkPath: '#'
+      },
+      smallBannerslinks: {
+        firstimagePath: require('~/assets/img/Group-9610.png'),
+        secondimagePath: require('~/assets/img/Group-9614.png'),
+        firstlinkPath: '#',
+        secondlinkPath: '#',
+        firstDescription: 'Description goes here',
+        secondDescription: 'Description goes here'
+      },
+      loading:false
+    }
+  },
+  mounted() {
+    this.getProductList();
+  },
+  watch: {
+    page(val){
+    this.getProductList();
+    }
+  },
+  methods: {
+    getProductList() {
+      this.loading=true;
+      this.$axios.$post('/api/product_list',
+        {
+          page: this.page
+        })
+        .then(res => {
+          this.product_list = res.data;
+          this.length = Math.ceil(res.total / res.per_page);
+          this.loading=false;
+        })
+        .catch(err => {
+          this.loading=false;
+          this.$toast.error(err);
+        })
     }
   }
+}
 </script>

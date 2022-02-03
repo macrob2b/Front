@@ -1,7 +1,7 @@
 <template>
   <section class="product-info pa-md-5">
     <h1>
-      Product Name
+      {{product_details.title}}
     </h1>
 
     <!--  Product Rate  -->
@@ -11,14 +11,14 @@
 
     <!-- Information List    -->
     <v-list class="transparent">
-      <v-list-item v-for="(info, i) in infos" :key="i">
+      <v-list-item v-for="(info, i) in product_details.attribute" :key="i">
         <v-list-item-content>
           <v-row no-gutters>
             <v-col cols="6" lg="3">
-              <div>{{info.label}}</div>
+              <div>{{i}}</div>
             </v-col>
             <v-col cols="6" lg="3" >
-              <div class="d-flex justify-end">{{info.value}}</div>
+              <div class="d-flex justify-end">{{info}}</div>
             </v-col>
           </v-row>
         </v-list-item-content>
@@ -82,6 +82,7 @@
     },
     data() {
       return {
+        product_details:{},
         infos: [
           {
             label: "Brand Name",
@@ -109,6 +110,25 @@
           },
         ],
         price: "195.562 $"
+      }
+    },
+    mounted() {
+      this.getProductInfo();
+      console.log(this.$route.params.id);
+    },
+    methods:{
+      getProductInfo(){
+        this.$axios.$post('/api/product_details',
+          {
+            id:this.$route.params.id
+          })
+          .then(res=>
+          {
+            this.product_details=res;
+          })
+          .catch(err=>{
+            this.$toast.error(err);
+          })
       }
     }
   }
