@@ -1,18 +1,10 @@
 <template>
   <div class="product-tab">
-    <v-row class="mt-12 mb-12"  v-if="loading">
-      <v-col cols="12" class="text-center">
-        <v-progress-circular
-          :size="50"
-          :width="5"
-          color="orange"
-          indeterminate
-        ></v-progress-circular>
-      </v-col>
-    </v-row>
+
     <div class="searchbar-pagination-container">
-      <searchBar :productList="product_list"></searchBar>
-      <div class="text-center mt-4">
+
+      <searchBar :productList="product_list" :loadingStatus="loading"></searchBar>
+      <div class="text-center mt-4" v-if="length>1">
         <v-pagination
           v-model="page"
           :length="length"

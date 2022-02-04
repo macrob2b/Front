@@ -10,7 +10,7 @@
       </v-row>
       <v-divider class="my-3"></v-divider>
 
-      <v-row class="mt-12 mb-12"  v-if="loading">
+      <v-row class="mt-12 mb-12" v-if="loading">
         <v-col cols="12" class="text-center">
           <v-progress-circular
             :size="50"
@@ -25,7 +25,7 @@
           <v-col
             cols="12"
           >
-            <v-simple-table >
+            <v-simple-table>
               <template v-slot:default>
                 <thead>
                 <tr>
@@ -76,7 +76,6 @@
                   </td>
                 </tr>
                 </tbody>
-
 
 
                 <v-dialog
@@ -137,44 +136,46 @@
 
 <script>
 export default {
-  layout:"user_dashboard",
+  layout: "user_dashboard",
   name: "index",
-  data(){
-    return{
-      product_list:[],
-      page:1,
-      total_page:0,
-      deleteConfirmDialog:false,
-      loading:false
+  data() {
+    return {
+      product_list: [],
+      page: 1,
+      total_page: 0,
+      deleteConfirmDialog: false,
+      loading: false
     }
   },
   mounted() {
+    this.$auth.user;
     this.getProductList();
   },
-  watch:{
-    page(val){
+  watch: {
+    page(val) {
       this.getProductList();
     }
   },
-  methods:{
-    getProductList(){
-      this.loading=true;
+  methods: {
+    getProductList() {
+
+      this.loading = true;
       this.$axios.$post('/api/user_product_list',
         {
-          page:this.page
+          page: this.page
         })
-        .then(res=>
-        {
-          this.product_list=res.data;
-          this.total_page=Math.ceil(res.total/res.per_page);
-          this.loading=false;
+        .then(res => {
+          this.product_list = res.data;
+          this.total_page = Math.ceil(res.total / res.per_page);
+          this.loading = false;
         })
-        .catch(err=>{
-          this.loading=false;
-          this.$toast.error(err);
-        })
+        .catch(err => {
+            this.loading = false;
+            this.$toast.error(err);
+          }
+        )
     },
-    deleteProduct(id){
+    deleteProduct(id) {
 
     }
   }

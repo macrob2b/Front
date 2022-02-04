@@ -46,7 +46,7 @@
               </div>
 
               <div class="pa-1 px-2 mx-1">
-                <v-btn color="#005270" min-width="0" width="40">
+                <v-btn to="/company-list" color="#005270" min-width="0" width="40">
                   <v-icon color="white"> mdi-earth </v-icon>
                 </v-btn>
               </div>
@@ -101,7 +101,7 @@
                 </v-btn>
               </div>
               <div class="mx-1">
-                <v-btn color="#005270" min-width="0" width="20">
+                <v-btn to="/company-list" color="#005270" min-width="0" width="20">
                   <v-icon color="white" small> mdi-earth </v-icon>
                 </v-btn>
               </div>

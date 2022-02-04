@@ -114,7 +114,18 @@
         <v-tab-item>
           <v-card flat>
             <v-card-text>
+              <v-row class="mt-12 mb-12"  v-if="loadingStatus">
+                <v-col cols="12" class="text-center">
+                  <v-progress-circular
+                    :size="50"
+                    :width="5"
+                    color="orange"
+                    indeterminate
+                  ></v-progress-circular>
+                </v-col>
+              </v-row>
               <v-row
+                v-else
                 no-gutters
               >
                 <v-col
@@ -152,6 +163,7 @@ export default {
     productBox
   },
   props: {
+    loadingStatus:false,
     productList:[]
   },
   data() {
