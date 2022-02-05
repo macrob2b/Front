@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <v-container >
+    <h1 class="text-center blue-grey--text">All categories</h1>
+    <v-divider class="mt-3 mb-2"/>
     <v-row class="mt-12 mb-12"  v-if="loading">
       <v-col cols="12" class="text-center">
         <v-progress-circular
@@ -10,33 +12,40 @@
         ></v-progress-circular>
       </v-col>
     </v-row>
-    <v-row class="masonry">
-      <v-col cols="12" sm="4" class="px-6"
-             v-for="(item,index) in categories"
-      >
-        <h2>{{ item.title }}</h2>
-        <ul>
-          <li
-            v-for="(child_item,child_index) in item.grandchildren"
-          >
-            <h3>{{ child_item.title }}</h3>
-            <ul v-if="child_item.length!=0">
-              <li
-                v-for="(grandchild_item,grandchild_index) in child_item.grandchildren"
-              >
-                <h4>{{ grandchild_item.title }}</h4>
-              </li>
-            </ul>
-          </li>
-        </ul>
+    <v-row v-else>
+      <v-col cols="12">
+
+        <vue-masonry-wall :items="categories" :options="{width: 400, padding: 12}" @append="append">
+          <template v-slot:default="{item}">
+            <div class="item">
+              <h2 @click="openLink(item._id)" class="light-green--text pointer">{{item.title}}</h2>
+              <ul>
+                <li
+                  v-for="(child_item,child_index) in item.grandchildren"
+                >
+                  <h3 @click="openLink(child_item._id)" class="blue-grey--text pointer">{{ child_item.title }}</h3>
+                  <ul v-if="child_item.length!=0">
+                    <li
+                      @click="openLink(grandchild_item._id)"
+                      v-for="(grandchild_item,grandchild_index) in child_item.grandchildren"
+                    >
+                      <h4 class="grey--text pointer">{{ grandchild_item.title }}</h4>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </template>
+        </vue-masonry-wall>
       </v-col>
     </v-row>
-
-  </div>
+  </v-container>
 </template>
 
 <script>
+import VueMasonryWall from "vue-masonry-wall";
 export default {
+  components: {VueMasonryWall},
   auth: false,
   name: "all-categories",
   data() {
@@ -64,11 +73,19 @@ export default {
           console.log('error');
         })
     },
-
+    openLink(id) {
+      this.$router.push({
+        path: 'product-list', query: {cate_id: id}
+      })
+    },
   }
 }
 </script>
 
 <style scoped>
+
+.pointer:hover {
+  color: orange !important;
+}
 
 </style>

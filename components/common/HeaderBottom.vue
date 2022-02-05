@@ -40,7 +40,7 @@
         </div>
       </v-col>
     </v-row>
-    <HeaderSubCat :subCats="sub_cats" v-show="activeTab != -1" />
+<!--    <HeaderSubCat :subCats="sub_cats" v-show="activeTab != -1" />-->
   </div>
 </template>
 
