@@ -1,9 +1,7 @@
 <template>
   <v-container fluid class="company-profile">
     <v-row>
-      <div class="company-side-bar">
-        <SideBar></SideBar>
-      </div>
+
       <div class="company-main">
         <div class="mobile-nav d-md-none">
           <v-btn class="drawer-btn" @click.stop="drawer = !drawer">
@@ -31,6 +29,7 @@ import Stepper from '../components/company/stepper'
 import Navigation from "~/components/navigation"
 
 export default {
+  layout:'user_dashboard',
   name:"user-dashboard",
   middleware:'is_user',
   components: {

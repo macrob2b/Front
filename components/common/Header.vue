@@ -4,26 +4,29 @@
     <div  class="d-none d-sm-flex pb-2 pt-0 w-100 pa-0 ma-0 "  >
       <v-card class="card pa-2 ma-0" style="width: 100%">
         <v-row class="justify-between" >
-          <v-col class="pt-0">
-            <v-tabs
-              fluid
-              fixed-tabs
-              background-color="transparent"
-              slider-color="white"
-            >
-              <v-tab
-                v-for="(item,index) in main_items"
-                :to="item.to">{{item.title}}</v-tab>
+          <v-col cols="4" class="pt-0 d-flex ">
+            <div>
+              <v-tabs
 
-            </v-tabs>
+                fluid
+                fixed-tabs
+                background-color="transparent"
+                slider-color="white"
+              >
+                <v-tab
+                  v-for="(item,index) in main_items"
+                  :to="item.to">{{item.title}}</v-tab>
+
+              </v-tabs>
+            </div>
           </v-col>
-          <v-col class="d-flex justify-center">
+          <v-col cols="4" class="d-flex justify-center">
             <nuxt-link
               tag="img"
               class="pointer"
               :src="require('../../assets/img/white-logo.png')" to="/" />
           </v-col>
-          <v-col class="pr-0">
+          <v-col cols="4" class="pr-0">
             <div class="d-flex justify-end">
               <!-- <div class="pa-1 px-2 mx-3"> -->
               <div class="pa-1 px-2 mx-1">
@@ -43,7 +46,7 @@
               </div>
 
               <div class="pa-1 px-2 mx-1">
-                <v-btn color="#005270" min-width="0" width="40">
+                <v-btn to="/company-list" color="#005270" min-width="0" width="40">
                   <v-icon color="white"> mdi-earth </v-icon>
                 </v-btn>
               </div>
@@ -98,7 +101,7 @@
                 </v-btn>
               </div>
               <div class="mx-1">
-                <v-btn color="#005270" min-width="0" width="20">
+                <v-btn to="/company-list" color="#005270" min-width="0" width="20">
                   <v-icon color="white" small> mdi-earth </v-icon>
                 </v-btn>
               </div>
@@ -127,7 +130,7 @@
 
       <v-divider></v-divider>
 
-      <v-list>
+      <v-list >
         <v-list-item
           v-for="(item, i) in main_items"
           :key="i"
@@ -161,16 +164,16 @@ export default {
         },
         {
           title: 'Sell Now ',
-          to: '/sell'
+          to: '/user/product/add'
         },
-        {
-          title: 'Community',
-          to: '/community'
-        },
-        {
-          title: 'Help',
-          to: '/help'
-        }
+        // {
+        //   title: 'Community',
+        //   to: '/community'
+        // },
+        // {
+        //   title: 'Help',
+        //   to: '/help'
+        // }
       ],
 
     };

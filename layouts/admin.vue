@@ -53,6 +53,9 @@
           <v-list-item to="/admin/category">
             <v-list-item-title>Category manage</v-list-item-title>
           </v-list-item>
+          <v-list-item to="/admin/user">
+            <v-list-item-title>User manage</v-list-item-title>
+          </v-list-item>
           <v-list-item to="/admin/company">
             <v-list-item-title>Company manage</v-list-item-title>
           </v-list-item>

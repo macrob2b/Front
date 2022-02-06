@@ -18,16 +18,16 @@
 </template>
 
 <script>
-import ProductInfo from "../components/detail/ProductInfo";
-import SupplierInfo from "../components/detail/SupplierInfo";
-import Banner from "../components/home/Banner";
-import Ads from "../components/home/Ads";
-import ContainerCard from "../components/home/ContainerCard";
-import ProductContainer from "../components/home/ProductContainer";
-import Logo from "../components/home/Logo";
-import ProductSlider1 from "../components/product/ProductSlider1";
-import ProductSection1 from "../components/home/ProductSection1";
-import Slider from "../components/detail/Slider";
+import ProductInfo from "../../components/detail/ProductInfo";
+import SupplierInfo from "../../components/detail/SupplierInfo";
+import Banner from "../../components/home/Banner";
+import Ads from "../../components/home/Ads";
+import ContainerCard from "../../components/home/ContainerCard";
+import ProductContainer from "../../components/home/ProductContainer";
+import Logo from "../../components/home/Logo";
+import ProductSlider1 from "../../components/product/ProductSlider1";
+import ProductSection1 from "../../components/home/ProductSection1";
+import Slider from "../../components/detail/Slider";
 export default {
   name: "index",
   auth: false,

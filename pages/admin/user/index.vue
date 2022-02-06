@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-row>
-        <h1>{{ cat_list_title }}</h1>
-
-    </v-row>
+    <h1>Users</h1>
     <hr>
     <v-app-bar
     >
@@ -37,7 +34,7 @@
         </v-btn>
 
         <v-btn
-          :to="'/admin/category/add/'+new_item_parent"
+          :to="'/admin/user/add/'+new_item_parent"
           class="mx-2"
           fab
           dark
@@ -57,54 +54,56 @@
       <thead>
       <tr>
         <th>
-          Title
+          First name
         </th>
         <th>
-          Operation
+          Last name
         </th>
+
+        <th>
+          Mobile number
+        </th>
+        <th>
+          Email
+        </th>
+        <th>
+          Action
+        </th>
+
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(category,index) in categories" :key="index">
+      <tr v-for="(user,index) in users" :key="index">
         <td>
-          {{ category.title }}
+          {{ user.first_name }}
+        </td>
+        <td>
+          {{ user.last_name }}
+        </td>
+        <td>
+          {{ user.mobile_num }}
+        </td>
+        <td>
+          {{ user.email }}
         </td>
         <td>
           <v-btn icon
-                 v-if="category.children.length"
-                 :to="'/admin/category/'+category._id"
+                 :to="'/admin/user/'+user._id"
           >
             <v-icon small
-                    color="green"
                     class="mr-2">mdi-eye
             </v-icon>
           </v-btn>
           <v-btn icon
-                 v-else
-                 :to="'/admin/category/'+category._id"
-          >
-            <v-icon small
-                    color="red"
-                    class="mr-2">mdi-eye-off
-            </v-icon>
-          </v-btn>
-          <v-btn icon
-                 :to="'/admin/category/edit/'+category._id"
+                 :to="'/admin/user/edit/'+user._id"
           >
             <v-icon small
                     class="mr-2">mdi-pencil
             </v-icon>
           </v-btn>
-          <v-btn icon
-                 @click="deleteCate(category._id)"
-          >
-            <v-icon small
-                    class="mr-2">mdi-delete
-            </v-icon>
-          </v-btn>
           <!--          <v-icon-->
           <!--            small-->
-          <!--            @click="deleteItem(category)"-->
+          <!--            @click="deleteItem(user)"-->
           <!--          >-->
           <!--            mdi-delete-->
           <!--          </v-icon>-->
@@ -123,7 +122,7 @@
 <script>
 export default {
   middleware: ['auth', 'is_admin'],
-  name: "category.vue",
+  name: "user.vue",
   layout: "admin",
   data() {
     return {
@@ -134,18 +133,15 @@ export default {
       page: 1,
       pageSize: 20,
       //=====================
-      categories: [],
-      cat_list_title: null,
+      users: [],
+      user_list_title: null,
 
       //To create new item button
       new_item_parent: null
     }
   },
   mounted() {
-    if (this.$route.params.id)
-      this.getCatListTitle();
-    else
-      this.cat_list_title='Main categories';
+
     this.getData();
     if (this.$route.params.id != undefined)
       this.new_item_parent = this.$route.params.id;
@@ -153,22 +149,21 @@ export default {
   methods: {
     searchData() {
       this.page = 1;
-      this.categories = [];
+      this.users = [];
       this.getData();
     },
     async getData() {
       //Get brand list
-      let categoryApiURL = `/api/category_list`;
-      await this.$axios.$post(categoryApiURL,
+      let userApiURL = `/api/user_list`;
+      await this.$axios.$post(userApiURL,
         {
-          "parent": this.$route.params.id,
           "paginate": true,
           "keyword": this.search,
           "page": this.page++
         }
       ).then(response => {
         if (response)
-          this.categories = this.categories.concat(response.data);
+          this.users = this.users.concat(response.data);
         else
           this.table_status = "Not found"
       })
@@ -177,29 +172,12 @@ export default {
           console.log('error');
         })
     },
-    getCatListTitle() {
-      const response = this.$axios.$post('/api/find_category',
+    getUserListTitle() {
+      const response = this.$axios.$post('/api/find_user',
         {id: this.$route.params.id}).then(response => {
-        this.cat_list_title = response.title;
+        this.user_list_title = response.title;
       }).catch(e => {
         this.$toast.error('Error on updating');
-
-      });
-    },
-    deleteCate(cat_id) {
-      const response = this.$axios.$delete('/api/delete_category',
-        {
-          params: {
-            id: cat_id
-          }
-        }).then(response => {
-        this.$toast.success('Deleted successfully');
-        this.page = 1;
-        this.categories = [];
-        this.getData();
-        // this.$router.go(-1);
-      }).catch(e => {
-        this.$toast.error('Error on deleting');
 
       });
     },

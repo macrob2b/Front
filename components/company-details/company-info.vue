@@ -7,7 +7,7 @@
           <img :src="logo" alt="company-logo">
         </div>
         <div class="company-name-info">
-          <p class="company-name">{{ companyName }}</p>
+          <p class="company-name">{{ companyInfo.company_name }}</p>
           <p class="company-slogan">{{ companySlogan }}</p>
         </div>
       </div>
@@ -16,7 +16,7 @@
           <span class="icon">
             <v-icon>mdi-phone</v-icon>
           </span>
-          <span class="number">{{ phone }}</span>
+          <a :href="'tel:'+companyInfo.phone"  target="_blank" class="number">{{ companyInfo.phone }}</a>
         </div>
       </div>
     </div>
@@ -25,12 +25,13 @@
 
 <script>
 export default {
+  props:{
+    companyInfo:[],
+  },
   data() {
     return {
       logo: '',
-      companyName: 'Name of the company',
       companySlogan: 'World class B2B wholesale platform',
-      phone: '+44 21 5648 1236'
     }
   }
 }

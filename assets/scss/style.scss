@@ -104,6 +104,14 @@ body {
       border-radius: 8px;
       color: #FFFFFF;
     }
+
+    .premium {
+      .v-btn {
+        box-shadow: none !important;
+        background-color: $golden_color !important;
+        color: $white;
+      }
+    }
   }
 }
 
@@ -113,7 +121,6 @@ body {
     border-radius: 0 0 10px 10px;
   }
 }
-
 
 
 /*******************
@@ -760,14 +767,6 @@ body {
         margin-bottom: 0;
       }
     }
-
-    .premium {
-      .v-btn {
-        box-shadow: none !important;
-        background-color: $golden_color !important;
-        color: $white;
-      }
-    }
   }
 
   .profile-card-body {
@@ -978,8 +977,10 @@ body {
             }
           }
         }
+
         /* stylelint-enable */
       }
+
       .v-text-field {
         .v-input__control {
           .v-input__slot {
@@ -989,6 +990,7 @@ body {
           }
         }
       }
+
       .v-input__append-inner {
         margin-right: auto;
         padding-right: 4px;
@@ -1433,166 +1435,376 @@ body {
     }
   }
 }
+
 //.v-tabs:not(.v-tabs--vertical):not(.v-tabs--right) > .v-slide-group--is-overflowing.v-tabs-bar--is-mobile:not(.v-slide-group--has-affixes) .v-slide-group__prev
 //.company-details-tabs {
-  .v-tabs:not(.v-tabs--vertical):not(.v-tabs--right) {
-    & .v-slide-group--is-overflowing.v-tabs-bar--is-mobile:not(.v-slide-group--has-affixes) {
-      .v-slide-group__pre {
-        display: none !important;
+.v-tabs:not(.v-tabs--vertical):not(.v-tabs--right) {
+  & .v-slide-group--is-overflowing.v-tabs-bar--is-mobile:not(.v-slide-group--has-affixes) {
+    .v-slide-group__pre {
+      display: none !important;
+    }
+  }
+}
+
+//}
+
+.v-application {
+  .company-details-tabs {
+    .v-tabs-slider-wrapper {
+      width: 0 !important;
+    }
+
+    .v-tab.v-tab--active {
+      color: $primary_color2;
+      border-radius: 10px 10px 0 0;
+      background: $box_background_color2;
+      box-shadow: inset 0 3px 6px rgba(0, 0, 0, .16);
+    }
+
+    .nuxt-link-exact-active.nuxt-link-active {
+      color: $primary_color2;
+    }
+  }
+}
+
+.company-details-tabs-content {
+  .theme--light.v-icon {
+    color: $primary_color2
+  }
+
+  .company-image {
+    width: 409px;
+    height: 472px !important;
+  }
+
+  .verify-logo {
+    width: 92px;
+    height: 21px;
+  }
+
+  .purchases {
+    .card-header {
+      span {
+        color: #6633CC;
+        background-color: #EFEAFA;
       }
     }
   }
-    //}
 
-    .v-application {
-      .company-details-tabs {
-        .v-tabs-slider-wrapper {
-          width: 0 !important;
-        }
+  .satisfaction {
+    .card-header {
+      span {
+        color: #FDB433;
+        background-color: #FFF7EA;
+      }
+    }
+  }
 
-        .v-tab.v-tab--active {
-          color: $primary_color2;
-          border-radius: 10px 10px 0 0;
-          background: $box_background_color2;
-          box-shadow: inset 0 3px 6px rgba(0, 0, 0, .16);
-        }
+  .more-sales {
+    .card-header {
+      span {
+        color: #FF4D4D;
+        background-color: #FFEDED;
+      }
+    }
+  }
+}
 
-        .nuxt-link-exact-active.nuxt-link-active {
-          color: $primary_color2;
-        }
+.branch-tab-content {
+  aside.v-navigation-drawer {
+    transform: translateX(0%) !important;
+    width: 100% !important;
+
+    .v-list--nav {
+      padding: 0;
+    }
+
+    .v-list-item {
+      padding: 0 16px;
+      border-bottom: 1px solid $box_background_color2;
+      border-radius: 0;
+
+      .theme--light.v-icon {
+        color: #000000;
       }
     }
 
-    .company-details-tabs-content {
-      .theme--light.v-icon {
+    .v-list-item.selected {
+      border-left: 3px solid $primary_color2;
+
+      .v-icon {
         color: $primary_color2
       }
+    }
+  }
 
-      .company-image {
-        width: 409px;
-        height: 472px !important;
+  aside.v-navigation-drawer.v-navigation-drawer--is-mobile {
+    transform: translateX(0%) !important;
+    width: 100% !important;
+  }
+
+  .v-navigation-drawer--close {
+    visibility: visible;
+  }
+
+  .location-map {
+    position: relative;
+    height: 600px;
+
+    .leaflet-container {
+      z-index: 1;
+    }
+
+    #map {
+      height: 600px;
+    }
+
+    .show-branch-details {
+      position: absolute;
+      z-index: 2;
+      width: 90%;
+      bottom: 10px;
+      left: 10px;
+    }
+  }
+
+  .v-list-item__title,
+  .v-list-item__subtitle {
+    white-space: unset;
+  }
+}
+
+.trade-tab-content {
+  .trade-table {
+    tr {
+      td:last-child {
+        .theme--light.v-icon--disabled {
+          color: #98CB00 !important;
+        }
+      }
+    }
+  }
+}
+
+.certificate-tab-content {
+  .certificate-table {
+    tr {
+      td:first-child {
+        display: flex;
+        align-items: center;
+        margin: 5px;
       }
 
-      .verify-logo {
-        width: 92px;
-        height: 21px;
+      td:last-child {
+        .theme--light.v-icon--disabled {
+          color: #98CB00 !important;
+        }
       }
+    }
+  }
+}
 
-      .purchases {
-        .card-header {
-          span {
-            color: #6633CC;
-            background-color: #EFEAFA;
-          }
+/**********************
+27. Dashboard
+***********************/
+.dashboard {
+  .dashboard-holder {
+    background-color: $box_background_color2;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 15px;
+
+    .dashboard-box-header {
+      padding: 16px;
+    }
+
+    .intro {
+      background-color: $primary_color2;
+      color: $white;
+      padding: 16px 40px 16px 16px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .parts {
+      margin: 0 -10px;
+
+      .part-item-content {
+        background-color: $white;
+        height: 176px;
+
+        .v-icon.v-icon {
+          font-size: 72px;
         }
       }
 
-      .satisfaction {
-        .card-header {
-          span {
-            color: #FDB433;
-            background-color: #FFF7EA;
-          }
+      .storefront {
+        .v-icon.v-icon {
+          color: $primary_color2
         }
       }
 
-      .more-sales {
-        .card-header {
-          span {
-            color: #FF4D4D;
-            background-color: #FFEDED;
-          }
+      .basket {
+        .v-icon.v-icon {
+          color: #6633CC;
+        }
+      }
+
+      .company {
+        .v-icon.v-icon {
+          color: #00E676;
+        }
+      }
+
+      .premium {
+        .v-icon.v-icon {
+          color: #FDB433;
         }
       }
     }
 
-    .branch-tab-content {
-      aside.v-navigation-drawer {
-        transform: translateX(0%) !important;
-        width: 100% !important;
+    .statistics {
+      flex-wrap: wrap;
+      background-color: $box_background_color;
+      margin: 20px 0 25px 0;
 
-        .v-list--nav {
-          padding: 0;
-        }
+      .statistics-item {
+        border-right: 1px solid #D4D4D4;
+        padding: 0 40px;
+        width: 20%;
 
-        .v-list-item {
-          padding: 0 16px;
-          border-bottom: 1px solid $box_background_color2;
-          border-radius: 0;
-
-          .theme--light.v-icon {
-            color: #000000;
+        .statistics-item-content {
+          .statistics-count {
+            font-size: 32px;
+            font-weight: 700;
           }
-        }
 
-        .v-list-item.selected {
-          border-left: 3px solid $primary_color2;
-
-          .v-icon {
-            color: $primary_color2
+          .statistics-name {
+            text-align: center;
+            font-size: 16px;
           }
         }
       }
-      aside.v-navigation-drawer.v-navigation-drawer--is-mobile {
-        transform: translateX(0%) !important;
-        width: 100% !important;
-      }
-      .v-navigation-drawer--close {
-        visibility: visible;
-      }
-      .location-map {
-        position: relative;
-        height: 600px;
-        .leaflet-container {
-          z-index: 1;
-        }
-        #map {
-          height: 600px;
-        }
-        .show-branch-details {
-          position: absolute;
-          z-index: 2;
-          width: 90%;
-          bottom: 10px;
-          left: 10px;
-        }
-      }
-      .v-list-item__title,
-      .v-list-item__subtitle {
-        white-space: unset;
+
+      .statistics-item:last-child {
+        border-right: 0
       }
     }
 
-    .trade-tab-content {
-      .trade-table {
-        tr {
-          td:last-child {
-            .theme--light.v-icon--disabled {
-              color: #98CB00 !important;
+    .notifications {
+      background-color: $white;
+      padding: 22px;
+
+      .notifications-holder {
+        margin-top: 25px;
+
+        .notifications-item {
+          background-color: $box_background_color;
+          padding: 14px;
+          margin-bottom: 16px;
+
+          .icon-holder {
+            .icon-box {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+
+              .v-icon.v-icon {
+                color: $white;
+                font-size: 24px;
+              }
             }
           }
+
+          .notification-content {
+            width: 100%;
+          }
+
+          .notification-name {
+            font-size: 20px;
+            font-weight: 700;
+          }
+
+          .notification-description {
+            font-size: 16px;
+            font-weight: 300;
+          }
+        }
+
+        .notifications-item.update-notif {
+          border-left: 5px solid #FDB433;
+
+          .icon-box {
+            background-color: #FDB433;
+          }
+        }
+
+        .notifications-item.successful-notif {
+          border-left: 5px solid $correct_color;
+
+          .icon-box {
+            background-color: $correct_color;
+          }
+        }
+
+        .notifications-item.error-notif {
+          border-left: 5px solid #FF4D4D;
+
+          .icon-box {
+            background-color: #FF4D4D;
+          }
+        }
+
+        .notifications-item.good-news-notif {
+          border-left: 5px solid $primary_color2;
+
+          .icon-box {
+            background-color: $primary_color2;
+          }
+        }
+      }
+
+      .more-notification {
+        .v-btn {
+          padding: 10px 85px !important;
         }
       }
     }
 
-    .certificate-tab-content {
-      .certificate-table {
-        tr {
-          td:first-child {
-            display: flex;
-            align-items: center;
-            margin: 5px;
-          }
 
-          td:last-child {
-            .theme--light.v-icon--disabled {
-              color: #98CB00 !important;
-            }
-          }
+  }
+
+  .premium-benefits-holder {
+    .benefits-details-holder {
+      border: 1px solid $typography_place_holder;
+      padding: 24px;
+
+      .benefit-name {
+        font-size: 20px;
+      }
+
+      .status {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #FF4D4D;
+
+        .v-icon.v-icon {
+          color: $white;
+          font-size: 24px;
         }
       }
-    }
 
+      .status.checked {
+        background-color: $correct_color;
+      }
+
+      .benefit-btn {
+        padding: 10px 63px !important;;
+      }
+    }
+  }
+}
 
 
 
