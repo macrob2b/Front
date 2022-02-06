@@ -1,113 +1,117 @@
 <template>
-  <div>
-    <div v-show="!$vuetify.breakpoint.xs">
-      <ContainerCard>
-        <v-row>
-          <v-col cols="5">
-            <div class="pa-10">
-              <nuxt-link
-                tag="img"
-                :src="require('../../assets/img/black-logo.png')" to="/" class="pointer mb-10" />
+  <v-container fluid>
+    <v-row class="d-none d-sm-flex">
+      <v-col cols="12">
+        <ContainerCard>
+          <v-row>
+            <v-col cols="3">
+              <div class="py-10">
+                <nuxt-link
+                  tag="img"
+                  :src="require('../../assets/img/black-logo.png')" to="/" class="pointer mb-10" />
 
-              <div class="pr-10 mr-10">
-                <h3  class="mb-2" id="h3">Brand Name</h3>
-                <div class="my-2" id="div1" >
-                  <div class="pt-2 pb-3">
-                    <v-progress-linear
-                      value="25"
-                      color="primary"
-                      height="1.5px"
-                      class=""
-                    ></v-progress-linear>
-                  </div>
-                  <p  id="#p1">
-                    Our company has maintained low competitive prices, good
-                    quality as well as timely deliveries. We are a gold supplier
-                    and assessed.
-                  </p>
-                </div>
-                <v-btn v-if="!this.$auth.loggedIn" to="/login" color="primary" width="55%">
-                  <span  id="span1"> SIGNIN </span>
-                </v-btn>
-                <v-btn v-else to="/user-dashboard" color="primary" width="55%">
-                  <span  id="span1"> Hi, {{$auth.user.first_name}} </span>
-                </v-btn>
-              </div>
-            </div>
-          </v-col>
-          <v-col cols="7">
-            <div class="pa-5">
-              <v-row>
-                <v-col v-for="n in 4" :key="n">
-                  <div class="pa-2">
-                    <h3 class="py-2">Contact Us</h3>
-                    <v-progress-linear
-                      value="25"
-                      color="primary"
-                      height="1.5px"
-                      class=""
-                    ></v-progress-linear>
-                    <div>
-                      <ul class="py-1">
-                        <li class="py-2">Link name</li>
-                        <li class="py-2">Link name</li>
-                        <li class="py-2">Link name</li>
-                        <li class="py-2">Link name</li>
-                      </ul>
+                <div >
+                  <h3  class="mb-2" id="h3">{{brand}}</h3>
+                  <div class="my-2" id="div1" >
+                    <div class="pt-2 pb-3">
+                      <v-progress-linear
+                        value="25"
+                        color="primary"
+                        height="1.5px"
+                        class=""
+                      ></v-progress-linear>
                     </div>
+                    <p  class="text-justify">
+                      We have the best services
+                    </p>
                   </div>
-                </v-col>
-              </v-row>
-            </div>
-            <div class="mt-10 d-flex justify-space-between">
-              <div class="d-flex justify-start">
-                <v-btn href="https://facebook.com/macrob2b"
-                       target="_blank"
-                       color="primary" min-width="0" width="40" class="mx-2">
-                  <v-icon color="white"> mdi-facebook </v-icon>
-                </v-btn>
-                <v-btn
-                  href="https://www.instagram.com/macrob2b"
-                  target="_blank"
-                  color="primary" min-width="0" width="40" class="mx-2">
-                  <v-icon color="white"> mdi-instagram </v-icon>
-                </v-btn>
-                <v-btn
-                  href="https://www.linkedin.com/company/macrob2b"
-                  target="_blank"
-                  color="primary" min-width="0" width="40" class="mx-2">
-                  <v-icon color="white"> mdi-linkedin </v-icon>
-                </v-btn>
-                <v-btn
-                  href="https://t.me/macrob2b"
-                  target="_blank"
-                  color="primary" min-width="0" width="40" class="mx-2">
-                  <v-icon class="mdi-rotate-315"  color="white" > mdi-send </v-icon>
-                </v-btn>
+                  <v-btn v-if="!this.$auth.loggedIn" to="/login" color="primary" width="55%">
+                    <span  id="span1"> SIGNIN </span>
+                  </v-btn>
+                  <v-btn v-else to="/user-dashboard" color="primary" width="55%">
+                    <span  id="span1"> Hi, {{$auth.user.first_name}} </span>
+                  </v-btn>
+                </div>
               </div>
-              <div  id="div2">
-                Copyright (c)1997-2021. All Rights Reserved
+            </v-col>
+            <v-col cols="9">
+              <div class="pa-5">
+                <v-row>
+                  <v-col v-for="item in footerLinks">
+                    <div class="pa-2">
+                      <h3 class="py-2">{{item.title}}</h3>
+                      <v-progress-linear
+                        value="25"
+                        color="primary"
+                        height="1.5px"
+                        class=""
+                      ></v-progress-linear>
+                      <div>
+                        <ul class="py-1">
+                          <li
+                            v-for="link in item.links"
+                            class="py-2">
+                            <nuxt-link :to="link.link">{{link.label}}</nuxt-link>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </v-col>
+                </v-row>
               </div>
+              <div class="mt-10 d-flex justify-space-between mb-4">
+                <div class="d-flex justify-start">
+                  <v-btn href="https://facebook.com/macrob2b"
+                         target="_blank"
+                         color="primary" min-width="0" width="40" class="mx-2">
+                    <v-icon color="white"> mdi-facebook </v-icon>
+                  </v-btn>
+                  <v-btn
+                    href="https://www.instagram.com/macrob2b"
+                    target="_blank"
+                    color="primary" min-width="0" width="40" class="mx-2">
+                    <v-icon color="white"> mdi-instagram </v-icon>
+                  </v-btn>
+                  <v-btn
+                    href="https://www.linkedin.com/company/macrob2b"
+                    target="_blank"
+                    color="primary" min-width="0" width="40" class="mx-2">
+                    <v-icon color="white"> mdi-linkedin </v-icon>
+                  </v-btn>
+                  <v-btn
+                    href="https://t.me/macrob2b"
+                    target="_blank"
+                    color="primary" min-width="0" width="40" class="mx-2">
+                    <v-icon class="mdi-rotate-315"  color="white" > mdi-send </v-icon>
+                  </v-btn>
+                </div>
+                <div  id="div2">
+                  Copyright (c)1997-2025. All Rights Reserved
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+          <v-divider></v-divider><v-divider></v-divider>
+          <div class="end-footer pa-6 mt-7">
+            <div class="d-flex justify-start">
+              <span class="px-5"> Deutsch </span>
+              <v-divider vertical />
+              <span class="px-5"> Deutsch </span>
+              <v-divider vertical />
+              <span class="px-5"> Deutsch </span>
+              <v-divider vertical />
+              <span class="px-5"> Deutsch </span>
+              <v-divider vertical />
+              <span class="px-5"> Deutsch </span>
             </div>
-          </v-col>
-        </v-row>
-        <v-divider></v-divider><v-divider></v-divider>
-        <div class="end-footer pa-6 mt-7">
-          <div class="d-flex justify-start">
-            <span class="px-5"> Deutsch </span>
-            <v-divider vertical />
-            <span class="px-5"> Deutsch </span>
-            <v-divider vertical />
-            <span class="px-5"> Deutsch </span>
-            <v-divider vertical />
-            <span class="px-5"> Deutsch </span>
-            <v-divider vertical />
-            <span class="px-5"> Deutsch </span>
           </div>
-        </div>
-      </ContainerCard>
-    </div>
-    <div v-show="$vuetify.breakpoint.xs" class="footer-mobile justify-start">
+        </ContainerCard>
+      </v-col>
+    </v-row>
+
+
+
+    <div  class="d-flex d-sm-none footer-mobile justify-start">
       <div class="pa-6">
         <div>
           <nuxt-link
@@ -145,7 +149,7 @@
             <div>
               <ul class="py-1">
                 <li class="py-2" v-for="(link, idx) in item.links" :key="idx">
-                  {{ link }}
+                  <nuxt-link :to="link.link">{{ link.label }}</nuxt-link>
                 </li>
               </ul>
             </div>
@@ -217,7 +221,9 @@
         </div>
       </div>
     </div>
-  </div>
+
+
+  </v-container>
 </template>
 
 <script>
@@ -225,26 +231,37 @@ import ContainerCard from "../home/ContainerCard.vue";
 export default {
   data() {
     return {
-      brand: "Brand Name",
+      brand: "Macrob2b.com",
       description:
         "Our company has maintained low competitive prices, good quality as well as timely deliveries. We are a gold supplier and assessed.",
       languages: ["Deutsch", "Deutsch", "Deutsch", "Deutsch", "Deutsch"],
       footerLinks: [
         {
-          title: "Contact us",
-          links: ["Link name", "Link name", "Link name", "Link name"],
-        },
-        {
-          title: "Contact us",
-          links: ["Link name", "Link name", "Link name", "Link name"],
-        },
-        {
-          title: "Contact us",
-          links: ["Link name", "Link name", "Link name", "Link name"],
-        },
-        {
-          title: "Contact us",
-          links: ["Link name", "Link name", "Link name", "Link name"],
+          title: 'About us',
+          links: [
+               {label:'About Macrob2b.com',link:'/about_website'},
+               {label:'About Group',link:'/about_group'},
+            ],
+        },{
+          title: 'Source',
+          links: [
+               {label:'Resources',link:'/resources'},
+               {label:'All Categories',link:'/category-list'},
+               {label:'Request for Quotation',link:'/request_quotation'},
+               {label:'Buyer Partners',link:'/buyer_partners'},
+            ],
+        },{
+          title: 'Selling ',
+          links: [
+               {label:'Post products',link:'/user/product/add'},
+               {label:'Manage products',link:'/user/product'},
+            ],
+        },{
+          title: 'Services',
+          links: [
+               {label:'Trade Assurance',link:'/trade_assurance'},
+               {label:'Business Identity',link:'/business_identity'},
+            ],
         },
       ],
     };

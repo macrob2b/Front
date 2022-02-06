@@ -2,51 +2,61 @@
 @import "style";
 
 @media (max-width: 1263px) {
-/********************
-1.Search-bar CSS start
-*********************/
+  /********************
+  1.Search-bar CSS start
+  *********************/
   .search-bar {
     .search-bar-container {
       .column {
         .icons {
           width: 1rem;
         }
+
         .submit-btn {
           background-color: $primary_color;
           color: $white;
         }
+
         .v-text-field__details {
           display: none;
         }
+
         .v-input__slot {
           margin-bottom: 0 !important;
           background-color: $box_background_color !important;
         }
       }
     }
+
     .grid-section {
       padding: 0 !important;
+
       .tabs {
         display: flex;
         justify-content: flex-end;
+
         .v-tab {
           border-radius: 10px !important;
           min-width: 50px !important;
           margin: 0 0.5rem;
           background-color: $box_background_color;
         }
+
         .v-tab--active {
           background-color: $primary_color;
           color: $white;
         }
+
         .v-tabs-slider {
           display: none;
         }
       }
+
       .grid-btn {
         padding: 20px 0 !important;
         font-size: 24px;
       }
+
       .v-btn:not(.v-btn--round).v-size--default {
         min-width: 45px !important;
       }
@@ -61,6 +71,109 @@
 
 }
 
+@media screen and (max-width: 1050px) {
+  .v-application {
+    .dashboard-holder {
+      .part-item-content {
+        height: 120px;
+
+        .v-icon.v-icon {
+          font-size: 40px;
+        }
+
+        .title {
+          font-size: 14px !important;
+        }
+      }
+
+      .statistics {
+        background-color: $box_background_color;
+
+        .statistics-item {
+          border-right: 0;
+          padding: 20px;
+          width: 50%;
+
+          .statistics-item-content {
+            .statistics-count {
+              font-size: 24px;
+              font-weight: 700;
+            }
+
+            .statistics-name {
+              font-size: 14px;
+            }
+          }
+        }
+
+        .statistics-item:last-child {
+          border-right: 0
+        }
+      }
+
+      .notifications {
+        padding: 16px;
+
+        .notifications-holder {
+          margin-top: 25px;
+
+          .notifications-item {
+            padding: 7px;
+            margin-bottom: 16px;
+
+            .icon-box {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+
+              .v-icon {
+                font-size: 15px;
+              }
+            }
+
+            .notification-name {
+              font-size: 16px;
+            }
+
+            .notification-description {
+              font-size: 14px;
+              width: 80%;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .notifications-item.update {
+            border-left: 5px solid #FDB433;
+
+            .icon-box {
+              background-color: #FDB433;
+            }
+          }
+        }
+
+
+      }
+    }
+
+    .premium-benefits-holder {
+      .benefits-details-holder {
+        border: 1px solid $typography_place_holder;
+        padding: 24px;
+
+        .label {
+          font-size: 12px;
+        }
+
+        .benefit-name {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 1006px) {
   .desktop-header {
     display: none;
@@ -72,6 +185,7 @@
     .v-slide-group__prev {
       display: none !important;
     }
+
     .v-btn:not(.v-btn--round).v-size--default {
       height: 32px;
       min-width: 32px;
@@ -81,15 +195,16 @@
 }
 
 @media (max-width: 968px) {
-/************************
-1.Image-slider CSS start
-*************************/
+  /************************
+  1.Image-slider CSS start
+  *************************/
   .image-slider {
     .slider-header {
       .design-divider {
         width: 30%;
       }
     }
+
     .slider-static-img {
       img {
         width: 13rem;
@@ -97,30 +212,35 @@
     }
   }
 
-/*********************
-2.Search-bar CSS start
-*********************/
+  /*********************
+  2.Search-bar CSS start
+  *********************/
   .search-bar {
     .search-bar-mobile {
       display: flex;
       justify-content: space-between !important;
       align-items: center;
       margin: 1rem 0 1rem 0.5rem;
+
       .v-btn:not(.v-btn--round).v-size--default {
         height: 3rem !important;
       }
+
       .category-mobile {
         background-color: $primary_color !important;
         border-radius: 10px !important;
         min-width: 3rem !important;
+
         .category-mobile-icon {
           width: 0.938rem;
         }
       }
     }
+
     .tabs {
       display: flex;
       justify-content: flex-end;
+
       .v-tab {
         border-radius: 10px !important;
         min-width: 3rem !important;
@@ -128,14 +248,17 @@
         margin: 0 0.5rem;
         background-color: $box_background_color;
       }
+
       .v-tab--active {
         background-color: $primary_color;
         color: $white;
       }
+
       .v-tabs-slider {
         display: none;
       }
     }
+
     .tabs-item {
       .v-card {
         .v-card__text {
@@ -143,14 +266,15 @@
         }
       }
     }
+
     .search-bar-detail {
       display: none;
     }
   }
 
-/**********************
-3.Product-Box CSS start
-**********************/
+  /**********************
+  3.Product-Box CSS start
+  **********************/
   .product-box {
     .product-box-detail {
       display: flex;
@@ -160,31 +284,38 @@
       min-width: 8.75rem;
       max-width: 90%;
       position: relative;
+
       .product-img {
         width: 8rem;
         height: 5.25rem;
       }
+
       .product-name {
         font-size: $content_font_size;
         color: $typography_0;
       }
+
       .product-price {
         font-size: $title_font_size;
         color: $correct_color;
       }
+
       .v-btn {
         min-width: 2rem !important;
         height: 2rem !important;
       }
-      .order-btn{
+
+      .order-btn {
         width: 2rem;
         background-color: $primary_color !important;
         color: $white !important;
         position: absolute;
         bottom: -13px;
+
         .btn-text {
           display: none;
         }
+
         .btn-text-mobile {
           display: flex !important;
         }
@@ -194,34 +325,34 @@
 }
 
 @media (max-width: 960px) {
-/************************
-1.Image-slider CSS start
-*************************/
+  /************************
+  1.Image-slider CSS start
+  *************************/
   .image-slider {
     .slider-static-img {
       display: none;
     }
   }
 
-/**********************
-2.Side-bar CSS start
-***********************/
+  /**********************
+  2.Side-bar CSS start
+  ***********************/
   .side-bar {
     display: none;
   }
 
-/**********************
-3.Company-profile CSS start
-***********************/
+  /**********************
+  3.Company-profile CSS start
+  ***********************/
   .company-profile {
     .company-main {
       width: 100%;
     }
   }
 
-/**********************
-21.Trade-info CSS start
-***********************/
+  /**********************
+  21.Trade-info CSS start
+  ***********************/
   .trade-info {
     .company-history {
       .company-history-body {
@@ -230,6 +361,7 @@
             .year-col {
               padding-bottom: 0;
             }
+
             .description-col {
               padding-top: 0;
             }
@@ -266,9 +398,9 @@
 }
 
 @media (max-width: 770px) {
-/**********************
-1.Profile-card CSS start
-***********************/
+  /**********************
+  1.Profile-card CSS start
+  ***********************/
   .profile-card {
     .profile-card-header {
       .profile-header-title {
@@ -276,6 +408,7 @@
           margin-bottom: 0;
         }
       }
+
       .premium {
         .v-btn {
           box-shadow: none !important;
@@ -283,31 +416,40 @@
         }
       }
     }
+
     .profile-card-body {
       display: flex;
       flex-direction: column;
+
       .edit-menu {
         display: flex;
         flex-direction: column;
         align-items: flex-start !important;
+
         .v-btn {
           padding: 0;
         }
       }
+
       .strength-inner {
         width: 100%;
+
         p {
           margin-top: 1rem;
           margin-bottom: 0;
         }
+
         .v-input {
           width: 70%;
+
           .v-slider__track-background {
             background-color: $typography_1 !important;
           }
+
           .v-slider__track-fill {
             background-color: $primary_color !important;
           }
+
           .v-slider__thumb {
             background-color: $primary_color !important;
             border-color: $primary_color !important;
@@ -327,64 +469,76 @@
       .body-2 {
         font-size: 12px !important;
       }
+
       .col-6 {
         padding: 8px;
       }
+
       .mb-8 {
         margin-bottom: 16px !important;
       }
+
       .pa-8 {
         padding: 16px !important;
       }
+
       .pa-2 {
         padding: 5px !important;
       }
     }
   }
-  .v-application{
+  .v-application {
     .company-details-tabs-content.pa-8 {
       //padding: 16px !important;
     }
+
     .performance-card-item {
       .pa-2 {
         //padding: 5px !important;
       }
+
       .card-header {
         span {
           padding: 3px 12px !important;
         }
       }
     }
+
     .v-list-item__title {
       font-size: 12px;
     }
   }
 
-/*********************
-4.Search-bar CSS start
-*********************/
+  /*********************
+  4.Search-bar CSS start
+  *********************/
   .search-bar {
     .search-bar-mobile {
       display: flex;
       justify-content: space-between !important;
       align-items: center;
       margin: 1rem 0 1rem 0.5rem;
+
       .v-btn:not(.v-btn--round).v-size--default {
         height: 2rem !important;
       }
+
       .category-mobile {
         background-color: $primary_color !important;
         border-radius: 10px !important;
         min-width: 2rem !important;
         padding: 0 !important;
+
         .category-mobile-icon {
           width: 0.938rem;
         }
       }
     }
+
     .tabs {
       display: flex;
       justify-content: flex-end;
+
       .v-tab {
         border-radius: 10px !important;
         min-width: 2rem !important;
@@ -393,17 +547,21 @@
         margin: 0 0.5rem;
         background-color: $box_background_color;
       }
+
       .v-slide-group {
         align-items: center;
       }
+
       .v-tab--active {
         background-color: $primary_color;
         color: $white;
       }
+
       .v-tabs-slider {
         display: none;
       }
     }
+
     .search-bar-detail {
       display: none;
     }
@@ -411,9 +569,9 @@
 }
 
 @media (max-width: 448px) {
-/**********************
-1.Mobile-stepper CSS start
-***********************/
+  /**********************
+  1.Mobile-stepper CSS start
+  ***********************/
   .v-stepper--vertical {
     .v-stepper__content {
       .v-stepper__wrapper {
@@ -423,6 +581,7 @@
             margin-bottom: 1rem;
           }
         }
+
         .v-btn {
           width: 100%;
         }
@@ -435,6 +594,7 @@
       width: 100%;
       height: 203px !important;
     }
+
     .v-image__image {
       width: 100%;
       height: 203px !important;
@@ -443,85 +603,95 @@
 }
 
 @media (max-width: 420px) {
-/**********************
-1.Mobile-stepper CSS start
-***********************/
+  /**********************
+  1.Mobile-stepper CSS start
+  ***********************/
   .v-stepper--vertical {
     .v-stepper__step {
       padding-left: 0 !important;
       padding-right: 0 !important;
     }
+
     .v-stepper__content {
       margin-left: 0 !important;
       margin-right: -55px;
     }
   }
-/**********************
-2. Company overview
-***********************/
-.company-details-info {
-  .company-info-details {
-    .empty-logo {
-      width: 38px;
-      height: 38px;
-      display: block;
-      border-radius: 5px;
-      background-color: #FDB433;
-    }
-    .logo-container {
-      width: 38px;
-      height: 38px;
-      img {
+  /**********************
+  2. Company overview
+  ***********************/
+  .company-details-info {
+    .company-info-details {
+      .empty-logo {
         width: 38px;
         height: 38px;
+        display: block;
         border-radius: 5px;
+        background-color: #FDB433;
       }
-    }
-    .company-name-info {
-      .company-name {
-        font-size: $content_font_size;
-        font-weight: 700;
-        margin-bottom: 0;
+
+      .logo-container {
+        width: 38px;
+        height: 38px;
+
+        img {
+          width: 38px;
+          height: 38px;
+          border-radius: 5px;
+        }
       }
-      .company-slogan {
-        font-size: $content_font_size;
+
+      .company-name-info {
+        .company-name {
+          font-size: $content_font_size;
+          font-weight: 700;
+          margin-bottom: 0;
+        }
+
+        .company-slogan {
+          font-size: $content_font_size;
+        }
       }
-    }
-    .contact-info {
-      .phone {
-        .icon {
-          .v-icon {
-            border-radius: 5px;
-            background-color: #304FFE47;
-            padding: 0.2rem;
-            //opacity: 0.1;
-            color: $primary_color2;
+
+      .contact-info {
+        .phone {
+          .icon {
+            .v-icon {
+              border-radius: 5px;
+              background-color: #304FFE47;
+              padding: 0.2rem;
+              //opacity: 0.1;
+              color: $primary_color2;
+            }
           }
         }
       }
     }
   }
 }
-}
 
 @media (max-width: 388px) {
-/************************
-1.Image-slider CSS start
-*************************/
+  /************************
+  1.Image-slider CSS start
+  *************************/
   .image-slider {
     background-color: $box_background_color;
+
     .slider-header {
       background-color: $box_background_color;
+
       .header-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         .header-column {
           .header-title {
             display: flex;
             justify-content: flex-start;
             align-items: center;
             margin-bottom: 0.97rem;
+
             .design-square {
               border-radius: 0;
               background-color: $primary_color;
@@ -529,27 +699,33 @@
               width: 20px;
               height: 20px;
             }
+
             p {
               font-size: $subcontent_font_size;
             }
           }
+
           .btn-container {
             display: flex;
             justify-content: flex-end;
+
             .more-btn {
               color: $primary_color;
             }
           }
         }
       }
+
       .design-divider {
         border-color: $primary_color !important;
         width: 10%;
       }
     }
+
     .product-slider {
       background-color: $box_background_color !important;
       margin-bottom: 1.5rem;
+
       .v-slide-group__prev {
         position: absolute;
         border-radius: 8px;
@@ -558,6 +734,7 @@
         bottom: -1rem;
         right: 5rem;
       }
+
       .v-slide-group__next {
         position: absolute;
         border-radius: 8px;
@@ -576,12 +753,13 @@
       }
     }
   }
+
 }
 
 @media (max-width: 360px) {
-/**********************
-1.Product-Box CSS start
-**********************/
+  /**********************
+  1.Product-Box CSS start
+  **********************/
   .product-box {
     .product-box-detail {
       display: flex;
@@ -591,31 +769,38 @@
       min-width: 7.75rem;
       max-width: 90%;
       position: relative;
+
       .product-img {
         width: 7rem;
         height: 4.25rem;
       }
+
       .product-name {
         font-size: $content_font_size;
         color: $typography_0;
       }
+
       .product-price {
         font-size: $title_font_size;
         color: $correct_color;
       }
+
       .v-btn {
         min-width: 2rem !important;
         height: 2rem !important;
       }
-      .order-btn{
+
+      .order-btn {
         width: 2rem;
         background-color: $primary_color !important;
         color: $white !important;
         position: absolute;
         top: 160px;
+
         .btn-text {
           display: none;
         }
+
         .btn-text-mobile {
           display: block;
         }
@@ -623,15 +808,16 @@
     }
   }
 
-/**********************
-2.User-type CSS start
-***********************/
+  /**********************
+  2.User-type CSS start
+  ***********************/
   .user-type {
     .user-type-body {
       /* stylelint-disable */
       .v-input {
         margin: 1rem 0.2rem 0 0.2rem;
       }
+
       /* stylelint-enable */
     }
   }
@@ -645,6 +831,7 @@
           padding: 2px !important;
         }
       }
+
       .contact-us-tab-content {
         .v-list-item__title {
           font-size: .75rem;

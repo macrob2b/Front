@@ -1,3 +1,4 @@
+
 <template>
   <div class="contact-info">
     <div class="contact-info-header">
@@ -12,6 +13,13 @@
               cols="12"
               md="4"
             >
+<!--              <v-text-field-->
+<!--                v-model="phone"-->
+<!--                :counter="10"-->
+<!--                label="Phone"-->
+<!--                required-->
+<!--                outlined-->
+<!--              ></v-text-field>-->
               <phone-number-input @numberEntered="phoneNumberEnterd"></phone-number-input>
             </v-col>
 
@@ -22,8 +30,8 @@
               <v-text-field
                 v-model="fax"
                 label="Fax"
-                outlined
                 required
+                outlined
               ></v-text-field>
             </v-col>
 
@@ -35,8 +43,8 @@
                 v-model="email"
                 :rules="emailRules"
                 label="Email"
-                outlined
                 required
+                outlined
               ></v-text-field>
             </v-col>
           </v-row>
@@ -47,10 +55,10 @@
             >
               <v-text-field
                 v-model="companywebsite"
-                append-icon="mdi-web"
                 label="Company Website URL"
-                outlined
+                append-icon="mdi-web"
                 required
+                outlined
               ></v-text-field>
             </v-col>
 
@@ -61,8 +69,8 @@
               <v-text-field
                 v-model="postalcode"
                 label="Postal Code"
-                outlined
                 required
+                outlined
               ></v-text-field>
             </v-col>
           </v-row>
@@ -73,35 +81,36 @@
 </template>
 
 <script>
-import PhoneNumberInput from "../phoneNumberInput";
+  import PhoneNumberInput from "../phoneNumberInput";
 
-export default {
-  components: {PhoneNumberInput},
-  data() {
-    return {
-      phone: null,
-      email: '',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-      fax: null,
-      postalcode: null,
-      companywebsite: '',
-    }
-  },
-  watch: {
-    $data: {
-      handler: function (val, oldVal) {
-        this.$emit('updateData', this.$data)
-      },
-      deep: true
-    }
-  },
-  methods: {
-    phoneNumberEnterd(phoneEntered) {
-      this.phone = phoneEntered
+  export default {
+    components: {PhoneNumberInput},
+    data() {
+      return {
+        phone: null,
+        email: '',
+        emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        ],
+        fax: null,
+        postalcode: null,
+        companywebsite: '',
+      }
+    },
+    watch: {
+      $data: {
+        handler: function(val, oldVal) {
+          this.$emit('updateData', this.$data)
+        },
+        deep: true
+      }
+    },
+    methods: {
+      phoneNumberEnterd (phoneEntered) {
+        this.phone = phoneEntered
+        alert(this.phone)
+      }
     }
   }
-}
 </script>

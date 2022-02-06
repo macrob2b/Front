@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1>{{ cat_list_title }}</h1>
+    <v-row>
+        <h1>{{ cat_list_title }}</h1>
+
+    </v-row>
     <hr>
     <v-app-bar
     >
@@ -68,10 +71,21 @@
         </td>
         <td>
           <v-btn icon
+                 v-if="category.children.length"
                  :to="'/admin/category/'+category._id"
           >
             <v-icon small
+                    color="green"
                     class="mr-2">mdi-eye
+            </v-icon>
+          </v-btn>
+          <v-btn icon
+                 v-else
+                 :to="'/admin/category/'+category._id"
+          >
+            <v-icon small
+                    color="red"
+                    class="mr-2">mdi-eye-off
             </v-icon>
           </v-btn>
           <v-btn icon

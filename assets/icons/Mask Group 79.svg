@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="74" height="74" viewBox="0 0 74 74">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Boundary" width="74" height="74" fill="none" opacity="0"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_79" data-name="Mask Group 79" clip-path="url(#clip-path)">
+    <path id="Path_diamond-stone" data-name="Path / diamond-stone" d="M49.963,25.981H60.241L43.111,49.963m-13.7-23.981h13.7L36.259,53.389M12.278,25.981H22.556l6.852,23.981M46.537,8.852h6.852L60.241,19.13H49.963M32.833,8.852h6.852L43.111,19.13h-13.7M19.13,8.852h6.852L22.556,19.13H12.278M15.7,2,2,22.556,36.259,70.519,70.519,22.556,56.815,2Z" transform="translate(0.741 0.741)" fill="#fdb433"/>
+  </g>
+</svg>

@@ -26,7 +26,7 @@
   import Navigation from "~/components/navigation"
   export default {
     components: {
-      SideBar,
+        SideBar,
       ProfileCard,
       Stepper,
       Navigation
@@ -44,5 +44,38 @@
         ],
       }
     },
+    methods: {
+      updateData() {
+        this.$axios.post('/api/update_company_general_info',
+          {
+            "role": "seller,buyer,agent",
+            "company_name": "MacroB2B Co",
+            "business_type": "Ex: 1 or 2 ...",
+            "location": "lat,lng",
+            "street_address": "52 Main Street London N86 7VH",
+            "postal_code": "N4 2QE",
+            "phone": "+4479352121",
+            "fax": "+4479395212",
+            "main_products_keywords": "test1,test2",
+            "year_established": "2010",
+            "employees_total": "50",
+            "annual_revenue": "50,000",
+            "description": "Example is a very big company ....",
+            "logo": "One png or svg or webp file",
+            "images": "Multiple png,jpg or webp file",
+            "brochure": "Multiple png,jpg,pdf or webp file",
+            "video": "One mp4 file"
+          }).then(response => {
+          console.log(response)
+
+        }).catch(({response}) => {
+          if (response.status == 401) {
+            this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          } else if (response.status == 500 || response.status == 504) {
+            this.$toast.error(this.$t(`REQUEST_FAILED`));
+          }
+        });
+      }
+    }
   }
 </script>

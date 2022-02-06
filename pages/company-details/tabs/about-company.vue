@@ -49,6 +49,17 @@
       <v-col cols="12" lg="8" class="">
         <div class="fill-height py-4  white rounded-lg">
           <h3 class="subtitle-1 font-weight-bold mb-4 px-4">Company basic informations</h3>
+          <div>
+            <v-divider></v-divider>
+            <v-row class="row align-center ma-0">
+              <v-col cols="6" md="4" class="px-4">
+                <span class="body-2">Company name</span>
+              </v-col>
+              <v-col cols="6" md="8" class="px-4">
+                <span class="body-2">{{companyInfo.company_name}}</span>
+              </v-col>
+            </v-row>
+          </div>
           <div v-for="item in companyOverviews">
             <v-divider></v-divider>
             <v-row class="row align-center ma-0">
@@ -249,6 +260,9 @@
 
 <script>
 export default {
+  props:{
+    companyInfo:[]
+  },
   data() {
     return {
       company: [
@@ -257,7 +271,6 @@ export default {
         {src:'company-2.png' },
       ],
       companyOverviews:[
-        {title:'companyName', content:'Exampla'},
         {title:'location', content:'Exampla'},
         {title:'businessType', content:'Exampla'},
         {title:'yearEstablished', content:'Exampla'},

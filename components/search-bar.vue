@@ -56,7 +56,8 @@
           <v-btn
             elevation="0"
             class="submit-btn"
-          >Submit</v-btn>
+          >Submit
+          </v-btn>
         </v-sheet>
       </div>
       <div class="grid-section d-flex align-center justify-end">
@@ -78,9 +79,9 @@
       </div>
     </div>
 
-<!--    /**************************-->
-<!--    mobile-responsive CSS start-->
-<!--    ***************************/-->
+    <!--    /**************************-->
+    <!--    mobile-responsive CSS start-->
+    <!--    ***************************/-->
     <div class="search-bar-mobile">
       <v-btn
         class="category-mobile"
@@ -104,20 +105,31 @@
         </v-tab>
       </v-tabs>
     </div>
-<!--    /**************************-->
-<!--    mobile-responsive CSS end-->
-<!--    ***************************/-->
+    <!--    /**************************-->
+    <!--    mobile-responsive CSS end-->
+    <!--    ***************************/-->
 
     <div class="tabs-item">
       <v-tabs-items v-model="tabs">
         <v-tab-item>
           <v-card flat>
             <v-card-text>
+              <v-row class="mt-12 mb-12"  v-if="loadingStatus">
+                <v-col cols="12" class="text-center">
+                  <v-progress-circular
+                    :size="50"
+                    :width="5"
+                    color="orange"
+                    indeterminate
+                  ></v-progress-circular>
+                </v-col>
+              </v-row>
               <v-row
+                v-else
                 no-gutters
               >
                 <v-col
-                  v-for="index in 15"
+                  v-for="item in productList"
                   :key="index"
                   class="my-2"
                   cols="6"
@@ -125,7 +137,7 @@
                   md="4"
                   lg="3"
                 >
-                  <productBox></productBox>
+                  <productBox :productData="item"></productBox>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -144,34 +156,35 @@
 </template>
 
 <script>
-  import productBox from '../components/product-box'
-  export default {
-    components: {
-      productBox
-    },
-      data() {
-        return {
-          searchSelected: '',
-          products: [
-            'test1',
-            'test2',
-            'test3',
-            'test4'
-          ],
-          items: [
-            'item1',
-            'item2',
-            'item3',
-            'item4'
-          ],
-          tabs: null
-        }
-      },
-    watch: {
-        searchSelected(val) {
-          // eslint-disable-next-line no-console
-          console.log('selected', val);
-        }
+import productBox from '../components/product-box'
+
+export default {
+  components: {
+    productBox
+  },
+  props: {
+    loadingStatus:false,
+    productList:[]
+  },
+  data() {
+    return {
+      searchSelected: '',
+
+      items: [
+        'item1',
+        'item2',
+        'item3',
+        'item4'
+      ],
+      tabs: null
+    }
+  },
+  watch: {
+    searchSelected(val) {
+      // eslint-disable-next-line no-console
+      console.log('selected', val);
     }
   }
+
+}
 </script>

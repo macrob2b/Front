@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Edit {{cateTitle}} category and its properties</h1>
+    <h1>Edit {{ cateTitle }} category and its properties</h1>
     <hr class="mt-5 mb-5">
     <v-tabs vertical
             background-color="deep-cyan accent-4" dark
@@ -60,6 +60,35 @@
               sm="4"
             >
               <v-select
+                :items="field_source"
+                v-model="field_source_val"
+                @change="fieldSourceChange"
+                label="Field Source"
+              ></v-select>
+
+            </v-col>
+            <v-col
+              v-if="field_source_val=='From reusable'"
+              class="d-flex"
+              cols="12"
+              sm="4"
+            >
+              <v-select
+                :items="reusableFieldList"
+                v-model="selectedReusable"
+                @change="reusableFieldChange()"
+                item-text="label"
+                item-value="_id"
+                label="Reusable field list"
+              ></v-select>
+
+            </v-col>
+            <v-col
+              class="d-flex"
+              cols="12"
+              sm="4"
+            >
+              <v-select
                 :items="field_type"
                 v-model="field_type_val"
                 label="Field type"
@@ -91,6 +120,35 @@
                 hint="Separate by enter"
               ></v-textarea>
             </v-col>
+
+            <v-col
+              cols="12"
+            >
+
+              <v-checkbox
+                label="Required field"
+                color="red darken-3"
+                :value="true"
+                v-model="required_field"
+              ></v-checkbox>
+
+
+            </v-col>
+
+
+            <v-col
+              cols="12"
+              v-if="field_source_val=='Generate new'"
+            >
+
+              <v-checkbox
+                label="Reusable field"
+                :value="true"
+                v-model="reusable_field"
+              ></v-checkbox>
+
+
+            </v-col>
           </v-row>
 
           <v-btn
@@ -115,10 +173,13 @@
             <thead>
             <tr>
               <th class="text-left">
-                Filed type
+                Field type
               </th>
               <th class="text-left">
                 Label
+              </th>
+              <th class="text-left">
+                Required
               </th>
               <th class="text-left">
                 Preview
@@ -135,6 +196,7 @@
             >
               <td>{{ item.field_type }}</td>
               <td>{{ item.label }}</td>
+              <td>{{ item.required_field == true ? "Yes" : "No" }}</td>
               <td>
                 <span
                   v-if="item.field_type=='Text'"
@@ -216,7 +278,7 @@ export default {
   layout: "admin",
   head() {
     return {
-      title: 'Edit '+this.cateTitle+' category and its properties'
+      title: 'Edit ' + this.cateTitle + ' category and its properties'
     }
   },
   data() {
@@ -231,11 +293,23 @@ export default {
         'Checkbox',
         'Textarea',
       ],
+      field_source: [
+        'Generate new',
+        'From reusable',
+        'General field'
+      ],
+      reusableFieldList: [],
+      selectedReusable: null,
+      field_source_val: 'Generate new',
       label: "",
       field_type_val: "",
       optionValues: null,
+      optionValuesArr: [],
       final_option_val_string: null,
-      propertyList: []
+      propertyList: [],
+      required_field: false,
+      reusable_field: true,
+      general_field: false
     }
   },
   mounted() {
@@ -245,6 +319,12 @@ export default {
   watch: {
     optionValues(newVal, oldVal) {
       this.final_option_val_string = newVal.split('\n').join('|');
+    },
+    field_source_val(newVal){
+      if (newVal=="General field")
+        this.general_field=true;
+      else
+        this.general_field=false;
     }
   },
   methods: {
@@ -266,19 +346,26 @@ export default {
 
       });
     },
-    addCateProperty() {
+    async addCateProperty() {
       this.property_submit_btn = 'Creating, please wait...';
-      const response = this.$axios.$post('/api/create_cate_property',
+      const response = await this.$axios.$post('/api/create_cate_property',
         {
           cate_id: this.$route.params.id,
           field_type: this.field_type_val,
           label: this.label,
-          values: this.final_option_val_string
+          values: this.final_option_val_string,
+          required_field: this.required_field,
+          reusable_field: this.reusable_field,
+          general_field: this.general_field
         }).then(response => {
         this.$toast.success('Property Created successfully');
         this.label = "";
         this.field_type_val = "";
         this.optionValues = "";
+        this.field_source_val = "Generate new";
+        this.reusable_field = "";
+        this.required_field = false;
+        this.selectedReusable = "";
         this.getPropertyList();
         this.property_submit_btn = 'Create';
       }).catch(e => {
@@ -316,6 +403,67 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
+    },
+    fieldSourceChange() {
+      this.label = "";
+      this.field_type_val = "";
+      this.optionValues = "";
+      this.required_field = false;
+      this.reusable_field = false;
+
+      if (this.field_source_val == 'From reusable') {
+        this.reusable_field = false;
+        this.getReusableProperty();
+      }
+    },
+    getReusableProperty() {
+      this.reusableFieldList = [];
+      this.selectedReusable = null;
+      const response = this.$axios.$post('/api/get_cate_reusable_property',
+      ).then(response => {
+        this.reusableFieldList = response;
+      }).catch(e => {
+        this.$toast.error('Error on loading property');
+
+      });
+    },
+    reusableFieldChange() {
+      this.label = "";
+      this.field_type_val = "";
+      this.optionValues = "";
+      this.required_field = false;
+      this.reusable_field = false;
+
+
+      this.findProperty(this.selectedReusable);
+    },
+    findProperty(id) {
+      const response = this.$axios.$post('/api/find_property',
+        {
+          id: id
+        }
+      ).then(response => {
+        this.field_type_val = response.field_type;
+        this.label = response.label;
+        this.required_field = response.required_field;
+        if (!(this.field_type_val == "Text" || this.field_type_val == 'Textarea')) {
+          if (this.field_type_val == 'Select')
+            this.optionValues = response.values.join("\n");
+          else {
+            for (var i = 0; i < response.values.length; i++) {
+              this.optionValuesArr[i] = response.values[i].label;
+            }
+            console.log(this.optionValuesArr);
+
+            this.optionValues = this.optionValuesArr.join("\n");
+          }
+        }
+        console.log(response);
+        // this.reusableFieldList = response;
+      }).catch(e => {
+        this.$toast.error('Error on loading property');
+
+      });
     },
   }
 }

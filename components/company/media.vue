@@ -13,7 +13,6 @@
               md="4"
             >
               <v-file-input
-                v-model="logo"
                 small-chips
                 outlined
                 append-icon="mdi-cloud-upload"
@@ -26,7 +25,6 @@
               md="4"
             >
               <v-file-input
-                v-model="companyImage"
                 small-chips
                 multiple
                 outlined
@@ -40,7 +38,6 @@
               md="4"
             >
               <v-file-input
-                v-model="companyBrochure"
                 small-chips
                 multiple
                 outlined
@@ -55,7 +52,6 @@
               md="4"
             >
               <v-file-input
-                v-model="video"
                 label="Video"
                 outlined
                 append-icon="mdi-cloud-upload"
@@ -77,19 +73,19 @@
     },
     data() {
       return {
-        logo: null,
-        companyImage: null,
-        companyBrochure: null,
-        video: null,
+        logo: '',
+        companyImage: '',
+        companyBrochure: '',
+        video: '',
       }
     },
     watch: {
-      $data: {
-        handler: function(val, oldVal) {
-          this.$emit('updateData', this.$data)
-        },
-        deep: true
-      }
+      // $data: {
+      //   handler: function(val, oldVal) {
+      //     this.$emit('updateData', this.$data)
+      //   },
+      //   deep: true
+      // }
     }
   }
 </script>
