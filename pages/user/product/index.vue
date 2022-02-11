@@ -138,6 +138,11 @@
 export default {
   layout: "user_dashboard",
   name: "index",
+  head() {
+    return {
+      title: "Product list"
+    }
+  },
   data() {
     return {
       product_list: [],

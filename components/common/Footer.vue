@@ -8,7 +8,7 @@
               <div class="py-10">
                 <nuxt-link
                   tag="img"
-                  :src="require('../../assets/img/black-logo.png')" to="/" class="pointer mb-10" />
+                  :src="require('../../assets/img/color-logo.png')" to="/" class="pointer mb-10" />
 
                 <div >
                   <h3  class="mb-2" id="h3">{{brand}}</h3>
@@ -116,7 +116,7 @@
         <div>
           <nuxt-link
             tag="img"
-            :src="require('../../assets/img/black-logo.png')" width="50%" class="pointer" to="/" />
+            :src="require('../../assets/img/color-logo.png')" width="50%" class="pointer" to="/" />
         </div>
         <div class="mt-2 mb-2"  id="div3">
           {{ brand }}

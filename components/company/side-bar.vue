@@ -29,7 +29,14 @@
             data: [
               {title:'Product list',link:'/user/product'},
               {title:'Add a new product',link:'/user/product/add'},
-            ]},
+            ]
+          },
+          {
+            name: 'My company',
+            data: [
+              {title:'Update company info',link:'/user/company'},
+            ]
+          },
           // {name: 'My Inquiries', data: [{title:'Add a New Buying Lead',link:'/'}, 'Add a New Buying Lead', 'Add a New Buying Lead']},
           // {name: 'My Storefront', data: ['Add a New Buying Lead']},
           // {name: 'My Buying Tools', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},

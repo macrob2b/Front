@@ -34,7 +34,7 @@
     </v-stepper-step>
 
     <v-stepper-content step="2">
-      <TradeInfo></TradeInfo>
+<!--      <TradeInfo></TradeInfo>-->
         <v-btn
           class="submit"
           color="primary"
@@ -98,10 +98,10 @@
 </template>
 
 <script>
-import BasicInfo from "~/pages/company-profile/basic-info"
-import TradeInfo from "~/pages/company-profile/trade-info"
-import FactoriesBranches from "~/pages/company-profile/factories-branches"
-import Certifications from "~/pages/company-profile/certifications"
+import BasicInfo from "~/pages/user/company/company-profile/basic-info"
+import TradeInfo from "~/pages/user/company/company-profile/trade-info"
+import FactoriesBranches from "~/pages/user/company/company-profile/factories-branches"
+import Certifications from "~/pages/user/company/company-profile/certifications"
 export default {
   components: {
     BasicInfo,

@@ -8,6 +8,13 @@
         <v-row>
           <v-col cols="12" md="3">
             <SideBar></SideBar>
+            <div class="text-center mt-12" >
+              <v-btn
+                :loading="logout_loading"
+                @click="logout()">
+                Logout
+              </v-btn>
+            </div>
 
           </v-col>
           <v-col cols="12" md="9">
@@ -32,7 +39,19 @@ export default {
     Footer,
     Header
   },
-  name: "user_dashboard"
+  data(){
+    return{
+      logout_loading:false
+    }
+  },
+  name: "user_dashboard",
+  methods:{
+    logout(){
+      this.logout_loading=true;
+      this.$auth.logout();
+      this.logout_loading=false;
+    }
+  }
 }
 </script>
 

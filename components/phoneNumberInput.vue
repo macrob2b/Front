@@ -7,7 +7,7 @@
     type="number"
     :loading="loading"
     :error-messages="errors"
-    :label="$t(`PHONE_NUMBER`)"
+    :label="label"
     outlined>
     <template slot="prepend-inner">
       <v-select class="phoneCodeSelect"
@@ -35,7 +35,9 @@
 
 export default {
   name : "phoneNumberInput",
-  props: ['errors'],
+  props: {
+    errors:null,
+    label:'Phone number'},
   data() {
     return {
       phoneCode  : '90',

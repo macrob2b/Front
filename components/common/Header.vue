@@ -24,7 +24,7 @@
             <nuxt-link
               tag="img"
               class="pointer"
-              :src="require('../../assets/img/white-logo.png')" to="/" />
+              :src="require('../../assets/img/color-logo.png')" to="/" />
           </v-col>
           <v-col cols="4" class="pr-0">
             <div class="d-flex justify-end">
@@ -91,7 +91,7 @@
               <nuxt-link
                 tag="img"
 
-                :src="require('../../assets/img/white-logo.png')"  to="/" class="py-2 pointer" />
+                :src="require('../../assets/img/color-logo.png')"  to="/" class="py-2 pointer" />
             </div>
 
             <div class="d-flex justify-start py-3">
@@ -121,7 +121,7 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6 text-center">
-            <nuxt-link tag="img" class="mr-3 pointer" :src="require('../../assets/img/black-logo.png')"  to="/" nuxt height="40px">
+            <nuxt-link tag="img" class="mr-3 pointer" :src="require('../../assets/img/color-logo.png')"  to="/" nuxt height="40px">
             </nuxt-link>
           </v-list-item-title>
 

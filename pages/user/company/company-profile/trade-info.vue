@@ -12,6 +12,8 @@
               <v-select
                 v-model="tradeInfo.export_percentage"
                 :items="ePercentage"
+                item-text="title"
+                item-value="_id"
                 label="Export Percentage"
                 outlined
               ></v-select>
@@ -37,7 +39,7 @@
               sm="4"
             >
               <v-select
-                v-model="annualExportSelected"
+                v-model="tradeInfo.annual_export_value"
                 :items="annualExport"
                 label="Annual Export Value (USD)"
                 outlined
@@ -50,7 +52,7 @@
               md="4"
             >
               <v-text-field
-                v-model="leadTime"
+                v-model="tradeInfo.avg_lead_time"
                 :rules="leadTimeRules"
                 hint="Please enter the average production time. Numbers only."
                 class="leadTime"
@@ -65,7 +67,7 @@
               md="8"
             >
               <v-combobox
-                v-model="ports"
+                v-model="tradeInfo.nearest_port"
                 :items="portItems"
                 :search-input.sync="search"
                 hide-selected
@@ -94,7 +96,7 @@
               sm="6"
             >
               <v-autocomplete
-                v-model="exportMarket"
+                v-model="tradeInfo.export_market"
                 :items="continents"
                 chips
                 label="Export Market"
@@ -110,7 +112,7 @@
               sm="6"
             >
               <v-autocomplete
-                v-model="importMarket"
+                v-model="tradeInfo.import_market"
                 :items="continents"
                 chips
                 label="Import Market"
@@ -149,13 +151,14 @@
                 cols="12"
               >
                 <v-textarea
+                  v-model="tradeInfo.history_introduction"
                   outlined
                   name="history"
                   label="Company History Introduction"
                 ></v-textarea>
               </v-col>
             </v-row>
-            <v-row v-for="(item, index) in historyByYear" :key="index">
+            <v-row v-for="(item, index) in tradeInfo.history_by_year" :key="index">
               <v-col
                 class="year-col"
                 cols="6"
@@ -175,7 +178,7 @@
                 md="8"
               >
                 <v-text-field
-                  v-model="item.description"
+                  v-model="item.describe"
                   label="Description"
                   outlined
                 ></v-text-field>
@@ -229,12 +232,11 @@
 
 <script>
   export default {
+    props: ['serverComInfo'],
     data() {
       return {
-        leadTime: '',
         addHistory: false,
         radioGroup: 'No',
-        ports: [],
         portItems: [],
         more: 0,
         search: null,
@@ -248,20 +250,16 @@
           'No',
           'Yes'
         ],
-        ePercentageSelected: '',
         ePercentage: [],
         yearFExport: '',
         yearFExportRule: [
           value => {
-            if (!value || !value.trim()) return true;
             if (!isNaN(parseInt(value)) && value >= 1900 && value <= new Date().getFullYear()) return true;
             return 'The year entered must be after 1900 to the present year';
           },
         ],
         annualExportSelected: '',
         annualExport: [],
-        importMarket: [],
-        exportMarket: [],
         continents: [],
         year: null,
         description: null,
@@ -272,31 +270,30 @@
             return 'The year entered must be after 1900 to the present year';
           }
         ],
-        historyByYear: [
-          {year: '', description: ''},
-          {year: '', description: ''},
-        ],
         tradeInfo: {
           export_percentage: '',
-          nearest_port: '',
-          avg_lead_time: [],
+          nearest_port: [],
+          avg_lead_time: '',
           first_export_year: '',
           annual_export_value: '',
           annual_import_value: '',
-          export_market: '',
-          import_market: '',
+          export_market: [],
+          import_market: [],
           history_introduction: '',
-          history_by_year: []
+          history_by_year: [
+            {year: '', describe: ''},
+            {year: '', describe: ''},
+          ]
         }
       }
     },
     watch: {
-      ports (val) {
-        if (val.length > 3) {
-          this.$nextTick(() => this.model.pop())
-        }
-        this.tradeInfo.nearest_port = val;
-        // alert(val)
+      'tradeInfo.nearest_port': {
+        handler: function(val) {
+          if (val.length > 3) {
+            this.$nextTick(() => this.tradeInfo.nearest_port.pop())
+          }
+        },
       },
       radioGroup (val) {
         if (val === 'Yes') {
@@ -304,66 +301,49 @@
         } else if (val === 'No') {
           this.addHistory = false;
         }
+      },
+      tradeInfo: {
+        handler: function(val, oldVal) {
+          this.$emit('updateTradeInfoData', this.tradeInfo)
+        },
+        deep: true
+      },
+      serverComInfo: {
+        handler: function(val, oldVal) {
+          for(let i in val) {
+            if(this.tradeInfo.hasOwnProperty(i)) {
+              if(i === 'history_by_year' && !(val[i] && val[i].length)) {
+                continue;
+              }
+              this.tradeInfo[i] = val[i] ?? ''
+            }
+          }
+
+          if(val.history_introduction.length > 0 || (!!val.history_by_year && val.history_by_year.length > 0)) {
+            this.radioGroup = 'Yes';
+          }
+        },
+        deep: true
       }
     },
 
     async mounted() {
-      await this.getAnnualTradeValues();
-      // Get export_percentage_list
-      await this.$axios.post('/api/export_percentage_list',
-        {}).then(response => {
-        let result=[];
-        let item
-        for(let i in  response.data){
-          item = response.data[i].title
-          result.push(item)
-        }
-        this.ePercentage = result;
-      }).catch(({response}) => {
-        if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
-        } else if (response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
-        } else if (response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
-        }
-      });
-
-      // Get country list for import market & export market
-      await this.$axios.post('/api/search_country',
-        {}).then(response => {
-        let result=[];
-        let item
-        for(let i in  response.data){
-          item = response.data[i].title
-          result.push(item)
-        }
-        this.continents = result;
-      }).catch(({response}) => {
-        if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
-        } else if (response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
-        } else if (response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
-        }
-      });
+      // await this.getAnnualTradeValues();
+      // // Get export_percentage_list
+      // await this.getExportPercentageList();
+      // // Get country list for import market & export market
+      // await this.getCountryList();
     },
 
     methods: {
       addNewHistory() {
-        this.historyByYear.push({year: this.year, description: this.description});
-        this.tradeInfo.history_by_year = this.historyByYear;
+        this.tradeInfo.history_by_year.push({year: this.year, description: this.description});
         this.year = '';
         this.description = '';
+        console.log("tradeInfo: " + this.tradeInfo)
       },
       deleteHistory(index) {
-        this.historyByYear.splice(index, 1);
-        this.tradeInfo.history_by_year = this.historyByYear;
+        this.tradeInfo.history_by_year.splice(index, 1);
       },
       getAnnualTradeValues() {
         // Get get_annual_trade_values
@@ -376,6 +356,45 @@
             result.push(item)
           }
           this.annualExport = result;
+        }).catch(({response}) => {
+          if (response.status == 401) {
+            this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          } else if (response.status == 400) {
+            this.$toast.error(this.$t(`Bad Request`));
+          } else if (response.status == 403) {
+            this.$toast.error(this.$t(`Forbidden`));
+          } else if (response.status == 404) {
+            this.$toast.error(this.$t(`not found`));
+          }
+        });
+      },
+      getExportPercentageList() {
+        this.$axios.post('/api/export_percentage_list',
+          {}).then(response => {
+          this.ePercentage = response.data;
+          console.log('ttyyyyyy', response.data)
+        }).catch(({response}) => {
+          if (response.status == 401) {
+            this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          } else if (response.status == 400) {
+            this.$toast.error(this.$t(`Bad Request`));
+          } else if (response.status == 403) {
+            this.$toast.error(this.$t(`Forbidden`));
+          } else if (response.status == 404) {
+            this.$toast.error(this.$t(`not found`));
+          }
+        });
+      },
+      getCountryList() {
+        this.$axios.post('/api/search_country',
+          {}).then(response => {
+          let result=[];
+          let item
+          for(let i in  response.data){
+            item = response.data[i].title
+            result.push(item)
+          }
+          this.continents = result;
         }).catch(({response}) => {
           if (response.status == 401) {
             this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
