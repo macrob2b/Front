@@ -6,7 +6,7 @@
       </div>
       <v-divider></v-divider>
       <div class="mb-10 add-information-body">
-        <v-btn v-if="addCertificateBtn" class="add-btn" @click="addCertificate">+ Add Certificate</v-btn>
+        <v-btn v-if="addCertificateBtn" class="primary add-btn" @click="addCertificate">+ Add Certificate</v-btn>
       </div>
       <div class="mb-10 add-information-body">
         <div v-if="showCertificateForm" class="add-certificate">

@@ -312,14 +312,14 @@
     <!--End Upload media section-->
 
     <v-btn
-      class="submit"
+      class="submit mt-3 primary"
       @click="submitCompanyInfo"
 
     >
-      Submit
+      Update
     </v-btn>
 
-    <v-btn outlined>
+    <v-btn outlined class="mt-3">
       Cancel
     </v-btn>
 
@@ -332,10 +332,13 @@ import PhoneNumberInput from "~/components/phoneNumberInput";
 
 
 export default {
-  // props: ['serverComInfo'],
+  props: {
+    companyLoadedInfo: []
+  },
   data() {
     return {
-      default_location:null,
+      default_location: null,
+      loaded: false,
       bussinessTypeArr: [],
       companyInfo: {
         roles: [],
@@ -398,12 +401,20 @@ export default {
     },
     revenue(val) {
       this.revenue = this.spilitter(val);
+    },
+    companyLoadedInfo(val){
+      if(val.length!==0 && this.loaded===false){
+        this.setCompanyData();
+        this.loaded=true;
+      }
     }
+
   },
   mounted() {
     this.loadBusinessType();
-    this.loadCompanyInfo();
   },
+
+
   components: {
     LocationField,
     PhoneNumberInput,
@@ -419,6 +430,28 @@ export default {
           this.$toast.error(this.$t(`REQUEST_FAILED`));
         }
       });
+    },
+    async setCompanyData() {
+      this.companyInfo.roles = this.companyLoadedInfo.roles;
+      this.companyInfo.company_name = this.companyLoadedInfo.company_name;
+      this.companyInfo.business_type = this.companyLoadedInfo.business_type;
+      this.companyInfo.location = this.companyLoadedInfo.location.coordinates[1] + ',' + this.companyLoadedInfo.location.coordinates[0];
+
+      this.reverseLocation(this.companyLoadedInfo.location.coordinates[1], this.companyLoadedInfo.location.coordinates[0]);
+
+      this.companyInfo.country = this.companyLoadedInfo.country;
+      this.companyInfo.country_code = this.companyLoadedInfo.country_code;
+      this.companyInfo.state = this.companyLoadedInfo.state;
+      this.companyInfo.city = this.companyLoadedInfo.city;
+      this.companyInfo.description = this.companyLoadedInfo.description;
+      this.companyInfo.phone = this.companyLoadedInfo.phone;
+      this.companyInfo.fax = this.companyLoadedInfo.fax;
+      this.companyInfo.employees_total = this.companyLoadedInfo.employees_total;
+      this.companyInfo.annual_revenue = this.companyLoadedInfo.annual_revenue;
+      this.companyInfo.year_established = this.companyLoadedInfo.year_established;
+      this.companyInfo.email = this.companyLoadedInfo.email;
+      this.companyInfo.website = this.companyLoadedInfo.website;
+      this.companyInfo.postal_code = this.companyLoadedInfo.postal_code;
     },
     spilitter(val) {
       val = val.replace(/,/g, '');
@@ -453,8 +486,8 @@ export default {
         .then(response => {
           console.log(response.data.length);
 
-          if (response.data.length==0)
-            this.$toast.success("Update data successfuly");
+          if (response.data.length == 0)
+            this.$toast.success("Update data successfully");
           else
             this.$toast.error("Please fill required fields");
 
@@ -468,31 +501,12 @@ export default {
         }
       });
     },
-    async loadCompanyInfo() {
-      await this.$axios.$post('/api/get_company_info',{
-        id:this.$auth.user.company._id
+    async reverseLocation(lat, lng) {
+      await this.$axios.$post('/api/reverse_location', {
+        lat: lat,
+        lng: lng,
       }).then(response => {
-        var user_company = response;
-        this.companyInfo.roles = user_company.roles;
-        this.companyInfo.company_name = user_company.company_name;
-        this.companyInfo.business_type = user_company.business_type;
-        this.companyInfo.location = user_company.location.coordinates[1]+','+user_company.location.coordinates[0];
-
-        this.reverseLocation(user_company.location.coordinates[1],user_company.location.coordinates[0]);
-
-        this.companyInfo.country = user_company.country;
-        this.companyInfo.country_code = user_company.country_code;
-        this.companyInfo.state = user_company.state;
-        this.companyInfo.city = user_company.city;
-        this.companyInfo.description = user_company.description;
-        this.companyInfo.phone = user_company.phone;
-        this.companyInfo.fax = user_company.fax;
-        this.companyInfo.employees_total = user_company.employees_total;
-        this.companyInfo.annual_revenue = user_company.annual_revenue;
-        this.companyInfo.year_established = user_company.year_established;
-        this.companyInfo.email = user_company.email;
-        this.companyInfo.website = user_company.website;
-        this.companyInfo.postal_code = user_company.postal_code;
+        this.default_location = response;
       }).catch(({response}) => {
         if (response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
@@ -500,21 +514,6 @@ export default {
           this.$toast.error(this.$t(`REQUEST_FAILED`));
         }
       });
-
-    },
-    async reverseLocation(lat,lng){
-        await this.$axios.$post('/api/reverse_location',{
-          lat:lat,
-          lng:lng,
-        }).then(response => {
-         this.default_location=response;
-        }).catch(({response}) => {
-          if (response.status == 401) {
-            this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-          } else if (response.status == 500 || response.status == 504) {
-            this.$toast.error(this.$t(`REQUEST_FAILED`));
-          }
-        });
 
     },
     async uploadFile() {

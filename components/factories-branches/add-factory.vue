@@ -144,7 +144,7 @@
               <v-btn
                 @click="$emit('input', false)"
                 outlined
-                class="cancelBtn"
+                color="default"
               >
                 cancel
               </v-btn>
@@ -170,7 +170,7 @@ export default {
       isLoading: false,
 
 
-      
+
       showSave: false,
       showCancel: false,
       // factoryName: '',

@@ -12,17 +12,7 @@
     </v-stepper-step>
 
     <v-stepper-content step="1">
-      <BasicInfo></BasicInfo>
-        <v-btn
-          class="submit"
-          @click="e1 = 2"
-        >
-          Submit
-        </v-btn>
-
-      <v-btn outlined>
-        Cancel
-      </v-btn>
+      <BasicInfo  :companyLoadedInfo="companyInfo" ></BasicInfo>
     </v-stepper-content>
 
     <v-stepper-step
@@ -34,20 +24,7 @@
     </v-stepper-step>
 
     <v-stepper-content step="2">
-<!--      <TradeInfo></TradeInfo>-->
-        <v-btn
-          class="submit"
-          color="primary"
-          @click="e1 = 3"
-        >
-          Continue
-        </v-btn>
-        <v-btn
-          outlined
-          @click="e1 = 1"
-        >
-          Cancel
-        </v-btn>
+      <TradeInfo  :companyLoadedInfo="companyInfo"></TradeInfo>
     </v-stepper-content>
 
     <v-stepper-step
@@ -60,19 +37,6 @@
 
     <v-stepper-content step="3">
       <FactoriesBranches></FactoriesBranches>
-        <v-btn
-          class="submit"
-          color="primary"
-          @click="e1 = 4"
-        >
-          Continue
-        </v-btn>
-        <v-btn
-          outlined
-          @click="e1 = 2"
-        >
-          Cancel
-        </v-btn>
     </v-stepper-content>
 
     <v-stepper-step editable step="4">
@@ -80,19 +44,6 @@
     </v-stepper-step>
     <v-stepper-content step="4">
       <Certifications></Certifications>
-        <v-btn
-          class="submit"
-          color="primary"
-          @click="e1 = 1"
-        >
-          Continue
-        </v-btn>
-        <v-btn
-          outlined
-          @click="e1 = 3"
-        >
-          Cancel
-        </v-btn>
     </v-stepper-content>
   </v-stepper>
 </template>
@@ -110,7 +61,10 @@ export default {
     Certifications
   },
   /* eslint-disable */
-  props: ['step1'],
+  props: {
+    step1:null,
+    companyInfo:[]
+  },
   data() {
     return {
       e1: 1,

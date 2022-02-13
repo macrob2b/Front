@@ -7,23 +7,37 @@
       <div>
         <div class="add-factory">
           <div class="add-information-body">
-            <v-btn v-if="!showBranchForm" class="add-btn" @click="showBranchForm = true">+ Add Branch Information</v-btn>
+            <v-btn v-if="!showBranchForm" class="primary add-btn" @click="showBranchForm = true">+ Add Branch Information</v-btn>
           </div>
 
           <AddBranch v-if="showBranchForm" v-model="showBranchForm" :activeBranch="activeBranch()" @reloadBranches="reloadBranches"></AddBranch>
 
           <div class="mb-10">
-            <v-data-table
-              :headers="headers"
-              :items="branches"
-              class="elevation-1 factory-table"
+            <v-simple-table
             >
-              <template
-                v-slot:body="{ items }"
-              >
+              <template v-slot:default>
+                <thead>
+                <tr>
+                  <th class="text-left">
+                    Branch name
+                  </th>
+                  <th class="text-left">
+                    Contact num
+                  </th>
+                  <th class="text-left">
+                    Description
+                  </th>
+                  <th class="text-left">
+                    Supervisor name
+                  </th>
+                  <th class="text-left">
+                    Actions
+                  </th>
+                </tr>
+                </thead>
                 <tbody>
                 <tr
-                  v-for="(item, i) in items"
+                  v-for="(item, i) in branches"
                   :key="i"
                 >
                   <td>{{ item.name }}</td>
@@ -47,8 +61,10 @@
                   </td>
                 </tr>
                 </tbody>
-              </template>
-            </v-data-table>
+              </template>/
+            </v-simple-table>
+
+
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@
       <div>
         <div class="add-factory">
           <div class="add-information-body">
-            <v-btn v-if="!showFactoryForm" class="add-btn" @click="showFactoryForm = true">+ Add Factory Information</v-btn>
+            <v-btn v-if="!showFactoryForm" class="primary add-btn" @click="showFactoryForm = true">+ Add Factory Information</v-btn>
           </div>
 
           <add-factory v-if="showFactoryForm" v-model="showFactoryForm" :defaultFactoryInfo="defaultFactoryInfo" @addFactoryInfo="addFactory" @reloadFactories="reloadFactories"></add-factory>
