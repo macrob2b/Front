@@ -12,6 +12,7 @@
       <v-btn
         class="order-btn"
         elevation="1"
+        :to="'/product-details/'+productData._id"
         large
       >
         <span class="btn-text">order</span>

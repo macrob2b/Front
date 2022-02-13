@@ -12,17 +12,7 @@
     </v-stepper-step>
 
     <v-stepper-content step="1">
-      <BasicInfo></BasicInfo>
-        <v-btn
-          class="submit"
-          @click="e1 = 2"
-        >
-          Submit
-        </v-btn>
-
-      <v-btn outlined>
-        Cancel
-      </v-btn>
+      <BasicInfo  :companyLoadedInfo="companyInfo" ></BasicInfo>
     </v-stepper-content>
 
     <v-stepper-step
@@ -34,20 +24,7 @@
     </v-stepper-step>
 
     <v-stepper-content step="2">
-      <TradeInfo></TradeInfo>
-        <v-btn
-          class="submit"
-          color="primary"
-          @click="e1 = 3"
-        >
-          Continue
-        </v-btn>
-        <v-btn
-          outlined
-          @click="e1 = 1"
-        >
-          Cancel
-        </v-btn>
+      <TradeInfo  :companyLoadedInfo="companyInfo"></TradeInfo>
     </v-stepper-content>
 
     <v-stepper-step
@@ -60,19 +37,6 @@
 
     <v-stepper-content step="3">
       <FactoriesBranches></FactoriesBranches>
-        <v-btn
-          class="submit"
-          color="primary"
-          @click="e1 = 4"
-        >
-          Continue
-        </v-btn>
-        <v-btn
-          outlined
-          @click="e1 = 2"
-        >
-          Cancel
-        </v-btn>
     </v-stepper-content>
 
     <v-stepper-step editable step="4">
@@ -80,28 +44,15 @@
     </v-stepper-step>
     <v-stepper-content step="4">
       <Certifications></Certifications>
-        <v-btn
-          class="submit"
-          color="primary"
-          @click="e1 = 1"
-        >
-          Continue
-        </v-btn>
-        <v-btn
-          outlined
-          @click="e1 = 3"
-        >
-          Cancel
-        </v-btn>
     </v-stepper-content>
   </v-stepper>
 </template>
 
 <script>
-import BasicInfo from "~/pages/company-profile/basic-info"
-import TradeInfo from "~/pages/company-profile/trade-info"
-import FactoriesBranches from "~/pages/company-profile/factories-branches"
-import Certifications from "~/pages/company-profile/certifications"
+import BasicInfo from "~/pages/user/company/company-profile/basic-info"
+import TradeInfo from "~/pages/user/company/company-profile/trade-info"
+import FactoriesBranches from "~/pages/user/company/company-profile/factories-branches"
+import Certifications from "~/pages/user/company/company-profile/certifications"
 export default {
   components: {
     BasicInfo,
@@ -110,7 +61,10 @@ export default {
     Certifications
   },
   /* eslint-disable */
-  props: ['step1'],
+  props: {
+    step1:null,
+    companyInfo:[]
+  },
   data() {
     return {
       e1: 1,

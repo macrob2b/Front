@@ -220,6 +220,11 @@
 <script>
 export default {
   name: "add",
+  head() {
+    return {
+      title: "Add new product"
+    }
+  },
   layout: "user_dashboard",
   data: () => ({
     isLoading: false,
