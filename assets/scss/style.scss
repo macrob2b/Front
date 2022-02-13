@@ -59,6 +59,14 @@ body {
   font-size: $content_font_size;
 
   .v-application {
+    .rtl {
+      direction: rtl;
+    }
+
+    .ltr {
+      direction: ltr;
+    }
+
     p {
       margin-bottom: 0;
     }
@@ -1785,7 +1793,75 @@ body {
   }
 }
 
+/**********************
+28. Trade order
+***********************/
+.trade-order {
+  .v-text-field .v-input__control {
+    max-width: 120px;
+  }
 
+  .v-text-field--outlined > .v-input__control > .v-input__slot {
+    min-height: 41px;
+  }
+
+  .v-text-field--enclosed .v-input__append-inner {
+    margin-top: 0;
+    display: flex;
+    align-self: center;
+  }
+
+  .v-text-field__details {
+    display: none;
+  }
+
+  .header {
+    .header-description {
+      background-color: $box_background_color2;
+    }
+  }
+
+  .trade-order-tabs-holder {
+    .theme--light.v-tabs > .v-tabs-bar {
+      background-color: $box_background_color2;
+    }
+  }
+
+  .order-request {
+    .product-img-holder {
+      border: 1px solid $typography_place_holder;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      justify-items: center;
+      align-items: center;
+
+      .product-image {
+        max-width: 118px;
+        max-height: 118px;
+        object-fit: contain;
+      }
+    }
+
+    .shipping-holder {
+      .v-text-field .v-input__control {
+        max-width: 300px;
+      }
+    }
+
+    .final-request-holder {
+      .v-text-field .v-input__control {
+        max-width: 100%;
+      }
+    }
+
+    .total-holder {
+      .total-box {
+        background-color: $box_background_color2;
+      }
+    }
+  }
+}
 
 
 
