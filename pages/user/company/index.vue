@@ -1,6 +1,6 @@
 <template>
     <v-row>
-      <div class="company-main">
+      <div class="company-main " >
         <ProfileCard></ProfileCard>
         <div class="mobile-nav d-md-none">
           <v-btn class="drawer-btn" @click.stop="drawer = !drawer">
@@ -38,14 +38,27 @@
       return {
         drawer: null,
         items: [
-          {name: 'My Inquiries', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},
-          {name: 'My Storefront', data: ['Add a New Buying Lead']},
-          {name: 'My Buying Tools', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},
-          {name: 'My Selling Tools', data: ['Add a New Buying Lead', 'Add a New Buying Lead']},
-          {name: 'My Products', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},
-          {name: 'My account', data: ['Add a New Buying Lead']}
+          {
+            name: 'My Products',
+            data: [
+              {title:'Product list',link:'/user/product'},
+              {title:'Add a new product',link:'/user/product/add'},
+            ]
+          },
+          {
+            name: 'My company',
+            data: [
+              {title:'Update company info',link:'/user/company'},
+            ]
+          },
         ],
       }
     },
   }
 </script>
+
+<style scoped>
+.company-main{
+  width: 100%;
+}
+</style>

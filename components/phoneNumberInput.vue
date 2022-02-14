@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     inputChanged() {
-      this.$emit('numberEntered', '+' + this.phoneCode + ' ' + this.phoneNumber);
+      this.$emit('numberEntered', '+' + this.phoneCode + '-' + this.phoneNumber);
     },
     reRenderComponent() {
       this.render = false;

@@ -19,8 +19,8 @@
             :key="id1"
           >
             <v-expansion-panel-header>{{ index.name }}</v-expansion-panel-header>
-            <v-expansion-panel-content v-for="(menuItems, id2) in index.data" :key="id2">
-              <v-btn><div class="dot">&nbsp;</div> {{ menuItems }}</v-btn>
+            <v-expansion-panel-content v-for="(menuItem, id2) in index.data" :key="id2">
+              <v-btn :to="menuItem.link"><div class="dot">&nbsp;</div> {{ menuItem.title }}</v-btn>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>

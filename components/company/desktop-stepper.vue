@@ -1,5 +1,7 @@
 <template>
-  <v-stepper v-model="e1" alt-labels>
+  <v-stepper
+    max-width="100vw"
+    v-model="e1" alt-labels>
    <v-row>
      <v-col cols="12">
        <v-stepper-header>

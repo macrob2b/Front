@@ -16,17 +16,17 @@
                 ></v-text-field>
               </v-col>
 
+
+
               <v-col
                 cols="12"
                 md="4"
               >
-                <v-text-field
-                  v-model="factoryInfo.contact_num"
-                  :rules="contactRules"
-                  label="Contact Number"
-                  outlined
-                ></v-text-field>
+                <phone-number-input @numberEntered="phoneNumberEntered" label="Contact Number"
+                                    :phone="factoryInfo.contact_num"></phone-number-input>
               </v-col>
+
+
 
               <v-col
                 class="d-flex"
@@ -36,6 +36,8 @@
                 <v-select
                   v-model="factoryInfo.area_size"
                   :items="factorySizeArr"
+                  item-text="title"
+                  item-value="_id"
                   label="Factory Size"
                   outlined
                 ></v-select>
@@ -103,6 +105,8 @@
                 <v-select
                   v-model="factoryInfo.annual_output_val"
                   :items="annualArr"
+                  item-text="title"
+                  item-value="_id"
                   label="Annual Output Value"
                   outlined
                 ></v-select>
@@ -275,16 +279,8 @@ export default {
   },
   methods: {
     getFactorySize() {
-      this.$axios.post('/api/factory_size',
-        {}).then(response => {
-        let result = [];
-        let item
-        console.log("response" + response)
-        for (let i in response.data) {
-          item = response.data[i].title
-          result.push(item)
-        }
-        this.factorySizeArr = result;
+      this.$axios.$post('/api/factory_size').then(response => {
+        this.factorySizeArr = response;
       }).catch(({response}) => {
         if (response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
@@ -321,15 +317,9 @@ export default {
       });
     },
     getAnnualTradeValues() {
-      this.$axios.post('/api/get_annual_trade_values',
-        {}).then(response => {
-        let result = [];
-        let item;
-        for (let i in response.data) {
-          item = response.data[i].title
-          result.push(item)
-        }
-        this.annualArr = result;
+      this.$axios.$post('/api/get_annual_trade_values')
+        .then(response => {
+        this.annualArr = response;
       }).catch(({response}) => {
         if (response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
@@ -344,6 +334,10 @@ export default {
     },
     locationSelected(location) {
       this.factoryInfo.location = location.lat + ',' + location.lng;
+      this.factoryInfo.country = location.country;
+      this.factoryInfo.country_code = location.country_code;
+      this.factoryInfo.state = location.state;
+      this.factoryInfo.city = location.city;
     },
     spilitter(val) {
       val = val.replace(/,/g, '');
@@ -469,7 +463,10 @@ export default {
         }
         reader.readAsArrayBuffer(file);
       });
-    }
+    },
+    phoneNumberEntered(phoneEntered) {
+      this.factoryInfo.contact_num = phoneEntered
+    },
   }
 }
 </script>

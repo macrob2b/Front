@@ -1,5 +1,15 @@
 <template>
-  <div class="basic-info">
+  <v-row class="mt-12 mb-12" v-if="!loaded">
+    <v-col cols="12" class="text-center">
+      <v-progress-circular
+        :size="50"
+        :width="5"
+        color="orange"
+        indeterminate
+      ></v-progress-circular>
+    </v-col>
+  </v-row>
+  <div v-else class="basic-info">
     <!--User type-->
     <div class="user-type">
       <div class="user-type-header">
@@ -31,6 +41,7 @@
         <p>Company info</p>
       </div>
       <v-divider></v-divider>
+
       <div class="company-info-body">
         <v-form>
           <v-container>
@@ -256,9 +267,10 @@
                 <v-file-input
                   v-model="companyInfo.logo"
                   small-chips
+                  accept="image/png,image/webp,"
                   outlined
-                  @change="uploadFile"
-                  @click:clear="deleteFile"
+                  @change="uploadFile('logo')"
+                  @click:clear="deleteFile('logo')"
                   append-icon="mdi-cloud-upload"
                   label="Business Logo"
                 ></v-file-input>
@@ -269,10 +281,13 @@
                 md="4"
               >
                 <v-file-input
-                  v-model="companyInfo.companyImage"
+                  v-model="companyInfo.images"
                   small-chips
                   multiple
                   outlined
+                  accept="image/png,image/webp,"
+                  @change="uploadFile('images')"
+                  @click:clear="deleteFile('images')"
                   append-icon="mdi-cloud-upload"
                   label="Company Image"
                 ></v-file-input>
@@ -283,7 +298,7 @@
                 md="4"
               >
                 <v-file-input
-                  v-model="companyInfo.companyBrochure"
+                  v-model="companyInfo.brochures"
                   small-chips
                   multiple
                   outlined
@@ -313,6 +328,7 @@
 
     <v-btn
       class="submit mt-3 primary"
+      :loading="submit_loading"
       @click="submitCompanyInfo"
 
     >
@@ -359,12 +375,11 @@ export default {
         email: '',
         postal_code: '',
         logo: '',
-        logo_name: '',
-        image: '',
         images: [],
-        brochure: [],
+        brochures: [],
         video: '',
       },
+      submit_loading: false,
       yearEstablishedRule: [
         value => {
           if (!value.trim()) return true;
@@ -402,10 +417,10 @@ export default {
     revenue(val) {
       this.revenue = this.spilitter(val);
     },
-    companyLoadedInfo(val){
-      if(val.length!==0 && this.loaded===false){
+    companyLoadedInfo(val) {
+      if (val.length !== 0 && this.loaded === false) {
         this.setCompanyData();
-        this.loaded=true;
+        this.loaded = true;
       }
     }
 
@@ -452,6 +467,10 @@ export default {
       this.companyInfo.email = this.companyLoadedInfo.email;
       this.companyInfo.website = this.companyLoadedInfo.website;
       this.companyInfo.postal_code = this.companyLoadedInfo.postal_code;
+      this.companyInfo.logo = this.companyLoadedInfo.logo ? new File([], this.companyLoadedInfo.logo) : '';
+      for (var x = 0; x < this.companyLoadedInfo.images.length; x++) {
+        this.companyInfo.images[x] = new File([], this.companyLoadedInfo.images[x]) ;
+      }
     },
     spilitter(val) {
       val = val.replace(/,/g, '');
@@ -474,6 +493,7 @@ export default {
 
 
     submitCompanyInfo() {
+      this.submit_loading = true;
       let formData = new FormData()
 
 
@@ -484,12 +504,12 @@ export default {
 
       this.$axios.post('/api/update_company_general_info', formData)
         .then(response => {
-          console.log(response.data.length);
-
           if (response.data.length == 0)
             this.$toast.success("Update data successfully");
           else
             this.$toast.error("Please fill required fields");
+
+          this.submit_loading = false;
 
         }).catch(({response}) => {
         if (response.status == 401) {
@@ -499,6 +519,7 @@ export default {
         } else {
           this.$toast.error("Please fill all fields");
         }
+        this.submit_loading = false;
       });
     },
     async reverseLocation(lat, lng) {
@@ -516,33 +537,52 @@ export default {
       });
 
     },
-    async uploadFile() {
-      if (this.companyInfo.logo) {
-        let formData = new FormData();
-        formData.append('file', this.companyInfo.logo);
-        formData.append('field', 'logo');
-        formData.append('directory', '/');
+    async uploadFile(type) {
+      let formData = new FormData();
 
-        await this.$axios.$post('/api/upload_company_file',
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            }
-          })
-          .then(response => {
-            this.companyInfo.logo_name = response;
-          }).catch(({err}) => {
-            this.$toast.error(err)
-
-          });
+      console.log(type);
+      console.log(this.companyInfo.logo);
+      if (type === 'logo') {
+        if (this.companyInfo.logo) {
+          formData.append('file', this.companyInfo.logo);
+          formData.append('field', 'logo');
+          formData.append('directory', '/');
+          formData.append('type', 'single');
+        }
+      } else if (type === 'images') {
+        if (this.companyInfo.images) {
+          var ins = this.companyInfo.images.length;
+          for (var x = 0; x < ins; x++) {
+            formData.append("file[]", this.companyInfo.images[x]);
+          }
+          formData.append('field', 'images');
+          formData.append('directory', '/images');
+          formData.append('type', 'multiple');
+        }
       }
+
+      console.log(formData);
+
+      await this.$axios.$post('/api/upload_company_file',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        })
+        .then(response => {
+          console.log("Success");
+          // this.companyInfo.logo_name = response;
+        }).catch(({err}) => {
+          this.$toast.error(err)
+
+        });
     },
-    async deleteFile() {
+    async deleteFile(type) {
       await this.$axios.$delete('/api/delete_company_file',
         {
           params: {
-            'field': 'logo'
+            'field': type
           }
         }
       )
@@ -553,7 +593,8 @@ export default {
 
         });
     }
-  },
+  }
+  ,
 
 }
 </script>

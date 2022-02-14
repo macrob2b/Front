@@ -63,7 +63,7 @@ export default {
   created() {
     // this.addFactory();
   },
-  beforeMount() {
+  mounted() {
       this.reloadFactories();
   },
   watch: {
@@ -86,12 +86,10 @@ export default {
       this.factories.splice(index, 1);
     },
     reloadFactories(func) {
-      this.$axios.post('/api/factory_list', {company_id: this.$auth.user.company._id}).then(response => {
-        console.log('aaaaaaaaaaaaa factory_list', response.data)
-        this.factories = response.data;
-        if(func) {
-          func(true, this);
-        }
+      this.$axios.$post('/api/factory_list',
+        {company_id: this.$auth.user.company._id})
+        .then(response => {
+        this.factories = response;
       }).catch(({response}) => {
           func(false, this);
         if (response.status == 401) {
