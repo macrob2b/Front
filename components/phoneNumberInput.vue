@@ -36,10 +36,13 @@
 export default {
   name : "phoneNumberInput",
   props: {
-    errors:null,
-    label:'Phone number'},
+    errors:{default:null},
+    label:{type:String,default:'Phone number'},
+    phone: {type:String,default:null},
+  },
   data() {
     return {
+      inputLabel:"",
       phoneCode  : '90',
       phoneNumber: '',
       finalNumber: '',
@@ -81,7 +84,16 @@ export default {
         };
       }
       this.loading = false;
+
+      //Set default value
+      if (this.phone){
+        this.phoneCode=this.phone.split('-')[0].replace('+','');
+        this.phoneNumber=this.phone.split('-')[1];
+      }
+      //End set default value
       this.reRenderComponent();
+
+
     }
   }
 }

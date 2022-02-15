@@ -71,9 +71,7 @@ export default {
     mainProducts,
     contactUs,
   },
-  props:{
-    companyInfo:[]
-  },
+  props:['companyInfo'],
   data() {
     return {
       tab: null
