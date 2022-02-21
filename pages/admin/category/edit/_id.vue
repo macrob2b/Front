@@ -16,7 +16,18 @@
       </v-tab>
       <v-tab-item class="px-12">
         <h3>Edit</h3>
+        <v-row class="mt-12 mb-12"  v-if="loading_edit_page">
+          <v-col cols="12" class="text-center">
+            <v-progress-circular
+              :size="50"
+              :width="5"
+              color="orange"
+              indeterminate
+            ></v-progress-circular>
+          </v-col>
+        </v-row>
         <v-form
+          v-else
           ref="form"
           v-model="valid"
           lazy-validation
@@ -33,6 +44,7 @@
           <v-btn
             color="success"
             class="mr-4"
+            :loading="submit_loading"
             @click="updateCategory"
           >
             {{ this.submit_btn }}
@@ -285,6 +297,8 @@ export default {
     return {
       cateTitle: null,
       submit_btn: 'Update',
+      submit_loading:false,
+      loading_edit_page:false,
       property_submit_btn: 'Create',
       field_type: [
         'Text',
@@ -309,7 +323,7 @@ export default {
       propertyList: [],
       required_field: false,
       reusable_field: true,
-      general_field: false
+      general_field: false,
     }
   },
   mounted() {
@@ -329,21 +343,25 @@ export default {
   },
   methods: {
     loadCategory(event) {
+      this.loading_edit_page=true;
       const response = this.$axios.$post('/api/find_category', {id: this.$route.params.id}).then(response => {
         this.cateTitle = response.title
+        this.loading_edit_page=false;
       }).catch(e => {
         this.$toast.error('Error on loading');
-
+        this.loading_edit_page=false;
       });
     },
     updateCategory() {
+      this.submit_loading=true;
       const response = this.$axios.$put('/api/update_category',
         {id: this.$route.params.id, title: this.cateTitle}).then(response => {
         this.$toast.success('Updated successfully');
+        this.submit_loading=false;
         this.$router.go(-1);
       }).catch(e => {
         this.$toast.error('Error on updating');
-
+        this.submit_loading=false;
       });
     },
     async addCateProperty() {
