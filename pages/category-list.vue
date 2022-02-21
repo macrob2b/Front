@@ -21,17 +21,9 @@
               <h2 @click="openLink(item._id)" class="light-green--text pointer">{{item.title}}</h2>
               <ul>
                 <li
-                  v-for="(child_item,child_index) in item.grandchildren"
+                  v-for="(child_item,child_index) in item.children"
                 >
-                  <h3 @click="openLink(child_item._id)" class="blue-grey--text pointer">{{ child_item.title }}</h3>
-                  <ul v-if="child_item.length!=0">
-                    <li
-                      @click="openLink(grandchild_item._id)"
-                      v-for="(grandchild_item,grandchild_index) in child_item.grandchildren"
-                    >
-                      <h4 class="grey--text pointer">{{ grandchild_item.title }}</h4>
-                    </li>
-                  </ul>
+                  <h3 @click="openLink(child_item.id)" class="blue-grey--text pointer">{{ child_item.title }}</h3>
                 </li>
               </ul>
             </div>
@@ -61,7 +53,7 @@ export default {
     async getData() {
       this.loading=true;
       //Get brand list
-      let categoryApiURL = `/api/cate_list_by_child`;
+      let categoryApiURL = `/api/category_list`;
       await this.$axios.$post(categoryApiURL,
       ).then(response => {
         this.categories = response;

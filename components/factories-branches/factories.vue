@@ -1,25 +1,23 @@
 <template>
   <div class="mb-10">
-    <v-row>
-      <v-col cols="12">
         <v-simple-table
         >
           <template v-slot:default>
             <thead>
             <tr>
-              <th class="text-left">
+              <th >
                 Factory name
               </th>
-              <th class="text-left">
+              <th >
                 Contact num
               </th>
-              <th class="text-left">
+              <th >
                 Factory size
               </th>
-              <th class="text-left">
+              <th >
                 Production staff num
               </th>
-              <th class="text-left">
+              <th >
                 Actions
               </th>
             </tr>
@@ -34,26 +32,32 @@
               <td>{{ item.area_size }}</td>
               <td>{{ item.production_staff_num }}</td>
               <td>
-                <v-icon
-                  class="mr-2"
-                  small
+                <v-btn
+                  icon
                   @click="editItem(item, i)"
                 >
-                  mdi-pencil
-                </v-icon>
-                <v-icon
-                  small
-                  @click="deleteItem(item, i)"
+                  <v-icon
+                    small
+                  >
+                    mdi-pencil
+                  </v-icon>
+                </v-btn>
+                <v-btn icon
+                       color="error"
+                       @click="deleteItem(item, i)"
                 >
-                  mdi-delete
-                </v-icon>
+                  <v-icon
+                    small
+                  >
+                    mdi-delete
+                  </v-icon>
+                </v-btn>
               </td>
             </tr>
             </tbody>
-          </template>/
+          </template>
+          /
         </v-simple-table>
-      </v-col>
-    </v-row>
   </div>
 </template>
 

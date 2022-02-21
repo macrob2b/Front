@@ -99,7 +99,7 @@
         ],
       }
     },
-    beforeMount() {
+    mounted() {
         this.reloadBranches();
     },
     watch: {
@@ -133,13 +133,10 @@
           }
         });
       },
-      reloadBranches(func) {
-        this.$axios.post('/api/branch_list', {company_id: this.$auth.user.company._id}).then(response => {
-          console.log('aaaaaaaaaaaaa branch_list', response.data)
-          this.branches = response.data;
-          if(func) {
-            func(true, this);
-          }
+      reloadBranches() {
+        this.$axios.$post('/api/branch_list',
+          {company_id: this.$auth.user.company._id}).then(response => {
+          this.branches = response;
         }).catch(({response}) => {
             func(false, this);
           if (response.status == 401) {

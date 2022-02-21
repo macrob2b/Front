@@ -67,7 +67,7 @@ export default {
   methods: {
     async getData() {
       //Get brand list
-      let categoryApiURL = `/api/cate_list_by_child`;
+      let categoryApiURL = `/api/category_list`;
       await this.$axios.$post(categoryApiURL,
         {
           "without_child": true,
@@ -83,7 +83,7 @@ export default {
     async loadCatChild(parent) {
       this.subCats=[];
       //Get brand list
-      let categoryApiURL = `/api/cate_list_by_child`;
+      let categoryApiURL = `/api/category_list`;
       await this.$axios.$post(categoryApiURL,
         {
           "parent": parent

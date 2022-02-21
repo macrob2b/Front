@@ -858,7 +858,7 @@ body {
   }
 
   .company-main {
-    width: 75%;
+    width: 100%!important;
     //stylelint-disable
     .mobile-nav {
       margin: 0.5rem 0;
@@ -1868,3 +1868,52 @@ body {
 
 
 
+/**********************
+29. Contact us
+***********************/
+.contact-us-holder {
+  .mapbox {
+    width: 100vw;
+    height: 45vh;
+    position: relative;
+
+    .office-address {
+      position: absolute;
+      bottom: 5%;
+      left: 20%;
+      z-index: 9999;
+      background-color: $white;
+      width: 310px;
+    }
+  }
+  .contact-form-holder {
+    background-color: $box_background_color;
+    padding: 0.5rem .5rem 1rem .5rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+  }
+}
+
+
+/**********************
+30. 404 Page
+***********************/
+.not-found-page {
+  //background: url("../img/404.jpeg") no-repeat center center;
+  background-size: cover;
+  width: 100vw;
+  height: 70vh;
+  position: relative;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  .back-to-home{
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #FFFFFF;
+    z-index: 9999;
+  }
+}

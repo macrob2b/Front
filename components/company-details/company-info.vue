@@ -3,7 +3,7 @@
     <div class="d-flex align-center justify-space-between flex-wrap company-info-details">
       <div class="d-flex align-center flex-wrap pe-sm-16">
         <span v-if="logo === ''" class="me-4 empty-logo">&nbsp;</span>
-        <div v-else-if="logo !== ''" class="logo-container">
+        <div v-else-if="logo !== ''" class="logo-container mx-4">
           <img :src="logo" alt="company-logo">
         </div>
         <div class="company-name-info">
@@ -33,6 +33,9 @@ export default {
       logo: '',
       companySlogan: 'World class B2B wholesale platform',
     }
+  },
+  mounted() {
+    this.logo="https://dl.macrob2b.com/companies/"+this.companyInfo._id+"/"+this.companyInfo.logo;
   }
 }
 </script>
