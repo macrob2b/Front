@@ -29,7 +29,7 @@
       return {
         menu: [
           'Here you can edit or update your company information',
-          'Here you can edit or update your company information'
+          // 'Here you can edit or update your company information'
         ],
         strength: {
           val: '40'

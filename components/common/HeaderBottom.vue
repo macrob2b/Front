@@ -34,13 +34,13 @@
       </v-col>
       <v-col cols="3"  class="d-none d-sm-flex justify-end">
         <div class="px-3 mx-2 mt-3">
-          <v-btn color="white" min-width="0" width="auto" height="45">
-            <span  id="span2" class="my-10"> POST BUYING LEADS </span>
-          </v-btn>
+<!--          <v-btn color="white" min-width="0" width="auto" height="45">-->
+<!--            <span  id="span2" class="my-10"> POST BUYING LEADS </span>-->
+<!--          </v-btn>-->
         </div>
       </v-col>
     </v-row>
-    <HeaderSubCat :subCats="sub_cats" v-show="activeTab != -1" />
+<!--    <HeaderSubCat :subCats="sub_cats" v-show="activeTab != -1" />-->
   </div>
 </template>
 

@@ -15,23 +15,12 @@
     <v-icon small color="white" class="mx-1 py-1 px-2 rounded-lg icons">
       mdi-share-variant
     </v-icon>
-    <v-col
-      cols="auto"
-      align-self="center"
-      class="
-        d-none d-md-flex
-        mx-4
-        pa-2
-        rounded-lg
-        justify-space-between
-        align-center
-        grey
-        lighten-2
-      "
-    >
-
-      contact supplier
-    </v-col>
+      <v-btn
+        class="mx-2"
+        small
+        :to="'/company-details/'">
+        Contact supplier
+      </v-btn>
   </v-row>
 </template>
 

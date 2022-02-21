@@ -11,7 +11,7 @@
         >
           <v-expansion-panel-header>{{ index.name }}</v-expansion-panel-header>
           <v-expansion-panel-content v-for="(menuItem, id2) in index.data" :key="id2">
-            <v-btn><div class="dot">&nbsp;</div> {{ menuItem }}</v-btn>
+            <v-btn :to="menuItem.link"><div class="dot">&nbsp;</div> {{ menuItem.title }}</v-btn>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -24,12 +24,24 @@
     data() {
       return {
         items: [
-          {name: 'My Inquiries', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},
-          {name: 'My Storefront', data: ['Add a New Buying Lead']},
-          {name: 'My Buying Tools', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},
-          {name: 'My Selling Tools', data: ['Add a New Buying Lead', 'Add a New Buying Lead']},
-          {name: 'My Products', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},
-          {name: 'My account', data: ['Add a New Buying Lead']}
+          {
+            name: 'My Products',
+            data: [
+              {title:'Product list',link:'/user/product'},
+              {title:'Add a new product',link:'/user/product/add'},
+            ]
+          },
+          {
+            name: 'My company',
+            data: [
+              {title:'Update company info',link:'/user/company'},
+            ]
+          },
+          // {name: 'My Inquiries', data: [{title:'Add a New Buying Lead',link:'/'}, 'Add a New Buying Lead', 'Add a New Buying Lead']},
+          // {name: 'My Storefront', data: ['Add a New Buying Lead']},
+          // {name: 'My Buying Tools', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},
+          // {name: 'My Selling Tools', data: ['Add a New Buying Lead', 'Add a New Buying Lead']},
+          // {name: 'My account', data: ['Add a New Buying Lead']}
         ],
       }
     }

@@ -1,16 +1,17 @@
 <template>
   <!-- App.vue -->
 
-  <v-app>
-    <Header/>
+  <v-app >
+      <Header />
 
-    <v-main style="margin-top: 140px">
-      <v-container fluid>
-        <Nuxt/>
-      </v-container>
-    </v-main>
+      <v-main style="margin-top: 140px">
+        <v-container fluid>
+          <Nuxt/>
+        </v-container>
+      </v-main>
 
-    <Footer/>
+      <Footer/>
+
   </v-app>
 
 </template>

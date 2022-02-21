@@ -1,116 +1,218 @@
 <template>
   <div class="annual-production">
-    <div class="annual-production-header">
+    <div class="annual-production-header my-8">
       <p>Annual Production Capacity</p>
     </div>
     <v-divider></v-divider>
-    <div class="annual-production-body">
-      <v-form>
-        <v-container>
-          <v-row>
-            <v-col
-              cols="12"
-            >
-              <v-text-field
-                v-model="productionName"
-                label="Production Name"
-                outlined
-              ></v-text-field>
-            </v-col>
+    <v-row v-for="(item, index) in annualProductions" :key="index" class="mb-5 rounded-lg grey lighten-2">
+      <v-col
+        class="btn-group"
+        cols="2"
+      >
+        <v-btn @click="deleteFactoryProduct(index)">
+          <v-icon>mdi-trash-can</v-icon>
+          delete
+        </v-btn>
+      </v-col>
+      <v-col
+        cols="12"
+      >
+        <div class="annual-production">
+          <div class="annual-production-body">
+            <v-form>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                  >
+                    <v-text-field
+                      v-model="item.product_name"
+                      label="Production Name"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
 
-            <v-col
-              cols="12"
-              md="6"
-            >
-              <v-text-field
-                v-model="unitsProduced"
-                label="Units Produced(Previous Year)"
-                outlined
-              ></v-text-field>
-            </v-col>
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="item.produced_val"
+                      label="Units Produced(Previous Year)"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
 
-            <v-col
-              cols="12"
-              md="6"
-            >
-              <v-select
-                :items="measurement"
-                label="Unit of measurement"
-                outlined
-              ></v-select>
-            </v-col>
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <v-select
+                      v-model="item.produced_unit"
+                      :items="measurementUnitArr"
+                      label="Unit of measurement"
+                      outlined
+                    ></v-select>
+                  </v-col>
 
-            <v-col
-              cols="12"
-              md="6"
-            >
-              <v-text-field
-                v-model="highestAnnual"
-                :rules="annualRules"
-                label="Highest Ever Annual Output"
-                outlined
-              ></v-text-field>
-            </v-col>
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="item.highest_annual_output_val"
+                      :rules="annualRules"
+                      label="Highest Ever Annual Output"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
 
-            <v-col
-              cols="12"
-              md="6"
-            >
-              <v-select
-                :items="measurement"
-                label="Unit of measurement"
-                outlined
-              ></v-select>
-            </v-col>
-            <v-col
-              cols="12"
-              sm="4"
-            >
-              <v-file-input
-                accept="image/*"
-                label="Image"
-                outlined
-              ></v-file-input>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-form>
-    </div>
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <v-select
+                      v-model="item.highest_annual_output_unit"
+                      :items="measurementUnitArr"
+                      label="Unit of measurement"
+                      outlined
+                    ></v-select>
+                  </v-col>
+
+                </v-row>
+              </v-container>
+            </v-form>
+          </div>
+        </div>
+      </v-col>
+
+    </v-row>
+    <v-row class="mb-5 rounded-lg grey lighten-2">
+      <v-col
+        class="btn-group"
+        cols="2"
+      >
+        <v-btn @click="addFactoryProduct" color="primary">
+          <v-icon>mdi-plus</v-icon>
+          Add
+        </v-btn>
+      </v-col>
+      <v-col
+        cols="12"
+      >
+        <div class="annual-production">
+          <div class="annual-production-body">
+            <v-form>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                  >
+                    <v-text-field
+                      v-model="annualProductionCapacity.product_name"
+                      label="Production Name"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="annualProductionCapacity.produced_val"
+                      label="Units Produced(Previous Year)"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <v-select
+                      v-model="annualProductionCapacity.produced_unit"
+                      :items="measurementUnitArr"
+                      label="Unit of measurement"
+                      outlined
+                    ></v-select>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="annualProductionCapacity.highest_annual_output_val"
+                      :rules="annualRules"
+                      label="Highest Ever Annual Output"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    md="6"
+                  >
+                    <v-select
+                      v-model="annualProductionCapacity.highest_annual_output_unit"
+                      :items="measurementUnitArr"
+                      label="Unit of measurement"
+                      outlined
+                    ></v-select>
+                  </v-col>
+
+                </v-row>
+              </v-container>
+            </v-form>
+          </div>
+        </div>
+      </v-col>
+
+    </v-row>
   </div>
 </template>
 
 <script>
   export default {
+    props: ['value', 'measurementUnitArr', 'annualRules'],
     data() {
       return {
-        productionName: '',
-        unitsProduced: '',
-        highestAnnual: null,
-        measurement: [
-          'Acre',
-          'Ampere',
-          'Bag',
-          'Barrel'
-        ],
-        annualRules: [
-          value => {
-            const pattern = /^[-,0-9]+$/;
-            return pattern.test(value) || 'Invalid value.'
-          },
-        ],
+        annualProductions: [],
+        annualProductionCapacity: {
+          product_name: '',
+          produced_unit: '',
+          produced_val: '',
+          highest_annual_output_val: '',
+          highest_annual_output_unit: ''
+        },
       }
     },
     watch: {
-      highestAnnual (val) {
-        this.highestAnnual = this.spilitter(val);
+      value: {
+        handler: function(val) {
+          // this.annualProductions = Array.isArray(val) ? val : [];
+          this.annualProductions = val;
+        },
+        immediate: true
       }
     },
     methods: {
-      spilitter(val) {
-        val = val.replace(/,/g, '');
-        const str = val.toString().split(".");
-        return str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      }
+      addFactoryProduct() {
+        this.annualProductions.push(Object.assign({}, this.annualProductionCapacity));
+        this.$emit('input', this.annualProductions);
+        this.annualProductionCapacity = {
+          product_name: '',
+          produced_unit: '',
+          produced_val: '',
+          highest_annual_output_val: '',
+          highest_annual_output_unit: ''
+        };
+      },
+      deleteFactoryProduct(index) {
+        this.annualProductions.splice(index, 1);
+        this.$emit('input', this.annualProductions);
+      },
     },
   }
 </script>

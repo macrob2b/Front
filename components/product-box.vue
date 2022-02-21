@@ -3,13 +3,16 @@
     <v-card
       class="product-box-detail pa-4 rounded-lg"
       elevation="2"
+
     >
-      <img class="product-img mb-3" src="~/assets/img/999327.png" alt="product-img"/>
-      <span class="product-name mb-3">{{product.name}}</span>
-      <span class="product-price mb-3">{{product.price}}$</span>
-      <v-btn to="/product-details"
+      <nuxt-link tag="img" class="product-img mb-3 pointer" :to="'/product-details/'+productData._id"
+                 :src="require('assets/img/999327.png')"  alt="product-img"/>
+      <nuxt-link :to="'/product-details/'+productData._id" class="product-name mb-3 font-weight-bold">{{productData.title}}</nuxt-link>
+      <span class="product-price mb-3">{{productData.price}}$</span>
+      <v-btn
         class="order-btn"
         elevation="1"
+        :to="'/product-details/'+productData._id"
         large
       >
         <span class="btn-text">order</span>
@@ -21,6 +24,9 @@
 
 <script>
   export default {
+    props:{
+      productData:[]
+    },
       data() {
         return {
           product: {

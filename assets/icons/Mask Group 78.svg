@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="74" height="74" viewBox="0 0 74 74">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Boundary" width="74" height="74" transform="translate(0.001)" fill="none" opacity="0"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_78" data-name="Mask Group 78" transform="translate(-0.001)" clip-path="url(#clip-path)">
+    <path id="Path_domain" data-name="Path / domain" d="M50.686,39.191H44.6v6.032h6.086m0-18.1H44.6v6.032h6.086m6.086,18.1H32.429V45.223h6.086V39.191H32.429V33.159h6.086V27.127H32.429V21.1H56.772M26.343,15.064H20.257V9.032h6.086m0,18.1H20.257V21.1h6.086m0,18.1H20.257V33.159h6.086m0,18.1H20.257V45.223h6.086M14.171,15.064H8.086V9.032h6.086m0,18.1H8.086V21.1h6.086m0,18.1H8.086V33.159h6.086m0,18.1H8.086V45.223h6.086M32.429,15.064V3H2V57.286H62.857V15.064Z" transform="translate(4.572 6.857)" fill="#00e676"/>
+  </g>
+</svg>

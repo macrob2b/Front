@@ -48,11 +48,24 @@ import LeafletMap     from "@/components/leafletMap/LeafletMap";
 export default {
   name      : "LocationField",
   components: {LocationSearch, LeafletMap},
-  props     : ['label'],
+  props     : {
+    'label':null,
+    'defaultLocation':null,
+  },
   data() {
     return {
       locationDialog: false,
       loading       : false,
+    }
+  },
+  watch:{
+    defaultLocation(val){
+      if (val!==null){
+        val['locationName']=val.road+','+val.country+','+val.state;
+        this.$refs.locationField.addAndSetItem(val);
+
+      }
+
     }
   },
   methods: {
@@ -61,6 +74,7 @@ export default {
       this.locationDialog = true;
     },
     selectLocation(location) {
+      console.log(location);
       this.$refs.locationField.toggleSearch(false);
       this.$refs.locationField.addAndSetItem(location);
       this.$emit('locationSelected', {

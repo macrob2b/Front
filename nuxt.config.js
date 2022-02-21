@@ -64,6 +64,7 @@ export default {
   },
 
   auth: {
+    cookie:false,
     strategies: {
       google: {
         clientId: config.googleClientId,
@@ -119,12 +120,18 @@ export default {
           property: 'token',
           global: true,
         },
+        refreshToken: {
+          property: 'refresh_token',
+          data: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 30
+        },
         user: {
           property: 'user',
           autoFetch: true
         },
         endpoints: {
           login: {url: '/api/login', method: 'post'},
+          refresh: {url: '/api/refresh_token', method: 'post'},
           user: {url: '/api/user'},
           logout: {url: '/api/logout',method: 'post'}
         }
@@ -147,6 +154,7 @@ export default {
   },
   proxy: {
     '/api/': {target: "https://api.macrob2b.com", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
+    // '/api/': {target: "http://localhost:8000", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
   },
 
 
@@ -199,5 +207,5 @@ export default {
   server: {
     host: '0.0.0.0',
     port: 3000
-  },
+  }
 }

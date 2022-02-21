@@ -1,45 +1,91 @@
 <template>
-  <div class="container px-10">
-    <v-row v-if="subCats && subCats.length">
-      <v-col
-        cols="3"
-        class="d-none d-sm-flex"
-        v-for="(cat,idx) in subCats"
-        :key="idx"
-      >
-        <div class="d-flex-column">
-          <h3 id="h1">{{ cat.title }}</h3>
-          <div v-for="(sub,idx2) in cat.grandchildren" :key="'A' + idx2">{{ sub.title }}</div>
-        </div>
-      </v-col>
-      <v-col
-        cols="12"
-        class="d-flex d-sm-none"
-        v-for="(cat,idx3) in subCats"
-        :key="'B'+ idx3"
-      >
-        <div class="d-flex-column">
-          <h3>{{ cat.title }}</h3>
-          <div v-for="(sub,idx4) in cat.grandchildren" :key="'C'+ idx4">{{ sub.title }}</div>
-        </div>
+  <v-container class="pa-0">
+    <v-row
+      v-if="subCats && subCats.length"
+    >
+      <v-col cols="12">
+        <v-card
+          v-scroll.self="onScroll"
+          class="overflow-y-auto px-12"
+          max-height="80vh"
+        >
+          <v-col cols="12">
+            <vue-masonry-wall
+              :items="subCats"
+              :options="{width: 400}"
+              class="d-none d-sm-flex"
+            >
+              <template v-slot:default="{item}">
+                <div class="d-flex-column">
+                <span class="subtitle-1 blue-grey--text pointer"
+                      @click="openLink(item._id)"
+                >{{ item.title }}</span>
+                  <ul style="list-style: none;padding-left: 8px">
+                    <li v-for="(sub,idx2) in item.grandchildren" :key="'A' + idx2"
+                        @click="openLink(sub._id)">
+                      <span class="subtitle-2 grey--text pointer">{{ sub.title }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </template>
+            </vue-masonry-wall>
+            <vue-masonry-wall
+              :items="subCats"
+              class="d-flex d-sm-none"
+            >
+              <template v-slot:default="{item}">
+                <div class="d-flex-column">
+                  <h3
+                    @click="openLink(item._id)"
+                  >{{ item.title }}</h3>
+                  <ul style="list-style: none;padding-left: 8px">
+                    <li v-for="(sub,idx4) in item.grandchildren" :key="'C'+ idx4"
+                        class="pointer"
+                        @click="openLink(sub._id)">
+                      <span class="subtitle-2 grey--text pointer">{{ sub.title }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </template>
+            </vue-masonry-wall>
+          </v-col>
+        </v-card>
       </v-col>
     </v-row>
-    <v-row v-else>{{loading}}</v-row>
-  </div>
+    <v-row v-else class="mt-4 mb-4">
+      <v-col cols="12" class="text-center">
+        <v-progress-circular
+          :size="30"
+          :width="3"
+          color="orange"
+          indeterminate
+        ></v-progress-circular>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
+import VueMasonryWall from "vue-masonry-wall";
+
 export default {
+  components: {VueMasonryWall},
+
   props: ['subCats'],
   data() {
-    return {
-      loading: 'Loading ...'
-    };
+    scrollInvoked: 0
   },
   mounted() {
 
-  },methods:{
-
+  }, methods: {
+    openLink(id) {
+      this.$router.push({
+        path: 'product-list', query: {cate_id: id}
+      })
+    },
+    onScroll() {
+      this.scrollInvoked++
+    }
   }
 };
 </script>
@@ -54,6 +100,10 @@ export default {
   left: 0;
   right: 0;
   background-color: #e1e2e3;
+}
+
+.pointer:hover {
+  color: orange !important;
 }
 
 #h1 {
