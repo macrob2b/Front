@@ -33,7 +33,7 @@
                          :to="button.to"
                          nuxt>
               <v-list-item-content>
-                <v-list-item-title v-text="button.title"></v-list-item-title>
+                <v-list-item-title class="font-weight-bold" v-text="button.title"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
 
@@ -48,7 +48,8 @@
                       color="primary"
                       shaped>
             <template v-slot:label="{item,active,selected}">
-              <NuxtLink class="font-weight-black" :to="'/product-list?cate_id=' + (item._id ? item._id : item.id)">
+              <NuxtLink :class="item.children ? 'font-weight-black' : ''"
+                        :to="'/product-list?cate_id=' + (item._id ? item._id : item.id)">
                 {{ item.title }}
               </NuxtLink>
             </template>
@@ -198,7 +199,7 @@
                     <!--         Sub Categories           -->
                     <v-col v-for="(subCategory,i) in subCategories" cols="4">
                       <nuxt-link :to="'/product-list?cate_id=' + subCategory.id"
-                                 class="font-weight-black text-h6">
+                                 class="font-weight-black text-h9">
                         {{ subCategory.title }}
                       </nuxt-link>
 
