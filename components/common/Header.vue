@@ -198,23 +198,29 @@
 
                     <!--         Sub Categories           -->
                     <v-col v-for="(subCategory,i) in subCategories" cols="4">
-                      <nuxt-link :to="'/product-list?cate_id=' + subCategory.id"
-                                 class="font-weight-black text-h9">
-                        {{ subCategory.title }}
-                      </nuxt-link>
 
-                      <!--          Child of SubCategory            -->
-                      <v-row v-if="subCategories.children">
-                        <v-col cols="12" v-for="(subChildCategory,i) in subCategories.children" :key="i">
-                          <nuxt-link :to="'/product-list?cate_id=' + subChildCategory.id"
-                                     class="text--darken-3">
-                            {{ subChildCategory.title }}
+                      <v-row>
+
+                        <v-col cols="12">
+                          <nuxt-link :to="'/product-list?cate_id=' + subCategory.id"
+                                     class="font-weight-black text-h9">
+                            {{ subCategory.title }}
                           </nuxt-link>
                         </v-col>
+
+                        <!--          Child of SubCategory            -->
+                        <v-col cols="12" v-if="subCategories.children">
+                          <v-col cols="12" v-for="(subChildCategory,i) in subCategories.children" :key="i">
+                            <nuxt-link :to="'/product-list?cate_id=' + subChildCategory.id"
+                                       class="text--darken-3">
+                              {{ subChildCategory.title }}
+                            </nuxt-link>
+                          </v-col>
+                        </v-col>
+
                       </v-row>
 
                     </v-col>
-
                   </v-row>
                 </v-col>
 
