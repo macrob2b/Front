@@ -138,9 +138,10 @@
                 </div>
               </v-col>
             </v-row> -->
-            <div class="btn-container">
+            <div >
               <v-btn
-                :disabled="isDisabled || isLoading"
+                class="primary"
+                :loading="submit_loading"
                 @click="saveFactory">
                 <span v-if="factoryInfo._id">Save</span>
                 <span v-else>Submit</span>
@@ -171,7 +172,7 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
+      submit_loading:false,
 
 
 
@@ -355,7 +356,7 @@ export default {
     },
     saveFactory() {
       let formData = new FormData()
-      this.isLoading = true;
+      this.submit_loading = true;
 
       let endPoint = '/api/submit_factory_info';
       for (let key in _.pick(this.factoryInfo, '_id', 'name', 'location', 'contact_num', 'area_size', 'production_staff_num', 'qc_staff_num', 'rd_staff_num', 'production_line_num', 'annual_output_val', 'annual_production_capacity', 'image')) {
@@ -377,7 +378,7 @@ export default {
       }
 
       this.$axios.post(endPoint, formData).then(response => {
-        this.isLoading = false;
+        this.submit_loading = false;
         if(typeof response.data === 'object') {
           for(let i in response.data) {
             let error = response.data[i][0];
@@ -386,12 +387,12 @@ export default {
           }
         } else {
             this.$emit('reloadFactories', (reloaded, parent) => {
-              this.isLoading = false;
+              this.submit_loading = false;
               this.$emit('input', false);
             });
         }
       }).catch(({response}) => {
-        this.isLoading = false;
+        this.submit_loading = false;
         if (response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
         } else if (response.status == 500 || response.status == 504) {

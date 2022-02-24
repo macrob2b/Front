@@ -1,5 +1,15 @@
 <template>
-  <v-row class="trade-info">
+  <v-row class="mt-12 mb-12" v-if="!loaded">
+    <v-col cols="12" class="text-center">
+      <v-progress-circular
+        :size="50"
+        :width="5"
+        color="orange"
+        indeterminate
+      ></v-progress-circular>
+    </v-col>
+  </v-row>
+  <v-row v-else class="trade-info">
     <v-col cols="12">
       <div class="trade-info-inner">
         <v-form>
@@ -13,6 +23,7 @@
                 <v-select
                   v-model="tradeInfo.export_percentage"
                   :items="ePercentage"
+                  :loading="ePercentage_loading"
                   item-text="title"
                   item-value="_id"
                   label="Export Percentage"
@@ -42,6 +53,7 @@
                 <v-select
                   v-model="tradeInfo.annual_export_value"
                   :items="annualExport"
+                  :loading="annualExport_loading"
                   item-text="title"
                   item-value="_id"
                   label="Annual Export Value (USD)"
@@ -102,6 +114,7 @@
                 <v-select
                   v-model="tradeInfo.export_market"
                   :items="continents"
+                  :loading="market_loading"
                   label="Export Market"
                   item-text="title"
                   item-value="title"
@@ -117,6 +130,7 @@
                 <v-select
                   v-model="tradeInfo.import_market"
                   :items="continents"
+                  :loading="market_loading"
                   label="Import Market"
                   item-text="title"
                   item-value="title"
@@ -130,7 +144,7 @@
               <v-col cols="12">
                 <div class="add-history">
                   <p>Add Company History</p>
-                  <v-radio-group v-model="radioGroup">
+                  <v-radio-group v-model="tradeInfo.has_history">
                     <v-radio
                       v-for="index in yesno"
                       :key="index"
@@ -139,7 +153,7 @@
                     ></v-radio>
                   </v-radio-group>
                 </div>
-                <div v-if="addHistory" class="company-history">
+                <div v-if="tradeInfo.has_history==='Yes'" class="company-history">
                   <div class="company-history-header">
                     <p>Company History Introduction</p>
                   </div>
@@ -185,43 +199,31 @@
                       <v-col
                         cols="2"
                       >
-                        <v-btn class="primary" @click="deleteHistory(index)">-</v-btn>
-                      </v-col>
-                    </v-row>
-
-                    <v-row>
-                      <v-col
-                        class="year-col"
-                        cols="6"
-                        md="2"
-                      >
-                        <v-text-field
-                          v-model="year"
-                          type="number"
-                          label="Year"
-                          :rules="yearFExportRule"
-                          outlined
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        class="description-col"
-                        cols="10"
-                        md="8"
-                      >
-                        <v-text-field
-                          v-model="description"
-                          label="Description"
-                          outlined
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="2"
-                      >
                         <v-btn
-                          class="primary" @click="addNewHistory">+
+                          fab
+                          dark
+                          color="red"
+                          small
+                          v-if="!(tradeInfo.history_by_year.length===1 && index===0)"
+
+                          @click="deleteHistory(index)">
+                          <v-icon dark>
+                            mdi-minus
+                          </v-icon>
+                        </v-btn>
+                        <v-btn
+                          small
+                          dark
+                          fab v-if="index===(tradeInfo.history_by_year.length-1)"
+                          color="green"
+                          @click="addNewHistory">
+                          <v-icon dark>
+                            mdi-plus
+                          </v-icon>
                         </v-btn>
                       </v-col>
                     </v-row>
+
                   </div>
                 </div>
               </v-col>
@@ -230,17 +232,14 @@
             <v-btn
               class="submit"
               color="primary"
+              :loading="update_loading"
               @click="submitTradeInfo"
 
             >
               Update
             </v-btn>
 
-            <v-btn
-              outlined
-            >
-              Cancel
-            </v-btn>
+
           </v-container>
         </v-form>
       </div>
@@ -254,9 +253,8 @@ export default {
   props: ['companyLoadedInfo'],
   data() {
     return {
-      loaded:false,
-      addHistory: false,
-      radioGroup: 'No',
+      loaded: false,
+      update_loading: false,
       portItems: [],
       more: 0,
       search: null,
@@ -271,6 +269,7 @@ export default {
         'Yes'
       ],
       ePercentage: [],
+      ePercentage_loading: false,
       yearFExport: '',
       yearFExportRule: [
         value => {
@@ -280,7 +279,9 @@ export default {
       ],
       annualExportSelected: '',
       annualExport: [],
+      annualExport_loading: false,
       continents: [],
+      market_loading:false,
       year: null,
       description: null,
       yearCompanyHistoryRule: [
@@ -299,8 +300,10 @@ export default {
         annual_import_value: '',
         export_market: [],
         import_market: [],
+        has_history: 'No',
         history_introduction: '',
         history_by_year: [
+          {year: '', describe: ''},
           {year: '', describe: ''},
           {year: '', describe: ''},
         ]
@@ -315,12 +318,10 @@ export default {
         }
       },
     },
-    radioGroup(val) {
-      if (val === 'Yes') {
-        this.addHistory = true;
-      } else if (val === 'No') {
-        this.addHistory = false;
-      }
+    'tradeInfo.has_history': {
+      handler: function (val) {
+        console.log(val);
+      },
     },
     tradeInfo: {
       handler: function (val, oldVal) {
@@ -346,19 +347,18 @@ export default {
 
   methods: {
     addNewHistory() {
-      this.tradeInfo.history_by_year.push({year: this.year, description: this.description});
-      this.year = '';
-      this.description = '';
-      console.log("tradeInfo: " + this.tradeInfo)
+      this.tradeInfo.history_by_year.push({year: '', describe: ''});
     },
     deleteHistory(index) {
       this.tradeInfo.history_by_year.splice(index, 1);
     },
     async getAnnualTradeValues() {
+      this.annualExport_loading=true;
       // Get get_annual_trade_values
       await this.$axios.$post('/api/get_annual_trade_values')
         .then(response => {
           this.annualExport = response;
+          this.annualExport_loading=false;
         }).catch(({response}) => {
           if (response.status == 401) {
             this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
@@ -369,13 +369,16 @@ export default {
           } else if (response.status == 404) {
             this.$toast.error(this.$t(`not found`));
           }
+
+          this.annualExport_loading=false;
         });
     },
     async getExportPercentageList() {
+      this.ePercentage_loading = true;
       await this.$axios.$post('/api/export_percentage_list')
         .then(response => {
           this.ePercentage = response;
-          console.log('ttyyyyyy', response.data)
+          this.ePercentage_loading = false;
         }).catch(({response}) => {
           if (response.status == 401) {
             this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
@@ -386,12 +389,15 @@ export default {
           } else if (response.status == 404) {
             this.$toast.error(this.$t(`not found`));
           }
+          this.ePercentage_loading = false;
         });
     },
     async getCountryList() {
+      this.market_loading=true;
       await this.$axios.$post('/api/search_country')
         .then(response => {
           this.continents = response;
+          this.market_loading=false;
         }).catch(({response}) => {
           if (response.status == 401) {
             this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
@@ -402,12 +408,16 @@ export default {
           } else if (response.status == 404) {
             this.$toast.error(this.$t(`not found`));
           }
+          this.market_loading=false;
         });
     },
 
     submitTradeInfo() {
+      this.update_loading = true;
       this.$axios.$post('/api/update_company_trade_info', this.tradeInfo)
         .then(response => {
+          this.update_loading = false;
+          window.scrollTo(0,0)
           if (response.length == 0)
             this.$toast.success("Update data successfully");
           else
@@ -422,18 +432,23 @@ export default {
         } else if (response.status == 404) {
           this.$toast.error(this.$t(`not found`));
         }
+
+        this.update_loading = false;
+        window.scrollTo(0,0);
       });
     },
     async setTradeData() {
-      this.tradeInfo.export_percentage=this.companyLoadedInfo.export_percentage;
-      this.tradeInfo.nearest_port=this.companyLoadedInfo.nearest_port;
-      this.tradeInfo.avg_lead_time=this.companyLoadedInfo.avg_lead_time;
-      this.tradeInfo.first_export_year=this.companyLoadedInfo.first_export_year;
-      this.tradeInfo.annual_export_value=this.companyLoadedInfo.annual_export_value;
-      this.tradeInfo.annual_import_value=this.companyLoadedInfo.annual_import_value;
-      this.tradeInfo.export_market=this.companyLoadedInfo.export_market;
-      this.tradeInfo.import_market=this.companyLoadedInfo.import_market;
-      this.tradeInfo.history_introduction=this.companyLoadedInfo.history_introduction;
+      this.tradeInfo.export_percentage = this.companyLoadedInfo.export_percentage;
+      this.tradeInfo.nearest_port = this.companyLoadedInfo.nearest_port;
+      this.tradeInfo.avg_lead_time = this.companyLoadedInfo.avg_lead_time;
+      this.tradeInfo.first_export_year = this.companyLoadedInfo.first_export_year;
+      this.tradeInfo.annual_export_value = this.companyLoadedInfo.annual_export_value;
+      this.tradeInfo.annual_import_value = this.companyLoadedInfo.annual_import_value;
+      this.tradeInfo.export_market = this.companyLoadedInfo.export_market;
+      this.tradeInfo.import_market = this.companyLoadedInfo.import_market;
+      this.tradeInfo.has_history = this.companyLoadedInfo.has_history;
+      this.tradeInfo.history_introduction = this.companyLoadedInfo.history_introduction;
+      this.tradeInfo.history_by_year = this.companyLoadedInfo.history_by_year;
     },
 
   },

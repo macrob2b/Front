@@ -91,20 +91,20 @@
               </div>
             </v-col>
           </v-row>
-          <v-divider></v-divider><v-divider></v-divider>
-          <div class="end-footer pa-6 mt-7">
-            <div class="d-flex justify-start">
-              <span class="px-5"> Deutsch </span>
-              <v-divider vertical />
-              <span class="px-5"> Deutsch </span>
-              <v-divider vertical />
-              <span class="px-5"> Deutsch </span>
-              <v-divider vertical />
-              <span class="px-5"> Deutsch </span>
-              <v-divider vertical />
-              <span class="px-5"> Deutsch </span>
-            </div>
-          </div>
+<!--          <v-divider></v-divider><v-divider></v-divider>-->
+<!--          <div class="end-footer pa-6 mt-7">-->
+<!--            <div class="d-flex justify-start">-->
+<!--              <span class="px-5"> Deutsch </span>-->
+<!--              <v-divider vertical />-->
+<!--              <span class="px-5"> Deutsch </span>-->
+<!--              <v-divider vertical />-->
+<!--              <span class="px-5"> Deutsch </span>-->
+<!--              <v-divider vertical />-->
+<!--              <span class="px-5"> Deutsch </span>-->
+<!--              <v-divider vertical />-->
+<!--              <span class="px-5"> Deutsch </span>-->
+<!--            </div>-->
+<!--          </div>-->
         </ContainerCard>
       </v-col>
     </v-row>
@@ -240,7 +240,7 @@ export default {
           title: 'About us',
           links: [
                {label:'About Macrob2b.com',link:'/about_website'},
-               {label:'About Group',link:'/about_group'},
+               {label:'Contact us',link:'/contact-us'},
             ],
         },{
           title: 'Source',

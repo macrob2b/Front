@@ -908,21 +908,6 @@ body {
       }
     }
 
-    .v-stepper__items {
-      .v-stepper__content {
-        .v-stepper__wrapper {
-          .submit {
-            background-color: $primary_color;
-            color: $white;
-            margin-right: 1rem;
-          }
-
-          .v-btn {
-            width: 10rem;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -1865,55 +1850,105 @@ body {
 
 
 
-
-
-
 /**********************
 29. Contact us
 ***********************/
 .contact-us-holder {
   .mapbox {
-    width: 100vw;
-    height: 45vh;
+    width: 100%;
+    height: 60vh;
     position: relative;
+    z-index: 0;
 
     .office-address {
       position: absolute;
       bottom: 5%;
-      left: 20%;
+      left: 10%;
       z-index: 9999;
       background-color: $white;
-      width: 310px;
+      width: 385px;
+    }
+
+    .show-desktop {
+      display: block;
+    }
+
+    .show-mobile {
+      display: none;
     }
   }
+
   .contact-form-holder {
     background-color: $box_background_color;
     padding: 0.5rem .5rem 1rem .5rem;
     margin: 0.5rem 0;
     border-radius: 8px;
+
+    .v-divider {
+      border-color: #FFF !important;
+    }
   }
 }
-
 
 /**********************
 30. 404 Page
 ***********************/
 .not-found-page {
+  position: relative;
   //background: url("../img/404.jpeg") no-repeat center center;
   background-size: cover;
-  width: 100vw;
+  width: 100%;
   height: 70vh;
-  position: relative;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
   border-radius: 10px;
-  .back-to-home{
+
+  .set404 {
     position: absolute;
-    bottom: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000000;
+    width: 100%;
+    text-align: center;
+
+    span {
+      font-size: 14vw;
+      line-height: 0;
+      margin: 0 1vw;
+    }
+
+    .img-404 {
+      width: 11vw;
+      height: 11vw;
+      border-radius: 100%;
+    }
+  }
+
+  .description {
+    position: absolute;
+    top: 45vh;
+    color: #000000;
+    width: 100%;
+    text-align: center;
+
+    h2 {
+      font-size: 2vw;
+    }
+
+    h3 {
+      font-size: 1vw;
+    }
+  }
+
+  .back-to-home {
+    position: absolute;
+    bottom: 8%;
     left: 50%;
     transform: translateX(-50%);
-    color: #FFFFFF;
+    color: #000000;
     z-index: 9999;
   }
 }
+
+
+
+
+

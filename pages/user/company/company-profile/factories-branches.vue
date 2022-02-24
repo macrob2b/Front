@@ -7,11 +7,16 @@
       <div>
         <div class="add-factory">
           <div class="add-information-body">
-            <v-btn v-if="!showFactoryForm" class="primary add-btn" @click="showFactoryForm = true">+ Add Factory Information</v-btn>
+            <v-btn v-if="!showFactoryForm" class="primary add-btn" @click="showFactoryForm = true">+ Add Factory
+              Information
+            </v-btn>
           </div>
 
-          <add-factory v-if="showFactoryForm" v-model="showFactoryForm" :defaultFactoryInfo="defaultFactoryInfo" @addFactoryInfo="addFactory" @reloadFactories="reloadFactories"></add-factory>
-          <Factories v-model="factories" @edit="editFactory" @delete="deleteFactory"></Factories>
+          <div ref="add_factory">
+            <add-factory v-if="showFactoryForm" v-model="showFactoryForm" :defaultFactoryInfo="defaultFactoryInfo"
+                         @addFactoryInfo="addFactory" ></add-factory>
+            <Factories  @edit="editFactory" @delete="deleteFactory"></Factories>
+          </div>
         </div>
       </div>
     </div>
@@ -56,7 +61,6 @@ export default {
   data() {
     return {
       showFactoryForm: false,
-      factories: [],
       factoryInfo: null
     }
   },
@@ -64,11 +68,10 @@ export default {
     // this.addFactory();
   },
   mounted() {
-      this.reloadFactories();
   },
   watch: {
     showFactoryForm(val) {
-      if(!val) {
+      if (!val) {
         this.factoryInfo = null;
       }
     },
@@ -77,6 +80,9 @@ export default {
     editFactory(factoryInfo) {
       this.showFactoryForm = true;
       this.factoryInfo = factoryInfo;
+      window.scrollTo({top:this.$refs.add_factory.getBoundingClientRect().top,behavior:"smooth"});
+
+
     },
     addFactory(factoryInfo) {
       this.showFactoryForm = false;
@@ -85,20 +91,6 @@ export default {
     deleteFactory(index) {
       this.factories.splice(index, 1);
     },
-    reloadFactories(func) {
-      this.$axios.$post('/api/factory_list',
-        {company_id: this.$auth.user.company._id})
-        .then(response => {
-        this.factories = response;
-      }).catch(({response}) => {
-          func(false, this);
-        if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 500 || response.status == 504) {
-          this.$toast.error(this.$t(`REQUEST_FAILED`));
-        }
-      });
-    }
   }
 }
 </script>

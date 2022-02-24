@@ -82,6 +82,7 @@
         </td>
         <td>
           <v-btn icon
+                 v-if="category.children && category.children.length>0"
                  :to="'/admin/category/'+category._id"
           >
             <v-icon small
@@ -89,15 +90,15 @@
                     class="mr-2">mdi-eye
             </v-icon>
           </v-btn>
-          <!--          <v-btn icon-->
-          <!--                 v-else-->
-          <!--                 :to="'/admin/category/'+category._id"-->
-          <!--          >-->
-          <!--            <v-icon small-->
-          <!--                    color="red"-->
-          <!--                    class="mr-2">mdi-eye-off-->
-          <!--            </v-icon>-->
-          <!--          </v-btn>-->
+          <v-btn icon
+                 v-else
+                 :to="'/admin/category/'+category._id"
+          >
+            <v-icon small
+                    color="red"
+                    class="mr-2">mdi-eye-off
+            </v-icon>
+          </v-btn>
           <v-btn icon
                  :to="'/admin/category/edit/'+category._id"
           >
@@ -257,16 +258,17 @@ export default {
       });
     },
     deleteCate() {
-      this.delete_loading=true;
+      this.delete_loading = true;
       const response = this.$axios.$delete('/api/delete_category',
         {
           params: {
-            id: this.delete_item
+            id: this.delete_item,
+            parent_id: this.$route.params.id
           }
         }).then(response => {
         this.delete_item = null;
-        this.deleteConfirmDialog=false;
-        this.delete_loading=false;
+        this.deleteConfirmDialog = false;
+        this.delete_loading = false;
         this.$toast.success('Deleted successfully');
         this.page = 1;
         this.categories = [];
@@ -274,8 +276,9 @@ export default {
         // this.$router.go(-1);
       }).catch(e => {
         this.delete_item = null;
-        this.delete_loading=false;
-        this.$toast.error('Error on deleting');
+        this.delete_loading = false;
+        this.deleteConfirmDialog = false;
+        this.$toast.error('Error on deleting, Maybe has children (a child)');
       });
     },
     deleteCateConfirm(id) {

@@ -13,6 +13,11 @@
           <v-icon>mdi-trash-can</v-icon>
           delete
         </v-btn>
+
+        <v-btn @click="addFactoryProduct" color="primary">
+          <v-icon>mdi-plus</v-icon>
+          Add
+        </v-btn>
       </v-col>
       <v-col
         cols="12"
@@ -73,89 +78,6 @@
                   >
                     <v-select
                       v-model="item.highest_annual_output_unit"
-                      :items="measurementUnitArr"
-                      label="Unit of measurement"
-                      outlined
-                    ></v-select>
-                  </v-col>
-
-                </v-row>
-              </v-container>
-            </v-form>
-          </div>
-        </div>
-      </v-col>
-
-    </v-row>
-    <v-row class="mb-5 rounded-lg grey lighten-2">
-      <v-col
-        class="btn-group"
-        cols="2"
-      >
-        <v-btn @click="addFactoryProduct" color="primary">
-          <v-icon>mdi-plus</v-icon>
-          Add
-        </v-btn>
-      </v-col>
-      <v-col
-        cols="12"
-      >
-        <div class="annual-production">
-          <div class="annual-production-body">
-            <v-form>
-              <v-container>
-                <v-row>
-                  <v-col
-                    cols="12"
-                  >
-                    <v-text-field
-                      v-model="annualProductionCapacity.product_name"
-                      label="Production Name"
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col
-                    cols="12"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="annualProductionCapacity.produced_val"
-                      label="Units Produced(Previous Year)"
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col
-                    cols="12"
-                    md="6"
-                  >
-                    <v-select
-                      v-model="annualProductionCapacity.produced_unit"
-                      :items="measurementUnitArr"
-                      label="Unit of measurement"
-                      outlined
-                    ></v-select>
-                  </v-col>
-
-                  <v-col
-                    cols="12"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="annualProductionCapacity.highest_annual_output_val"
-                      :rules="annualRules"
-                      label="Highest Ever Annual Output"
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-
-                  <v-col
-                    cols="12"
-                    md="6"
-                  >
-                    <v-select
-                      v-model="annualProductionCapacity.highest_annual_output_unit"
                       :items="measurementUnitArr"
                       label="Unit of measurement"
                       outlined

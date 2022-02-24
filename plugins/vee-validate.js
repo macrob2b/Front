@@ -1,7 +1,7 @@
 import {extend, localize}                from "vee-validate";
 import {required, email, confirmed, min} from "vee-validate/dist/rules";
 
-let phoneRegex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
+let phoneRegex = /^\+(?:[0-9\-] ?){6,14}[0-9]$/;
 const phone    = {
   validate(value, args) {
     return phoneRegex.test(value);

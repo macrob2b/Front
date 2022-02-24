@@ -4,7 +4,7 @@
   <v-app >
       <Header />
 
-      <v-main style="margin-top: 140px">
+      <v-main style="margin-top:140px;">
         <v-container fluid>
           <Nuxt/>
         </v-container>
