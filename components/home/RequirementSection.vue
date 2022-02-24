@@ -104,7 +104,7 @@ export default {
   position: absolute;
   right: 60px;
   bottom: 50px;
-  z-index: 30;
+  z-index: 1;
 }
 .section-one {
   background-color: #f8f8f8;

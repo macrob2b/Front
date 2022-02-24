@@ -42,7 +42,7 @@ export default {
     };
   },
   mounted() {
-    setTimeout(() => this.checkNavBtnStatus(), 1000);
+    // setTimeout(() => this.checkNavBtnStatus(), 1000);
   },
   methods: {
     //   checkNavBtnStatus() {

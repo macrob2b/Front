@@ -59,20 +59,20 @@ export default {
       this.previousButton = document.querySelector(
         `.slider${this.$props.id} div.v-slide-group__prev`
       );
-      console.log(
-        this.previousButton,
-        "slider" + this.$props.id + " div.v-slide-group__prev"
-      );
+      // console.log(
+      //   this.previousButton,
+      //   "slider" + this.$props.id + " div.v-slide-group__prev"
+      // );
       this.nextButton = document.querySelector(
         `.slider${this.$props.id} div.v-slide-group__next`
       );
-      console.log(this.nextButton);
+      // console.log(this.nextButton);
       this.isPreviousBtnDisable =
         this.previousButton?.className.includes("disabled");
       this.isNextBtnDisable = this.nextButton?.className.includes("disabled");
     },
     clickLeft() {
-      console.log();
+      // console.log();
       this.previousButton.click();
       this.checkNavBtnStatus();
     },

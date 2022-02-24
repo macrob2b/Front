@@ -1,261 +1,332 @@
 <template>
-  <!-- <Tutorial/> -->
-  <div  class="header">
-    <div  class="d-none d-sm-flex pb-2 pt-0 w-100 pa-0 ma-0 "  >
-      <v-card class="card pa-2 ma-0" style="width: 100%">
-        <v-row class="justify-between" >
-          <v-col cols="4" class="pt-0 d-flex ">
-            <div>
-              <v-tabs
+  <div>
 
-                fluid
-                fixed-tabs
-                background-color="transparent"
-                slider-color="white"
-              >
-                <v-tab
-                  v-for="(item,index) in main_items"
-                  :to="item.to">{{item.title}}</v-tab>
+    <!--  Navigation Drawer   -->
+    <v-navigation-drawer v-model="drawer"
+                         fixed
+                         temporary>
 
-              </v-tabs>
-            </div>
-          </v-col>
-          <v-col cols="4" class="d-flex justify-center">
-            <nuxt-link
-              tag="img"
-              class="pointer"
-              :src="require('../../assets/img/color-logo.png')" to="/" />
-          </v-col>
-          <v-col cols="4" class="pr-0">
-            <div class="d-flex justify-end">
-              <!-- <div class="pa-1 px-2 mx-3"> -->
-              <div class="pa-1 px-2 mx-1">
-                <v-btn
-                  color="#005270"
-                  min-width="0"
-                  width="40"
-                  @click="activeSearch"
-                >
-                  <v-icon color="white"> mdi-magnify </v-icon>
-                </v-btn>
-              </div>
-              <div class="pa-1 px-2 mx-1">
-                <v-btn color="#005270" min-width="0" width="40" to="/user-dashboard">
-                  <v-icon color="white"> mdi-account </v-icon>
-                </v-btn>
-              </div>
+      <v-row class="mt-1">
 
-              <div class="pa-1 px-2 mx-1">
-                <v-btn to="/company-list" color="#005270" min-width="0" width="40">
-                  <v-icon color="white"> mdi-earth </v-icon>
-                </v-btn>
-              </div>
-              <div class="pa-1 px-2 mx-1 mr-3">
-                <v-btn v-if="!this.$auth.loggedIn" to="/login" min-width="0" width="100" color="#fb641e">
-                  <span  id="span1"> {{signin_btn}} </span>
-                </v-btn>
-                <v-btn v-else to="/user-dashboard" min-width="0" width="100" color="#fb641e">
-                  <span  id="span1"> Hi, {{$auth.user.first_name}} </span>
-                </v-btn>
-              </div>
-            </div>
-          </v-col>
-        </v-row>
-        <HeaderBottom />
-      </v-card>
-    </div>
+        <!--    Navigation Icon    -->
+        <v-col cols="12">
+          <nuxt-link to="/">
+            <v-img
+              width="180"
+              height="52"
+              :src="require('@/assets/img/color-logo.png')">
+            </v-img>
+          </nuxt-link>
+        </v-col>
 
-    <!-- responsive -->
-    <div class="d-flex d-sm-none" style="width: 100%">
-      <div style="width: 100%">
-        <v-card class="card" style="width: 100%">
-          <div class="d-flex justify-space-between px-3" style="width: 100%">
-            <div class="d-flex justify-start py-3">
-              <div class="mx-1">
-                <v-btn color="#005270" min-width="0" width="20" @click.stop="drawer= !drawer">
-                  <v-icon color="white" small> mdi-menu </v-icon>
-                </v-btn>
-              </div>
-              <div class="mx-1">
-                <v-btn
-                  color="#005270"
-                  min-width="0"
-                  width="20"
-                  @click="activeSearch"
-                >
-                  <v-icon color="white" small> mdi-magnify </v-icon>
-                </v-btn>
-              </div>
-            </div>
-            <div>
-              <nuxt-link
-                tag="img"
+        <v-divider></v-divider>
 
-                :src="require('../../assets/img/color-logo.png')"  to="/" class="py-2 pointer" />
-            </div>
+        <!--   Navigation List     -->
+        <v-col cols="12">
 
-            <div class="d-flex justify-start py-3">
-              <div class="mx-1">
-                <v-btn color="#005270" min-width="0" width="20" to="/user-dashboard">
-                  <v-icon color="white" small> mdi-account </v-icon>
-                </v-btn>
-              </div>
-              <div class="mx-1">
-                <v-btn to="/company-list" color="#005270" min-width="0" width="20">
-                  <v-icon color="white" small> mdi-earth </v-icon>
-                </v-btn>
-              </div>
-            </div>
+          <!--     Menu Buttons     -->
+          <v-list dense>
+
+            <!--      Menu Buttons      -->
+            <v-list-item v-for="(button,i) in menuButtons"
+                         :key="i"
+                         :to="button.to"
+                         nuxt>
+              <v-list-item-content>
+                <v-list-item-title v-text="button.title"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+          </v-list>
+
+          <v-divider class="mb-3"></v-divider>
+
+          <!--   Categories    -->
+          <span class="text--black font-weight-bold mx-3 text--accent-4 teal--text">Categories</span>
+          <v-treeview :items="categories"
+                      class="overflow-y-auto"
+                      color="primary"
+                      shaped>
+            <template v-slot:label="{item,active,selected}">
+              <NuxtLink class="font-weight-black" :to="'/product-list?cate_id=' + (item._id ? item._id : item.id)">
+                {{ item.title }}
+              </NuxtLink>
+            </template>
+          </v-treeview>
+
+        </v-col>
+
+      </v-row>
+
+    </v-navigation-drawer>
+
+    <!--  ToolBar  -->
+    <v-app-bar
+      color="primary"
+      elevation="4"
+      :prominent="$vuetify.breakpoint.mdAndUp"
+      :height="$vuetify.breakpoint.smAndDown ? '70' : '130'"
+      fixed>
+
+      <v-row>
+
+        <!--  Toolbar Items   -->
+        <v-col cols="12" class="d-flex justify-space-between mx-0 mb-0"
+               :class="$vuetify.breakpoint.smAndDown ? 'mt-1 mb-2' : 'mt-1'">
+
+          <!--  Menu Buttons (Left Side)  -->
+          <div class="d-lg-inline-block">
+
+            <!--    Navigation Trigger      -->
+            <v-btn v-if="$vuetify.breakpoint.smAndDown"
+                   @click="drawer = !drawer"
+                   class="menuIcon white--text mt-2"
+                   color="accent">
+              <v-icon>mdi-menu</v-icon>
+            </v-btn>
+
+            <!--  Menu Buttons  -->
+            <v-btn v-if="$vuetify.breakpoint.mdAndUp"
+                   v-for="(button , i) in menuButtons"
+                   :key="i"
+                   :to="button.to"
+                   class="white--text px-2 mx-1 mt-2"
+                   text
+                   nuxt>
+              {{ button.title }}
+            </v-btn>
+
           </div>
 
-          <HeaderBottom />
-        </v-card>
-      </div>
-    </div>
+          <!--    Main Icon     -->
+          <nuxt-link to="/">
+            <v-img
+              width="180"
+              height="52"
+              :src="require('@/static/Designs/white-logo.png')">
+            </v-img>
+          </nuxt-link>
 
-    <v-navigation-drawer
-      v-model="drawer"
-      fixed
+          <!--    Menu Buttons (Right Side)    -->
+          <div>
+            <v-btn class="menuIcon text--white mx-sm-2 mx-md-1 mt-2"
+                   color="accent"
+                   @click="toggleSearch">
+              <v-icon>mdi-magnify</v-icon>
+            </v-btn>
+            <v-btn v-if="$vuetify.breakpoint.smAndDown"
+                   class="menuIcon text--white mx-sm-2 mx-md-1 mt-2"
+                   color="accent"
+                   to="/user-dashboard"
+                   width="20px"
+                   nuxt>
+              <v-icon>mdi-account</v-icon>
+            </v-btn>
+            <v-btn v-if="$vuetify.breakpoint.mdAndUp"
+                   to="/user-dashboard"
+                   class="text--white mx-sm-2 mx-md-1 mt-2"
+                   color="accent"
+                   nuxt>
+              {{ this.$auth.loggedIn ? 'Hi ' + this.$auth.user.first_name : $t(`SIGN_IN`) }}
+            </v-btn>
+          </div>
 
-    >
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="text-h6 text-center">
-            <nuxt-link tag="img" class="mr-3 pointer" :src="require('../../assets/img/color-logo.png')"  to="/" nuxt height="40px">
-            </nuxt-link>
-          </v-list-item-title>
+        </v-col>
 
-        </v-list-item-content>
-      </v-list-item>
+        <!--  Toolbar Menu MD   -->
+        <v-col class="pt-5" v-if="$vuetify.breakpoint.mdAndUp" cols="12">
+          <!--     Category menu     -->
+          <v-menu
+            :nudge-width="selectedCategory ? $vuetify.breakpoint.width - 350 : ($vuetify.breakpoint.width - 700) / 12"
+            rounded="0"
+            open-on-hover
+            offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                class="white--text"
+                color="secondary"
+                v-bind="attrs"
+                v-on="on"
+                tile
+                text>
+                <v-icon>mdi-format-list-checkbox</v-icon>
+                {{ $t(`CATEGORIES`) }}
+              </v-btn>
+            </template>
 
-      <v-divider></v-divider>
+            <v-card tile>
+              <v-row class="ma-0 pa-0">
 
-      <v-list >
-        <v-list-item
-          v-for="(item, i) in main_items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title"/>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <SearchModal v-on:toggle="clicked" v-show="searchActive" />
+                <!--       Category (Parent)         -->
+                <v-col :cols="selectedCategory ? 2 : 12" class="categoryList ma-0 pa-0">
+                  <v-list-item-group
+                    v-model="selectedCategory"
+                    color="primary">
+
+                    <!--          Category List          -->
+                    <v-list-item
+                      v-for="(category, i) in categories"
+                      :key="i"
+                      :to="'/product-list?cate_id=' + category._id"
+                      @mouseover="setSubCategory(i)"
+                      dense
+                      nuxt>
+                      <v-list-item-content>
+                        <v-list-item-title :color="selectedCategory == category._id ? 'accent' : ''"
+                                           v-text="category.title">
+                        </v-list-item-title>
+                      </v-list-item-content>
+                      <v-list-item-icon v-if="category.children">
+                        <v-icon>mdi-menu-right</v-icon>
+                      </v-list-item-icon>
+                    </v-list-item>
+
+                    <!--         All Categories Item           -->
+                    <v-list-item @click="clearSubCategory" to="/category-list" nuxt>
+                      <v-list-item-content>
+                        <v-list-item-title v-text="'All Categories'"></v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+
+                  </v-list-item-group>
+                </v-col>
+
+                <!--       Sub Category         -->
+                <v-col :cols="10" class="ma-0 pa-3" v-if="selectedCategory">
+                  <v-row>
+
+                    <!--         Sub Categories           -->
+                    <v-col v-for="(subCategory,i) in subCategories" cols="4">
+                      <nuxt-link :to="'/product-list?cate_id=' + subCategory.id"
+                                 class="font-weight-black text-h6">
+                        {{ subCategory.title }}
+                      </nuxt-link>
+
+                      <!--          Child of SubCategory            -->
+                      <v-row v-if="subCategories.children">
+                        <v-col cols="12" v-for="(subChildCategory,i) in subCategories.children" :key="i">
+                          <nuxt-link :to="'/product-list?cate_id=' + subChildCategory.id"
+                                     class="text--darken-3">
+                            {{ subChildCategory.title }}
+                          </nuxt-link>
+                        </v-col>
+                      </v-row>
+
+                    </v-col>
+
+                  </v-row>
+                </v-col>
+
+              </v-row>
+            </v-card>
+          </v-menu>
+
+          <v-btn color="teal accent-4" tile text>Deals</v-btn>
+          <v-btn color="white" tile text>Buying Leads</v-btn>
+          <v-btn color="white" tile text>Selling Leads</v-btn>
+          <v-btn color="white" tile text>Services</v-btn>
+          <v-btn color="white" tile text>Help</v-btn>
+
+        </v-col>
+
+      </v-row>
+
+
+    </v-app-bar>
+
+    <!--   Search Overlay   -->
+    <v-overlay :value="searchActive"
+               z-index="2"
+               opacity="0.85">
+      <v-row :class="searchItems.length > 0 ? '' : 'mb-16'"
+             style="width: 75vw">
+        <v-col cols="12">
+
+          <!--    Search Field      -->
+          <v-text-field class="black--text"
+                        label="Search..."
+                        prepend-inner-icon="mdi-magnify"
+                        full-width>
+          </v-text-field>
+
+          <!--     List Search     -->
+          <v-list color="white" v-if="searchItems.length > 0">
+            <v-list-item v-for="i in 5">
+              <v-list-item-title class="black--text">Loaded item {{ i }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+
+        </v-col>
+      </v-row>
+
+    </v-overlay>
+
   </div>
 </template>
 
 <script>
-import HeaderBottom from "./HeaderBottom.vue";
-import SearchModal from "./SearchModal.vue";
 export default {
   data() {
     return {
-      drawer:false,
-      searchActive: false,
-      signin_btn: 'Sign In',
-      main_items: [
+      drawer          : false,
+      categoriesMenu  : false,
+      categories      : [],
+      selectedCategory: '',
+      subCategories   : [],
+      menuButtons     : [
         {
-          title: 'Buy Now',
-          to: '/product-list'
+          title: this.$t(`BUY_NOW`),
+          to   : '/product-list'
         },
         {
-          title: 'Sell Now ',
-          to: '/user/product/add'
+          title: this.$t(`SELL_NOW`),
+          to   : '/selling-leads'
         },
-        // {
-        //   title: 'Community',
-        //   to: '/community'
-        // },
-        // {
-        //   title: 'Help',
-        //   to: '/help'
-        // }
+        {
+          title: this.$t(`COMPANY_LIST`),
+          to   : '/company-list'
+        }
       ],
-
+      searchActive    : false,
+      searchItems     : [1]
     };
   },
   mounted() {
-
-  },
-  options: {
-    customProperties: true,
-  },
-  components: {
-    HeaderBottom,
-    SearchModal,
+    this.loadCategories();
   },
   methods: {
-    clicked: function () {
-      if (this.searchActive) {
-        this.searchActive = false;
-      }
+    async loadCategories() {
+      await this.$axios.$post('/api/category_list',
+        {
+          "without_child": true,
+        }
+      ).then(response => {
+        this.categories = response;
+        this.categories.concat(response);
+      })
+        .catch(e => {
+          console.log('error in load categories');
+        })
     },
-
-    activeSearch: function () {
+    clearSubCategory() {
+      this.selectedCategory = '';
+      this.subCategories    = []
+    },
+    setSubCategory(i) {
+      this.selectedCategory = this.categories[i]._id;
+      this.subCategories    = this.categories[i].children;
+    },
+    toggleSearch() {
       this.searchActive = !this.searchActive;
-    },
+    }
   },
 };
 </script>
 
 <style scoped>
-.header {
-  position: fixed;
-  right: 0;
-  left: 0;
-  top: 0;
-  max-width: 100%;
-  z-index: 100;
-}
-@media screen and (max-width: 600px) and (min-width: 320px) {
-  .card {
-    border-radius: 0 !important;
-  }
-  .header {
-    top: 0px;
-  }
-}
-@media screen and (min-width: 601px) {
-  .card {
-    border-radius: 10px !important;
-  }
-}
-.card {
-  /* border-radius: 10px !important; */
-  background-color: var(--v-primary-base) !important;
-}
-.v-tab {
-  width: fit-content!important;
-  color: white !important;
-  padding-top: 10px;
-}
-.theme--light.v-tabs .v-tabs-bar {
-  background-color: transparent !important;
-}
-.v-tabs >>> .v-tabs-slider-wrapper {
-  top: 0 !important;
-  height: 5px !important;
-  border-radius: 20px !important;
-  background-color: white !important;
-}
-.vbtn-color {
-  background-color: #005270;
-  color: white;
-}
-.vbtn-sign-in {
-  background-color: #fb641e;
-}
-.vbtn-round-shadow {
-  border-radius: 5px;
-  box-shadow: black;
-}
-#span1 {
-  font-size: 12px;
-  color: white;
-  font-weight: 350;
+.menuIcon {
+  width: 40px !important;
+  min-width: 40px !important;
+  height: 36px !important;
 }
 </style>

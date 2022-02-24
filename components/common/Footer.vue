@@ -6,12 +6,15 @@
           <v-row>
             <v-col cols="3">
               <div class="py-10">
-                <nuxt-link
-                  tag="img"
-                  :src="require('../../assets/img/color-logo.png')" to="/" class="pointer mb-10" />
+                <nuxt-link to="/">
+                  <v-img
+                    width="180"
+                    height="52"
+                    :src="require('@/assets/img/color-logo.png')">
+                  </v-img>
+                </nuxt-link>
 
-                <div >
-                  <h3  class="mb-2" id="h3">{{brand}}</h3>
+                <div>
                   <div class="my-2" id="div1" >
                     <div class="pt-2 pb-3">
                       <v-progress-linear
