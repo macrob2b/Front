@@ -48,16 +48,16 @@
           </td>
           <td>{{ item.production_staff_num }}</td>
           <td>
-            <v-btn
-              icon
-              @click="editItem(item, i)"
-            >
-              <v-icon
-                small
-              >
-                mdi-pencil
-              </v-icon>
-            </v-btn>
+<!--            <v-btn-->
+<!--              icon-->
+<!--              @click="editItem(item, i)"-->
+<!--            >-->
+<!--              <v-icon-->
+<!--                small-->
+<!--              >-->
+<!--                mdi-pencil-->
+<!--              </v-icon>-->
+<!--            </v-btn>-->
             <v-btn icon
                    color="error"
                    @click.stop="openDeleteConfirmDialog(item, i)"
@@ -72,7 +72,6 @@
         </tr>
         </tbody>
       </template>
-      /
     </v-simple-table>
 
 
@@ -116,6 +115,7 @@
 <script>
 export default {
   /* eslint-disable */
+  props:['submit_status'],
   data() {
     return {
       factories: [],
@@ -130,7 +130,15 @@ export default {
   mounted() {
     this.getFactories();
   },
-  watch: {},
+  watch: {
+    submit_status:{
+      immediate: true,
+        handler (val, oldVal) {
+          if (val===true)
+            this.getFactories();
+      }
+    }
+  },
   methods: {
     editItem(item, i) {
       this.$emit('edit', item, i);

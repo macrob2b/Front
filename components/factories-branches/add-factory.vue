@@ -1,192 +1,280 @@
 <template>
-    <div class="add-factory-inner">
-      <div class="add-factory">
-        <v-form>
-          <v-container>
-            <v-row>
+  <div class="add-factory-inner">
+    <div class="add-factory">
+      <v-form>
+        <v-container>
+          <v-row>
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                v-model="factoryInfo.name"
+                label="Factory Name"
+                outlined
+                required
+              ></v-text-field>
+            </v-col>
+
+
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <phone-number-input @numberEntered="phoneNumberEntered" label="Contact Number"
+                                  :phone="factoryInfo.contact_num"></phone-number-input>
+            </v-col>
+
+
+            <v-col
+              class="d-flex"
+              cols="12"
+              sm="4"
+            >
+              <v-select
+                v-model="factoryInfo.area_size"
+                :items="factorySizeArr"
+                item-text="title"
+                item-value="_id"
+                label="Factory Size"
+                outlined
+              ></v-select>
+            </v-col>
+
+            <v-col
+              cols="12"
+            >
+              <location-field v-model="factoryInfo.location" label="Factory Address"
+                              @locationSelected="locationSelected"></location-field>
+            </v-col>
+
+            <v-col
+              class="d-flex"
+              cols="12"
+              sm="4"
+            >
+              <v-text-field
+                v-model="factoryInfo.production_staff_num"
+                label="No. of Production Staff"
+                outlined
+              ></v-text-field>
+            </v-col>
+
+            <v-col
+              class="d-flex"
+              cols="12"
+              sm="4"
+            >
+              <v-text-field
+                v-model="factoryInfo.qc_staff_num"
+                label="No. of QC Staff"
+                outlined
+              ></v-text-field>
+            </v-col>
+
+            <v-col
+              class="d-flex"
+              cols="12"
+              sm="4"
+            >
+              <v-text-field
+                v-model="factoryInfo.rd_staff_num"
+                label="No. of R&D Staff"
+                outlined
+              ></v-text-field>
+            </v-col>
+
+            <v-col
+              class="d-flex"
+              cols="12"
+              sm="4"
+            >
+              <v-text-field
+                v-model="factoryInfo.production_line_num"
+                label="No. of Production Lines"
+                outlined
+              ></v-text-field>
+            </v-col>
+
+            <v-col
+              class="d-flex"
+              cols="12"
+              sm="4"
+            >
+              <v-select
+                v-model="factoryInfo.annual_output_val"
+                :items="annualArr"
+                item-text="title"
+                item-value="_id"
+                label="Annual Output Value"
+                outlined
+              ></v-select>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="4"
+            >
+              <v-file-input
+                v-model="factoryInfo.image"
+                class="factory-image"
+                accept="image/*"
+                label="Image"
+                outlined
+                @change="uploadImage"
+              ></v-file-input>
+            </v-col>
+          </v-row>
+          <!--product capacity-->
+          <div class="annual-production">
+            <div class="annual-production-header my-8">
+              <p>Annual Production Capacity</p>
+            </div>
+            <v-divider></v-divider>
+            <v-row v-for="(item, index) in factoryInfo.annual_production_capacity" :key="index"
+                   class="mb-5 rounded-lg grey lighten-2">
+              <v-col
+                class="btn-group"
+                cols="2"
+              >
+                <v-btn
+                  dark
+                  color="red"
+                  v-if="!(factoryInfo.annual_production_capacity.length===1 && index===0)"
+                  @click="deleteFactoryProduct(index)">
+                  <v-icon>mdi-trash-can</v-icon>
+                  Delete
+                </v-btn>
+
+              </v-col>
               <v-col
                 cols="12"
-                md="4"
               >
-                <v-text-field
-                  v-model="factoryInfo.name"
-                  label="Factory Name"
-                  outlined
-                  required
-                ></v-text-field>
-              </v-col>
+                <div class="annual-production">
+                  <div class="annual-production-body">
+                    <v-form>
+                      <v-container>
+                        <v-row>
+                          <v-col
+                            cols="12"
+                          >
+                            <v-text-field
+                              v-model="item.product_name"
+                              label="Production Name"
+                              outlined
+                            ></v-text-field>
+                          </v-col>
 
+                          <v-col
+                            cols="12"
+                            md="6"
+                          >
+                            <v-text-field
+                              v-model="item.produced_val"
+                              label="Units Produced(Previous Year)"
+                              outlined
+                            ></v-text-field>
+                          </v-col>
 
+                          <v-col
+                            cols="12"
+                            md="6"
+                          >
+                            <v-select
+                              v-model="item.produced_unit"
+                              :items="measurementUnitArr"
+                              label="Unit of measurement"
+                              outlined
+                            ></v-select>
+                          </v-col>
 
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <phone-number-input @numberEntered="phoneNumberEntered" label="Contact Number"
-                                    :phone="factoryInfo.contact_num"></phone-number-input>
-              </v-col>
+                          <v-col
+                            cols="12"
+                            md="6"
+                          >
+                            <v-text-field
+                              v-model="item.highest_annual_output_val"
+                              :rules="annualRules"
+                              label="Highest Ever Annual Output"
+                              outlined
+                            ></v-text-field>
+                          </v-col>
 
+                          <v-col
+                            cols="12"
+                            md="6"
+                          >
+                            <v-select
+                              v-model="item.highest_annual_output_unit"
+                              :items="measurementUnitArr"
+                              label="Unit of measurement"
+                              outlined
+                            ></v-select>
+                          </v-col>
 
-
-              <v-col
-                class="d-flex"
-                cols="12"
-                sm="4"
-              >
-                <v-select
-                  v-model="factoryInfo.area_size"
-                  :items="factorySizeArr"
-                  item-text="title"
-                  item-value="_id"
-                  label="Factory Size"
-                  outlined
-                ></v-select>
-              </v-col>
-
-              <v-col
-                cols="12"
-              >
-                <location-field v-model="factoryInfo.location" label="Factory Address" @locationSelected="locationSelected"></location-field>
-              </v-col>
-
-              <v-col
-                class="d-flex"
-                cols="12"
-                sm="4"
-              >
-                <v-text-field
-                  v-model="factoryInfo.production_staff_num"
-                  label="No. of Production Staff"
-                  outlined
-                ></v-text-field>
-              </v-col>
-
-              <v-col
-                class="d-flex"
-                cols="12"
-                sm="4"
-              >
-                <v-text-field
-                  v-model="factoryInfo.qc_staff_num"
-                  label="No. of QC Staff"
-                  outlined
-                ></v-text-field>
-              </v-col>
-
-              <v-col
-                class="d-flex"
-                cols="12"
-                sm="4"
-              >
-                <v-text-field
-                  v-model="factoryInfo.rd_staff_num"
-                  label="No. of R&D Staff"
-                  outlined
-                ></v-text-field>
-              </v-col>
-
-              <v-col
-                class="d-flex"
-                cols="12"
-                sm="4"
-              >
-                <v-text-field
-                  v-model="factoryInfo.production_line_num"
-                  label="No. of Production Lines"
-                  outlined
-                ></v-text-field>
-              </v-col>
-
-              <v-col
-                class="d-flex"
-                cols="12"
-                sm="4"
-              >
-                <v-select
-                  v-model="factoryInfo.annual_output_val"
-                  :items="annualArr"
-                  item-text="title"
-                  item-value="_id"
-                  label="Annual Output Value"
-                  outlined
-                ></v-select>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="4"
-              >
-                <v-file-input
-                  v-model="factoryInfo.image"
-                  class="factory-image"
-                  accept="image/*"
-                  label="Image"
-                  outlined
-                  @change="uploadImage"
-                ></v-file-input>
-              </v-col>
-            </v-row>
-            <!--product capacity-->
-            <AnnualProduction
-              v-model="factoryInfo.annual_production_capacity"
-              :measurementUnitArr="measurementUnitArr"
-              :annualRules="annualRules"
-              ></AnnualProduction>
-            <!-- <v-row>
-              <v-col cols="12">
-                <div class="add-information-body">
-                  <v-btn class="add-btn" @click="addFactoryProduct">+ Add another annual production capacity</v-btn>
+                        </v-row>
+                      </v-container>
+                    </v-form>
+                  </div>
                 </div>
               </v-col>
-            </v-row> -->
-            <div >
-              <v-btn
-                class="primary"
-                :loading="submit_loading"
-                @click="saveFactory">
-                <span v-if="factoryInfo._id">Save</span>
-                <span v-else>Submit</span>
-              </v-btn>
-              <v-btn
-                @click="$emit('input', false)"
-                outlined
-                color="default"
+
+            </v-row>
+
+            <v-row class="my-6 text-center">
+              <v-col
+                class="btn-group"
+                cols="12"
               >
-                cancel
-              </v-btn>
-            </div>
-          </v-container>
-        </v-form>
-      </div>
+
+                <v-btn @click="addFactoryProduct">
+                  <v-icon>mdi-plus</v-icon>
+                  Add another annual production capacity
+                </v-btn>
+              </v-col>
+            </v-row>
+          </div>
+          <v-divider></v-divider>
+
+          <div>
+            <v-btn
+              class="primary"
+              :loading="submit_loading"
+              @click="saveFactory">
+              <span v-if="factoryInfo._id">Save</span>
+              <span v-else>Submit</span>
+            </v-btn>
+            <v-btn
+              @click="$emit('input', false)"
+              outlined
+              color="default"
+            >
+              cancel
+            </v-btn>
+          </div>
+        </v-container>
+      </v-form>
     </div>
+  </div>
 </template>
 
 <script>
-import AnnualProduction from "~/components/factories-branches/annual-production"
 import LocationField from "../Form/LocationField";
 
 export default {
-  props: ['value', 'defaultFactoryInfo'],
+  props: ['value'],
   components: {
-    AnnualProduction,
     LocationField
   },
   data() {
     return {
-      submit_loading:false,
-
+      submit_loading: false,
 
 
       showSave: false,
       showCancel: false,
-      // factoryName: '',
-      // factoryAddress: '',
-      // contactNumber: null,
       factorySizeArr: [],
       measurementUnitArr: [],
-      // production: '',
-      // qc: '',
-      // rd: '',
-      // productionLines: '',
+
       annualArr: [],
       contactRules: [
         value => {
@@ -194,59 +282,45 @@ export default {
           return pattern.test(value) || 'Invalid value.'
         },
       ],
-      factoryProductArr: [
-        {
-          productName: '',
-          unitsProduced: '',
-          measurement: '',
-          highestAnnual: '',
-          UnitMeasurement: '',
-        }
-      ],
-      // productName: '',
-      // producedUnit: '',
-      // producedVal: '',
-      // highestAnnualOutputVal: '',
-      // highestAnnualOutputUnit: '',
+
       annualRules: [
         value => {
           const pattern = /^[-,0-9]+$/;
           return pattern.test(value) || 'Invalid value.'
         },
       ],
-      annualProductionCapacity: [
-        {
+      factoryInfo: {
+        name: '',
+        location: '',
+        country: '',
+        country_code: '',
+        state: '',
+        city: '',
+        contact_num: '',
+        area_size: '',
+        production_staff_num: '',
+        qc_staff_num: '',
+        rd_staff_num: '',
+        production_line_num: '',
+        annual_output_val: '',
+        annual_production_capacity: [{
           product_name: '',
           produced_unit: '',
           produced_val: '',
           highest_annual_output_val: '',
           highest_annual_output_unit: ''
-        },
-      ],
-      factoryInfoDataTable:[],
-      factoryInfo: null,
-      // factoryInfo: {
-      //   name: '',
-      //   location: '',
-      //   contact_num: '',
-      //   area_size: '',
-      //   production_staff_num: '',
-      //   qc_staff_num: '',
-      //   rd_staff_num: '',
-      //   production_line_num: '',
-      //   annual_output_val: '',
-      //   annual_production_capacity: [],
-      //   image: null,
-      // },
+        }],
+        image: null,
+      },
     }
   },
   watch: {
-    defaultFactoryInfo: {
-      handler: function(val) {
-        this.factoryInfo = val;
-      },
-      immediate: true
-    },
+    // defaultFactoryInfo: {
+    //   handler: function(val) {
+    //     this.factoryInfo = val;
+    //   },
+    //   immediate: true
+    // },
     // $data: {
     //   handler: function(val) {
     //     this.$emit('value', val.factoryInfo)
@@ -254,23 +328,9 @@ export default {
     //   deep: true
     // }
   },
-  computed: {
-    isDisabled () {
-      return !(
-          this.factoryInfo.name ||
-          this.factoryInfo.location ||
-          this.factoryInfo.contact_num ||
-          this.factoryInfo.area_size ||
-          this.factoryInfo.production_staff_num ||
-          this.factoryInfo.qc_staff_num ||
-          this.factoryInfo.rd_staff_num ||
-          this.factoryInfo.production_line_num ||
-          this.factoryInfo.annual_output_val ||
-          this.factoryInfo.annual_production_capacity.length > 0 ||
-          this.factoryInfo.image.length > 0
-        );
-    },
-  },
+  // computed: {
+  //
+  // },
   async mounted() {
     await this.getFactorySize()
     //Get measurement unit list
@@ -320,8 +380,8 @@ export default {
     getAnnualTradeValues() {
       this.$axios.$post('/api/get_annual_trade_values')
         .then(response => {
-        this.annualArr = response;
-      }).catch(({response}) => {
+          this.annualArr = response;
+        }).catch(({response}) => {
         if (response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
         } else if (response.status == 400) {
@@ -345,8 +405,14 @@ export default {
       const str = val.toString().split(".");
       return str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
-    addFactoryProduct(annualProductionCapacity) {
-      this.factoryInfo.annual_production_capacity.push(annualProductionCapacity);
+    addFactoryProduct() {
+      this.factoryInfo.annual_production_capacity.push({
+        product_name: '',
+        produced_unit: '',
+        produced_val: '',
+        highest_annual_output_val: '',
+        highest_annual_output_unit: ''
+      });
     },
     deleteFactoryProduct(index) {
       this.factoryInfo.annual_production_capacity.splice(index, 1);
@@ -359,38 +425,37 @@ export default {
       this.submit_loading = true;
 
       let endPoint = '/api/submit_factory_info';
-      for (let key in _.pick(this.factoryInfo, '_id', 'name', 'location', 'contact_num', 'area_size', 'production_staff_num', 'qc_staff_num', 'rd_staff_num', 'production_line_num', 'annual_output_val', 'annual_production_capacity', 'image')) {
-          if(key == '_id') {
-            endPoint = '/api/update_factory_info';
-            formData.append('factory_id', this.factoryInfo[key]);
-          } else {
-            if(key === 'annual_production_capacity') {
-              for(let j in this.factoryInfo[key]) {
-                for(let y in this.factoryInfo[key][j]) {
-                  let apc = this.factoryInfo[key][j][y];
-                  formData.append('annual_production_capacity['+j.toString()+']['+y.toString()+']', apc);
-                }
+      for (let key in _.pick(this.factoryInfo, '_id', 'name', 'location','country','country_code','state','city','contact_num', 'area_size', 'production_staff_num', 'qc_staff_num', 'rd_staff_num', 'production_line_num', 'annual_output_val', 'annual_production_capacity', 'image')) {
+        if (key == '_id') {
+          endPoint = '/api/update_factory_info';
+          formData.append('factory_id', this.factoryInfo[key]);
+        } else {
+          if (key === 'annual_production_capacity') {
+            for (let j in this.factoryInfo[key]) {
+              for (let y in this.factoryInfo[key][j]) {
+                let apc = this.factoryInfo[key][j][y];
+                formData.append('annual_production_capacity[' + j.toString() + '][' + y.toString() + ']', apc);
               }
-            } else {
-              formData.append(key, this.factoryInfo[key]);
             }
+          } else {
+            formData.append(key, this.factoryInfo[key]);
           }
+        }
       }
 
       this.$axios.post(endPoint, formData).then(response => {
         this.submit_loading = false;
-        if(typeof response.data === 'object') {
-          for(let i in response.data) {
+        if (typeof response.data === 'object') {
+          for (let i in response.data) {
             let error = response.data[i][0];
             this.$toast.error(error);
             // break;
           }
         } else {
-            this.$emit('reloadFactories', (reloaded, parent) => {
-              this.submit_loading = false;
-              this.$emit('input', false);
-            });
+          this.$toast.success("Submit successfully");
+          this.$emit('submitStatus', true);
         }
+        this.submit_loading = false;
       }).catch(({response}) => {
         this.submit_loading = false;
         if (response.status == 401) {

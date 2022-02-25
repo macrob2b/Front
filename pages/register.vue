@@ -3,7 +3,7 @@
 
     <v-col class="d-md-flex d-lg-flex d-none">
       <v-img
-        :src="`Designs/signup.svg`"
+        :src="`Designs/signup.webp`"
         aspect-ratio="1">
         <template v-slot:placeholder>
           <v-row class="fill-height ma-0" align="center" justify="center">

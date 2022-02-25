@@ -14,10 +14,6 @@
           delete
         </v-btn>
 
-        <v-btn @click="addFactoryProduct" color="primary">
-          <v-icon>mdi-plus</v-icon>
-          Add
-        </v-btn>
       </v-col>
       <v-col
         cols="12"
@@ -92,6 +88,19 @@
       </v-col>
 
     </v-row>
+
+   <v-row class="my-6 text-center">
+     <v-col
+       class="btn-group"
+       cols="12"
+     >
+
+       <v-btn @click="addFactoryProduct" >
+         <v-icon>mdi-plus</v-icon>
+         Add another annual production capacity
+       </v-btn>
+     </v-col>
+   </v-row>
   </div>
 </template>
 
@@ -100,14 +109,15 @@
     props: ['value', 'measurementUnitArr', 'annualRules'],
     data() {
       return {
-        annualProductions: [],
-        annualProductionCapacity: {
-          product_name: '',
-          produced_unit: '',
-          produced_val: '',
-          highest_annual_output_val: '',
-          highest_annual_output_unit: ''
-        },
+        annualProductions: [
+          {
+            product_name: '',
+            produced_unit: '',
+            produced_val: '',
+            highest_annual_output_val: '',
+            highest_annual_output_unit: ''
+          }
+        ],
       }
     },
     watch: {
@@ -119,17 +129,19 @@
         immediate: true
       }
     },
+    mounted() {
+    },
     methods: {
       addFactoryProduct() {
-        this.annualProductions.push(Object.assign({}, this.annualProductionCapacity));
+        this.annualProductions.push({
+            product_name: '',
+            produced_unit: '',
+            produced_val: '',
+            highest_annual_output_val: '',
+            highest_annual_output_unit: ''
+          }
+        );
         this.$emit('input', this.annualProductions);
-        this.annualProductionCapacity = {
-          product_name: '',
-          produced_unit: '',
-          produced_val: '',
-          highest_annual_output_val: '',
-          highest_annual_output_unit: ''
-        };
       },
       deleteFactoryProduct(index) {
         this.annualProductions.splice(index, 1);

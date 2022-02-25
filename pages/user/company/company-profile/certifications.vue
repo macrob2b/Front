@@ -5,10 +5,12 @@
         <p>Certificates</p>
       </div>
       <v-divider></v-divider>
-      <div class="mb-10 add-information-body">
-        <v-btn v-if="!showCertificateForm" class="primary add-btn" @click="showCertificateForm = true">+ Add Certificate</v-btn>
+      <div class="mb-2 add-information-body">
+        <v-btn v-if="!showCertificateForm" class="primary add-btn" @click="showCertificateForm = true">+ Add
+          Certificate
+        </v-btn>
       </div>
-      <div class="mb-10 add-information-body">
+      <div class="mb-2 add-information-body">
         <div v-if="showCertificateForm" class="add-certificate">
           <v-form>
             <v-container>
@@ -52,19 +54,38 @@
 
                 <v-col
                   cols="12"
-                  md="6"
+                  md="4"
                 >
-                  <v-text-field
-                    v-model="cert.expiry_date"
-                    :rules="exRules"
-                    label="Expiry Date"
-                    outlined
-                  ></v-text-field>
+                  <v-menu
+                    v-model="exp_data_menu"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="cert.expiry_date"
+                        label="Expiry Date"
+                        outlined
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="cert.expiry_date"
+                      @input="exp_data_menu = false"
+                    ></v-date-picker>
+                  </v-menu>
                 </v-col>
+
 
                 <v-col
                   cols="12"
-                  md="6"
+                  md="4"
                 >
                   <v-file-input
                     v-model="cert.image"
@@ -87,10 +108,12 @@
                   ></v-textarea>
                 </v-col>
               </v-row>
-              <div class="btn-container">
+              <div>
                 <v-btn
                   :disabled="isDisabled"
-                  @click="submit">
+                  class="primary"
+                  :loading="submit_loading"
+                  @click="submitCertificate">
                   <span v-if="cert._id">Save</span>
                   <span v-else>Submit</span>
                 </v-btn>
@@ -108,48 +131,98 @@
       </div>
 
       <div class="mb-10">
-        <v-data-table
-          :headers="headers"
-          :items="certificates"
-          class="elevation-1 certificate-table"
+        <v-simple-table
         >
-          <template
-            v-slot:body="{ items }"
-          >
+          <template v-slot:default>
+
+          <thead>
+            <tr>
+              <td>Certificate name</td>
+              <td>Certificate issuer</td>
+              <td>Expiry date</td>
+              <td>Actions</td>
+            </tr>
+            </thead>
             <tbody>
+            <tr class="mt-12 mb-12" v-if="loading_data">
+              <td colspan="5" class="text-center">
+                <v-progress-circular
+                  class="mt-4"
+                  :size="30"
+                  :width="3"
+                  color="orange"
+                  indeterminate
+                ></v-progress-circular>
+              </td>
+            </tr>
             <tr
-              v-for="(item, i) in items"
+              v-else
+              v-for="(item, i) in certificates"
               :key="i"
             >
               <td>{{ item.name }}</td>
               <td>{{ item.issuer }}</td>
-              <td>{{ item.identify_num }}</td>
               <td>{{ item.expiry_date }}</td>
-              <td class="certificate-table-image">
-                <img :src="`data:image/png;base64,` + item.image" style="width: 50px; height: 40px">
-              </td>
               <td>
-                <p class="certificate-description">{{ item.description }}</p></td>
-              <td>
-                <v-icon
-                  class="mr-2"
-                  small
-                  @click="editItem(item,i)"
-                >
-                  mdi-pencil
-                </v-icon>
-                <v-icon
-                  small
-                  @click="deleteItem(item,i)"
-                >
-                  mdi-delete
-                </v-icon>
+<!--                <v-icon-->
+<!--                  small-->
+<!--                  @click="editItem(item,i)"-->
+<!--                >-->
+<!--                  mdi-pencil-->
+<!--                </v-icon>-->
+               <v-btn
+               icon
+               color="error"
+               >
+                 <v-icon
+                   small
+                   @click="openDeleteConfirmDialog(item, i)"
+                 >
+                   mdi-delete
+                 </v-icon>
+               </v-btn>
               </td>
             </tr>
             </tbody>
           </template>
-        </v-data-table>
+        </v-simple-table>
       </div>
+
+
+      <v-dialog
+        v-model="deleteConfirmDialog"
+        max-width="290"
+      >
+        <v-card>
+          <v-card-title class="text-h5">
+            Are you sure?
+          </v-card-title>
+
+          <v-card-text>
+            Click AGREE if you are sure
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn
+              text
+              @click="deleteConfirmDialog = false"
+            >
+              Disagree
+            </v-btn>
+
+            <v-btn
+              color="green darken-1"
+              text
+              :loading="delete_loading"
+              @click="deleteItem()"
+            >
+              Agree
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
 
   </div>
@@ -160,14 +233,9 @@ export default {
   data() {
     return {
       showCertificateForm: false,
+      submit_loading: false,
+      loading_data:false,
       certificateType: '',
-      exRules: [
-        value => {
-          /* eslint-disable */
-          const pattern = new RegExp('[0-9]{2}/[0-9]{2}/[0-9]{4}');
-          return pattern.test(value) || 'Set Date like MM/DD/YYYY'
-        }
-      ],
       certificateTypeArr: [],
       certificateIssuerArr: [],
       certificateImage: null,
@@ -175,31 +243,24 @@ export default {
         name: '',
         issuer: '',
         identify_num: '',
-        expiry_date: '',
+        expiry_date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         image: [],
         description: '',
       },
-      headers: [
-        {
-          text: 'Certificate name',
-          align: 'start',
-          sortable: false,
-          value: 'name',
-        },
-        {text: 'Certificate isuuer', value: 'certificate_isuuer'},
-        {text: 'Certificate ID', value: 'identify_num'},
-        {text: 'Expiry date', value: 'expiry_date'},
-        {text: 'Picture', value: 'image'},
-        {text: 'Description', value: 'description'},
-        {text: 'Actions', value: 'actions', sortable: false},
-      ],
+
       certificates: [],
+
+      exp_data_menu: false,
+      deleteConfirmDialog:false,
+      delete_loading:false,
+      delete_item:null,
+      delete_index:null,
     }
   },
   watch: {
     showCertificateForm: {
-      handler: function(val) {
-        if(!val) {
+      handler: function (val) {
+        if (!val) {
           this.cert = {
             name: '',
             issuer: '',
@@ -214,13 +275,14 @@ export default {
     },
   },
   computed: {
-    isDisabled () {
+    isDisabled() {
       return !(this.cert.name || this.cert.issuer || this.cert.identify_num || this.cert.image.length > 0 || this.cert.expiry_date || this.cert.description);
     },
   },
   mounted() {
     this.getCertificateType()
-    this.getCertificateIssuer()
+    this.getCertificateIssuer();
+    this.getCertificates();
   },
   methods: {
     getCertificateType() {
@@ -263,17 +325,41 @@ export default {
     addCertificate() {
       this.showCertificateForm = true;
     },
-    submit() {
-      this.certificates.push(Object.assign({}, this.cert))
+    submitCertificate() {
+      this.submit_loading=true;
 
-      this.$axios.post('/api/submit_certification_info', this.cert).then(response => {
-        console.log("response" + JSON.stringify(response) );
-        console.log("cert:" + JSON.stringify(this.cert))
-        console.log("certificates:" + JSON.stringify(this.certificates))
+      //Arrange data to form data
+      let formData = new FormData()
+      for (let key in this.cert) {
+        formData.append(key, this.cert[key]);
+      }
 
-        this.showCertificateForm = false;
-        this.cert = {}
-      }).catch(({response}) => {
+
+      this.$axios.$post('/api/submit_certification_info',
+        formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        })
+        .then(response => {
+          if (typeof response === 'object') {
+            for (let i in response) {
+              let error = response[i][0];
+              this.$toast.error(error);
+              // break;
+            }
+          } else {
+            this.$toast.success("Submit successfully");
+            this.submit_loading = false;
+            this.showCertificateForm = false;
+            this.getCertificates();
+            // this.$emit('submitStatus', true);
+            this.cert = {}
+          }
+
+          this.submit_loading=false;
+          window.scrollTo(0,0);
+        }).catch(({response}) => {
         if (response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
         } else if (response.status == 400) {
@@ -283,68 +369,71 @@ export default {
         } else if (response.status == 404) {
           this.$toast.error(this.$t(`not found`));
         }
+        this.submit_loading=false;
       })
-
     },
     editItem(item, index) {
       this.editedIndex = index;
       this.showCertificateForm = true
       this.cert = Object.assign({}, item);
     },
-    save() {
-      Object.assign(this.certificates[this.editedIndex], this.cert)
-      this.showCertificateForm = false;
-      this.cert.name = ''
-      this.cert.issuer = ''
-      this.cert.identify_num = ''
-      this.cert.image = []
-      this.cert.expiry_date = ''
-      this.cert.description = ''
-    },
     cancel() {
       this.showCertificateForm = false;
     },
-    deleteItem(item, index) {
-      console.log(JSON.stringify(item))
-      this.certificates.splice(index, 1)
-    },
-    deleteItemConfirm() {
-      this.certificates.splice(this.editedIndex, 1)
-      this.closeDelete()
-    },
-
-    async uploadImage(e) {
-      return;
-      let a = (await this.getFile(e)).base64StringFile;
-      var d1 = document.querySelector('.certificate-image');
-      d1.insertAdjacentHTML('beforeend', '<img  src="data:image/png;base64,' + a +'">');
-
-      this.cert.image = a;
-    },
-    //take a single JavaScript File object
-    getFile(file) {
-      let reader = new FileReader();
-      return new Promise((resolve, reject) => {
-        reader.onerror = () => { reader.abort(); reject(new Error("Error parsing file"));}
-        reader.onload = function () {
-
-          //This will result in an array that will be recognized by C#.NET WebApi as a byte[]
-          let bytes = Array.from(new Uint8Array(this.result));
-
-          //if you want the base64encoded file you would use the below line:
-          let base64StringFile = btoa(bytes.map((item) => String.fromCharCode(item)).join(""));
-
-          //Resolve the promise with your custom file structure
-          resolve({
-            bytes: bytes,
-            base64StringFile: base64StringFile,
-            fileName: file.name,
-            fileType: file.type
-          });
+    deleteItem() {
+      this.delete_loading=true;
+      this.$axios.$delete('/api/delete_company_certification',
+        {
+          params:
+            {id: this.delete_item._id}
+        })
+        .then(response => {
+          if (typeof response.data === 'object') {
+            for (let i in response.data) {
+              let error = response.data[i][0];
+              this.$toast.error(error);
+              // break;
+            }
+          } else {
+            this.$toast.success("Deleted successfully");
+            this.certificates.splice(this.delete_index, 1);
+            this.delete_loading=false;
+            this.deleteConfirmDialog=false;
+          }
+        }).catch(({response}) => {
+        if (response.status == 401) {
+          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+        } else if (response.status == 500 || response.status == 504) {
+          this.$toast.error(this.$t(`REQUEST_FAILED`));
         }
-        reader.readAsArrayBuffer(file);
+        this.delete_loading=false;
+        this.deleteConfirmDialog=false;
       });
-    }
+    },
+
+    getCertificates() {
+      this.loading_data=true;
+      this.$axios.$post('/api/certification_list',
+        {company_id: this.$auth.user.company._id}).then(response => {
+        this.certificates = response;
+        this.loading_data=false;
+      }).catch(({response}) => {
+        func(false, this);
+        if (response.status == 401) {
+          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+        } else if (response.status == 500 || response.status == 504) {
+          this.$toast.error(this.$t(`REQUEST_FAILED`));
+        }
+        this.loading_data=false;
+      });
+    },
+    openDeleteConfirmDialog(item, i) {
+      this.deleteConfirmDialog = true;
+      this.delete_item = item;
+      this.delete_index = i;
+    },
+
+
   },
 }
 </script>
