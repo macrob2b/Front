@@ -366,10 +366,10 @@ export default {
       loaded: false,
 
 
-      logo_uploading:false,
-      images_uploading:false,
-      brochures_uploading:false,
-      video_uploading:false,
+      logo_uploading: false,
+      images_uploading: false,
+      brochures_uploading: false,
+      video_uploading: false,
 
       businessTypeArr: [],
       companyInfo: {
@@ -390,10 +390,10 @@ export default {
         website: '',
         email: '',
         postal_code: '',
-        logo: '',
+        logo: null,
         images: [],
         brochures: [],
-        video: '',
+        video: null,
       },
       submit_loading: false,
       yearEstablishedRule: [
@@ -466,9 +466,13 @@ export default {
       this.companyInfo.roles = this.companyLoadedInfo.roles;
       this.companyInfo.company_name = this.companyLoadedInfo.company_name;
       this.companyInfo.business_type = this.companyLoadedInfo.business_type;
-      this.companyInfo.location = this.companyLoadedInfo.location.coordinates[1] + ',' + this.companyLoadedInfo.location.coordinates[0];
 
-      this.reverseLocation(this.companyLoadedInfo.location.coordinates[1], this.companyLoadedInfo.location.coordinates[0]);
+      if (this.companyLoadedInfo && this.companyLoadedInfo.location) {
+        this.companyInfo.location = this.companyLoadedInfo.location.coordinates[1] + ',' + this.companyLoadedInfo.location.coordinates[0];
+
+        this.reverseLocation(this.companyLoadedInfo.location.coordinates[1], this.companyLoadedInfo.location.coordinates[0]);
+
+      }
 
       this.companyInfo.country = this.companyLoadedInfo.country;
       this.companyInfo.country_code = this.companyLoadedInfo.country_code;
@@ -483,33 +487,47 @@ export default {
       this.companyInfo.email = this.companyLoadedInfo.email;
       this.companyInfo.website = this.companyLoadedInfo.website;
       this.companyInfo.postal_code = this.companyLoadedInfo.postal_code;
-      this.companyInfo.logo = (this.companyLoadedInfo.logo!==null ? new File([], this.companyLoadedInfo.logo) : '');
-      for (var x = 0; x < this.companyLoadedInfo.images.length; x++) {
-        this.companyInfo.images[x] = new File([], this.companyLoadedInfo.images[x]);
+
+      if (this.companyLoadedInfo && this.companyLoadedInfo.logo)
+        this.companyInfo.logo = new File([], this.companyLoadedInfo.logo);
+
+      if (this.companyLoadedInfo && this.companyLoadedInfo.images) {
+        for (var x = 0; x < this.companyLoadedInfo.images.length; x++) {
+          this.companyInfo.images[x] = new File([], this.companyLoadedInfo.images[x]);
+        }
       }
-      for (var x = 0; x < this.companyLoadedInfo.brochures.length; x++) {
-        this.companyInfo.brochures[x] = new File([], this.companyLoadedInfo.brochures[x]);
-      }
-      this.companyInfo.video = this.companyLoadedInfo.video ? new File([], this.companyLoadedInfo.video) : '';
+
+      if (this.companyLoadedInfo && this.companyLoadedInfo.brochures)
+        for (var x = 0; x < this.companyLoadedInfo.brochures.length; x++) {
+          this.companyInfo.brochures[x] = new File([], this.companyLoadedInfo.brochures[x]);
+        }
+
+      if (this.companyLoadedInfo && this.companyLoadedInfo.video)
+        this.companyInfo.video = new File([], this.companyLoadedInfo.video);
+
     },
     spilitter(val) {
       val = val.replace(/,/g, '');
       const str = val.toString().split(".");
       return str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
+    }
+    ,
     locationSelected(location) {
       this.companyInfo.location = location.lat + ',' + location.lng;
       this.companyInfo.country = location.country;
       this.companyInfo.country_code = location.country_code;
       this.companyInfo.state = location.state;
       this.companyInfo.city = location.city;
-    },
+    }
+    ,
     phoneNumberEntered(phoneEntered) {
       this.companyInfo.phone = phoneEntered
-    },
+    }
+    ,
     faxNumberEntered(faxEntered) {
       this.companyInfo.fax = faxEntered
-    },
+    }
+    ,
 
 
     submitCompanyInfo() {
@@ -541,7 +559,8 @@ export default {
         }
         this.submit_loading = false;
       });
-    },
+    }
+    ,
     async reverseLocation(lat, lng) {
       await this.$axios.$post('/api/reverse_location', {
         lat: lat,
@@ -556,14 +575,15 @@ export default {
         }
       });
 
-    },
+    }
+    ,
     async uploadFile(type) {
       let formData = new FormData();
 
       if (type === 'logo') {
         if (this.companyInfo.logo) {
-          this.logo_uploading=true;
-          this.submit_loading=true;
+          this.logo_uploading = true;
+          this.submit_loading = true;
 
           formData.append('file', this.companyInfo.logo);
           formData.append('field', 'logo');
@@ -575,8 +595,8 @@ export default {
         }
       } else if (type === 'images') {
         if (this.companyInfo.images) {
-          this.images_uploading=true;
-          this.submit_loading=true;
+          this.images_uploading = true;
+          this.submit_loading = true;
 
           var ins = this.companyInfo.images.length;
           for (var x = 0; x < ins; x++) {
@@ -591,8 +611,8 @@ export default {
         }
       } else if (type === 'brochures') {
         if (this.companyInfo.brochures) {
-          this.brochures_uploading=true;
-          this.submit_loading=true;
+          this.brochures_uploading = true;
+          this.submit_loading = true;
 
           var ins = this.companyInfo.brochures.length;
           for (var x = 0; x < ins; x++) {
@@ -607,8 +627,8 @@ export default {
         }
       } else if (type === 'video') {
         if (this.companyInfo.video) {
-          this.video_uploading=true;
-          this.submit_loading=true;
+          this.video_uploading = true;
+          this.submit_loading = true;
 
           formData.append('file', this.companyInfo.video);
           formData.append('field', 'video');
@@ -620,9 +640,9 @@ export default {
       }
 
 
-
-    },
-    async handleUpload(formData){
+    }
+    ,
+    async handleUpload(formData) {
       await this.$axios.$post('/api/upload_company_file',
         formData,
         {
@@ -632,24 +652,25 @@ export default {
         })
         .then(response => {
           console.log("Success");
-          this.logo_uploading=false;
-          this.images_uploading=false;
-          this.brochures_uploading=false;
-          this.video_uploading=false;
+          this.logo_uploading = false;
+          this.images_uploading = false;
+          this.brochures_uploading = false;
+          this.video_uploading = false;
 
-          this.submit_loading=false;
+          this.submit_loading = false;
           // this.companyInfo.logo_name = response;
         }).catch(({err}) => {
           this.$toast.error(err)
 
-          this.logo_uploading=false;
-          this.images_uploading=false;
-          this.brochures_uploading=false;
-          this.video_uploading=false;
+          this.logo_uploading = false;
+          this.images_uploading = false;
+          this.brochures_uploading = false;
+          this.video_uploading = false;
 
-          this.submit_loading=false;
+          this.submit_loading = false;
         });
-    },
+    }
+    ,
     async deleteFile(type) {
       await this.$axios.$delete('/api/delete_company_file',
         {

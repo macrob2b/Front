@@ -40,6 +40,10 @@ let messages = {
   BUSINESS_LOCATION       : 'Business Location',
   LOCATION                : 'Location',
   REGISTER_SUCCESSFUL     : 'You have successfully registered',
+  BUY_NOW                 : 'Buy Now',
+  SELL_NOW                : 'Sell Now',
+  CATEGORIES              : 'Categories',
+  COMPANY_LIST            : 'Company List',
 };
 
 export default messages;

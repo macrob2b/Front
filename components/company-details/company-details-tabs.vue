@@ -10,7 +10,7 @@
       </v-tab>
       <v-tab>
           <v-icon>mdi-source-branch</v-icon>
-          Factories & branches
+          Factories & Branches
       </v-tab>
       <v-tab>
           <v-icon>mdi-poll</v-icon>
@@ -18,7 +18,7 @@
       </v-tab>
       <v-tab>
           <v-icon>mdi-decagram</v-icon>
-          Certificates
+          Certificates & Trademarks
       </v-tab>
       <v-tab>
           <v-icon>mdi-tag</v-icon>

@@ -15,12 +15,12 @@
       <v-col  cols="12" v-for="item in companyList" class="py-10 company-item" v-if="!$vuetify.breakpoint.xs">
           <v-row>
             <v-col cols="9" class="d-flex justify-start align-center ">
-              <v-col cols="1" class="d-flex pa-0">
-                <div class="years">
-                  2
-                  <span>YRS</span>
-                </div>
-              </v-col>
+<!--              <v-col cols="1" class="d-flex pa-0">-->
+<!--                <div class="years">-->
+<!--                  2-->
+<!--                  <span>YRS</span>-->
+<!--                </div>-->
+<!--              </v-col>-->
               <v-col cols="11" class="pa-0 text-h6 font-weight-bold primary--text company-name">
                 <nuxt-link :to="'/company-details/'+item._id">{{ item.company_name }}</nuxt-link>
               </v-col>
@@ -42,75 +42,90 @@
               </v-row>
             </v-col>
           </v-row>
-          <v-row>
-            <v-tab>
-              <v-img src="/verified.svg" height="10px" contain></v-img>
-            </v-tab>
-            <v-tab to="/" class="text-caption blue--text text--lighten-2 text-capitalize">
-              <a href="">Contact Details</a>
-            </v-tab>
-            <v-divider vertical class=""/>
-            <v-tab to="/" class="text-caption blue--text text--lighten-2 text-capitalize">
-              <a href="">Video</a>
-            </v-tab>
-          </v-row>
+<!--          <v-row>-->
+<!--            <v-tab>-->
+<!--              <v-img src="/verified.svg" height="10px" contain></v-img>-->
+<!--            </v-tab>-->
+<!--            <v-tab to="/" class="text-caption blue&#45;&#45;text text&#45;&#45;lighten-2 text-capitalize">-->
+<!--              <a href="">Contact Details</a>-->
+<!--            </v-tab>-->
+<!--            <v-divider vertical class=""/>-->
+<!--            <v-tab to="/" class="text-caption blue&#45;&#45;text text&#45;&#45;lighten-2 text-capitalize">-->
+<!--              <a href="">Video</a>-->
+<!--            </v-tab>-->
+<!--          </v-row>-->
           <v-row>
 
           </v-row>
           <v-row class="d-flex">
-            <v-col cols="auto" v-for="n in 3" class="ability-item">
+            <v-col cols="auto"  class="ability-item">
               <v-icon small>mdi-check-decagram-outline</v-icon>
-              Total Floor Space 16000m
+              {{item.employees_total}} Employees
+            </v-col>
+            <v-col cols="auto"  class="ability-item">
+              <v-icon small>mdi-check-decagram-outline</v-icon>
+              Established in {{item.year_established}}
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="5">
               <v-row>
-                <v-col v-for="item in 3">
-                  <v-img aspect-ratio="1" src="/p1.jpeg" style="border:1px solid #eee"/>
-                  <div>
-                    some texts
+                <v-col v-for="(img,index) in item.images">
+                  <div v-if="index<3">
+                    <v-img
+                      max-height="140"
+                      max-width="140"
+                      aspect-ratio="1" :src="getFile(item._id,img,'image')" style="border:1px solid #eee"/>
+<!--                    <div>-->
+<!--                      some texts-->
+<!--                    </div>-->
                   </div>
                 </v-col>
               </v-row>
             </v-col>
             <v-col cols="7">
               <v-list class="transparent">
-                <v-list-item v-for="(info, i) in infos" :key="i" style="min-height: unset">
+                <v-list-item  style="min-height: unset">
                   <v-list-item-content class="py-0">
                     <v-row no-gutters>
                       <v-col cols="6" lg="3">
-                        <div class="text-caption grey--text ">{{info.label}}</div>
+<!--                        <div class="text-caption grey&#45;&#45;text ">{{info.label}}</div>-->
                       </v-col>
                       <v-col cols="6" lg="9">
-                        <div v-if="typeof(info.value)===`number`">
-                          <v-icon small color="deep-orange" v-for="n in info.value">
+                          <v-icon small color="deep-orange" >
                             mdi-diamond
                           </v-icon>
-                        </div>
-                        <div v-else class="text-caption">{{info.value}}</div>
+                          <v-icon small color="deep-orange" >
+                            mdi-diamond
+                          </v-icon>
+                          <v-icon small color="deep-orange" >
+                            mdi-diamond
+                          </v-icon>
+                        <div class="text-caption">{{item.description}}</div>
                       </v-col>
                     </v-row>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
               <v-col class="py-0 mt-2">
-                <span>25</span>
-                Transactions
+
+                No Transactions yet
               </v-col>
               <v-col class="text-caption py-0 mt-0">
-                + 570,000 $
+                0 $
               </v-col>
               <v-row no-gutters class="mt-5">
                 <v-tab>
-                  <v-btn color="deep-orange" elevation="0" small class="white--text text-capitalize text-caption">
+                  <v-btn
+                    :to="'/company-details/'+item._id"
+                    color="deep-orange" elevation="0" small class="white--text text-capitalize text-caption">
                     <v-icon small class="mr-3">mdi-message</v-icon>
                     contact supplier
                   </v-btn>
                 </v-tab>
-                <v-tab class="text-caption primary--text text-capitalize" to="/">
+                <nuxt-link class="text-caption primary--text text-capitalize" :to="'/company-details/'+item._id">
                   leave messages
-                </v-tab>
+                </nuxt-link>
               </v-row>
             </v-col>
           </v-row>
@@ -194,7 +209,16 @@
           }
         ],
       }
+    },
+    methods:{
+      getFile(item_id,file_name, type) {
+        if (type == 'image')
+          return "https://dl.macrob2b.com/companies/" + item_id + "/images/" + file_name;
+        else if (type == 'video')
+          return "https://dl.macrob2b.com/companies/" + item_id + "/video/" + file_name;
+      }
     }
+
   }
 </script>
 <style scoped>

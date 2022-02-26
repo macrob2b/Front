@@ -1,16 +1,17 @@
 <template>
   <!-- App.vue -->
 
-  <v-app >
-      <Header />
+  <v-app>
 
-      <v-main style="margin-top:140px;">
-        <v-container fluid>
-          <Nuxt/>
-        </v-container>
-      </v-main>
+    <Header/>
 
-      <Footer/>
+    <v-main class="mainContainer">
+      <v-container fluid>
+        <Nuxt/>
+      </v-container>
+    </v-main>
+
+    <Footer/>
 
   </v-app>
 
@@ -45,8 +46,13 @@ export default {
 </script>
 
 
-<style >
-.pointer{
-  cursor: pointer!important;
+<style>
+.mainContainer {
+  padding-top: 135px !important;
+}
+@media screen and (max-width: 960px) {
+  .mainContainer {
+    padding-top: 75px !important;
+  }
 }
 </style>

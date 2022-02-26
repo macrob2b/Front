@@ -30,7 +30,7 @@
            editable
            step="3"
          >
-           Factories & branches
+           Factories & Branches
          </v-stepper-step>
 
          <v-divider></v-divider>
@@ -39,7 +39,7 @@
            editable
            step="4"
          >
-           Certification
+           Certification & Trademarks
          </v-stepper-step>
        </v-stepper-header>
 

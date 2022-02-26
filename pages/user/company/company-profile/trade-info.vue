@@ -281,7 +281,7 @@ export default {
       annualExport: [],
       annualExport_loading: false,
       continents: [],
-      market_loading:false,
+      market_loading: false,
       year: null,
       description: null,
       yearCompanyHistoryRule: [
@@ -313,7 +313,7 @@ export default {
   watch: {
     'tradeInfo.nearest_port': {
       handler: function (val) {
-        if (val.length > 3) {
+        if (val && val.length > 3) {
           this.$nextTick(() => this.tradeInfo.nearest_port.pop())
         }
       },
@@ -353,12 +353,12 @@ export default {
       this.tradeInfo.history_by_year.splice(index, 1);
     },
     async getAnnualTradeValues() {
-      this.annualExport_loading=true;
+      this.annualExport_loading = true;
       // Get get_annual_trade_values
       await this.$axios.$post('/api/get_annual_trade_values')
         .then(response => {
           this.annualExport = response;
-          this.annualExport_loading=false;
+          this.annualExport_loading = false;
         }).catch(({response}) => {
           if (response.status == 401) {
             this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
@@ -370,7 +370,7 @@ export default {
             this.$toast.error(this.$t(`not found`));
           }
 
-          this.annualExport_loading=false;
+          this.annualExport_loading = false;
         });
     },
     async getExportPercentageList() {
@@ -393,11 +393,11 @@ export default {
         });
     },
     async getCountryList() {
-      this.market_loading=true;
+      this.market_loading = true;
       await this.$axios.$post('/api/search_country')
         .then(response => {
           this.continents = response;
-          this.market_loading=false;
+          this.market_loading = false;
         }).catch(({response}) => {
           if (response.status == 401) {
             this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
@@ -408,7 +408,7 @@ export default {
           } else if (response.status == 404) {
             this.$toast.error(this.$t(`not found`));
           }
-          this.market_loading=false;
+          this.market_loading = false;
         });
     },
 
@@ -417,7 +417,7 @@ export default {
       this.$axios.$post('/api/update_company_trade_info', this.tradeInfo)
         .then(response => {
           this.update_loading = false;
-          window.scrollTo(0,0)
+          window.scrollTo(0, 0)
           if (response.length == 0)
             this.$toast.success("Update data successfully");
           else
@@ -434,7 +434,7 @@ export default {
         }
 
         this.update_loading = false;
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
       });
     },
     async setTradeData() {
@@ -448,7 +448,10 @@ export default {
       this.tradeInfo.import_market = this.companyLoadedInfo.import_market;
       this.tradeInfo.has_history = this.companyLoadedInfo.has_history;
       this.tradeInfo.history_introduction = this.companyLoadedInfo.history_introduction;
-      this.tradeInfo.history_by_year = this.companyLoadedInfo.history_by_year;
+
+
+      if (this.companyLoadedInfo.history_by_year && this.companyLoadedInfo.history_by_year)
+        this.tradeInfo.history_by_year = this.companyLoadedInfo.history_by_year;
     },
 
   },
