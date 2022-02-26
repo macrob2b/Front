@@ -9,7 +9,7 @@
       <v-row class="mt-1">
 
         <!--    Navigation Icon    -->
-        <v-col cols="12">
+        <v-col cols="12" class="d-flex justify-center">
           <nuxt-link to="/">
             <v-img
               width="180"
@@ -33,7 +33,7 @@
                          :to="button.to"
                          nuxt>
               <v-list-item-content>
-                <v-list-item-title class="font-weight-bold" v-text="button.title"></v-list-item-title>
+                <v-list-item-title class="font-weight-black" v-text="button.title"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
 
@@ -87,9 +87,9 @@
             </v-btn>
 
             <!--  Menu Buttons  -->
-            <v-btn v-if="$vuetify.breakpoint.mdAndUp"
-                   v-for="(button , i) in menuButtons"
+            <v-btn v-for="(button , i) in menuButtons"
                    :key="i"
+                   v-if="$vuetify.breakpoint.mdAndUp && i < 2"
                    :to="button.to"
                    class="white--text px-2 mx-1 mt-2"
                    text
@@ -109,14 +109,13 @@
           </nuxt-link>
 
           <!--    Menu Buttons (Right Side)    -->
-          <div>
-            <v-btn class="menuIcon text--white mx-sm-2 mx-md-1 mt-2"
+          <div class="ml-md-3">
+            <v-btn class="menuIcon text--white mx-sm-2 mx-md-2 mt-2"
                    color="accent"
                    @click="toggleSearch">
               <v-icon>mdi-magnify</v-icon>
             </v-btn>
-            <v-btn v-if="$vuetify.breakpoint.smAndDown"
-                   class="menuIcon text--white mx-sm-2 mx-md-1 mt-2"
+            <v-btn class="menuIcon text--white mx-sm-2 mx-md-2 mt-2"
                    color="accent"
                    to="/user-dashboard"
                    width="20px"
@@ -124,21 +123,22 @@
               <v-icon>mdi-account</v-icon>
             </v-btn>
             <v-btn v-if="$vuetify.breakpoint.mdAndUp"
-                   to="/user-dashboard"
-                   class="text--white mx-sm-2 mx-md-1 mt-2"
+                   class="menuIcon text--white mx-sm-2 mx-md-2 mt-2"
                    color="accent"
+                   to="/company-list"
+                   width="20px"
                    nuxt>
-              {{ this.$auth.loggedIn ? 'Hi ' + this.$auth.user.first_name : $t(`SIGN_IN`) }}
+              <v-icon>mdi-earth</v-icon>
             </v-btn>
           </div>
 
         </v-col>
 
         <!--  Toolbar Menu MD   -->
-        <v-col class="pt-5" v-if="$vuetify.breakpoint.mdAndUp" cols="12">
+        <v-col class="pt-5 px-0" v-if="$vuetify.breakpoint.mdAndUp" cols="12">
           <!--     Category menu     -->
           <v-menu
-            :nudge-width="selectedCategory ? $vuetify.breakpoint.width - 350 : ($vuetify.breakpoint.width - 700) / 12"
+            :nudge-width="selectedCategory !== '' ? $vuetify.breakpoint.width - 350 : ($vuetify.breakpoint.width) / 12"
             rounded="0"
             open-on-hover
             offset-y>
@@ -159,27 +159,28 @@
               <v-row class="ma-0 pa-0">
 
                 <!--       Category (Parent)         -->
-                <v-col :cols="selectedCategory ? 2 : 12" class="categoryList ma-0 pa-0">
-                  <v-list-item-group
-                    v-model="selectedCategory"
-                    color="primary">
+                <v-col :cols="selectedCategory !== '' ? 3 : 12" class="categoryList ma-0 pa-0">
+
+                  <v-list flat>
 
                     <!--          Category List          -->
                     <v-list-item
                       v-for="(category, i) in categories"
                       :key="i"
                       :to="'/product-list?cate_id=' + category._id"
-                      @mouseover="setSubCategory(i)"
+                      @mouseover="loadSubCategories(i)"
                       dense
                       nuxt>
+
                       <v-list-item-content>
-                        <v-list-item-title :color="selectedCategory == category._id ? 'accent' : ''"
-                                           v-text="category.title">
+                        <v-list-item-title v-text="category.title">
                         </v-list-item-title>
                       </v-list-item-content>
+
                       <v-list-item-icon v-if="category.children">
                         <v-icon>mdi-menu-right</v-icon>
                       </v-list-item-icon>
+
                     </v-list-item>
 
                     <!--         All Categories Item           -->
@@ -189,38 +190,58 @@
                       </v-list-item-content>
                     </v-list-item>
 
-                  </v-list-item-group>
+                  </v-list>
+
                 </v-col>
 
                 <!--       Sub Category         -->
-                <v-col :cols="10" class="ma-0 pa-3" v-if="selectedCategory">
+                <v-col :cols="9" class="ma-0 pa-3" v-if="selectedCategory !== ''">
                   <v-row>
 
+                    <!--         Loader           -->
+                    <v-col v-if="categories[selectedCategory].subLoaderStatus === 'loading'"
+                           cols="1"
+                           offset="5"
+                           class="mt-16">
+                      <v-progress-circular color="primary"
+                                           size="50"
+                                           class="d-block align-content-center align-center"
+                                           indeterminate>
+                      </v-progress-circular>
+                    </v-col>
+
                     <!--         Sub Categories           -->
-                    <v-col v-for="(subCategory,i) in subCategories" cols="4">
+                    <v-col v-for="(subCategory,i) in categories[selectedCategory].children"
+                           v-if="categories[selectedCategory].subLoaderStatus === true"
+                           :key="i"
+                           cols="4">
 
                       <v-row>
 
                         <v-col cols="12">
-                          <nuxt-link :to="'/product-list?cate_id=' + subCategory.id"
-                                     class="font-weight-black text-h9">
+                          <nuxt-link :to="'/product-list?cate_id=' + subCategory._id"
+                                     class="font-weight-black text-h7">
                             {{ subCategory.title }}
                           </nuxt-link>
-                        </v-col>
 
-                        <!--          Child of SubCategory            -->
-                        <v-col cols="12" v-if="subCategories.children">
-                          <v-col cols="12" v-for="(subChildCategory,i) in subCategories.children" :key="i">
-                            <nuxt-link :to="'/product-list?cate_id=' + subChildCategory.id"
-                                       class="text--darken-3">
-                              {{ subChildCategory.title }}
-                            </nuxt-link>
-                          </v-col>
+                          <v-divider class="mb-1"></v-divider>
+
+                          <!--          Child of SubCategory            -->
+                          <nuxt-link v-for="(subChildCategory,i) in subCategory.children"
+                                     :key="i"
+                                     v-if="subCategory.children && i < 10"
+                                     :to="'/product-list?cate_id=' + subChildCategory.id"
+                                     class="text--darken-3 d-block">
+                            {{ subChildCategory.title }}
+                          </nuxt-link>
+
+
                         </v-col>
 
                       </v-row>
 
                     </v-col>
+
                   </v-row>
                 </v-col>
 
@@ -279,7 +300,6 @@ export default {
       categoriesMenu  : false,
       categories      : [],
       selectedCategory: '',
-      subCategories   : [],
       menuButtons     : [
         {
           title: this.$t(`BUY_NOW`),
@@ -303,13 +323,13 @@ export default {
   },
   methods: {
     async loadCategories() {
-      await this.$axios.$post('/api/category_list',
-        {
-          "without_child": true,
-        }
-      ).then(response => {
+      await this.$axios.$post('/api/category_list',).then(response => {
+        // set flag for sub loader
+        response.forEach((category) => {
+          category.subLoaderStatus = false;
+        });
+
         this.categories = response;
-        this.categories.concat(response);
       })
         .catch(e => {
           console.log('error in load categories');
@@ -317,11 +337,38 @@ export default {
     },
     clearSubCategory() {
       this.selectedCategory = '';
-      this.subCategories    = []
     },
-    setSubCategory(i) {
-      this.selectedCategory = this.categories[i]._id;
-      this.subCategories    = this.categories[i].children;
+    async loadSubCategories(i) {
+
+      // get category Id
+      let categoryId = this.categories[i]._id;
+
+      // load sub Categories if not loaded before
+      if (this.categories[i].subLoaderStatus === false) {
+
+        // set loader status
+        this.categories[i].subLoaderStatus = 'loading';
+
+
+        // send request
+        await this.$axios.$post('/api/category_list',
+          {
+            parent: categoryId
+          }
+        ).then(response => {
+          this.categories[i]['children'] = response;
+
+          // set loader status (force update)
+          this.categories[i].subLoaderStatus = true;
+          this.$forceUpdate();
+        })
+          .catch(e => {
+            console.log('error in load sub categories');
+          })
+      }
+
+      // set Selected Category for loading subCategory
+      this.selectedCategory = i;
     },
     toggleSearch() {
       this.searchActive = !this.searchActive;
