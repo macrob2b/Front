@@ -102,7 +102,7 @@
               sm="4"
             >
               <v-select
-                v-model="factoryInfo.annual_output_val"
+                v-model="factoryInfo.annual_output_value"
                 :items="annualArr"
                 item-text="title"
                 item-value="_id"
@@ -302,7 +302,7 @@ export default {
         qc_staff_num: '',
         rd_staff_num: '',
         production_line_num: '',
-        annual_output_val: '',
+        annual_output_value: '',
         annual_production_capacity: [{
           product_name: '',
           produced_unit: '',
@@ -425,7 +425,7 @@ export default {
       this.submit_loading = true;
 
       let endPoint = '/api/submit_factory_info';
-      for (let key in _.pick(this.factoryInfo, '_id', 'name', 'location','country','country_code','state','city','contact_num', 'area_size', 'production_staff_num', 'qc_staff_num', 'rd_staff_num', 'production_line_num', 'annual_output_val', 'annual_production_capacity', 'image')) {
+      for (let key in _.pick(this.factoryInfo, '_id', 'name', 'location','country','country_code','state','city','contact_num', 'area_size', 'production_staff_num', 'qc_staff_num', 'rd_staff_num', 'production_line_num', 'annual_output_value', 'annual_production_capacity', 'image')) {
         if (key == '_id') {
           endPoint = '/api/update_factory_info';
           formData.append('factory_id', this.factoryInfo[key]);

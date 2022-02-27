@@ -3,42 +3,99 @@
     <div class="pa-8 secondary-background company-details-tabs-content branch-tab-content">
       <v-row>
         <v-col cols="12" md="5">
-            <v-card>
-              <v-navigation-drawer>
-                <v-list
-                  dense
-                  nav
+          <h2 class="mt-4 mb-2">Factories</h2>
+          <v-card>
+            <v-row class="mt-12 mb-12" v-if="factories_loading">
+              <v-col cols="12" class="text-center">
+                <v-progress-circular
+                  :size="30"
+                  :width="4"
+                  color="orange"
+                  indeterminate
+                ></v-progress-circular>
+              </v-col>
+            </v-row>
+            <v-navigation-drawer v-else>
+              <v-list
+                dense
+                nav
+              >
+                <v-list-item
+                  v-for="(item, i) in factory_list"
+                  :key="item.id"
+                  link
+                  @click="showLocationDetails(item, i)"
+                  v-bind:class="{selected: activeIndex == i}"
+                  class="branchs-list"
                 >
-                  <v-list-item
-                    v-for="(item, i) in branchsList"
-                    :key="item.id"
-                    link
-                    @click="showDetailsBranch(item, i)"
-                    v-bind:class="{selected: activeIndex == i}"
-                    class="branchs-list"
-                  >
-                    <v-list-item-content>
-                      <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    </v-list-item-content>
-                    <v-list-item-icon>
-                      <v-icon>mdi-chevron-right</v-icon>
-                    </v-list-item-icon>
-                  </v-list-item>
-                </v-list>
-              </v-navigation-drawer>
-            </v-card>
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                  </v-list-item-content>
+                  <v-list-item-icon>
+                    <v-icon>mdi-chevron-right</v-icon>
+                  </v-list-item-icon>
+                </v-list-item>
+              </v-list>
+            </v-navigation-drawer>
+          </v-card>
+
+          <h2 class="mt-4 mb-2">Branches</h2>
+          <v-card>
+            <v-row class="mt-12 mb-12" v-if="branches_loading">
+              <v-col cols="12" class="text-center">
+                <v-progress-circular
+                  :size="30"
+                  :width="4"
+                  color="orange"
+                  indeterminate
+                ></v-progress-circular>
+              </v-col>
+            </v-row>
+            <v-navigation-drawer v-else>
+              <v-list
+                dense
+                nav
+              >
+                <v-list-item
+                  v-for="(item, i) in branch_list"
+                  :key="item.id"
+                  link
+                  @click="showLocationDetails(item, i)"
+                  v-bind:class="{selected: activeIndex == i}"
+                  class="branchs-list"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                  </v-list-item-content>
+                  <v-list-item-icon>
+                    <v-icon>mdi-chevron-right</v-icon>
+                  </v-list-item-icon>
+                </v-list-item>
+              </v-list>
+              <v-list
+                dense
+                nav
+              >
+              </v-list>
+            </v-navigation-drawer>
+          </v-card>
         </v-col>
         <v-col cols="12" md="7">
-          <div class="location-map" v-if="branchDetails">
+          <div class="location-map" v-if="locationDetails">
             <client-only>
-              <l-map id="map" :zoom=5 :center="[branchDetails.lat, branchDetails.lng]">
+              <l-map id="map" :zoom=5
+                     :center="[locationDetails.location.coordinates[1], locationDetails.location.coordinates[0]]">
                 <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-                <l-marker :lat-lng="[item.lat, item.lng]" v-for="(item, i) in branchsList" @click="showDetailsBranch(item, i)">
-                  <l-icon v-if="i===activeIndex" :icon-url="require('~/assets/img/marker-icon-red.png')"></l-icon>
+                <l-marker :lat-lng="[item.location.coordinates[1], item.location.coordinates[0]]"
+                          v-for="(item, i) in all_locations"
+                          v-if="item.location && item.location.coordinates"
+                          @click="showLocationDetails(item, i)">
+                  <l-icon v-if="item._id===activeIndex"
+                          :icon-url="require('~/assets/img/marker-icon-red.png')"></l-icon>
                 </l-marker>
               </l-map>
             </client-only>
-            <div id="showBranchDetails" class="show-branch-details">
+            <div id="showlocationDetails" class="show-branch-details">
               <v-card>
                 <v-list>
                   <v-list-item>
@@ -48,8 +105,8 @@
                       </v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title v-model="branchDetails.title">
-                        {{branchDetails.address}}
+                      <v-list-item-title v-model="locationDetails.title">
+                        {{ locationDetails.address }}
                       </v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
@@ -61,37 +118,37 @@
                     </v-list-item-icon>
 
                     <v-list-item-content>
-                      <v-list-item-title>{{branchDetails.phone}}</v-list-item-title>
+                      <v-list-item-title>{{ locationDetails.contact_num }}</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item>
+                  <v-list-item v-if="locationDetails.factory_size && locationDetails.factory_size.title">
                     <v-list-item-icon>
                       <v-list-item-title class="font-weight-bold primary-color">
                         Factory size
                       </v-list-item-title>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title>{{branchDetails.factorySize}}</v-list-item-title>
+                      <v-list-item-title>{{ locationDetails.factory_size.title }}</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item>
+                  <v-list-item v-if="locationDetails.annual_output && locationDetails.annual_output.title">
                     <v-list-item-icon>
                       <v-list-item-title class="font-weight-bold primary-color">
                         Annual output value
                       </v-list-item-title>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title>{{branchDetails.annualOutputValue}}</v-list-item-title>
+                      <v-list-item-title>{{ locationDetails.annual_output.title }}</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item>
+                  <v-list-item v-if="locationDetails.production_staff_num">
                     <v-list-item-icon>
                       <v-list-item-title class="font-weight-bold primary-color">
                         No. of production staff
                       </v-list-item-title>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title>{{branchDetails.productionStaff}}</v-list-item-title>
+                      <v-list-item-title>{{ locationDetails.production_staff_num }}</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                 </v-list>
@@ -109,121 +166,15 @@
 export default {
   data() {
     return {
-      branchsList: [
-        {
-          id: '1',
-          title: 'Example1',
-          address: 'Chicago , Bedford street , across the street from lufga academy',
-          phone: '+44 21 4578 32165',
-          factorySize: 'Example1',
-          annualOutputValue: 'Example',
-          productionStaff: 'Example',
-          lat: 55.9464418,
-          lng: 8.1277591,
-        },
-        {
-          id: '2',
-          title: 'Example2',
-          address: 'Chicago , Bedford street , across the street from lufga academy',
-          phone: '+44 21 4578 32165',
-          factorySize: 'Example2',
-          annualOutputValue: 'Example',
-          productionStaff: 'Example',
-          lat: 51.9464418,
-          lng: 7.1277591,
-        },
-        {
-          id: '3',
-          title: 'Example3',
-          address: 'Chicago , Bedford street , across the street from lufga academy',
-          phone: '+44 21 4578 32165',
-          factorySize: 'Example3',
-          annualOutputValue: 'Example',
-          productionStaff: 'Example',
-          lat: 45.9464418,
-          lng: 7.1277591,
-        },
-        {
-          id: '4',
-          title: 'Example4',
-          address: 'Chicago , Bedford street , across the street from lufga academy',
-          phone: '+44 21 4578 32165',
-          factorySize: 'Example',
-          annualOutputValue: 'Example',
-          productionStaff: 'Example',
-          lat: 44.9464418,
-          lng: 7.1277591,
-        },
-        {
-          id: '5',
-          title: 'Example5',
-          address: 'Chicago , Bedford street , across the street from lufga academy',
-          phone: '+44 21 4578 32165',
-          factorySize: 'Example',
-          annualOutputValue: 'Example',
-          productionStaff: 'Example',
-          lat: 43.9464418,
-          lng: 7.1277591,
-        },
-        {
-          id: '6',
-          title: 'Example6',
-          address: 'Chicago , Bedford street , across the street from lufga academy',
-          phone: '+44 21 4578 32165',
-          factorySize: 'Example',
-          annualOutputValue: 'Example',
-          productionStaff: 'Example',
-          lat: 42.9464418,
-          lng: 7.1277591,
-        },
-        {
-          id: '7',
-          title: 'Example7',
-          address: 'Chicago , Bedford street , across the street from lufga academy',
-          phone: '+44 21 4578 32165',
-          factorySize: 'Example',
-          annualOutputValue: 'Example',
-          productionStaff: 'Example',
-          lat: 40.9464418,
-          lng: 1.1277591,
-        },
-        {
-          id: '8',
-          title: 'Example8',
-          address: 'Chicago , Bedford street , across the street from lufga academy',
-          phone: '+44 21 4578 32165',
-          factorySize: 'Example',
-          annualOutputValue: 'Example',
-          productionStaff: 'Example',
-          lat: 51.9464418,
-          lng: 2.1277591,
-        },
-        {
-          id: '9',
-          title: 'Example9',
-          address: 'Chicago , Bedford street , across the street from lufga academy',
-          phone: '+44 21 4578 32165',
-          factorySize: 'Example',
-          annualOutputValue: 'Example',
-          productionStaff: 'Example',
-          lat: 51.3464418,
-          lng: 3.1277591,
-        },
-        {
-          id: '10',
-          title: 'Example10',
-          address: 'Chicago , Bedford street , across the street from lufga academy',
-          phone: '+44 21 4578 32165',
-          factorySize: 'Example',
-          annualOutputValue: 'Example',
-          productionStaff: 'Example',
-          lat: 52.9464418,
-          lng: 7.0977591,
-        },
+      factories_loading: false,
+      branches_loading: false,
 
-      ],
+      factory_list: [],
+      branch_list: [],
+
+      all_locations: [],
       right: null,
-      branchDetails: null,
+      locationDetails: null,
       activeIndex: 0
     }
   },
@@ -233,14 +184,72 @@ export default {
     //   zoom: 13
     // });
 
-    this.branchDetails = this.branchsList.length > 0 ? this.branchsList[0] : null;
-    this.mapCenter = [this.branchDetails.lat, this.branchDetails.lng];
+    // this.locationDetails = this.branchsList.length > 0 ? this.branchsList[0] : null;
+    // this.mapCenter = [this.locationDetails.location.coordinates[1], this.locationDetails.location.coordinates[0]];
+  },
+  mounted() {
+    this.getFactoryList();
+    this.getBranchList();
+  },
+  watch: {
+    factory_list(val, old_val) {
+      if (val !== old_val && val.length > 0) {
+        this.all_locations = this.factory_list.concat(this.branch_list);
+        this.locationDetails = this.all_locations.length > 0 ? this.all_locations[0] : null;
+        if (this.locationDetails && this.locationDetails.location && this.locationDetails.location.coordinates)
+          this.mapCenter = [this.locationDetails.location.coordinates[1], this.locationDetails.location.coordinates[0]];
+        else
+          this.mapCenter = [0, 0];
+      }
+    },
+    branch_list(val, old_val) {
+      if (val !== old_val && val.length > 0) {
+        this.all_locations = this.factory_list.concat(this.branch_list);
+        this.locationDetails = this.all_locations.length > 0 ? this.all_locations[0] : null;
+        if (this.locationDetails && this.locationDetails.location && this.locationDetails.location.coordinates)
+          this.mapCenter = [this.locationDetails.location.coordinates[1], this.locationDetails.location.coordinates[0]];
+        else
+          this.mapCenter = [0, 0];      }
+    }
   },
   methods: {
-    showDetailsBranch (branch, index) {
-      this.activeIndex = index;
-      this.branchDetails = branch;
+    showLocationDetails(location) {
+      this.activeIndex = location._id;
+      this.locationDetails = location;
+      this.locationDetails.address = location.country + '-' + location.state + '-' + location.city;
     },
+    getFactoryList() {
+      this.factories_loading = true;
+      this.$axios.$post('/api/factory_list',
+        {
+          company_id: this.$route.params.id
+        })
+        .then(response => {
+          this.factory_list = response;
+          this.factories_loading = false;
+          console.log("is ok")
+        })
+        .catch(err => {
+          this.factories_loading = false;
+          this.$toast.error(err);
+        })
+    },
+    getBranchList() {
+      this.branches_loading = true;
+      this.$axios.$post('/api/branch_list',
+        {
+          company_id: this.$route.params.id
+        })
+        .then(response => {
+          this.branch_list = response;
+          this.branches_loading = false;
+          console.log("is ok")
+        })
+        .catch(err => {
+          this.branches_loading = false;
+          this.$toast.error(err);
+        })
+    }
   }
 }
 </script>
