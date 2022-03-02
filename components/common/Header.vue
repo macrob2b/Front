@@ -39,6 +39,22 @@
 
           </v-list>
 
+          <!--   User menu-->
+          <v-divider class="mb-3"></v-divider>
+          <span class="text--black font-weight-bold mx-3 text--accent-4 teal--text">User menu</span>
+          <v-treeview :items="user_menu"
+                      class="overflow-y-auto"
+                      color="primary"
+                      shaped>
+            <template v-slot:label="{item,active,selected}">
+              <NuxtLink :class="item.children ? 'font-weight-black' : ''"
+                        :to="item.link!==undefined ? item.link : ''">
+                {{ item.name }}
+              </NuxtLink>
+            </template>
+          </v-treeview>
+
+
           <v-divider class="mb-3"></v-divider>
 
           <!--   Categories    -->
@@ -138,10 +154,10 @@
                {{ signin_btn }}
             </v-btn>
                <v-btn v-else
-                   to="/user-dashboard"
-                   class="mt-2 "
-                   dark
-                   min-width="0" width="100" color="#fb641e">
+                      to="/user-dashboard"
+                      class="mt-2 "
+                      dark
+                      min-width="0" width="100" color="#fb641e">
                Hi, {{ $auth.user.first_name }}
             </v-btn>
             </span>
@@ -151,12 +167,13 @@
         </v-col>
 
         <!--  Toolbar Menu MD   -->
-        <v-col class="pt-5 px-0" v-if="$vuetify.breakpoint.mdAndUp" cols="12">
+        <v-col class="pt-5 px-0 d-none d-md-block"  cols="12">
           <!--     Category menu     -->
           <v-menu
             :nudge-width="selectedCategory !== '' ? $vuetify.breakpoint.width - 350 : ($vuetify.breakpoint.width) / 12"
             rounded="0"
             open-on-hover
+            open-delay="500"
             offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -233,7 +250,6 @@
                            cols="4">
 
                       <v-row>
-
                         <v-col cols="12">
                           <nuxt-link :to="'/product-list?cate_id=' + subCategory._id"
                                      class="font-weight-black text-h7">
@@ -331,6 +347,21 @@ export default {
           to: '/company-list'
         }
       ],
+      user_menu: [
+        {
+          name: 'My Products',
+          children: [
+            {name: 'Product list', link: '/user/product'},
+            {name: 'Add a new product', link: '/user/product/add'},
+          ]
+        },
+        {
+          name: 'My company',
+          children: [
+            {name: 'Update company info', link: '/user/company'},
+          ]
+        },
+      ],
       searchActive: false,
       searchItems: [1]
     };
@@ -340,14 +371,15 @@ export default {
   },
   methods: {
     async loadCategories() {
-      await this.$axios.$post('/api/category_list',).then(response => {
-        // set flag for sub loader
-        response.forEach((category) => {
-          category.subLoaderStatus = false;
-        });
+      await this.$axios.$post('/api/category_list')
+        .then(response => {
+          // set flag for sub loader
+          response.forEach((category) => {
+            category.subLoaderStatus = false;
+          });
 
-        this.categories = response;
-      })
+          this.categories = response;
+        })
         .catch(e => {
           console.log('error in load categories');
         })

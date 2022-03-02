@@ -70,12 +70,14 @@
                 cols="6"
                 md="3"
               >
-                <div class="d-flex flex-column justify-center align-center rounded-lg part-item-content company">
+                <nuxt-link
+                  to="/user/company"
+                  class="d-flex flex-column justify-center align-center rounded-lg part-item-content company">
                   <div>
                     <v-icon>mdi-office-building-outline</v-icon>
                   </div>
                   <p class="title">Company profile</p>
-                </div>
+                </nuxt-link>
               </v-col>
               <v-col
                 class="rounded-lg part-item"

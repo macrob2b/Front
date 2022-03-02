@@ -4,7 +4,7 @@
       <v-row>
         <v-col
           cols="12"
-        class="order-sm-first order-0">
+          class="order-sm-first order-0">
           <div class="mb-8 title">
             <v-icon class="secondary-color">mdi-message</v-icon>
             Send message to supplier
@@ -16,25 +16,23 @@
           class="order-sm-0 order-1 bg-white rounded-lg py-4  fill-height">
           <v-row>
             <v-col
-            cols="12"
-            sm="6"
+              cols="12"
+              sm="6"
             >
               <v-text-field
-                placeholder="John Thompson"
-                v-model="from"
-                label="From"
+                v-model="name"
+                label="Name"
                 outlined
                 required
               ></v-text-field>
             </v-col>
             <v-col
-            cols="12"
-            sm="6"
+              cols="12"
+              sm="6"
             >
               <v-text-field
-                placeholder="Global BNB marketing"
-                v-model="to"
-                label="To"
+                v-model="email"
+                label="Email address"
                 outlined
                 required
               ></v-text-field>
@@ -55,13 +53,15 @@
             </v-col>
           </v-row>
           <div class="btn-container">
-            <v-btn @click="submit" class="secondary-btn px-10">Send</v-btn>
+            <v-btn @click="submitMsg"
+                   :loading="submit_loading" class="secondary-btn px-10">Send
+            </v-btn>
           </div>
         </v-col>
         <v-col
           cols="12"
           sm="6"
-        class="order-sm-1 order-first py-0  fill-height">
+          class="order-sm-1 order-first py-0  fill-height">
           <v-card
             class="mx-auto"
           >
@@ -80,7 +80,7 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>
-                    Chicago , Bedford street , across the street from lufga academy
+                    {{ companyInfo.country }}-{{ companyInfo.state }}-{{ companyInfo.city }}
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -93,10 +93,28 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                  <v-list-item-title>+44 21 6547 2134</v-list-item-title>
+                  <v-list-item-title>
+                    <a :href="'tel:'+companyInfo.phone">
+                      {{ companyInfo.phone }}
+                    </a>
+                  </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
 
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>
+                    mdi-fax
+                  </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <a :href="'tel:'+companyInfo.fax">
+                      {{ companyInfo.fax }}
+                    </a>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
               <v-list-item>
                 <v-list-item-icon>
                   <v-icon>
@@ -104,27 +122,25 @@
                   </v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>Example@gmail.com</v-list-item-title>
+                  <v-list-item-title>
+                    <a :href="'mailto:'+companyInfo.email">
+                      {{ companyInfo.email }}
+                    </a>
+                  </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item>
                 <v-list-item-icon>
-                  <v-list-item-title class="font-weight-bold primary-color">
-                    Country/region
-                  </v-list-item-title>
+                  <v-icon>
+                    mdi-earth
+                  </v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>Example</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-icon>
-                  <v-list-item-title class="font-weight-bold primary-color">
-                    Fax
+                  <v-list-item-title>
+                    <a :href="companyInfo.website" target="_blank">
+                      {{ companyInfo.website }}
+                    </a>
                   </v-list-item-title>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>Example</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -139,16 +155,44 @@
 <script>
 
 export default {
-  components: {
-
-  },
+  props: ['companyInfo'],
+  components: {},
   data() {
     return {
       valid: false,
-      from: '',
-      to: '',
+      name: '',
+      email: '',
       message: '',
+      submit_loading: false,
       img: 'message.png'
+    }
+  },
+  methods: {
+    async submitMsg() {
+      this.submit_loading = true;
+      await this.$axios.$post('/api/send_msg_to_company', {
+          company_id: this.$route.params.id,
+          name: this.name,
+          email: this.email,
+          message: this.message
+        }
+      ).then(response => {
+        if (typeof response === 'object') {
+          for (let i in response) {
+            let error = response[i][0];
+            this.$toast.error(error);
+            // break;
+          }
+        } else {
+          this.name = '';
+          this.email = '';
+          this.message = '';
+          this.$toast.success('Your message sent successfully')
+        }
+        this.submit_loading = false;
+      }).catch(err => {
+        this.submit_loading = false;
+      });
     }
   }
 }

@@ -46,7 +46,11 @@
                   :key="item.title"
                 >
                   <td>{{ item.title }}</td>
-                  <td>{{ item.category.title }}</td>
+                  <td>
+                    <span v-if="item.category">
+                    {{ item.category.title }}
+                    </span>
+                  </td>
                   <td>
                     <v-btn icon
                            :to="'/product-details/'+item._id"
@@ -66,7 +70,7 @@
                     </v-btn>
                     <v-btn icon
                            color="error"
-                           @click.stop="deleteConfirmDialog = true"
+                           @click.stop="openDeleteConfirmDialog(item)"
                     >
                       <v-icon small
                               class="mr-2">mdi-delete
@@ -104,6 +108,7 @@
                       <v-btn
                         color="green darken-1"
                         text
+                        :loading="delete_loading"
                         @click="deleteProduct()"
                       >
                         Agree
@@ -149,7 +154,9 @@ export default {
       page: 1,
       total_page: 0,
       deleteConfirmDialog: false,
-      loading: false
+      loading: false,
+      delete_loading:false,
+      delete_item:null,
     }
   },
   mounted() {
@@ -180,9 +187,40 @@ export default {
           }
         )
     },
-    deleteProduct(id) {
-
-    }
+    deleteProduct() {
+      this.delete_loading=true;
+      this.$axios.$delete('/api/delete_product',
+        {
+          params:
+            {id: this.delete_item._id}
+        })
+        .then(response => {
+          if (typeof response.data === 'object') {
+            for (let i in response.data) {
+              let error = response.data[i][0];
+              this.$toast.error(error);
+              // break;
+            }
+          } else {
+            this.$toast.success("Deleted successfully");
+            this.getProductList();
+            this.delete_loading=false;
+            this.deleteConfirmDialog=false;
+          }
+        }).catch(({response}) => {
+        if (response.status == 401) {
+          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+        } else if (response.status == 500 || response.status == 504) {
+          this.$toast.error(this.$t(`REQUEST_FAILED`));
+        }
+        this.delete_loading=false;
+        this.deleteConfirmDialog=false;
+      });
+    },
+    openDeleteConfirmDialog(item) {
+      this.deleteConfirmDialog = true;
+      this.delete_item = item;
+    },
   }
 }
 </script>

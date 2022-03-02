@@ -3,7 +3,7 @@
     <DesktopStepper class="d-none d-md-block"
                     :companyInfo="companyInfo"
                     :step1="step" @step="currentStep"></DesktopStepper>
-    <MobileStepper class="d-md-none"
+    <MobileStepper class="d-md-none mx-6"
 
                    :companyInfo="companyInfo"
                    :step1="step" @step="currentStep"></MobileStepper>

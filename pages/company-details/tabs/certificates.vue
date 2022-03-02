@@ -132,7 +132,7 @@ export default {
     getCertificates() {
       this.loading_data=true;
       this.$axios.$post('/api/certification_list',
-        {company_id: this.$auth.user.company._id}).then(response => {
+        {company_id: this.$route.params.id}).then(response => {
         this.certificates = response;
         this.loading_data=false;
       }).catch(({response}) => {
@@ -148,7 +148,7 @@ export default {
     getTrademarks() {
       this.loading_data = true;
       this.$axios.$post('/api/trademark_list',
-        {company_id: this.$auth.user.company._id}).then(response => {
+        {company_id: this.$route.params.id}).then(response => {
         this.trademarks = response;
         this.loading_data = false;
       }).catch(({response}) => {
@@ -164,7 +164,7 @@ export default {
     getPatents() {
       this.loading_data=true;
       this.$axios.$post('/api/patent_list',
-        {company_id: this.$auth.user.company._id}).then(response => {
+        {company_id: this.$route.params.id}).then(response => {
         this.patents = response;
         this.loading_data=false;
       }).catch(({response}) => {

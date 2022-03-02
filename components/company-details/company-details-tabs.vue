@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div >
     <v-tabs
+      :show-arrows="false"
       v-model="tab"
       class="company-details-tabs"
     >
@@ -47,7 +48,7 @@
 <!--          <mainProducts/>-->
 <!--        </v-tab-item>-->
         <v-tab-item>
-          <contactUs/>
+          <contactUs :companyInfo="companyInfo"/>
         </v-tab-item>
       </v-tabs-items>
     </div>
@@ -83,3 +84,9 @@ export default {
 </script>
 
 
+
+<style>
+.v-slide-group__prev,.v-slide-group__next {
+  display: none!important;
+}
+</style>

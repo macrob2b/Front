@@ -3,10 +3,10 @@
 
   <v-app>
     <Header/>
-    <v-main style="margin-top: 140px">
+    <v-main class="mainContainer">
       <v-container fluid>
         <v-row>
-          <v-col cols="12" md="3">
+          <v-col cols="12" md="3" class="d-none d-md-block">
             <SideBar></SideBar>
             <div class="text-center mt-12" >
               <v-btn

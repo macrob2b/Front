@@ -47,7 +47,8 @@
                   <v-list-item>
                     <v-list-item-content>
                       <v-list-item-title>
-                        No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+                        No results matching "<strong>{{ keyword_search }}</strong>". Press <kbd>enter</kbd> to create a
+                        new one
                       </v-list-item-title>
 
                     </v-list-item-content>
@@ -62,26 +63,24 @@
             <v-col
               cols="12"
               md="4"
+              v-for="(item,index) in categoryTree"
             >
               <v-autocomplete
-                v-model="categoryVal"
-                :items="cateItems"
-                :loading="isLoading"
-                :search-input.sync="cate_search"
-                chips
-                clearable
-                hide-details
-                hide-selected
+                v-model="item.value"
+                :items="item.items"
+                :loading="item.loading"
                 item-text="title"
-                item-value="_id"
-                label="Category"
+                :item-value="item.item_val"
+                :label="item.label"
+                @change="selectCate(item.value,index)"
                 outlined
               ></v-autocomplete>
             </v-col>
 
+
           </v-row>
         </v-container>
-        <v-container v-if="cateProperty.length>0">
+        <v-container v-if="property_section">
           <v-row class="mb-2">
             <v-col cols="12">
               <h3>Category property</h3>
@@ -91,10 +90,22 @@
 
 
           <v-row class="mt-2">
-            <v-col
-              v-for="(item,index) in cateProperty"
-              cols="12"
-              md="4"
+            <v-col cols="12" class="text-center" v-if="property_loading">
+              <v-progress-circular
+                class="mt-4"
+                :size="30"
+                :width="3"
+                color="orange"
+                indeterminate
+              ></v-progress-circular>
+            </v-col>
+            <v-col v-else-if="cate_not_exist" cols="12">
+              No attributes entered for this group, you can enter some custom attribute by below button
+            </v-col>
+            <v-col v-else
+                   v-for="(item,index) in cateProperty"
+                   cols="12"
+                   md="4"
             >
               <span
                 v-if="item.field_type=='Text'"
@@ -195,6 +206,7 @@
                 color="primary"
                 class="mr-4"
                 :loading="formLoader"
+                :disabled="!property_section"
                 @click="submitProduct"
                 large
               >
@@ -204,7 +216,7 @@
               <v-btn
                 class="mr-4"
                 large
-                @click="goBack"
+                to="/user/product"
               >
                 Cancel
               </v-btn>
@@ -227,9 +239,7 @@ export default {
   },
   layout: "user_dashboard",
   data: () => ({
-    isLoading: false,
     cateItems: [],
-    categoryVal: null,
     cate_search: null,
 
     cateProperty: [],
@@ -244,43 +254,126 @@ export default {
     fields: {},
     catPropertyVal: {},
     dynamicAttr: [],
-    formLoader:false
+    formLoader: false,
+    category_parent_id: null,
+
+    categoryTree: [
+      {
+        label: "Main category",
+        value: null,
+        items: [],
+        loading: false,
+        item_val: '_id'
+      },
+    ],
+    all_related_category: [],
+    category_id:null,
+    categoryTreeIndex: 0,
+    property_section: false,
+    property_loading: false,
+    cate_not_exist: false
   }),
+  mounted() {
+    this.loadCateList();
+  },
   watch: {
-    categoryVal(val) {
-      this.loadProperty(val);
-    },
-    async cate_search(val) {
+    property_section(val) {
+      this.all_related_category = [];
+      if (val === true) {
+        this.all_related_category = [];
+        for (let i in this.categoryTree) {
+          this.all_related_category.push(this.categoryTree[i].value);
+        }
+      }
+    }
+  },
+  methods: {
+    //Load category list
+    async loadCateList() {
       // Items have already been loaded
       if (this.cateItems.length > 0) return
 
-      this.isLoading = true
+      this.categoryTree[0].loading = true;
 
       // Lazily load input items
 
-      await this.$axios.$post('/api/main_cate_list', {
-        keyword: this.cate_search
+      await this.$axios.$post('/api/category_list', {
+        parent: this.category_parent_id,
       })
         .then(res => {
-          this.cateItems = res
+          this.categoryTree[this.categoryTreeIndex].items = res;
         })
         .catch(err => {
           console.log(err)
         })
-        .finally(() => (this.isLoading = false))
+        .finally(() => {
+          this.categoryTree[0].loading = false;
+        });
     },
-  },
-  methods: {
+
+
+    async selectCate(val, index) {
+      this.categoryTree[index].loading = true;
+      //When user change again parent or grandparent select, remove current children after changed select
+      this.categoryTreeIndex = index + 1;
+      if (this.categoryTree.length > this.categoryTreeIndex) {
+        this.categoryTree.splice(this.categoryTreeIndex, this.categoryTree.length - 1);
+      }
+      //End when user change again parent or grandparent select, remove current children after changed select
+
+      //When change one select category, hidden property section
+      this.property_section = false;
+
+
+      await this.$axios.$post('/api/find_category', {id: val})
+        .then(response => {
+
+          if (response.child_ids && response.child_ids.length) {
+            //Create new child category based on parent
+            this.categoryTree.push(
+              {
+                label: response.title,
+                value: null,
+                items: response.children,
+                loading: false,
+                item_val: 'id'
+              }
+            );
+            //En create new child category based on parent
+          } else {
+            //Category select for product
+            this.all_related_category.push(val);
+            this.category_id=val;
+
+            this.property_section = true;
+            this.loadProperty(val);
+          }
+          this.categoryTree[index].loading = false;
+
+        }).catch(err => {
+          this.$toast.error(err);
+          this.property_section = false;
+          this.categoryTree[index].loading = false;
+        });
+    },
+
     async loadProperty(catid) {
+      this.property_loading = true;
       await this.$axios.$post('/api/get_cate_property', {
         cate_id: catid
       })
         .then(res => {
-          this.cateProperty = res
+          if (res.length > 0) {
+            this.cate_not_exist = false;
+            this.cateProperty = res;
+          } else
+            this.cate_not_exist = true;
         })
         .catch(err => {
           console.log(err)
-        })
+        }).finally(() => {
+          this.property_loading = false;
+        });
 
     },
     applayCatVal(value, field) {
@@ -324,19 +417,19 @@ export default {
       var data = {
         title: this.productNameVal,
         keyword: this.keywordVal,
-        cate_id: this.categoryVal,
+        all_related_category: this.all_related_category,
+        cate_id: this.category_id,
         attribute: this.catPropertyVal
       };
       await this.$axios.$post('/api/create_product', data)
         .then(res => {
           this.formLoader = false;
-          if (res.length == 0){
+          if (res.length == 0) {
             this.$toast.success("Product create successfully");
             this.$router.push({
-              path:'/user/product'
+              path: '/user/product'
             });
-          }
-          else
+          } else
             this.$toast.error("Some error on form input");
 
         }).catch(err => {

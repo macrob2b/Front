@@ -2,12 +2,6 @@
     <v-row>
       <div class="company-main " >
         <ProfileCard></ProfileCard>
-        <div class="mobile-nav d-md-none">
-          <v-btn class="drawer-btn" @click.stop="drawer = !drawer">
-            <v-icon>mdi-filter-variant</v-icon>
-          </v-btn>
-          <Navigation :drawer="drawer" :items="items" @close="drawer = false"></Navigation>
-        </div>
         <Stepper></Stepper>
       </div>
     </v-row>

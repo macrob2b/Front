@@ -2,7 +2,7 @@
   <div class="profile-card">
     <div class="profile-card-header">
       <div class="profile-header-title">
-        <p class="title">Company Profile</p>
+        <h3 >Company Profile</h3>
       </div>
       <div class="premium">
         <v-btn>GO PREMIUM</v-btn>

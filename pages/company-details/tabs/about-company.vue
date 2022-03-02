@@ -59,7 +59,8 @@
               <v-col cols="6" md="4" class="px-4">
                 <span class="body-2">Business type</span>
               </v-col>
-              <v-col cols="6" md="8" class="px-4">
+              <v-col cols="6" md="8" class="px-4"
+                     v-if="companyInfo.business_type_info && companyInfo.business_type_info.title">
                 <span class="body-2">{{ companyInfo.business_type_info.title }}</span>
               </v-col>
             </v-row>
