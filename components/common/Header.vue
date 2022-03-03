@@ -146,28 +146,34 @@
                    nuxt>
               <v-icon>mdi-earth</v-icon>
             </v-btn>
-            <span class="d-none d-md-inline">
-              <v-btn
-                class="mt-2 "
-                dark
-                v-if="!this.$auth.loggedIn" to="/login" min-width="0" width="100" color="#fb641e">
-               {{ signin_btn }}
+            <v-btn v-if="$vuetify.breakpoint.mdAndUp"
+                   to="/user-dashboard"
+                   width="120"
+                   color="accent"
+                   class="mt-2" nuxt>
+
+              <span v-if="this.$auth.loggedIn && this.$auth.user.first_name">
+                {{ this.$auth.user.first_name.length > 5
+                   ? this.$auth.user.first_name.substr(0,5) + '...'
+                   : this.$auth.user.first_name }}
+              </span>
+
+              <span v-if="this.$auth.loggedIn && !this.$auth.user.first_name">
+                Dashboard
+              </span>
+
+              <span v-if="!this.$auth.loggedIn">
+                Sign In
+              </span>
+
             </v-btn>
-               <v-btn v-else
-                      to="/user-dashboard"
-                      class="mt-2 "
-                      dark
-                      min-width="0" width="100" color="#fb641e">
-               Hi, {{ $auth.user.first_name }}
-            </v-btn>
-            </span>
           </div>
 
 
         </v-col>
 
         <!--  Toolbar Menu MD   -->
-        <v-col class="pt-5 px-0 d-none d-md-block"  cols="12">
+        <v-col class="pt-5 px-0 d-none d-md-block" cols="12">
           <!--     Category menu     -->
           <v-menu
             :nudge-width="selectedCategory !== '' ? $vuetify.breakpoint.width - 350 : ($vuetify.breakpoint.width) / 12"
@@ -328,42 +334,41 @@
 export default {
   data() {
     return {
-      drawer: false,
-      signin_btn: 'Sign In',
-      categoriesMenu: false,
-      categories: [],
+      drawer          : false,
+      categoriesMenu  : false,
+      categories      : [],
       selectedCategory: '',
-      menuButtons: [
+      menuButtons     : [
         {
           title: this.$t(`BUY_NOW`),
-          to: '/product-list'
+          to   : '/product-list'
         },
         {
           title: this.$t(`SELL_NOW`),
-          to: '/selling-leads'
+          to   : '/selling-leads'
         },
         {
           title: this.$t(`COMPANY_LIST`),
-          to: '/company-list'
+          to   : '/company-list'
         }
       ],
-      user_menu: [
+      user_menu       : [
         {
-          name: 'My Products',
+          name    : 'My Products',
           children: [
             {name: 'Product list', link: '/user/product'},
             {name: 'Add a new product', link: '/user/product/add'},
           ]
         },
         {
-          name: 'My company',
+          name    : 'My company',
           children: [
             {name: 'Update company info', link: '/user/company'},
           ]
         },
       ],
-      searchActive: false,
-      searchItems: [1]
+      searchActive    : false,
+      searchItems     : [1]
     };
   },
   mounted() {
