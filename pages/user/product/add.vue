@@ -113,7 +113,7 @@
                   <v-text-field
                     :label="item.label"
                     outlined
-                    @input="applayCatVal($event, item.label)"
+                    @input="applyCatVal($event, item.label)"
                   >
                   </v-text-field>
                 </span>
@@ -123,7 +123,7 @@
                   <v-select
                     :items="item.values"
                     :label="item.label"
-                    @input="applayCatVal($event, item.label)"
+                    @input="applyCatVal($event, item.label)"
                     outlined
                   >
                   </v-select>
@@ -136,7 +136,7 @@
                       class="mt-0"
                       mandatory
                       row
-                      @change="applayCatVal($event, item.label)"
+                      @change="applyCatVal($event, item.label)"
                     >
                       <v-radio
                         v-for="(radio_val,index) in item.values"
@@ -153,7 +153,7 @@
                    <v-textarea
                      outlined
                      :label="item.label"
-                     @input="applayCatVal($event, item.label)"
+                     @input="applyCatVal($event, item.label)"
                    ></v-textarea>
                 </span>
             </v-col>
@@ -171,7 +171,7 @@
                 v-for="(item,index) in dynamicAttr"
               >
                 <v-col cols="12" md="4">
-                  <v-text-field label="Label" :value="item.label" @input="applayLabelVal($event,index)" class="mr-2"
+                  <v-text-field label="Label" :value="item.label" @input="applyLabelVal($event,index)" class="mr-2"
                                 outlined/>
                 </v-col>
                 <v-col cols="12" md="4">
@@ -194,6 +194,255 @@
               >
                 Add custom attribute
               </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+
+
+        <v-container>
+          <v-row>
+            <v-col cols="12">
+              <h2>Trade information</h2>
+              <v-divider></v-divider>
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <v-text-field
+                outlined
+                type="number"
+                v-model="min_order"
+                label="Minimum Order (Only numbers)"
+              ></v-text-field>
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <v-autocomplete
+                outlined
+                v-model="order_unit"
+                :items="measurement_list"
+                item-text="title"
+                item-value="title"
+                label="Unit of measurement"
+              ></v-autocomplete>
+            </v-col>
+            <v-col
+              cols="12"
+            >
+              <p>Set price</p>
+              <v-radio-group
+                v-model="price_type"
+                row
+              >
+                <v-radio
+                  value="base_on_qty"
+                  label="Different price based on quantity range">
+                </v-radio>
+                <v-radio
+                  value="range"
+                  label="Price Range">
+                </v-radio>
+              </v-radio-group>
+            </v-col>
+            <v-col cols="12" md="12">
+              <section v-if="price_type=='base_on_qty'">
+                <v-row v-for="(item,index) in price_set">
+                  <v-col cols="12" md="2">
+                    <v-text-field
+                      type="number"
+                      outlined
+                      v-model="item.min_qty"
+                      prefix="≥"
+                      label="Quantity"
+                    />
+
+                  </v-col>
+
+                  <v-col cols="12" md="3">
+                    <v-select
+                      v-model="item.currency"
+                      :items="currencyTypeItems"
+                      item-value="title"
+                      item-text="title"
+                      label="Currency"
+                      outlined
+                    />
+                  </v-col>
+
+                  <v-col cols="12" md="3">
+                    <v-text-field
+                      v-model="item.value"
+                      outlined
+                      label="Price"
+                    />
+                  </v-col>
+                  <v-col cols="12" md="2">
+                    <v-btn
+                      v-if="price_set.length===(index+1) & index!==3"
+                      icon color="green" @click="addNewPriceRange()">
+                      <v-icon>
+                        mdi-plus
+                      </v-icon>
+                    </v-btn>
+                    <v-btn
+                      v-if="index!==0"
+                      icon color="red" @click="removePriceRange(index)">
+                      <v-icon>
+                        mdi-minus
+                      </v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" md="2" class="mt-4">
+                    <span v-if="item.max_qty">
+                      [{{ item.min_qty }}~{{ item.max_qty }}]
+                    </span>
+                    <span v-else>
+                      <span v-if="item.min_qty">≥ {{ item.min_qty }}</span>
+                    </span>
+
+                  </v-col>
+                  <v-col>
+
+                  </v-col>
+                </v-row>
+              </section>
+              <section v-if="price_type=='range'">
+                <v-row>
+                  <v-col cols="12" md="3">
+                    <v-select
+                      v-model="price_range.currency"
+                      :items="currencyTypeItems"
+                      item-value="title"
+                      item-text="title"
+                      label="Currency"
+                      outlined
+                    />
+                  </v-col>
+                  <v-col cols="12" md="3">
+                    <v-text-field
+                      v-model="price_range.min_value"
+                      label="Min price"
+                      outlined
+                    />
+                  </v-col>
+                  <v-col cols="12" md="3">
+                    <v-text-field
+                      v-model="price_range.max_value"
+                      label="Max price"
+                      outlined
+                    />
+                  </v-col>
+                  <v-col cols="12" md="3" class="mt-3">
+                    <p>
+                      per Twenty-Foot Container
+                    </p>
+                  </v-col>
+                </v-row>
+              </section>
+            </v-col>
+
+
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                outlined
+                v-model="hs_code"
+                label="Hs code"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col md="2" cols="6">
+              <p class="mt-5">
+                Payment Terms
+              </p>
+            </v-col>
+            <v-col md="2" cols="6" v-for="item in payment_terms_list">
+              <v-checkbox
+                v-model="payment_terms"
+                :label="item"
+                :value="item"
+              ></v-checkbox>
+            </v-col>
+          </v-row>
+
+
+          <v-row>
+            <v-col cols="12">
+              <h2>Product Description</h2>
+              <v-divider></v-divider>
+            </v-col>
+
+            <v-col cols="12">
+              <v-textarea
+                outlined
+                label="Product details"
+              >
+
+              </v-textarea>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="4"
+            >
+              <v-file-input
+                v-model="images"
+                accept="image/*"
+                small-chips
+                multiple
+                label="Images"
+                outlined
+              ></v-file-input>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="4"
+            >
+              <v-file-input
+                v-model="video"
+                accept="video/mp4,video/x-m4v,video/*"
+                label="Video"
+                outlined
+              ></v-file-input>
+            </v-col>
+
+            <v-col cols="12">
+              <h4>Certificates Approval	</h4>
+              <v-data-table
+                :headers="cert_table_headers"
+                :items="product_cert_list"
+                :items-per-page="10"
+                class="elevation-1"
+                hide-default-footer
+              ></v-data-table>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col cols="12">
+              <h2>Ready to display?</h2>
+              <v-divider></v-divider>
+            </v-col>
+            <v-col cols="12">
+              <p> If you select “No”, your product will not be searchable.</p>
+              <v-radio-group
+                v-model="ready_display"
+                class="mx-0"
+                row
+              >
+                <v-radio
+                  label="Yes"
+                  value="yes"
+                ></v-radio>
+                <v-radio
+                  label="No"
+                  value="no"
+                ></v-radio>
+              </v-radio-group>
             </v-col>
           </v-row>
         </v-container>
@@ -243,7 +492,35 @@ export default {
     cate_search: null,
 
     cateProperty: [],
+    cert_table_headers:[
+      {
+        text: "Certificate Name",
+        align: 'start',
+        sortable: false,
+        value: 'name',
+      },
+      { text: 'Certificate Number', value: 'num' },
 
+    ],
+
+    min_order: 0,
+    order_unit: '',
+    price_set: [
+      {
+        min_qty: '',
+        max_qty: '',
+        currency: 'USD',
+        value: ''
+      }
+    ],
+    //==== When user select price range
+    price_range: {
+      currency: '',
+      min_value: '',
+      max_value: '',
+    },
+
+    hs_code: '',
 
     productNameVal: null,
 
@@ -251,11 +528,14 @@ export default {
     keywordItems: [],
     keyword_search: null,
 
+    currencyTypeItems: [],
+
     fields: {},
     catPropertyVal: {},
     dynamicAttr: [],
     formLoader: false,
     category_parent_id: null,
+    measurement_list: [],
 
     categoryTree: [
       {
@@ -267,14 +547,38 @@ export default {
       },
     ],
     all_related_category: [],
-    category_id:null,
+    category_id: null,
     categoryTreeIndex: 0,
     property_section: false,
     property_loading: false,
-    cate_not_exist: false
+    price_type: 'range',
+    cate_not_exist: false,
+    ready_display: "yes",
+
+    payment_terms: [],
+    payment_terms_list: [
+      'Payoneer',
+      'L/C',
+      'T/T',
+      'D/P',
+      'Western Union',
+      'Paypal',
+      'Money Gram',
+      'Others'
+    ],
   }),
   mounted() {
+    this.getCurrencyType();
     this.loadCateList();
+    this.getMeasurementUnit();
+  },
+  filters: {
+    currencyFormatted: function (value) {
+      return Number(value).toLocaleString("fa-IR", {
+        // style: "currency",
+        currency: "IRR"
+      });
+    },
   },
   watch: {
     property_section(val) {
@@ -285,7 +589,30 @@ export default {
           this.all_related_category.push(this.categoryTree[i].value);
         }
       }
-    }
+    },
+    min_order(val) {
+      this.price_set[0].min_qty = val;
+    },
+    'price_set.0.min_qty': {
+      handler: function (val) {
+        console.log(val);
+        this.min_order = val;
+      },
+      deep: true
+
+    },
+    'price_set': {
+      handler: function (val) {
+        for (let i in val) {
+          if (i > 0)
+            if (val[i].min_qty > val[i - 1].min_qty)
+              this.price_set[i - 1].max_qty = val[i].min_qty - 1;
+
+          this.price_set[i].value = this.spilitter(val[i].value)
+        }
+      },
+      deep: true
+    },
   },
   methods: {
     //Load category list
@@ -343,7 +670,7 @@ export default {
           } else {
             //Category select for product
             this.all_related_category.push(val);
-            this.category_id=val;
+            this.category_id = val;
 
             this.property_section = true;
             this.loadProperty(val);
@@ -376,11 +703,11 @@ export default {
         });
 
     },
-    applayCatVal(value, field) {
+    applyCatVal(value, field) {
       console.log(value);
       this.catPropertyVal[field] = value;
     },
-    applayLabelVal(value, index) {
+    applyLabelVal(value, index) {
       this.dynamicAttr[index].label = value;
     },
     applayCustomPropertyVal(value, index) {
@@ -407,7 +734,7 @@ export default {
         this.$toast.error("Before create new attribute, fill in the available fields")
 
     },
-    // applayCatValCheckbox(value, field, field_item) {
+    // applyCatValCheckbox(value, field, field_item) {
     //   this.fields[field_item] = value;
     //   this.catPropertyVal[field] = fields;
     // },
@@ -419,7 +746,13 @@ export default {
         keyword: this.keywordVal,
         all_related_category: this.all_related_category,
         cate_id: this.category_id,
-        attribute: this.catPropertyVal
+        attribute: this.catPropertyVal,
+        min_order: this.min_order,
+        order_unit: this.order_unit,
+        price_type: this.price_type,
+        price: (this.price_type === 'base_on_qty' ? this.price_set : this.price_range),
+        hs_code: this.hs_code,
+        payment_terms: this.payment_terms,
       };
       await this.$axios.$post('/api/create_product', data)
         .then(res => {
@@ -445,7 +778,55 @@ export default {
     },
     goBack() {
 
-    }
+    },
+    getCurrencyType() {
+      this.$axios.$post('/api/currency_type'
+      ).then(response => {
+        this.currencyTypeItems = response;
+      }).catch(err => {
+        console.log(err);
+      });
+    },
+    spilitter(val) {
+      val = val.replace(/,/g, '');
+      const str = val.toString().split(".");
+      return str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    //Add new price range to price set (different price based on quantity range)
+    addNewPriceRange() {
+      if (this.price_set.length < 4)
+        this.price_set.push({
+          min_qty: '',
+          max_qty: '',
+          currency: 'USD',
+          value: ''
+        })
+      else
+        this.$toast.error("Max record for range is 4")
+    },
+    removePriceRange(index) {
+      this.price_set.splice(index, 1);
+
+      //Remove max price from before object
+      if (index > 0)
+        this.price_set[index - 1].max_qty = '';
+    },
+    async getMeasurementUnit() {
+      await this.$axios.post('/api/measurement_unit').then(response => {
+        this.measurement_list = response.data;
+      }).catch(({response}) => {
+        if (response.status == 401) {
+          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+        } else if (response.status == 400) {
+          this.$toast.error(this.$t(`Bad Request`));
+        } else if (response.status == 403) {
+          this.$toast.error(this.$t(`Forbidden`));
+        } else if (response.status == 404) {
+          this.$toast.error(this.$t(`not found`));
+        }
+      });
+    },
+
   }
 
 }
