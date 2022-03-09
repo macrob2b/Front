@@ -19,7 +19,7 @@
               md="4"
             >
               <v-text-field
-                v-model="productNameVal"
+                v-model="productItems.title"
                 label="Product Name"
                 append-icon="mdi-pencil"
                 required
@@ -32,7 +32,7 @@
               md="8"
             >
               <v-combobox
-                v-model="keywordVal"
+                v-model="productItems.keyword"
                 :items="keywordItems"
                 :search-input.sync="keyword_search"
                 hide-selected
@@ -175,7 +175,7 @@
                                 outlined/>
                 </v-col>
                 <v-col cols="12" md="4">
-                  <v-text-field label="Value" :value="item.value" @input="applayCustomPropertyVal($event,index)"
+                  <v-text-field label="Value" :value="item.value" @input="applyCustomPropertyVal($event,index)"
                                 outlined/>
 
                 </v-col>
@@ -211,7 +211,7 @@
               <v-text-field
                 outlined
                 type="number"
-                v-model="min_order"
+                v-model="productItems.min_order"
                 label="Minimum Order (Only numbers)"
               ></v-text-field>
             </v-col>
@@ -220,7 +220,7 @@
             >
               <v-autocomplete
                 outlined
-                v-model="order_unit"
+                v-model="productItems.order_unit"
                 :items="measurement_list"
                 item-text="title"
                 item-value="title"
@@ -232,7 +232,7 @@
             >
               <p>Set price</p>
               <v-radio-group
-                v-model="price_type"
+                v-model="productItems.price_type"
                 row
               >
                 <v-radio
@@ -246,7 +246,7 @@
               </v-radio-group>
             </v-col>
             <v-col cols="12" md="12">
-              <section v-if="price_type=='base_on_qty'">
+              <section v-if="productItems.price_type=='base_on_qty'">
                 <v-row v-for="(item,index) in price_set">
                   <v-col cols="12" md="2">
                     <v-text-field
@@ -307,7 +307,7 @@
                   </v-col>
                 </v-row>
               </section>
-              <section v-if="price_type=='range'">
+              <section v-else-if="productItems.price_type=='range'">
                 <v-row>
                   <v-col cols="12" md="3">
                     <v-select
@@ -349,7 +349,7 @@
             >
               <v-text-field
                 outlined
-                v-model="hs_code"
+                v-model="productItems.hs_code"
                 label="Hs code"
               ></v-text-field>
             </v-col>
@@ -363,7 +363,7 @@
             </v-col>
             <v-col md="2" cols="6" v-for="item in payment_terms_list">
               <v-checkbox
-                v-model="payment_terms"
+                v-model="productItems.payment_terms"
                 :label="item"
                 :value="item"
               ></v-checkbox>
@@ -379,6 +379,7 @@
 
             <v-col cols="12">
               <v-textarea
+                v-model="productItems.details"
                 outlined
                 label="Product details"
               >
@@ -390,7 +391,7 @@
               sm="4"
             >
               <v-file-input
-                v-model="images"
+                v-model="productItems.images"
                 accept="image/*"
                 small-chips
                 multiple
@@ -403,7 +404,7 @@
               sm="4"
             >
               <v-file-input
-                v-model="video"
+                v-model="productItems.video"
                 accept="video/mp4,video/x-m4v,video/*"
                 label="Video"
                 outlined
@@ -411,7 +412,7 @@
             </v-col>
 
             <v-col cols="12">
-              <h4>Certificates Approval	</h4>
+              <h4>Certificates Approval </h4>
               <v-data-table
                 :headers="cert_table_headers"
                 :items="product_cert_list"
@@ -430,7 +431,7 @@
             <v-col cols="12">
               <p> If you select “No”, your product will not be searchable.</p>
               <v-radio-group
-                v-model="ready_display"
+                v-model="productItems.ready_display"
                 class="mx-0"
                 row
               >
@@ -488,29 +489,44 @@ export default {
   },
   layout: "user_dashboard",
   data: () => ({
+    productItems: {
+      title: '',
+      keyword: '',
+      all_related_category: [],
+      cate_id: '',
+      attribute: [],
+      min_order: 0,
+      order_unit: '',
+      price_type: 'range',
+      price: '',
+      hs_code: '',
+      payment_terms: [],
+      ready_display: "yes",
+      images: [],
+      video: null
+    },
+
     cateItems: [],
     cate_search: null,
 
     cateProperty: [],
-    cert_table_headers:[
+    cert_table_headers: [
       {
         text: "Certificate Name",
         align: 'start',
         sortable: false,
         value: 'name',
       },
-      { text: 'Certificate Number', value: 'num' },
+      {text: 'Certificate Number', value: 'num'},
 
     ],
 
-    min_order: 0,
-    order_unit: '',
     price_set: [
       {
         min_qty: '',
         max_qty: '',
         currency: 'USD',
-        value: ''
+        value: '',
       }
     ],
     //==== When user select price range
@@ -520,18 +536,13 @@ export default {
       max_value: '',
     },
 
-    hs_code: '',
 
-    productNameVal: null,
-
-    keywordVal: null,
     keywordItems: [],
     keyword_search: null,
 
     currencyTypeItems: [],
 
     fields: {},
-    catPropertyVal: {},
     dynamicAttr: [],
     formLoader: false,
     category_parent_id: null,
@@ -546,16 +557,11 @@ export default {
         item_val: '_id'
       },
     ],
-    all_related_category: [],
-    category_id: null,
     categoryTreeIndex: 0,
     property_section: false,
     property_loading: false,
-    price_type: 'range',
     cate_not_exist: false,
-    ready_display: "yes",
 
-    payment_terms: [],
     payment_terms_list: [
       'Payoneer',
       'L/C',
@@ -565,6 +571,14 @@ export default {
       'Paypal',
       'Money Gram',
       'Others'
+    ],
+    product_cert_list: [
+      'CCC',
+      'CE',
+      'FCC',
+      'TUV',
+      'UL',
+      'FDA'
     ],
   }),
   mounted() {
@@ -582,21 +596,24 @@ export default {
   },
   watch: {
     property_section(val) {
-      this.all_related_category = [];
+      this.productItems.all_related_category = [];
       if (val === true) {
-        this.all_related_category = [];
+        this.productItems.all_related_category = [];
         for (let i in this.categoryTree) {
-          this.all_related_category.push(this.categoryTree[i].value);
+          this.productItems.all_related_category.push(this.categoryTree[i].value);
         }
       }
     },
-    min_order(val) {
-      this.price_set[0].min_qty = val;
+    'productItems.min_order': {
+      handler: function (val) {
+        this.price_set[0].min_qty = val;
+      },
+      deep: true
     },
     'price_set.0.min_qty': {
       handler: function (val) {
         console.log(val);
-        this.min_order = val;
+        this.productItems.min_order = val;
       },
       deep: true
 
@@ -613,6 +630,12 @@ export default {
       },
       deep: true
     },
+    'productItems.price_type': {
+      handler: function (val) {
+        this.productItems.price = (val === 'base_on_qty' ? this.price_set : this.price_range);
+      },
+      deep: true
+    }
   },
   methods: {
     //Load category list
@@ -669,8 +692,8 @@ export default {
             //En create new child category based on parent
           } else {
             //Category select for product
-            this.all_related_category.push(val);
-            this.category_id = val;
+            this.productItems.all_related_category.push(val);
+            this.productItems.cate_id = val;
 
             this.property_section = true;
             this.loadProperty(val);
@@ -705,12 +728,12 @@ export default {
     },
     applyCatVal(value, field) {
       console.log(value);
-      this.catPropertyVal[field] = value;
+      this.productItems.attribute[field] = value;
     },
     applyLabelVal(value, index) {
       this.dynamicAttr[index].label = value;
     },
-    applayCustomPropertyVal(value, index) {
+    applyCustomPropertyVal(value, index) {
       this.dynamicAttr[index].value = value;
     },
     createCustomProperty() {
@@ -736,45 +759,59 @@ export default {
     },
     // applyCatValCheckbox(value, field, field_item) {
     //   this.fields[field_item] = value;
-    //   this.catPropertyVal[field] = fields;
+    //   this.productItems.attribute[field] = fields;
     // },
-    async submitProduct() {
+    submitProduct() {
       this.formLoader = true;
       this.updateAttrFromCustom();
-      var data = {
-        title: this.productNameVal,
-        keyword: this.keywordVal,
-        all_related_category: this.all_related_category,
-        cate_id: this.category_id,
-        attribute: this.catPropertyVal,
-        min_order: this.min_order,
-        order_unit: this.order_unit,
-        price_type: this.price_type,
-        price: (this.price_type === 'base_on_qty' ? this.price_set : this.price_range),
-        hs_code: this.hs_code,
-        payment_terms: this.payment_terms,
-      };
-      await this.$axios.$post('/api/create_product', data)
+
+      let formData = new FormData();
+      for (let key in this.productItems) {
+        if (!(key === 'images' || key === 'video'))
+          if (!(this.productItems[key] === "" || this.productItems[key].length === 0))
+            formData.append(key, JSON.stringify(this.productItems[key]));
+      }
+
+      formData.append("video", this.productItems.video);
+
+
+      //Multiple files
+      var ins = this.productItems.images.length;
+      for (var x = 0; x < ins; x++) {
+        formData.append("images[]", this.productItems.images[x]);
+      }
+
+      this.$axios.$post('/api/create_product'
+        , formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        }
+      )
         .then(res => {
           this.formLoader = false;
-          if (res.length == 0) {
+          if (typeof res === 'object') {
+            for (let i in res) {
+              let error = res[i][0];
+              this.$toast.error(error);
+              // break;
+            }
+          } else {
             this.$toast.success("Product create successfully");
-            this.$router.push({
-              path: '/user/product'
-            });
-          } else
-            this.$toast.error("Some error on form input");
+            // this.$router.push({
+            //   path: '/user/product'
+            // });
+          }
 
         }).catch(err => {
-          this.formLoader = false;
-          this.$toast.error(err);
-        });
+        this.formLoader = false;
+        this.$toast.error(err);
+      });
 
     },
     updateAttrFromCustom() {//Update attribute from custom user attribute
-      for (var i = 0; i < this.dynamicAttr.length; i++) {
-        this.catPropertyVal[this.dynamicAttr[i].label] = this.dynamicAttr[i].value;
-      }
+      this.productItems.attribute = this.productItems.attribute.concat(this.dynamicAttr);
     },
     goBack() {
 
