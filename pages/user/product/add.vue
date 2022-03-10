@@ -368,6 +368,26 @@
                 :value="item"
               ></v-checkbox>
             </v-col>
+
+            <v-col
+            cols="12"
+            >
+              <p>Product type</p>
+              <v-radio-group
+                v-model="productItems.product_type"
+                class="mx-0"
+                row
+              >
+                <v-radio
+                  label="Ready to ship"
+                  value="ready_to_ship"
+                ></v-radio>
+                <v-radio
+                  label="Customize"
+                  value="customize"
+                ></v-radio>
+              </v-radio-group>
+            </v-col>
           </v-row>
 
 
@@ -413,13 +433,131 @@
 
             <v-col cols="12">
               <h4>Certificates Approval </h4>
-              <v-data-table
-                :headers="cert_table_headers"
-                :items="product_cert_list"
-                :items-per-page="10"
-                class="elevation-1"
-                hide-default-footer
-              ></v-data-table>
+              <v-simple-table>
+                <thead>
+                <tr>
+                  <td>
+                    Certificate Name
+                  </td>
+                  <td>
+                    Certificate Number
+                  </td>
+                </tr>
+                </thead>
+                 <tbody>
+                 <tr v-for="(item,index) in productItems.certificates">
+                   <td>
+                     <v-checkbox
+                       :label="index"
+                       v-model="item.value"
+                     />
+                   </td>
+                   <td>
+                     <v-text-field
+                       class="my-2  certificate_text"
+                       outlined
+                       hide-details
+                       v-model="item.num"
+                     />
+                   </td>
+                 </tr>
+                 </tbody>
+              </v-simple-table>
+            </v-col>
+          </v-row>
+
+
+          <v-row>
+            <v-col cols="12">
+              <h2>Packaging & Shipping Information</h2>
+              <v-divider></v-divider>
+            </v-col>
+            <v-col md="4" cols="12">
+              <v-text-field
+              outlined
+              v-model="productItems.packing.pieces_per_box"
+              label="Packing ex: 10 pieces per box"
+              />
+            </v-col>
+            <v-col cols="6" md="2">
+              <v-text-field
+                outlined
+                v-model="productItems.packing.pack_length"
+                label="Length"
+              />
+            </v-col>
+            <v-col cols="6" md="2">
+              <v-text-field
+                outlined
+                v-model="productItems.packing.pack_width"
+                label="Width"
+              />
+            </v-col>
+            <v-col cols="6" md="2">
+              <v-text-field
+                outlined
+                v-model="productItems.packing.pack_height"
+                label="Height"
+              />
+            </v-col>
+            <v-col cols="6" md="2">
+              <v-autocomplete
+                outlined
+                :loading="dimension_unit_loading"
+                :items="dimensionUnitList"
+                item-text="title"
+                item-value="title"
+                v-model="productItems.packing.pack_dimension_unit"
+                label="Size unit"
+              />
+            </v-col>
+            <v-col cols="6" md="4">
+              <v-text-field
+                outlined
+                v-model="productItems.packing.pack_weight"
+                label="Weight"
+              />
+            </v-col>
+            <v-col cols="6" md="2">
+              <v-autocomplete
+                outlined
+                :loading="weight_unit_loading"
+                :items="weightUnitList"
+                item-text="title"
+                item-value="title"
+                v-model="productItems.packing.pack_weight_unit"
+                label="Weight unit"
+              />
+            </v-col>
+
+
+          </v-row>
+
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-text-field
+                outlined
+                v-model="productItems.delivery_lead_time"
+                label="Delivery Lead Time ex: 60 days for OEM, 7 days for ready goods"
+              />
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                outlined
+                v-model="productItems.supply_ability"
+                label="Supply Ability ex: 30,000 Set/ Sets per Month"
+              />
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-autocomplete
+                :items="shippingCarrierList"
+                :loading="shipping_carrier_loading"
+                item-value="title"
+                v-model="productItems.shipping_carrier"
+                item-text="title"
+                label="Shipping Carrier	"
+                outlined
+              />
             </v-col>
           </v-row>
 
@@ -477,6 +615,8 @@
     </div>
   </div>
 
+
+
 </template>
 
 <script>
@@ -503,23 +643,64 @@ export default {
       payment_terms: [],
       ready_display: "yes",
       images: [],
-      video: null
+      video: null,
+      certificates:{
+        CCC:{
+          value:false,
+          num:"",
+        },
+        CE:{
+          value:false,
+          num:"",
+        },
+        FCC:{
+          value:false,
+          num:"",
+        },
+        TUV:{
+          value:false,
+          num:"",
+        },
+        UL:{
+          value:false,
+          num:"",
+        },
+        FDA:{
+          value:false,
+          num:"",
+        },
+
+      },
+      product_type:'ready_to_ship',
+      packing:{
+        pieces_per_box:null,
+        pack_length:null,
+        pack_width:null,
+        pack_height:null,
+        pack_dimension_unit:null,
+        pack_weight:null,
+        pack_weight_unit:null,
+      },
+      delivery_lead_time:null,
+      supply_ability:null,
+      shipping_carrier:null
     },
 
     cateItems: [],
     cate_search: null,
 
-    cateProperty: [],
-    cert_table_headers: [
-      {
-        text: "Certificate Name",
-        align: 'start',
-        sortable: false,
-        value: 'name',
-      },
-      {text: 'Certificate Number', value: 'num'},
+    dimensionUnitList:[],
+    dimension_unit_loading:false,
 
-    ],
+    weightUnitList:[],
+    weight_unit_loading:false,
+
+    shippingCarrierList:[],
+    shipping_carrier_loading:false,
+
+
+    cateProperty: [],
+
 
     price_set: [
       {
@@ -572,17 +753,13 @@ export default {
       'Money Gram',
       'Others'
     ],
-    product_cert_list: [
-      'CCC',
-      'CE',
-      'FCC',
-      'TUV',
-      'UL',
-      'FDA'
-    ],
+
   }),
   mounted() {
     this.getCurrencyType();
+    this.getDimensionUnit();
+    this.getShippingCarrier();
+    this.getWeightUnit();
     this.loadCateList();
     this.getMeasurementUnit();
   },
@@ -757,10 +934,6 @@ export default {
         this.$toast.error("Before create new attribute, fill in the available fields")
 
     },
-    // applyCatValCheckbox(value, field, field_item) {
-    //   this.fields[field_item] = value;
-    //   this.productItems.attribute[field] = fields;
-    // },
     submitProduct() {
       this.formLoader = true;
       this.updateAttrFromCustom();
@@ -816,6 +989,8 @@ export default {
     goBack() {
 
     },
+
+
     getCurrencyType() {
       this.$axios.$post('/api/currency_type'
       ).then(response => {
@@ -824,6 +999,41 @@ export default {
         console.log(err);
       });
     },
+    getWeightUnit() {
+      this.weight_unit_loading=true;
+      this.$axios.$post('/api/weight_measurement'
+      ).then(response => {
+        this.weightUnitList= response;
+      }).catch(err => {
+        console.log(err);
+      }).finally(res=>{
+        this.weight_unit_loading=false;
+      });
+    },
+    getDimensionUnit() {
+      this.dimension_unit_loading=true;
+      this.$axios.$post('/api/dimension_measurement'
+      ).then(response => {
+        this.dimensionUnitList = response;
+      }).catch(err => {
+        console.log(err);
+      }).finally(res=>{
+        this.dimension_unit_loading=false;
+      });
+    },
+    getShippingCarrier() {
+      this.shipping_carrier_loading=true;
+      this.$axios.$post('/api/shipping_carrier'
+      ).then(response => {
+        this.shippingCarrierList = response;
+      }).catch(err => {
+        console.log(err);
+      }).finally(res=>{
+        this.shipping_carrier_loading=false;
+      });
+    },
+
+
     spilitter(val) {
       val = val.replace(/,/g, '');
       const str = val.toString().split(".");
@@ -870,5 +1080,7 @@ export default {
 </script>
 
 <style scoped>
-
+.certificate_text{
+  max-width: 300px;
+}
 </style>
