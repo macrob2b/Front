@@ -10,4 +10,5 @@ export default {
   linkedinClientId : '78a0o1ybd8ektx',
   linkedinRedirectUri: 'http://localhost:3000/auth/callback/linkedin',
 
+
 }

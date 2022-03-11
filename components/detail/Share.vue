@@ -1,24 +1,23 @@
 <template>
   <v-row no-gutters>
-    <v-icon color="white" small class="mx-1 py-1 px-2 rounded-lg icons">
-      mdi-facebook
-    </v-icon>
-    <v-icon color="white" small class="mx-1 py-1 px-2 rounded-lg icons">
-      mdi-instagram
-    </v-icon>
-    <v-icon color="white" small class="mx-1 py-1 px-2 rounded-lg icons">
-      mdi-linkedin
-    </v-icon>
-    <v-icon color="white" small class="mx-1 py-1 px-2 rounded-lg icons">
-      mdi-pinterest
-    </v-icon>
-    <v-icon small color="white" class="mx-1 py-1 px-2 rounded-lg icons">
-      mdi-share-variant
-    </v-icon>
+    <a :href="'https://www.facebook.com/sharer/sharer.php?u=https://macrob2b.com/product-details/'+$route.params.id" target="_blank">
+      <v-icon color="white" small class="mx-1 py-1 px-2 rounded-lg icons">
+        mdi-facebook
+      </v-icon>
+    </a>
+
+    <a :href="'https://www.linkedin.com/sharing/share-offsite/?url=https://macrob2b.com/product-details/'+$route.params.id"
+    target="_blank"
+    >
+      <v-icon color="white" small class="mx-1 py-1 px-2 rounded-lg icons">
+        mdi-linkedin
+      </v-icon>
+    </a>
+
       <v-btn
         class="mx-2"
         small
-        :to="'/company-details/'">
+        :to="'/company-details/'+companyId">
         Contact supplier
       </v-btn>
   </v-row>
@@ -26,10 +25,14 @@
 
 <script>
 
-export default {};
+export default {
+  name:'share_product',
+  props:['companyId']
+};
 </script>
 <style scoped>
 .icons {
+  color: #3E3E3E!important;
   background-color: var(--v-primary-base);
   border-radius: 5px;
   width: 30px;

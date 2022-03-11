@@ -6,9 +6,11 @@
 
     >
       <nuxt-link tag="img" class="product-img mb-3 pointer" :to="'/product-details/'+productData._id"
-                 :src="require('assets/img/999327.png')"  alt="product-img"/>
-      <nuxt-link :to="'/product-details/'+productData._id" class="product-name mb-3 font-weight-bold">{{productData.title}}</nuxt-link>
-      <span class="product-price mb-3">{{productData.price}}$</span>
+                 :src="getImgFile(productData)" alt="product-img"/>
+      <nuxt-link :to="'/product-details/'+productData._id" class="product-name mb-3 font-weight-bold">
+        {{ productData.title }}
+      </nuxt-link>
+      <!--      <span class="product-price mb-3">{{productData.price}}$</span>-->
       <v-btn
         class="order-btn"
         elevation="1"
@@ -23,17 +25,28 @@
 </template>
 
 <script>
-  export default {
-    props:{
-      productData:[]
-    },
-      data() {
-        return {
-          product: {
-            name: 'Product name',
-            price: '250'
-          },
-        }
-      }
+export default {
+  props: {
+    productData: []
+  },
+  data() {
+    return {
+      product: {
+        name: 'Product name',
+        price: '250'
+      },
+    }
+  },
+  mounted() {
+  },
+  methods: {
+    getImgFile(item) {
+      var img = require('assets/img/no-image.png');
+      if (item.images && item.images.length > 0)
+        img = "https://dl.macrob2b.com/products/" + item._id + "/images/" + item.images[0];
+      return img;
+
+    }
   }
+}
 </script>

@@ -120,13 +120,14 @@
               <span
                 v-else-if="item.field_type=='Select'"
               >
-                  <v-select
+                  <v-autocomplete
+                    :return-object="true"
                     :items="item.values"
                     :label="item.label"
                     @input="applyCatVal($event, item.label)"
                     outlined
                   >
-                  </v-select>
+                  </v-autocomplete>
                 </span>
               <span
                 v-else-if="item.field_type=='Radio'"
@@ -370,7 +371,7 @@
             </v-col>
 
             <v-col
-            cols="12"
+              cols="12"
             >
               <p>Product type</p>
               <v-radio-group
@@ -444,24 +445,24 @@
                   </td>
                 </tr>
                 </thead>
-                 <tbody>
-                 <tr v-for="(item,index) in productItems.certificates">
-                   <td>
-                     <v-checkbox
-                       :label="index"
-                       v-model="item.value"
-                     />
-                   </td>
-                   <td>
-                     <v-text-field
-                       class="my-2  certificate_text"
-                       outlined
-                       hide-details
-                       v-model="item.num"
-                     />
-                   </td>
-                 </tr>
-                 </tbody>
+                <tbody>
+                <tr v-for="(item,index) in productItems.certificates">
+                  <td>
+                    <v-checkbox
+                      :label="index"
+                      v-model="item.value"
+                    />
+                  </td>
+                  <td>
+                    <v-text-field
+                      class="my-2  certificate_text"
+                      outlined
+                      hide-details
+                      v-model="item.num"
+                    />
+                  </td>
+                </tr>
+                </tbody>
               </v-simple-table>
             </v-col>
           </v-row>
@@ -474,9 +475,9 @@
             </v-col>
             <v-col md="4" cols="12">
               <v-text-field
-              outlined
-              v-model="productItems.packing.pieces_per_box"
-              label="Packing ex: 10 pieces per box"
+                outlined
+                v-model="productItems.packing.pieces_per_box"
+                label="Packing ex: 10 pieces per box"
               />
             </v-col>
             <v-col cols="6" md="2">
@@ -616,7 +617,6 @@
   </div>
 
 
-
 </template>
 
 <script>
@@ -634,69 +634,69 @@ export default {
       keyword: '',
       all_related_category: [],
       cate_id: '',
-      attribute: [],
+      attribute: {},
       min_order: 0,
       order_unit: '',
-      price_type: 'range',
+      price_type: 'base_on_qty',
       price: '',
       hs_code: '',
       payment_terms: [],
       ready_display: "yes",
       images: [],
       video: null,
-      certificates:{
-        CCC:{
-          value:false,
-          num:"",
+      certificates: {
+        CCC: {
+          value: false,
+          num: "",
         },
-        CE:{
-          value:false,
-          num:"",
+        CE: {
+          value: false,
+          num: "",
         },
-        FCC:{
-          value:false,
-          num:"",
+        FCC: {
+          value: false,
+          num: "",
         },
-        TUV:{
-          value:false,
-          num:"",
+        TUV: {
+          value: false,
+          num: "",
         },
-        UL:{
-          value:false,
-          num:"",
+        UL: {
+          value: false,
+          num: "",
         },
-        FDA:{
-          value:false,
-          num:"",
+        FDA: {
+          value: false,
+          num: "",
         },
 
       },
-      product_type:'ready_to_ship',
-      packing:{
-        pieces_per_box:null,
-        pack_length:null,
-        pack_width:null,
-        pack_height:null,
-        pack_dimension_unit:null,
-        pack_weight:null,
-        pack_weight_unit:null,
+      product_type: 'ready_to_ship',
+      packing: {
+        pieces_per_box: null,
+        pack_length: null,
+        pack_width: null,
+        pack_height: null,
+        pack_dimension_unit: null,
+        pack_weight: null,
+        pack_weight_unit: null,
       },
-      delivery_lead_time:null,
-      supply_ability:null,
-      shipping_carrier:null
+      delivery_lead_time: null,
+      supply_ability: null,
+      shipping_carrier: null
     },
 
     cateItems: [],
     cate_search: null,
 
-    dimensionUnitList:[],
-    dimension_unit_loading:false,
+    dimensionUnitList: [],
+    dimension_unit_loading: false,
 
-    weightUnitList:[],
-    weight_unit_loading:false,
+    weightUnitList: [],
+    weight_unit_loading: false,
 
-    shippingCarrierList:[],
-    shipping_carrier_loading:false,
+    shippingCarrierList: [],
+    shipping_carrier_loading: false,
 
 
     cateProperty: [],
@@ -712,7 +712,7 @@ export default {
     ],
     //==== When user select price range
     price_range: {
-      currency: '',
+      currency: 'USD',
       min_value: '',
       max_value: '',
     },
@@ -724,6 +724,7 @@ export default {
     currencyTypeItems: [],
 
     fields: {},
+    mainAttr:{},
     dynamicAttr: [],
     formLoader: false,
     category_parent_id: null,
@@ -753,6 +754,7 @@ export default {
       'Money Gram',
       'Others'
     ],
+
 
   }),
   mounted() {
@@ -810,6 +812,13 @@ export default {
     'productItems.price_type': {
       handler: function (val) {
         this.productItems.price = (val === 'base_on_qty' ? this.price_set : this.price_range);
+      },
+      deep: true
+    },
+    'price_range': {
+      handler: function (val) {
+        this.price_range.min_value = this.spilitter(val.min_value);
+        this.price_range.max_value = this.spilitter(val.max_value);
       },
       deep: true
     }
@@ -901,11 +910,9 @@ export default {
         }).finally(() => {
           this.property_loading = false;
         });
-
     },
     applyCatVal(value, field) {
-      console.log(value);
-      this.productItems.attribute[field] = value;
+      this.mainAttr[field] = value;
     },
     applyLabelVal(value, index) {
       this.dynamicAttr[index].label = value;
@@ -940,9 +947,12 @@ export default {
 
       let formData = new FormData();
       for (let key in this.productItems) {
-        if (!(key === 'images' || key === 'video'))
-          if (!(this.productItems[key] === "" || this.productItems[key].length === 0))
+        if (!(key === 'images' || key === 'video')) {
+          if (!(this.productItems[key] === "" || this.productItems[key] === null ||
+            this.productItems[key].length === 0))
             formData.append(key, JSON.stringify(this.productItems[key]));
+        }
+
       }
 
       formData.append("video", this.productItems.video);
@@ -972,9 +982,9 @@ export default {
             }
           } else {
             this.$toast.success("Product create successfully");
-            // this.$router.push({
-            //   path: '/user/product'
-            // });
+            this.$router.push({
+              path: '/user/product'
+            });
           }
 
         }).catch(err => {
@@ -984,7 +994,10 @@ export default {
 
     },
     updateAttrFromCustom() {//Update attribute from custom user attribute
-      this.productItems.attribute = this.productItems.attribute.concat(this.dynamicAttr);
+      this.productItems.attribute=this.mainAttr;
+      for (var i = 0; i < this.dynamicAttr.length; i++) {
+        this.productItems.attribute[this.dynamicAttr[i].label] = this.dynamicAttr[i].value;
+      }
     },
     goBack() {
 
@@ -1000,36 +1013,36 @@ export default {
       });
     },
     getWeightUnit() {
-      this.weight_unit_loading=true;
+      this.weight_unit_loading = true;
       this.$axios.$post('/api/weight_measurement'
       ).then(response => {
-        this.weightUnitList= response;
+        this.weightUnitList = response;
       }).catch(err => {
         console.log(err);
-      }).finally(res=>{
-        this.weight_unit_loading=false;
+      }).finally(res => {
+        this.weight_unit_loading = false;
       });
     },
     getDimensionUnit() {
-      this.dimension_unit_loading=true;
+      this.dimension_unit_loading = true;
       this.$axios.$post('/api/dimension_measurement'
       ).then(response => {
         this.dimensionUnitList = response;
       }).catch(err => {
         console.log(err);
-      }).finally(res=>{
-        this.dimension_unit_loading=false;
+      }).finally(res => {
+        this.dimension_unit_loading = false;
       });
     },
     getShippingCarrier() {
-      this.shipping_carrier_loading=true;
+      this.shipping_carrier_loading = true;
       this.$axios.$post('/api/shipping_carrier'
       ).then(response => {
         this.shippingCarrierList = response;
       }).catch(err => {
         console.log(err);
-      }).finally(res=>{
-        this.shipping_carrier_loading=false;
+      }).finally(res => {
+        this.shipping_carrier_loading = false;
       });
     },
 
@@ -1080,7 +1093,7 @@ export default {
 </script>
 
 <style scoped>
-.certificate_text{
+.certificate_text {
   max-width: 300px;
 }
 </style>

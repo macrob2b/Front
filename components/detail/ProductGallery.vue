@@ -1,43 +1,75 @@
 <template>
   <section class="product-gallery rounded-lg overflow-hidden ">
-    <Share v-show="$vuetify.breakpoint.xs" class="mobile-share"/>
-    <Carousel  :images="images" ></Carousel>
+    <Share v-show="$vuetify.breakpoint.xs"
+           :companyId="productDetails.company_id"
+           class="mobile-share"/>
+    <div class="card-carousel">
+      <v-carousel
+        height="auto"
+        v-model="carouselVal"
+        hide-delimiters>
+        <v-carousel-item
+          :value="active_img"
+          v-for="(image, index) in  productDetails.images"
+          :key="index"
+          :src="getImgFile(image)"
+        ></v-carousel-item>
+      </v-carousel>
+
+
+      <div class="thumbnails">
+        <v-slide-group
+          class="pa-4"
+
+          active-class="success"
+        >
+          <v-slide-item
+            class="mx-2 thumbnail_itm"
+            v-for="(image, index) in  productDetails.images"
+            :key="index"
+
+          >
+            <v-img
+              :class="carouselVal==index ? 'active_slide' : ''"
+              @click="changeSlide(index)"
+              :src="getImgFile(image)"/>
+
+          </v-slide-item>
+        </v-slide-group>
+
+      </div>
+    </div>
   </section>
 </template>
 
 
 <script>
   import Share from "./Share";
-  import Carousel from "./Carousel";
+  import productDetail from "./ProductDetail";
+  import img from "../../assets/img/no-image.png";
   export default {
     components: {
-      Carousel,
       Share
+    },
+    props:['productDetails'],
+    mounted() {
+    },
+    methods:{
+      changeSlide(index) {
+        this.carouselVal = index;
+      },
+      getImgFile(item) {
+        var img = require('assets/img/no-image.png');
+        if (item && item.length > 0)
+          img = "https://dl.macrob2b.com/products/" + this.$route.params.id + "/images/" + item;
+        return img;
+
+      }
     },
     data(){
       return{
-        images:[
-          {
-            id: '1',
-            big: '/p1.jpeg',
-            thumb: '/thumbs/p1.jpeg'
-          },
-          {
-            id: '2',
-            big: '/p2.jpeg',
-            thumb: '/thumbs/p2.jpeg'
-          },
-          {
-            id: '3',
-            big: '/p3.jpeg',
-            thumb: '/thumbs/p3.jpeg'
-          },
-          {
-            id: '4',
-            big: '/p4.jpeg',
-            thumb: '/thumbs/p4.jpeg'
-          }
-        ]
+        carouselVal: null,
+        images:[]
       }
     }
 
@@ -54,5 +86,45 @@
   left: 10px;
   z-index: 50;
 }
+
+
+
+.thumbnails {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+.thumbnails .thumbnail_itm {
+  max-width: 80px !important;
+  max-height: 80px !important;
+}
+
+@media screen and (max-width: 600px) {
+  .thumbnails {
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+  }
+
+  .thumbnails .thumbnail_itm {
+    max-width: 50px !important;
+    max-height: 40px !important;
+  }
+}
+
+.active_slide {
+  border: 2px solid #fff;
+  border-radius: 5px;
+}
+
 
 </style>
