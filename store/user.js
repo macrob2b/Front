@@ -1,7 +1,7 @@
 // holds your root state
 export const state = () => ({
   userId  : '',
-  userName: 'AliAkbar Naderian',
+  userName: '',
   fName   : '',
   lName   : '',
 })
