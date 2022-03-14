@@ -2,17 +2,17 @@
   <div>
     <v-app>
       <v-container>
-        <ProductInfo />
-        <SupplierInfo />
-        <Banner />
-        <Ads />
-        <ContainerCard>
-          <ProductContainer title="Similar to searched before">
-            <ProductSection1 :id="3" />
-          </ProductContainer>
-        </ContainerCard>
+        <ProductInfo :productInfo="product_details" />
+        <SupplierInfo :productInfo="product_details"/>
+<!--        <Banner />-->
+<!--        <Ads />-->
+<!--        <ContainerCard>-->
+<!--          <ProductContainer title="Similar to searched before">-->
+<!--            <ProductSection1 :id="3" />-->
+<!--          </ProductContainer>-->
+<!--        </ContainerCard>-->
       </v-container>
-      <Slider />
+<!--      <Slider />-->
     </v-app>
   </div>
 </template>
@@ -31,10 +31,23 @@ import Slider from "../../components/detail/Slider";
 export default {
   name: "index",
   auth: false,
+  async asyncData({params, $axios}) {
+    const product_details = await $axios.$post('/api/product_details',
+      {
+        id: params.id
+      });
+    return {product_details};
+
+  },
   head() {
     return {
-      title: this.$t("Main_PAGE_TITLE"),
+      title: this.product_details.title,
     };
+  },
+  data(){
+    return{
+      product_details:{},
+    }
   },
   components: {
     ProductInfo,

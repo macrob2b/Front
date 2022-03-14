@@ -5,7 +5,7 @@
         <v-col
           cols="12"
         >
-          <h2>Add a New Product</h2>
+          <h2>Edit Product</h2>
         </v-col>
       </v-row>
     </v-container>
@@ -113,6 +113,7 @@
                   <v-text-field
                     :label="item.label"
                     outlined
+                    :value="productItems.attribute[item.label] ? productItems.attribute[item.label] : ''"
                     @input="applyCatVal($event, item.label)"
                   >
                   </v-text-field>
@@ -124,6 +125,7 @@
                     :return-object="true"
                     :items="item.values"
                     :label="item.label"
+                    :value="productItems.attribute[item.label] ? productItems.attribute[item.label] : ''"
                     @input="applyCatVal($event, item.label)"
                     outlined
                   >
@@ -137,6 +139,7 @@
                       class="mt-0"
                       mandatory
                       row
+                      :value="productItems.attribute[item.label] ? productItems.attribute[item.label] : ''"
                       @change="applyCatVal($event, item.label)"
                     >
                       <v-radio
@@ -153,6 +156,7 @@
               >
                    <v-textarea
                      outlined
+                     :value="productItems.attribute[item.label] ? productItems.attribute[item.label] : ''"
                      :label="item.label"
                      @input="applyCatVal($event, item.label)"
                    ></v-textarea>
@@ -592,10 +596,10 @@
                 class="mr-4"
                 :loading="formLoader"
                 :disabled="!property_section"
-                @click="submitProduct"
+                @click="updateProduct"
                 large
               >
-                Create
+                Update
               </v-btn>
 
               <v-btn
@@ -618,9 +622,18 @@
 <script>
 export default {
   name: "add",
+  async asyncData({params, $axios}) {
+    const productItems = await $axios.$post('/api/product_details',
+      {
+        id: params.id
+      });
+    return {productItems};
+
+  },
+
   head() {
     return {
-      title: "Add new product"
+      title: "Edit product"
     }
   },
   layout: "user_dashboard",
@@ -720,7 +733,7 @@ export default {
     currencyTypeItems: [],
 
     fields: {},
-    mainAttr:{},
+    mainAttr: {},
     dynamicAttr: [],
     formLoader: false,
     category_parent_id: null,
@@ -760,6 +773,8 @@ export default {
     this.getWeightUnit();
     this.loadCateList();
     this.getMeasurementUnit();
+    this.fillCategoryTree();
+
   },
   filters: {
     currencyFormatted: function (value) {
@@ -937,7 +952,7 @@ export default {
         this.$toast.error("Before create new attribute, fill in the available fields")
 
     },
-    submitProduct() {
+    updateProduct() {
       this.formLoader = true;
       this.updateAttrFromCustom();
 
@@ -960,7 +975,7 @@ export default {
         formData.append("images[]", this.productItems.images[x]);
       }
 
-      this.$axios.$post('/api/create_product'
+      this.$axios.$post('/api/update_product'
         , formData,
         {
           headers: {
@@ -990,7 +1005,7 @@ export default {
 
     },
     updateAttrFromCustom() {//Update attribute from custom user attribute
-      this.productItems.attribute=this.mainAttr;
+      this.productItems.attribute = this.mainAttr;
       for (var i = 0; i < this.dynamicAttr.length; i++) {
         this.productItems.attribute[this.dynamicAttr[i].label] = this.dynamicAttr[i].value;
       }
@@ -1082,6 +1097,50 @@ export default {
         }
       });
     },
+
+
+    async fillCategoryTree() {
+      if (this.productItems.all_related_category && this.productItems.all_related_category.length)
+        for (let key in this.productItems.all_related_category) {
+          this.categoryTree[key].value = this.productItems.all_related_category[key];
+          console.log(this.productItems.all_related_category[key]);
+
+          var val = this.productItems.all_related_category[key];
+          await this.$axios.$post('/api/find_category', {id: val})
+            .then(response => {
+
+              if (response.child_ids && response.child_ids.length) {
+                //Create new child category based on parent
+                this.categoryTree.push(
+                  {
+                    label: response.title,
+                    value: null,
+                    items: response.children,
+                    loading: false,
+                    item_val: 'id'
+                  }
+                );
+                //En create new child category based on parent
+              } else {
+                //Category select for product
+                this.productItems.all_related_category.push(val);
+                this.productItems.cate_id = val;
+
+                this.property_section = true;
+                this.loadProperty(val);
+              }
+            });
+
+          // this.categoryTree.push(
+          //   {
+          //     label: response.title,
+          //     value: null,
+          //     items: response.children,
+          //     loading: false,
+          //     item_val: 'id'
+          //   }
+        }
+    }
 
   }
 

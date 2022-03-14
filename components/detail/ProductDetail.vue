@@ -26,6 +26,7 @@
         empty-icon="$ratingFull"
         half-increments
         hover
+        @input="submitRate"
       ></v-rating>
 
       <v-divider class="my-3"></v-divider>
@@ -94,7 +95,11 @@
           <div v-else>
             <v-col cols="12">
               <strong>Price range: </strong>
-              {{productDetails.price.min_value |currencyFormatted}} ~ {{productDetails.price.max_value | currencyFormatted }} {{ productDetails.price.currency }}
+              <span v-if="productDetails.price && productDetails.price.min_value">
+                              {{ productDetails.price.min_value |currencyFormatted }} ~ {{
+                  productDetails.price.max_value | currencyFormatted
+                }} {{ productDetails.price.currency }}
+              </span>
             </v-col>
           </div>
         </v-col>
@@ -146,7 +151,6 @@ export default {
   },
   data() {
     return {
-      productDetails: {},
       infos: [
         {
           label: "Brand Name",
@@ -179,10 +183,29 @@ export default {
     }
   },
   mounted() {
-    if (this.productDetails.rate)
-      this.rating = this.productDetails.rate / this.productDetails.rate_count;
+
   },
-  methods: {}
+  watch: {
+    'productDetails.rate': {
+      handler: function (val, old_val) {
+        if (val !== old_val)
+          this.rating = this.productDetails.rate / this.productDetails.rate_count;
+      },
+      deep: true
+    }
+  },
+  methods: {
+    async submitRate() {
+      await this.$axios.$post('/api/submit_product_rate',
+        {rate: this.rating, product_id: this.$route.params.id})
+        .then(response => {
+          this.$toast.success("Tanks, Your rate applied")
+           this.rating=parseFloat(response);
+        }).catch(err => {
+           console.log(err);
+        });
+    }
+  }
 }
 </script>
 

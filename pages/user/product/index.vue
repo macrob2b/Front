@@ -62,7 +62,7 @@
                       </v-icon>
                     </v-btn>
                     <v-btn icon
-
+                           :to="'/user/product/edit/'+item._id"
                     >
                       <v-icon small
                               class="mr-2">mdi-pencil

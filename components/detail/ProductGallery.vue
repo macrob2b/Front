@@ -69,7 +69,8 @@
     data(){
       return{
         carouselVal: null,
-        images:[]
+        images:[],
+        active_img:null,
       }
     }
 
