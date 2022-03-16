@@ -4,7 +4,7 @@
       <v-row class="pa-0 ma-0">
 
         <!--    List Tickets     -->
-        <v-col v-if="$vuetify.breakpoint.mdAndUp || ($vuetify.breakpoint.smAndDown && !selectedRoomId)"
+        <v-col :class="selectedRoomId ? 'd-none d-md-block' : 'd-block'"
                cols="12"
                sm="12"
                md="4"
@@ -24,7 +24,6 @@
           <v-list class="overflow-y-auto px-3"
                   height="76vh"
                   nav>
-
 
             <v-list-item-group>
 
@@ -46,65 +45,19 @@
                 <!--       Avatar         -->
                 <v-list-item-action class="mr-3">
 
-                  <!--        System         -->
-                  <v-avatar v-if="ticket.type === 1">
-                    <v-img :src="`macrob2b.ico`"></v-img>
-                  </v-avatar>
-
-                  <!--        Support         -->
-                  <v-avatar v-if="ticket.type === 2"
-                            color="primary">
-                    <v-icon color="white" large>mdi-face-agent</v-icon>
-                  </v-avatar>
-
-                  <!--        Direct         -->
-                  <v-badge v-if="ticket.type === 3"
-                           :color="userStatusHandler('getColor',ticket.userStatus)"
-                           offset-x="10"
-                           offset-y="10"
-                           bordered
-                           bottom
-                           dot>
-                    <v-avatar :color="!ticket.avatar ? ticket.color : ''">
-                      <v-img v-if="ticket.avatar" :src="ticket.avatar"></v-img>
-                      <span class="white--text" v-if="!ticket.avatar" v-text="ticket.title.substr(0, 1)"></span>
-                    </v-avatar>
-                  </v-badge>
-
-                  <!--        Group || Channel        -->
-                  <v-avatar v-if="ticket.type === 4 || ticket.type === 5" :color="!ticket.avatar ? ticket.color : ''">
-                    <v-img v-if="ticket.avatar" :src="ticket.avatar"></v-img>
-                    <span class="white--text" v-if="!ticket.avatar" v-text="ticket.title.substr(0, 1)"></span>
-                  </v-avatar>
+                  <ChatAvatar :ticket-type="ticket.type"
+                              :ticket-title="ticket.title"
+                              :color="ticket.color"
+                              :avatar="ticket.avatar"
+                              :users-data="[2,3,4].includes(ticket.type) ? getUsersData(ticket.users) : false"/>
 
                 </v-list-item-action>
 
                 <v-list-item-content>
+
                   <!--         Title         -->
                   <v-list-item-title>
-
-                    <!--         Group Icon           -->
-                    <v-icon v-if="ticket.type === 4">mdi-account-multiple</v-icon>
-
-                    <!--         Channel Icon           -->
-                    <v-icon v-if="ticket.type === 5">mdi-bullhorn</v-icon>
-
-                    {{ ticket.title }}
-
-                    <!--         System Check Icon           -->
-                    <v-icon v-if="ticket.type === 1"
-                            class="mx-0"
-                            color="blue"
-                            dense>mdi-check-decagram
-                    </v-icon>
-
-                    <!--         Support Check Icon           -->
-                    <v-icon v-if="ticket.type === 2"
-                            class="mx-0"
-                            color="blue"
-                            dense>mdi-check-decagram-outline
-                    </v-icon>
-
+                    <ChatTitle :ticket-title="ticket.title" :ticket-type="ticket.type"/>
                   </v-list-item-title>
 
                   <!--        last Message          -->
@@ -130,17 +83,67 @@
               </v-list-item>
 
             </v-list-item-group>
+
           </v-list>
+
 
         </v-col>
 
         <!--    Chat Room    -->
-        <v-col v-if="$vuetify.breakpoint.mdAndUp || ($vuetify.breakpoint.smAndDown && selectedRoomId)"
+        <v-col :class="selectedRoomId ? 'd-block' : 'd-none d-md-block'"
                cols="12"
                sm="12"
                md="8"
                lg="9"
                class="pa-0">
+
+          <!--     Properties Dialog     -->
+          <v-dialog v-if="selectedRoomId"
+                    v-model="propertiesDialog"
+                    class="d-none d-sm-none"
+                    transition="slide-x-transition"
+                    width="450">
+            <v-card height="500px">
+
+              <v-card-title class="pr-3">
+
+                {{ propertiesDialogTitle }}
+
+                <v-spacer></v-spacer>
+
+                <!--        Menu Icon        -->
+                <v-btn class="mx-1" large icon>
+                  <v-icon size="25">mdi-dots-vertical</v-icon>
+                </v-btn>
+
+                <!--        Close Icon        -->
+                <v-btn @click="propertiesDialog = false" large icon>
+                  <v-icon size="25">mdi-close</v-icon>
+                </v-btn>
+
+              </v-card-title>
+
+              <v-card-text class="overflow-y-auto overflow-x-hidden">
+
+                <!--       avatar         -->
+                <ChatAvatar :ticket-type="tickets[selectedRoomId].type"
+                            :ticket-title="tickets[selectedRoomId].title"
+                            :color="tickets[selectedRoomId].color"
+                            :avatar="tickets[selectedRoomId].avatar"
+                            class-name="d-inline-block"
+                            :users-data="[2,3,4].includes(tickets[selectedRoomId].type) ? getUsersData(tickets[selectedRoomId].users) : false"
+                            size="100"/>
+
+                <!--        Title        -->
+                <ChatTitle :ticket-title="tickets[selectedRoomId].title"
+                           :ticket-type="tickets[selectedRoomId].type"
+                           class-name="d-inline-block text-h5"/>
+
+
+              </v-card-text>
+
+            </v-card>
+          </v-dialog>
 
           <!--     Idle Sheet     -->
           <v-sheet v-if="!selectedRoomId"
@@ -152,145 +155,106 @@
             </div>
           </v-sheet>
 
-          <v-sheet class="d-flex flex-column"
-                   v-if="selectedRoomId"
-                   height="100%">
+          <!--     Chat Room Sheet     -->
+          <v-slide-x-transition>
+            <v-sheet class="d-flex flex-column"
+                     v-if="selectedRoomId"
+                     height="100%">
 
-            <!--     Header     -->
-            <v-toolbar elevation="0" outlined>
+              <!--     Header     -->
+              <v-toolbar elevation="0" outlined>
 
-              <!--      Back Button        -->
-              <v-btn class="mr-2 ml-n2 d-sm-block d-md-none"
-                     @click="selectedRoomId = ''"
-                     icon>
-                <v-icon>mdi-arrow-left</v-icon>
-              </v-btn>
+                <!--      Back Button        -->
+                <v-btn class="mr-2 ml-n2 d-sm-block d-md-none"
+                       @click="selectedRoomId = ''"
+                       icon>
+                  <v-icon>mdi-arrow-left</v-icon>
+                </v-btn>
 
-              <!--        System         -->
-              <v-avatar v-if="tickets[selectedRoomId].type === 1">
-                <v-img :src="`macrob2b.ico`"></v-img>
-              </v-avatar>
+                <!--       avatar         -->
+                <ChatAvatar :ticket-type="tickets[selectedRoomId].type"
+                            :ticket-title="tickets[selectedRoomId].title"
+                            :color="tickets[selectedRoomId].color"
+                            :avatar="tickets[selectedRoomId].avatar"
+                            :users-data="[2,3,4].includes(tickets[selectedRoomId].type) ? getUsersData(tickets[selectedRoomId].users) : false"/>
 
-              <!--        Support         -->
-              <v-avatar v-if="tickets[selectedRoomId].type === 2"
-                        color="primary">
-                <v-icon color="white" large>mdi-face-agent</v-icon>
-              </v-avatar>
+                <v-toolbar-title @click="propertiesDialog = true"
+                                 class="mx-2">
+                  <!--      Title      -->
+                  <span class="d-block text-subtitle-1 mb-0">
+                    <ChatTitle :ticket-title="tickets[selectedRoomId].title"
+                               :ticket-type="tickets[selectedRoomId].type"/>
+                  </span>
 
-              <!--        Direct         -->
-              <v-badge v-if="tickets[selectedRoomId].type === 3"
-                       :color="userStatusHandler('getColor',tickets[selectedRoomId].userStatus)"
-                       offset-x="10"
-                       offset-y="10"
-                       bordered
-                       bottom
-                       dot>
-                <v-avatar :color="!tickets[selectedRoomId].avatar ? tickets[selectedRoomId].color : ''">
-                  <v-img v-if="tickets[selectedRoomId].avatar" :src="tickets[selectedRoomId].avatar"></v-img>
-                  <span v-if="!tickets[selectedRoomId].avatar"
-                        class="white--text" v-text="tickets[selectedRoomId].title.substr(0, 1)"></span>
-                </v-avatar>
-              </v-badge>
+                  <!--        User Status        -->
+                  <span class="d-block caption">Typing...</span>
 
-              <!--        Group || Channel        -->
-              <v-avatar v-if="tickets[selectedRoomId].type === 4 || tickets[selectedRoomId].type === 5"
-                        :color="!tickets[selectedRoomId].avatar ? tickets[selectedRoomId].color : ''">
-                <v-img v-if="tickets[selectedRoomId].avatar" :src="tickets[selectedRoomId].avatar"></v-img>
-                <span v-if="!tickets[selectedRoomId].avatar"
-                      class="white--text" v-text="tickets[selectedRoomId].title.substr(0, 1)"></span>
-              </v-avatar>
+                </v-toolbar-title>
 
+                <v-spacer></v-spacer>
 
-              <v-toolbar-title class="mx-2">
-                <!--      Title      -->
-                <span class="d-block text-subtitle-1 mb-0">
-                  <!--         Group Icon           -->
-                    <v-icon v-if="tickets[selectedRoomId].type === 4">mdi-account-multiple</v-icon>
+                <!--      Menu Icon      -->
+                <v-btn icon>
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
 
-                  <!--         Channel Icon           -->
-                    <v-icon v-if="tickets[selectedRoomId].type === 5">mdi-bullhorn</v-icon>
+              </v-toolbar>
 
-                    {{ tickets[selectedRoomId].title }}
-
-                  <!--         System Check Icon           -->
-                    <v-icon v-if="tickets[selectedRoomId].type === 1"
-                            class="mx-0 mt-n1"
-                            color="blue"
-                            dense>mdi-check-decagram
-                    </v-icon>
-
-                  <!--         Support Check Icon           -->
-                    <v-icon v-if="tickets[selectedRoomId].type === 2"
-                            class="mx-0 mt-n1"
-                            color="blue"
-                            dense>mdi-check-decagram-outline
-                    </v-icon>
-                </span>
-
-                <span class="d-block caption">Typing...</span>
-              </v-toolbar-title>
-
-              <v-spacer></v-spacer>
-
-              <!--      Menu Icon      -->
-              <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-
-            </v-toolbar>
-
-            <!--      Content      -->
-            <v-sheet color="grey lighten-5" class="d-flex flex-column" height="75vh">
+              <!--      Content      -->
+              <v-sheet color="grey lighten-5" class="d-flex flex-column" height="75vh">
 
 
-              <!--       Messages       -->
-              <v-sheet class="overflow-x-hidden overflow-y-auto flex-grow-1" color="transparent" elevation="0">
+                <!--       Messages       -->
+                <v-sheet class="overflow-x-hidden overflow-y-auto flex-grow-1" color="transparent" elevation="0">
 
-                <!--     Loading    -->
-                <v-col cols="12" v-if="loadingChatRoom">
-                  <div class="d-flex justify-center align-content-center flex-grow-1 align-center mt-16 pt-16">
-                    <v-progress-circular class="d-block align-center" indeterminate></v-progress-circular>
-                  </div>
-                </v-col>
+                  <!--     Loading    -->
+                  <v-col cols="12" v-if="loadingChatRoom">
+                    <div class="d-flex justify-center align-content-center flex-grow-1 align-center mt-16 pt-16">
+                      <v-progress-circular class="d-block align-center" indeterminate></v-progress-circular>
+                    </div>
+                  </v-col>
+
+                </v-sheet>
+
+                <!--      Footer      -->
+                <v-sheet class="pa-4">
+                  <v-row class="d-flex pt-1 pb-1 px-1">
+
+                    <!--         Emojy Button         -->
+                    <v-btn large icon>
+                      <v-icon size="25">mdi-emoticon-outline</v-icon>
+                    </v-btn>
+
+                    <!--         Chat Input         -->
+                    <v-text-field class="mt-1"
+                                  placeholder="Write a message..."
+                                  hide-details
+                                  flat
+                                  solo
+                                  dense>
+
+                    </v-text-field>
+
+                    <!--         File         -->
+                    <v-btn large icon>
+                      <v-icon size="25">mdi-paperclip</v-icon>
+                    </v-btn>
+
+                    <!--        Send        -->
+                    <v-btn large icon>
+                      <v-icon size="25">mdi-send</v-icon>
+                    </v-btn>
+
+                  </v-row>
+                </v-sheet>
 
               </v-sheet>
 
-              <!--      Footer      -->
-              <v-sheet class="pa-4">
-                <v-row class="d-flex pt-2 pb-1 px-1">
-
-                  <!--         Emojy Button         -->
-                  <v-btn class="mr-1" icon>
-                    <v-icon size="30">mdi-emoticon-outline</v-icon>
-                  </v-btn>
-
-                  <!--         Chat Input         -->
-                  <v-text-field class="mr-1"
-                                placeholder="Write a message..."
-                                hide-details
-                                flat
-                                solo
-                                dense>
-
-                  </v-text-field>
-
-                  <!--         File         -->
-                  <v-btn class="mr-3" icon>
-                    <v-icon size="30">mdi-paperclip</v-icon>
-                  </v-btn>
-
-                  <!--        Send        -->
-                  <v-btn icon>
-                    <v-icon size="30">mdi-send</v-icon>
-                  </v-btn>
-
-                </v-row>
-              </v-sheet>
 
             </v-sheet>
+          </v-slide-x-transition>
 
 
-          </v-sheet>
         </v-col>
 
       </v-row>
@@ -299,17 +263,22 @@
 </template>
 
 <script>
+import ChatAvatar from "@/components/messenger/ChatAvatar";
+import ChatTitle  from "@/components/messenger/ChatTitle";
+
 export default {
-  name: "messenger",
-  auth: false,
+  name      : "messenger",
+  components: {ChatTitle, ChatAvatar},
+  auth      : false,
   data() {
     return {
-      page           : '',
-      roomId         : '',
-      loadingChatRoom: false,
-      loadingChatList: false,
-      selectedRoomId : '',
-      tickets        : {
+      roomId          : '',
+      myId            : 'myId',
+      loadingChatRoom : false,
+      loadingChatList : false,
+      propertiesDialog: false,
+      selectedRoomId  : '',
+      tickets         : {
         1: {
           id             : 'ticketId',
           type           : 1,
@@ -317,7 +286,7 @@ export default {
           lastMessage    : 'this is a last Message of my ticket',
           lastMessageDate: '20:15',
           newMessageCount: 1,
-          users          : ['_Id']
+          users          : ['myId']
         },
         2: {
           id             : 'ticketId',
@@ -326,7 +295,7 @@ export default {
           lastMessage    : 'this is a last Message of my ticket',
           lastMessageDate: '20:15',
           newMessageCount: 0,
-          users          : ['_Id', '_Id']
+          users          : ['_Id', 'myId']
         },
         3: {
           id             : 'ticketId',
@@ -336,7 +305,7 @@ export default {
           avatar         : '',
           lastMessageDate: '20:15',
           newMessageCount: 0,
-          users          : ['_Id', '_id'],
+          users          : ['_Id', 'myId'],
           userStatus     : 1
         },
         4: {
@@ -347,7 +316,7 @@ export default {
           avatar         : '',
           lastMessageDate: '20:15',
           newMessageCount: 0,
-          users          : ['_Id', '_id']
+          users          : ['_Id', 'myId', '_Id2']
         },
         5: {
           id             : 'ticketId',
@@ -357,10 +326,10 @@ export default {
           avatar         : '',
           lastMessageDate: '20:15',
           newMessageCount: 0,
-          users          : ['_Id', '_id']
+          users          : ['_Id', 'myId']
         },
       },
-      messages       : {
+      messages        : {
         'ticketId': [
           {
             id        : 'messageId',
@@ -373,10 +342,19 @@ export default {
             updated_at: '',
           },
         ]
+      },
+      users           : {
+        '_Id': {
+          firstName: '',
+          lastName : '',
+          avatar   : '',
+          status   : 1,
+          ticket   : ''
+        }
       }
     };
   },
-  methods: {
+  methods : {
     // generate random Color
     randomColor: () => {
       let colors = [
@@ -402,27 +380,57 @@ export default {
       ];
       return colors[Math.floor(Math.random() * colors.length)];
     },
-    // handler of user status for (getColor,getText,...)
-    userStatusHandler(option, status) {
-      switch (option) {
-        case 'getColor':
-          switch (status) {
-            // offline
-            case 0:
-              return 'grey lighten-1';
-              break;
-            //  online
-            case 1:
-              return 'green';
-              break;
-            //  last seen
-            case 2:
-              return 'yellow';
-              break;
+    getUsersData(users) {
+      // list of request
+      let usersNeedStatus = [];
+      // list of status
+      let usersData       = [];
+
+      users.forEach((userId) => {
+        if (userId !== this.myId) {
+          if (this.users[userId] != undefined && this.users[userId].status) {
+            usersData.push({
+              status: this.users[userId].status,
+              id    : userId,
+              name  : this.users[userId].firstName
+            });
+          } else {
+            usersData.push({
+              status: 0,
+              id    : userId,
+              name  : ''
+            });
+            usersNeedStatus.push(userId);
           }
-          break;
-      }
+        }
+      });
+
+      // get users Status need
+
+      // **
+
+      return usersData;
     }
+  },
+  computed: {
+    propertiesDialogTitle: function () {
+      if (this.selectedRoomId) {
+        switch (this.tickets[this.selectedRoomId].type) {
+          case 1:
+            return 'System';
+          case 2:
+            return 'Support';
+          case 3:
+            return 'User Info';
+          case 4:
+            return 'Group Info';
+          case 5:
+            return 'Channel Info';
+        }
+      } else {
+        return '';
+      }
+    },
   },
   created() {
     // generate color for users have not avatar
