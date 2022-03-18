@@ -1,47 +1,57 @@
 <template>
-  <div :class="'slider' + id">
-    <v-row>
-      <v-slide-group class="pa-2" center-active show-arrows>
-        <v-slide-item v-for="n in 15" :key="n">
-          <ProductCard1 />
-          <!-- <ProductCard2 /> -->
-        </v-slide-item>
-      </v-slide-group>
-    </v-row>
-    <div class="d-flex justify-end px-5">
-      <v-btn
-        color="#165048"
-        @click="clickLeft"
-        medium
-        width="40"
-        min-width="0"
-        v-show="!$vuetify.breakpoint.xs"
-      >
-        <v-icon color="white"> mdi-chevron-left </v-icon>
-      </v-btn>
-      <v-btn
-        color="#165048"
-        @click="clickRight"
-        class="mx-2"
-        medium
-        width="40"
-        min-width="0"
-        v-show="!$vuetify.breakpoint.xs"
-      >
-        <v-icon color="white"> mdi-chevron-right </v-icon>
-      </v-btn>
+  <v-container >
+<!--    <div class="d-block" v-if="true" >-->
+<!--      <v-row class="mt-12 mb-12 " >-->
+<!--        <v-col cols="12"  class="text-center d-block">-->
+<!--          <v-progress-circular-->
+<!--            :size="40"-->
+<!--            :width="4"-->
+<!--            color="orange"-->
+<!--            indeterminate-->
+<!--          ></v-progress-circular>-->
+<!--        </v-col>-->
+<!--      </v-row>-->
+<!--    </div>-->
+    <div >
+      <v-row >
+        <v-slide-group class="pa-2" center-active show-arrows>
+          <v-slide-item v-for="(product,index) in newProducts" :key="index">
+            <ProductCard1 :product="product"  />
+          </v-slide-item>
+        </v-slide-group>
+      </v-row>
+      <div class="d-flex justify-end px-5">
+        <v-btn
+          color="#165048"
+          @click="clickLeft"
+          medium
+          width="40"
+          min-width="0"
+          v-show="!$vuetify.breakpoint.xs"
+        >
+          <v-icon color="white"> mdi-chevron-left </v-icon>
+        </v-btn>
+        <v-btn
+          color="#165048"
+          @click="clickRight"
+          class="mx-2"
+          medium
+          width="40"
+          min-width="0"
+          v-show="!$vuetify.breakpoint.xs"
+        >
+          <v-icon color="white"> mdi-chevron-right </v-icon>
+        </v-btn>
+      </div>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
 import ProductCard1 from "./ProductCard1.vue";
-import _ from "lodash";
 import ProductCard2 from "./ProductCard2.vue";
 export default {
-  props: {
-    id: 0,
-  },
+  props: ['newProducts','loading'],
   components: { ProductCard1, ProductCard2 },
   data() {
     return {
@@ -52,7 +62,11 @@ export default {
     };
   },
   mounted() {
-    setTimeout(() => this.checkNavBtnStatus(), 2000);
+    // this.getNewProducts();
+    // setTimeout(() => this.checkNavBtnStatus(), 2000);
+  },
+  watch:{
+
   },
   methods: {
     checkNavBtnStatus() {
@@ -80,6 +94,7 @@ export default {
       this.nextButton.click();
       this.checkNavBtnStatus();
     },
+
   },
 };
 </script>

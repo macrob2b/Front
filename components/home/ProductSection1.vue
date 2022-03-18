@@ -1,24 +1,24 @@
 <template>
   <div class="d-flex justify-space-between">
-    <div class="" v-show="!$vuetify.breakpoint.xs">
+    <div class="d-none d-sm-block">
       <div class="tit">Title goes here</div>
       <div class="banner-container">
-        <img src="banner-bg.png" />
+        <img src="banner-bg.png"/>
       </div>
     </div>
     <div class="slider-sheet">
-      <div v-show="!$vuetify.breakpoint.xs">
-      <ProductSlider :id="id" />
+      <div class="d-none d-sm-block">
+        <ProductSlider :newProducts="new_products" :loading="new_product_loading"/>
       </div>
-      <div v-show="$vuetify.breakpoint.xs">
-      <ProductSlider1 :id="id"  />
+      <div class="d-block d-sm-none">
+        <ProductSlider :newProducts="new_products" :loading="new_product_loading"/>
       </div>
     </div>
   </div>
   <!-- <div class="pa-3">
     <div class="d-flex">
       <div class="banner" >
-        <div class="tit"> 
+        <div class="tit">
           Title goes here
         </div>
       </div>
@@ -37,7 +37,29 @@ export default {
   props: {
     id: 0,
   },
-  components: { ProductSlider,ProductSlider1 },
+  data() {
+    return {
+      new_products: null,
+      new_product_loading:false
+    }
+  },
+  components: {ProductSlider, ProductSlider1},
+  mounted() {
+    this.getNewProducts();
+  },
+  methods: {
+    getNewProducts() {
+      this.new_product_loading = true;
+      this.$axios.$post('/api/get_new_products')
+        .then(response => {
+          this.new_products = response;
+        }).catch(err => {
+        console.log(err);
+      }).finally(msg => {
+        this.new_product_loading = false;
+      })
+    }
+  }
 };
 </script>
 
@@ -45,6 +67,7 @@ export default {
 .slider-sheet {
   overflow: hidden;
 }
+
 .banner {
   background-image: url("/banner-bg.png");
   background-position: center;
@@ -54,6 +77,7 @@ export default {
   /* width: 20%; */
   height: 420px;
 }
+
 .tit {
   position: relative;
   top: 60px;
@@ -62,6 +86,7 @@ export default {
   font-size: 16px !important;
   color: white;
 }
+
 .banner-container {
   margin-top: -30px;
 }

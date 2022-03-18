@@ -205,12 +205,12 @@
 <script>
 
 import {ValidationObserver, ValidationProvider, validate} from "vee-validate";
-import PhoneNumberInput                                   from "../components/phoneNumberInput";
-import LocationField                                      from "../components/Form/LocationField";
+import PhoneNumberInput from "../components/phoneNumberInput";
+import LocationField from "../components/Form/LocationField";
 
 export default {
-  name      : "signup",
-  auth      : 'guest',
+  name: "signup",
+  auth: 'guest',
   components: {
     LocationField,
     PhoneNumberInput,
@@ -224,28 +224,28 @@ export default {
   },
   data() {
     return {
-      email           : '',
-      password        : '',
-      confirmPassword : '',
-      gender          : '',
-      firstName       : '',
-      lastName        : '',
-      companyName     : '',
-      phoneNumber     : '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      gender: '',
+      firstName: '',
+      lastName: '',
+      companyName: '',
+      phoneNumber: '',
       businessLocation: {
-        location    : '',
+        location: '',
         country_code: '',
-        country     : '',
-        state       : ''
+        country: '',
+        state: ''
       },
-      businessType    : '',
-      acceptTerms     : false,
-      showPassword    : false,
-      loading         : false,
+      businessType: '',
+      acceptTerms: false,
+      showPassword: false,
+      loading: false,
     };
   },
   computed: {
-    genders      : () => {
+    genders: () => {
       return [
         {name: 'Male', value: 'male'},
         {name: 'Female', value: 'female'},
@@ -259,36 +259,47 @@ export default {
       ];
     }
   },
-  methods : {
+  methods: {
     async submit() {
-      this.loading      = true;
+      this.loading = true;
       let checkRegister = await this.$axios.post('/api/register', {
-        "first_name"       : this.firstName,
-        "last_name"        : this.lastName,
-        "mobile_num"       : this.phoneNumber.replace(/\s/g, ''),
-        "email"            : this.email,
-        "password"         : this.password,
-        "gender"           : this.gender,
-        "role"             : this.businessType.join(),
+        "first_name": this.firstName,
+        "last_name": this.lastName,
+        "mobile_num": this.phoneNumber.replace(/\s/g, ''),
+        "email": this.email,
+        "password": this.password,
+        "gender": this.gender,
+        "role": this.businessType.join(),
         "business_location": this.businessLocation.location,
-        "country_code"     : this.businessLocation.country_code,
-        "country"          : this.businessLocation.country,
-        "state"            : this.businessLocation.state,
+        "country_code": this.businessLocation.country_code,
+        "country": this.businessLocation.country,
+        "state": this.businessLocation.state,
       });
 
       // Handler of signup api
       if (checkRegister.status == 200) {
-        await this.$auth.setUserToken(checkRegister.data.token);
-        this.$toast.success(this.$t(`REGISTER_SUCCESSFUL`));
-        this.loading = false;
+        if (typeof checkRegister.data === 'object' && checkRegister.data.token && checkRegister.data.token.length) {
+          await this.$auth.setUserToken(checkRegister.data.token);
+          this.$toast.success(this.$t(`REGISTER_SUCCESSFUL`));
+          this.$router.push({
+            path: "/user-dashboard"
+          })
+        } else if (typeof checkRegister.data === 'object') {
+          for (let i in checkRegister.data) {
+            let error = checkRegister.data[i][0];
+            this.$toast.error(error);
+            // break;
+          }
+          this.loading = false;
+        }
       }
 
     },
     selectLocation(location) {
-      this.businessLocation.location     = location.lat + ',' + location.lng;
+      this.businessLocation.location = location.lat + ',' + location.lng;
       this.businessLocation.country_code = location.country_code;
-      this.businessLocation.country      = location.country;
-      this.businessLocation.state        = location.state;
+      this.businessLocation.country = location.country;
+      this.businessLocation.state = location.state;
     },
     loginWithGoogle() {
       this.$auth.loginWith('google', {params: {prompt: "select_account"}})

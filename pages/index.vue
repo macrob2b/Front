@@ -8,45 +8,45 @@
           <ProductSection1 :id="1"/>
         </ProductContainer>
       </ContainerCard>
-      <div v-show="!$vuetify.breakpoint.xs">
-        <Ads/>
-      </div>
-      <div v-show="$vuetify.breakpoint.xs">
-        <CarouselResponsive/>
-      </div>
-      <div v-show="$vuetify.breakpoint.xs">
-        <ContainerCard>
-          <ProductContainer title="popular products">
-            <ProductSlider1 :id="2"/>
-          </ProductContainer>
-        </ContainerCard>
-      </div>
+<!--      <div v-show="!$vuetify.breakpoint.xs">-->
+<!--        <Ads/>-->
+<!--      </div>-->
+<!--      <div v-show="$vuetify.breakpoint.xs">-->
+<!--        <CarouselResponsive/>-->
+<!--      </div>-->
+<!--      <div v-show="$vuetify.breakpoint.xs">-->
+<!--        <ContainerCard>-->
+<!--          <ProductContainer title="popular products">-->
+<!--            <ProductSlider1 :id="2"/>-->
+<!--          </ProductContainer>-->
+<!--        </ContainerCard>-->
+<!--      </div>-->
       <br/>
       <ProductSection2/>
       <br/>
-      <div class="pa-2 ma-5">
-        <ProductSection3/>
-      </div>
-      <div v-show="!$vuetify.breakpoint.xs">
-        <Banner/>
-        <Ads/>
-      </div>
+<!--      <div class="pa-2 ma-5">-->
+<!--        <ProductSection3/>-->
+<!--      </div>-->
+<!--      <div v-show="!$vuetify.breakpoint.xs">-->
+<!--        <Banner/>-->
+<!--        <Ads/>-->
+<!--      </div>-->
 
-      <div v-show="$vuetify.breakpoint.xs">
-        <CarouselResponsive/>
-      </div>
+<!--      <div v-show="$vuetify.breakpoint.xs">-->
+<!--        <CarouselResponsive/>-->
+<!--      </div>-->
 
-      <ContainerCard>
-        <ProductContainer title="Similar to searched before">
-          <ProductSection1 :id="3"/>
-        </ProductContainer>
-      </ContainerCard>
+<!--      <ContainerCard>-->
+<!--        <ProductContainer title="Similar to searched before">-->
+<!--          <ProductSection1 :id="3"/>-->
+<!--        </ProductContainer>-->
+<!--      </ContainerCard>-->
 
-      <ContainerCard>
-        <ProductContainer title="Similar to searched before">
-          <ProductSlider1 :id="4"/>
-        </ProductContainer>
-      </ContainerCard>
+<!--      <ContainerCard>-->
+<!--        <ProductContainer title="Similar to searched before">-->
+<!--          <ProductSlider1 :id="4"/>-->
+<!--        </ProductContainer>-->
+<!--      </ContainerCard>-->
 
 <!--      <div class="pa-2 ma-5" v-show="!$vuetify.breakpoint.xs">-->
 <!--        <Logo />-->
@@ -67,7 +67,6 @@ import ProductCard2       from "../components/product/ProductCard2.vue";
 import ProductSection2    from "../components/home/ProductSection2.vue";
 import ProductSection3    from "../components/home/ProductSection3.vue";
 import CarouselResponsive from "../components/home/CarouselResponsive.vue";
-// import Logo               from "../components/home/Logo.vue";
 import Banner             from "../components/home/Banner.vue";
 
 export default {

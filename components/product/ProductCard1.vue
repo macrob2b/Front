@@ -1,16 +1,19 @@
 <template>
-  <div class="mx-2 card">
+  <div class="mx-2 card"  >
     <v-card min-width="0" elevation="0">
       <div class="pa-2">
-        <img src="/card_img.png" />
+        <img
+          :src="getImgFile(product)" />
       </div>
-      <div class="text-center">Product Name</div>
-      <div class="text-center"  id="div1">
-        250 <span  id="span1">$</span>
-      </div>
+      <div class="text-center">{{product.title}}</div>
+<!--      <div class="text-center"  id="div1">-->
+<!--        250 <span  id="span1">$</span>-->
+<!--      </div>-->
       <div class="pb-3 pa-4 btn">
-        <v-btn color="primary" width="100%">
-          <span  id="span2">Button</span>
+        <v-btn color="primary" width="100%"
+               :to="'/product-details/'+product._id"
+        >
+          <span  id="span2">Order</span>
         </v-btn>
       </div>
     </v-card>
@@ -18,7 +21,20 @@
 </template>
 
 <script>
-export default {};
+import img from "../../assets/img/no-image.png";
+
+export default {
+  props:['product'],
+  methods:{
+    getImgFile(item) {
+      var img = require('assets/img/no-image.png');
+      if (item.images && item.images.length > 0)
+        img = "https://dl.macrob2b.com/products/" + item._id + "/images/" + item.images[0];
+      return img;
+
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -31,9 +47,7 @@ export default {};
 #span2{
   color: white
 }
-.card{
-    z-index: 50;
-}
+
 @media screen and (max-width: 600px) and (min-width: 320px) {
   img{
     width: 126px;
@@ -48,5 +62,10 @@ export default {};
     width: 110px !important;
     text-align: center !important;
   }
+}
+
+.card img{
+  width: 200px;
+  height: 162px;
 }
 </style>

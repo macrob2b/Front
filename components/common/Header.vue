@@ -340,7 +340,7 @@ export default {
         },
         {
           title: this.$t(`SELL_NOW`),
-          to: '/selling-leads'
+          to: '/user/product/add'
         },
         {
           title: this.$t(`COMPANY_LIST`),
