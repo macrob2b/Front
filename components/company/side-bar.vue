@@ -35,6 +35,7 @@
             name: 'My company',
             data: [
               {title:'Update company info',link:'/user/company'},
+              {title: 'My message', link: '/messenger'},
             ]
           },
           // {name: 'My Inquiries', data: [{title:'Add a New Buying Lead',link:'/'}, 'Add a New Buying Lead', 'Add a New Buying Lead']},

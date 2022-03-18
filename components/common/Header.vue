@@ -359,6 +359,7 @@ export default {
           name: 'My company',
           children: [
             {name: 'Update company info', link: '/user/company'},
+            {name: 'My message', link: '/messenger'},
           ]
         },
       ],

@@ -71,7 +71,7 @@
           <v-col cols="5">
             <v-row>
               <nuxt-link :to="'/company-details/'+item._id">
-                <div v-if="item.images.length>0">
+                <div v-if="item.images && item.images.length>0">
                   <div v-for="(img,index) in item.images" class="d-inline-block">
                     <div v-if="index<3">
                       <v-img
