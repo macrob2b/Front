@@ -4,8 +4,8 @@
     <v-row class="mt-12 mb-12" v-if="loadingStatus">
       <v-col cols="12" class="text-center">
         <v-progress-circular
-          :size="50"
-          :width="5"
+          :size="40"
+          :width="4"
           color="orange"
           indeterminate
         ></v-progress-circular>
@@ -152,7 +152,7 @@
           <v-col cols="4" class="pa-0">
             <nuxt-link :to="'/company-details/'+item._id">
               <v-img
-                v-if="item.images[0]" aspect-ratio="1" :src="getFile(item._id,item.images[0],'image')"
+                v-if="item.images && item.images[0]" aspect-ratio="1" :src="getFile(item._id,item.images[0],'image')"
                 style="border:1px solid #eee"/>
               <v-img
                 v-else aspect-ratio="1" :src="require('assets/img/no-image.png')"/>

@@ -911,6 +911,24 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     "to-fast-properties" "^2.0.0"
 
+"@blowstack/ckeditor-nuxt@^0.6.0":
+  "integrity" "sha512-IbCm6GQ0NWwZlhSL5BI2sV3cG6O0hRk17sAAMbLSB2cTJ6r+3ZAeB6AYuanQSppMIFNI/Nvssj6TLuCpinNPUA=="
+  "resolved" "https://registry.npmjs.org/@blowstack/ckeditor-nuxt/-/ckeditor-nuxt-0.6.0.tgz"
+  "version" "0.6.0"
+  dependencies:
+    "@blowstack/ckeditor5-full-free-build" "^27.0.1"
+    "@ckeditor/ckeditor5-vue2" "^1.0.5"
+
+"@blowstack/ckeditor5-full-free-build@^27.0.1":
+  "integrity" "sha512-JuzZhsFATSiH1NBtv5R/ym//uRuFHBo8DMcREzldyDF6vrxaAni8jimHHr9i9k7y3wXE4WgiRrjcZcENPNh/+g=="
+  "resolved" "https://registry.npmjs.org/@blowstack/ckeditor5-full-free-build/-/ckeditor5-full-free-build-27.0.1.tgz"
+  "version" "27.0.1"
+
+"@ckeditor/ckeditor5-vue2@^1.0.5":
+  "integrity" "sha512-snsNB/2oWfKw0drGJAmMGpTatmt//L1rQsOwkBw+1uKUuOJPKN3xwyUZVWT906VguIMXm4E9OHzquZ3bdkijiA=="
+  "resolved" "https://registry.npmjs.org/@ckeditor/ckeditor5-vue2/-/ckeditor5-vue2-1.0.5.tgz"
+  "version" "1.0.5"
+
 "@csstools/convert-colors@^1.4.0":
   "integrity" "sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw=="
   "resolved" "https://registry.npmjs.org/@csstools/convert-colors/-/convert-colors-1.4.0.tgz"
@@ -6029,7 +6047,7 @@
   "resolved" "https://registry.npmjs.org/lodash.uniq/-/lodash.uniq-4.5.0.tgz"
   "version" "4.5.0"
 
-"lodash@^4.15.0", "lodash@^4.17.15", "lodash@^4.17.19", "lodash@^4.17.20", "lodash@^4.17.21", "lodash@^4.17.5":
+"lodash@^4.15.0", "lodash@^4.17.19", "lodash@^4.17.20", "lodash@^4.17.21", "lodash@^4.17.5":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   "version" "4.17.21"
@@ -10037,7 +10055,7 @@
   "resolved" "https://registry.npmjs.org/vue-toasted/-/vue-toasted-1.1.28.tgz"
   "version" "1.1.28"
 
-"vue@^2.0.0 || >=3.0.0", "vue@^2.6.10", "vue@^2.6.12", "vue@^3.0.0-0 || ^2.6.0":
+"vue@^2.6.12":
   "integrity" "sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-2.6.14.tgz"
   "version" "2.6.14"

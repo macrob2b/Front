@@ -242,8 +242,10 @@ export default {
         {
           title: 'About us',
           links: [
-               {label:'About Macrob2b.com',link:'/about_website'},
+               {label:'About me',link:'/about-me'},
                {label:'Contact us',link:'/contact-us'},
+               {label:'Terms and Conditions',link:'/terms-and-conditions'},
+               {label:'Privacy Policy',link:'/privacy-policy'},
             ],
         },{
           title: 'Source',
@@ -262,8 +264,8 @@ export default {
         },{
           title: 'Services',
           links: [
-               {label:'Trade Assurance',link:'/trade_assurance'},
-               {label:'Business Identity',link:'/business_identity'},
+               {label:'Trade Assurance',link:'/trade-assurance'},
+               {label:'Business Identity',link:'/business-identity'},
             ],
         },
       ],

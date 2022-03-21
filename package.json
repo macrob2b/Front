@@ -9,6 +9,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@blowstack/ckeditor-nuxt": "^0.6.0",
     "@forked-prs/nuxt-infinite-scroll-module": "^1.0.2",
     "@growthbunker/vueflags": "^0.1.14",
     "@mdi/font": "^6.5.95",

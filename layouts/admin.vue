@@ -59,6 +59,9 @@
           <v-list-item to="/admin/company">
             <v-list-item-title>Company manage</v-list-item-title>
           </v-list-item>
+          <v-list-item to="/admin/static-page">
+            <v-list-item-title>Static page manage</v-list-item-title>
+          </v-list-item>
           <v-list-item to="/admin/dashboard">
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item>
