@@ -3,14 +3,14 @@
     <h1>Static page list</h1>
     <v-divider/>
     <v-row class="mt-3">
-      <v-col cols="10">
-        <v-text-field
-          v-model="search"
-          label="Search"
-          class="mx-4"
-          @keyup="searchData()"
-        ></v-text-field>
-      </v-col>
+<!--      <v-col cols="10">-->
+<!--        <v-text-field-->
+<!--          v-model="search"-->
+<!--          label="Search"-->
+<!--          class="mx-4"-->
+<!--          @keyup="searchData()"-->
+<!--        ></v-text-field>-->
+<!--      </v-col>-->
 
       <v-col cols="2">
         <v-btn

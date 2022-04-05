@@ -56,12 +56,12 @@
 </template>
 
 <script>
-import aboutCompany from "../../pages/company-details/tabs/about-company"
-import factoriesBranches from "../../pages/company-details/tabs/factories-branches"
-// import tradeCapacity from "../../pages/company-details/tabs/trade-capacity"
-import certificates from "../../pages/company-details/tabs/certificates"
-// import mainProducts from "../../pages/company-details/tabs/main-products"
-import contactUs from "../../pages/company-details/tabs/contact-us"
+import aboutCompany from "../../pages/company/tabs/about-company"
+import factoriesBranches from "../../pages/company/tabs/factories-branches"
+// import tradeCapacity from "../../pages/company/tabs/trade-capacity"
+import certificates from "../../pages/company/tabs/certificates"
+// import mainProducts from "../../pages/company/tabs/main-products"
+import contactUs from "../../pages/company/tabs/contact-us"
 
 export default {
   components: {

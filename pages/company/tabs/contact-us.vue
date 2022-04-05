@@ -171,7 +171,7 @@ export default {
     async submitMsg() {
       this.submit_loading = true;
       await this.$axios.$post('/api/send_msg_to_company', {
-          company_id: this.$route.params.id,
+          company_id: this.companyInfo._id,
           name: this.name,
           email: this.email,
           message: this.message

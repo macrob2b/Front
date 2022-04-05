@@ -210,7 +210,6 @@
               >
                 <v-text-field
                   v-model="companyInfo.email"
-                  :rules="emailRules"
                   label="Email"
                   outlined
                   required
@@ -225,8 +224,9 @@
                 <v-text-field
                   v-model="companyInfo.website"
                   append-icon="mdi-web"
-                  :rules="urlRules"
                   label="Company Website URL"
+                  hint="Ex: https://macrob2b.com"
+                  persistent-hint
                   outlined
                   required
                 ></v-text-field>
@@ -266,15 +266,24 @@
               >
                 <v-file-input
                   v-model="companyInfo.logo"
-                  small-chips
                   accept="image/png,image/webp,"
                   outlined
+                  :clearable="false"
                   :loading="logo_uploading"
                   @change="uploadFile('logo')"
-                  @click:clear="deleteFile('logo')"
                   append-icon="mdi-cloud-upload"
                   label="Business Logo"
                 ></v-file-input>
+                <v-chip
+                  v-if="company_logo_name"
+                  small
+                  class="my-1"
+                  @click:close="deleteFile('logo')"
+                  text-color="white"
+                  color="green"
+                  close>
+                  {{ company_logo_name.substring(0, 30) }}
+                </v-chip>
               </v-col>
 
               <v-col
@@ -283,16 +292,25 @@
               >
                 <v-file-input
                   v-model="companyInfo.images"
-                  small-chips
                   multiple
+                  :clearable="false"
                   outlined
                   :loading="images_uploading"
                   accept="image/png,image/webp,"
                   @change="uploadFile('images')"
-                  @click:clear="deleteFile('images')"
                   append-icon="mdi-cloud-upload"
                   label="Company Image"
                 ></v-file-input>
+                <v-chip
+                  v-for="item in company_images_name"
+                  small
+                  class="my-1"
+                  @click:close="deleteFile('images',item)"
+                  text-color="white"
+                  color="green"
+                  close>
+                  {{ item.substring(0, 15) }}
+                </v-chip>
               </v-col>
 
               <v-col
@@ -301,16 +319,26 @@
               >
                 <v-file-input
                   v-model="companyInfo.brochures"
-                  small-chips
                   multiple
+                  :clearable="false"
                   outlined
                   :loading="brochures_uploading"
                   accept="image/jpeg,image/gif,image/png,image/webp,application/pdf"
                   @change="uploadFile('brochures')"
-                  @click:clear="deleteFile('brochures')"
                   append-icon="mdi-cloud-upload"
                   label="Company Brochure"
                 ></v-file-input>
+
+                <v-chip
+                  v-for="item in company_brochures_name"
+                  @click:close="deleteFile('brochures',item)"
+                  small
+                  class="my-1"
+                  text-color="white"
+                  color="green"
+                  close>
+                  {{ item.substring(0, 15) }}
+                </v-chip>
               </v-col>
             </v-row>
             <v-row>
@@ -321,14 +349,22 @@
                 <v-file-input
                   v-model="companyInfo.video"
                   :loading="video_uploading"
-                  small-chips
                   label="Video"
                   accept="video/mp4,video/x-m4v,video/*"
                   @change="uploadFile('video')"
-                  @click:clear="deleteFile('video')"
                   outlined
                   append-icon="mdi-cloud-upload"
                 ></v-file-input>
+                <v-chip
+                  v-if="company_video_name"
+                  small
+                  class="my-1"
+                  @click:close="deleteFile('video')"
+                  text-color="white"
+                  color="green"
+                  close>
+                  {{ company_video_name.substring(0, 30) }}
+                </v-chip>
               </v-col>
             </v-row>
           </v-container>
@@ -395,6 +431,13 @@ export default {
         brochures: [],
         video: null,
       },
+
+      //Uploaded name section
+      company_images_name: [],
+      company_logo_name: '',
+      company_video_name: '',
+      company_brochures_name: [],
+
       submit_loading: false,
       yearEstablishedRule: [
         value => {
@@ -408,17 +451,7 @@ export default {
           const pattern = /^[-,0-9]+$/;
           return pattern.test(value) || 'Invalid value.'
         },
-      ],
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-      urlRules: [
-        value => {
-          const pattern = /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
-          return pattern.test(value) || 'Invalid value.'
-        }
-      ],
+      ]
     }
   },
   computed: {
@@ -489,21 +522,16 @@ export default {
       this.companyInfo.postal_code = this.companyLoadedInfo.postal_code;
 
       if (this.companyLoadedInfo && this.companyLoadedInfo.logo)
-        this.companyInfo.logo = new File([], this.companyLoadedInfo.logo);
+        this.company_logo_name = this.companyLoadedInfo.logo;
 
-      if (this.companyLoadedInfo && this.companyLoadedInfo.images) {
-        for (var x = 0; x < this.companyLoadedInfo.images.length; x++) {
-          this.companyInfo.images[x] = new File([], this.companyLoadedInfo.images[x]);
-        }
-      }
+      if (this.companyLoadedInfo && this.companyLoadedInfo.images)
+        this.company_images_name = this.companyLoadedInfo.images;
 
       if (this.companyLoadedInfo && this.companyLoadedInfo.brochures)
-        for (var x = 0; x < this.companyLoadedInfo.brochures.length; x++) {
-          this.companyInfo.brochures[x] = new File([], this.companyLoadedInfo.brochures[x]);
-        }
+        this.company_brochures_name = this.companyLoadedInfo.brochures;
 
       if (this.companyLoadedInfo && this.companyLoadedInfo.video)
-        this.companyInfo.video = new File([], this.companyLoadedInfo.video);
+        this.company_video_name = this.companyLoadedInfo.video;
 
     },
     spilitter(val) {
@@ -536,19 +564,23 @@ export default {
 
 
       for (var key in this.companyInfo) {
-        formData.append(key, this.companyInfo[key]);
+        if (!(key === "logo" || key === "images" || key === "video" || key === "brochures"))
+          formData.append(key, this.companyInfo[key]);
       }
 
 
-      this.$axios.post('/api/update_company_general_info', formData)
+      this.$axios.$post('/api/update_company_general_info', formData)
         .then(response => {
-          if (response.data.length == 0)
+          if (typeof response === 'object') {
+            for (let i in response) {
+              let error = response[i][0];
+              this.$toast.error(error);
+              // break;
+            }
+          } else {
             this.$toast.success("Update data successfully");
-          else
-            this.$toast.error("Please fill required fields");
-
+          }
           this.submit_loading = false;
-
         }).catch(({response}) => {
         if (response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
@@ -590,7 +622,7 @@ export default {
           formData.append('directory', '/');
           formData.append('type', 'single');
 
-          this.handleUpload(formData);
+          this.handleUpload(formData, type);
 
         }
       } else if (type === 'images') {
@@ -606,7 +638,7 @@ export default {
           formData.append('directory', '/images');
           formData.append('type', 'multiple');
 
-          this.handleUpload(formData);
+          this.handleUpload(formData, type);
 
         }
       } else if (type === 'brochures') {
@@ -622,7 +654,7 @@ export default {
           formData.append('directory', '/brochures');
           formData.append('type', 'multiple');
 
-          this.handleUpload(formData);
+          this.handleUpload(formData, type);
 
         }
       } else if (type === 'video') {
@@ -635,14 +667,14 @@ export default {
           formData.append('directory', '/video');
           formData.append('type', 'single');
 
-          this.handleUpload(formData);
+          this.handleUpload(formData, type);
         }
       }
 
 
     }
     ,
-    async handleUpload(formData) {
+    async handleUpload(formData, type = '') {
       await this.$axios.$post('/api/upload_company_file',
         formData,
         {
@@ -651,6 +683,14 @@ export default {
           }
         })
         .then(response => {
+          if (type === 'images')
+            this.company_images_name = response
+          else if (type === 'logo')
+            this.company_logo_name = response;
+          else if (type === "brochures")
+            this.company_brochures_name = response;
+          else if (type === "video")
+            this.company_video_name = response;
           console.log("Success");
           this.logo_uploading = false;
           this.images_uploading = false;
@@ -671,15 +711,26 @@ export default {
         });
     }
     ,
-    async deleteFile(type) {
+    async deleteFile(type, filename = '') {
+      this.$toast.info("Delete in progress ...");
       await this.$axios.$delete('/api/delete_company_file',
         {
           params: {
-            'field': type
+            field: type,
+            filename: filename
           }
         }
       )
         .then(response => {
+          if (type === "images")
+            this.company_images_name = response;
+          else if (type === "logo")
+            this.company_logo_name = response;
+          else if (type === "brochures")
+            this.company_brochures_name = response;
+          else if (type === "video")
+            this.company_video_name = response;
+
           this.$toast.error("Deleted successfully");
         }).catch(({err}) => {
           this.$toast.error(err)

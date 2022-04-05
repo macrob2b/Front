@@ -3,7 +3,6 @@
     <h2>Create new page</h2>
     <v-form
       ref="form"
-      v-model="valid"
       lazy-validation
     >
 

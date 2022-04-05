@@ -1,22 +1,25 @@
 <template>
-  <v-container >
-<!--    <div class="d-block" v-if="true" >-->
-<!--      <v-row class="mt-12 mb-12 " >-->
-<!--        <v-col cols="12"  class="text-center d-block">-->
-<!--          <v-progress-circular-->
-<!--            :size="40"-->
-<!--            :width="4"-->
-<!--            color="orange"-->
-<!--            indeterminate-->
-<!--          ></v-progress-circular>-->
-<!--        </v-col>-->
-<!--      </v-row>-->
-<!--    </div>-->
-    <div >
-      <v-row >
-        <v-slide-group class="pa-2" center-active show-arrows>
+  <v-container>
+    <!--    <div class="d-block" v-if="true" >-->
+    <!--      <v-row class="mt-12 mb-12 " >-->
+    <!--        <v-col cols="12"  class="text-center d-block">-->
+    <!--          <v-progress-circular-->
+    <!--            :size="40"-->
+    <!--            :width="4"-->
+    <!--            color="orange"-->
+    <!--            indeterminate-->
+    <!--          ></v-progress-circular>-->
+    <!--        </v-col>-->
+    <!--      </v-row>-->
+    <!--    </div>-->
+    <div>
+      <v-row>
+        <v-slide-group class="pa-2"
+                       :continuous="true"
+                       v-model="slideVal"
+                       center-active show-arrows>
           <v-slide-item v-for="(product,index) in newProducts" :key="index">
-            <ProductCard1 :product="product"  />
+            <ProductCard1 :product="product"/>
           </v-slide-item>
         </v-slide-group>
       </v-row>
@@ -29,7 +32,7 @@
           min-width="0"
           v-show="!$vuetify.breakpoint.xs"
         >
-          <v-icon color="white"> mdi-chevron-left </v-icon>
+          <v-icon color="white"> mdi-chevron-left</v-icon>
         </v-btn>
         <v-btn
           color="#165048"
@@ -40,7 +43,7 @@
           min-width="0"
           v-show="!$vuetify.breakpoint.xs"
         >
-          <v-icon color="white"> mdi-chevron-right </v-icon>
+          <v-icon color="white"> mdi-chevron-right</v-icon>
         </v-btn>
       </div>
     </div>
@@ -50,49 +53,45 @@
 <script>
 import ProductCard1 from "./ProductCard1.vue";
 import ProductCard2 from "./ProductCard2.vue";
+
 export default {
-  props: ['newProducts','loading'],
-  components: { ProductCard1, ProductCard2 },
+  props: ['newProducts', 'loading'],
+  components: {ProductCard1, ProductCard2},
   data() {
     return {
-      previousButton: "",
-      nextButton: "",
-      isPreviousBtnDisable: true,
-      isNextBtnDisable: false,
+      slideVal: 0,
+      slideTimer:null
     };
   },
   mounted() {
-    // this.getNewProducts();
-    // setTimeout(() => this.checkNavBtnStatus(), 2000);
+    this.slideVal++;
   },
-  watch:{
-
+  watch: {
+    slideVal(val,old_val){
+      if (val!==old_val){
+        clearTimeout(this.slideTimer);
+        this.slideTimer=setTimeout(()=>{
+          if (this.slideVal === 9)
+            this.slideVal = 0
+          else
+            this.slideVal++;
+        },2000)
+      }
+    }
   },
   methods: {
-    checkNavBtnStatus() {
-      this.previousButton = document.querySelector(
-        `.slider${this.$props.id} div.v-slide-group__prev`
-      );
-      // console.log(
-      //   this.previousButton,
-      //   "slider" + this.$props.id + " div.v-slide-group__prev"
-      // );
-      this.nextButton = document.querySelector(
-        `.slider${this.$props.id} div.v-slide-group__next`
-      );
-      // console.log(this.nextButton);
-      this.isPreviousBtnDisable =
-        this.previousButton?.className.includes("disabled");
-      this.isNextBtnDisable = this.nextButton?.className.includes("disabled");
-    },
     clickLeft() {
-      // console.log();
-      this.previousButton.click();
-      this.checkNavBtnStatus();
+      if (this.slideVal === 0)
+        this.slideVal = 9
+      else
+        this.slideVal--;
+
     },
     clickRight() {
-      this.nextButton.click();
-      this.checkNavBtnStatus();
+      if (this.slideVal === 9)
+        this.slideVal = 0
+      else
+        this.slideVal++;
     },
 
   },
@@ -104,9 +103,11 @@ export default {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
 .v-item-group >>> .v-slide-group__prev {
   display: none;
 }
+
 .v-item-group >>> .v-slide-group__next {
   display: none;
 }
@@ -116,6 +117,7 @@ export default {
     display: flex;
     min-width: 10px !important;
   }
+
   .v-item-group >>> .v-slide-group__next {
     display: flex;
     min-width: 10px !important;

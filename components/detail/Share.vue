@@ -17,7 +17,7 @@
       <v-btn
         class="mx-2"
         small
-        :to="'/company-details/'+companyId">
+        :to="'/company/'+companyId">
         Contact supplier
       </v-btn>
   </v-row>

@@ -5,7 +5,7 @@
         <img
           :src="getImgFile(product)" />
       </div>
-      <div class="text-center">{{product.title}}</div>
+      <div class="text-center">{{product.title.length<=25 ? product.title : product.title.substring(0,22)+"..."}}</div>
 <!--      <div class="text-center"  id="div1">-->
 <!--        250 <span  id="span1">$</span>-->
 <!--      </div>-->

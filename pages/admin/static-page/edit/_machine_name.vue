@@ -3,7 +3,6 @@
     <h2>Edit {{ page_info.title }}</h2>
     <v-form
       ref="form"
-      v-model="valid"
       lazy-validation
     >
 
