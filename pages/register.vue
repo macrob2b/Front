@@ -115,6 +115,9 @@
               </validation-provider>
             </v-col>
 
+
+
+
             <!--     Password       -->
             <v-col cols="12" md="6" lg="6" xl="6" class="ma-0 pt-0 pb-0">
               <validation-provider v-slot="{errors}" name="password" rules="required|min:8">

@@ -113,7 +113,7 @@
           </div>
         </v-container>
       </v-form>
-      <div >
+      <div>
         <v-btn
           class="primary"
           :loading="submit_loading"
@@ -143,7 +143,7 @@ export default {
   computed: {},
   data() {
     return {
-      submit_loading:false,
+      submit_loading: false,
       branch: {
         name: '',
         contact_num: '',
@@ -191,12 +191,12 @@ export default {
   methods: {
     submit() {
       // this.$emit('formData', this.branch);
-      this.submit_loading=true;
+      this.submit_loading = true;
       let formData = new FormData()
 
       let edit = false;
       for (let key in _.pick(this.branch, '_id', 'name', 'contact_num',
-        'location','country','country_code','state','city','description', 'image', 'supervisor_name', 'supervisor_phone', 'supervisor_fax', 'supervisor_email')) {
+        'location', 'country', 'country_code', 'state', 'city', 'description', 'image', 'supervisor_name', 'supervisor_phone', 'supervisor_fax', 'supervisor_email')) {
         if (key == '_id') {
           edit = true;
           formData.append('branch_id', this.branch[key]);
@@ -218,14 +218,14 @@ export default {
           this.$toast.success("Submit successfully");
           this.$emit('submitStatus', true);
         }
-        this.submit_loading=false;
+        this.submit_loading = false;
       }).catch(({response}) => {
         if (response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
         } else if (response.status == 500 || response.status == 504) {
           this.$toast.error(this.$t(`REQUEST_FAILED`));
         }
-        this.submit_loading=false;
+        this.submit_loading = false;
       });
     },
     locationSelected(location) {
@@ -235,14 +235,14 @@ export default {
       this.branch.state = location.state;
       this.branch.city = location.city;
     },
-    contactNumEntered(num){
-        this.branch.contact_num = num;
+    contactNumEntered(num) {
+      this.branch.contact_num = num;
     },
-    supervisorNumEntered(num){
-        this.branch.supervisor_phone = num;
+    supervisorNumEntered(num) {
+      this.branch.supervisor_phone = num;
     },
-    supervisorFaxEntered(num){
-        this.branch.supervisor_fax = num;
+    supervisorFaxEntered(num) {
+      this.branch.supervisor_fax = num;
     }
   }
 }

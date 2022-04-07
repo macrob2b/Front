@@ -1,8 +1,17 @@
 <template>
   <!-- Root -->
   <div>
-    <!-- Location Field -->
-    <LocationSearch ref="locationField" :label="label" @locationSelected="zoomOnLocation"/>
+    <v-text-field
+      prepend-inner-icon="mdi-map-marker"
+      v-model="locationInput"
+      :loading="location_loading"
+      @focus="zoomOnLocation($event,[currentLat,currentLng])"
+      :label="this.label ? this.label : 'Business location'"
+      :background-color="locationInput ? 'green lighten-4' : ''"
+      outlined
+    >
+
+    </v-text-field>
 
     <!--    Location Map Dialog       -->
     <v-dialog
@@ -43,54 +52,93 @@
 <script>
 
 import LocationSearch from "@/components/Form/LocationSearch";
-import LeafletMap     from "@/components/leafletMap/LeafletMap";
+import LeafletMap from "@/components/leafletMap/LeafletMap";
 
 export default {
-  name      : "LocationField",
+  name: "LocationField",
   components: {LocationSearch, LeafletMap},
-  props     : {
-    'label':null,
-    'defaultLocation':null,
+  props: {
+    label: {
+      type: String,
+      default: null
+    },
+    defaultLocation: {
+      type: String,
+      default: ""
+    },
   },
   data() {
     return {
       locationDialog: false,
-      loading       : false,
+      loading: false,
+      locationInput: '',
+      location_loading: false,
+      currentLat: 32,
+      currentLng: 50
     }
   },
-  watch:{
-    defaultLocation(val){
-      if (val!==null){
-        val['locationName']=val.road+','+val.country+','+val.state;
-        this.$refs.locationField.addAndSetItem(val);
-
-      }
-
-    }
+  watch: {
+  },
+  mounted() {
+    if (!(this.defaultLocation || this.defaultLocation === null || this.defaultLocation===undefined))
+      this.getLocationByIp();
+    else
+      this.locationInput = `Selected: ${this.defaultLocation}`;
   },
   methods: {
-    zoomOnLocation(location) {
+    zoomOnLocation(e, location) {
       this.$refs.locationMap.goToSearchLocation(location);
+      e.target.blur();
       this.locationDialog = true;
     },
     selectLocation(location) {
-      console.log(location);
-      this.$refs.locationField.toggleSearch(false);
-      this.$refs.locationField.addAndSetItem(location);
-      this.$emit('locationSelected', {
-        lat         : location.lat,
-        lng         : location.lng,
-        country_code: location.country_code,
-        country     : location.country,
-        state       : location.state,
-        city        : location.city,
-      });
-      this.loading        = false;
+      this.loading = false;
       this.locationDialog = false;
+      this.locationInput = `Selected: ${location.country}`;
+      this.$emit('locationSelected', {
+        lat: location.lat,
+        lng: location.lng,
+        country_code: location.country_code,
+        country: location.country,
+        state: location.state,
+        city: location.city,
+      });
     },
     emitLocation() {
       this.loading = true;
       this.$refs.locationMap.selectLocation();
+    },
+    async getLocationByIp() {
+      this.location_loading = true;
+      await this.$axios.$get('https://api.ipregistry.co', {
+        params: {
+          key: process.env.geo_by_ip_key
+        }
+      })
+        .then(response => {
+          if (response.location && response.location.latitude)
+            this.reverseLocation(response.location.latitude, response.location.longitude)
+        }).finally(msg => {
+          this.location_loading = false;
+        });
+    },
+    async reverseLocation(lat, lng) {
+      await this.$axios.$post('/api/reverse_location', {
+        lat: lat,
+        lng: lng
+      }).then(location => {
+        this.locationInput = `Current location: ${location.country}`;
+        this.currentLat = lat;
+        this.currentLng = lng;
+        this.$emit('locationSelected', {
+          lat: lat,
+          lng: lng,
+          country_code: location.country_code,
+          country: location.country,
+          state: location.state,
+          city: location.city,
+        });
+      })
     }
   }
 }

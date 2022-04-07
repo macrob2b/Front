@@ -10,14 +10,14 @@
     :label="label"
     outlined>
     <template slot="prepend-inner">
-      <v-select class="phoneCodeSelect"
-                v-model="phoneCode"
-                :items="phoneCodes"
-                item-text="title"
-                item-value="code"
-                flat
-                solo
-                dense>
+      <v-autocomplete class="phoneCodeSelect"
+                      v-model="phoneCode"
+                      :items="phoneCodes"
+                      item-text="title"
+                      item-value="code"
+                      flat
+                      solo
+                      dense>
         <template slot="selection" slot-scope="data">
           <gb-flag :code="data.item.flag" class="mr-2"/>
           +{{ data.item.code }}
@@ -26,7 +26,7 @@
           <gb-flag :code="data.item.flag" class="mr-2"/>
           {{ data.item.title }}
         </template>
-      </v-select>
+      </v-autocomplete>
     </template>
   </v-text-field>
 </template>
@@ -34,21 +34,21 @@
 <script>
 
 export default {
-  name : "phoneNumberInput",
+  name: "phoneNumberInput",
   props: {
-    errors:{default:null},
-    label:{type:String,default:'Phone number'},
-    phone: {type:String,default:null},
+    errors: {default: null},
+    label: {type: String, default: 'Phone number'},
+    phone: {type: String, default: null},
   },
   data() {
     return {
-      inputLabel:"",
-      phoneCode  : '90',
+      inputLabel: "",
+      phoneCode: '90',
       phoneNumber: '',
       finalNumber: '',
-      phoneCodes : [],
-      render     : true,
-      loading    : false
+      phoneCodes: [],
+      render: true,
+      loading: false
     };
   },
   methods: {
@@ -62,16 +62,16 @@ export default {
       });
     }
   },
-  watch  : {
+  watch: {
     phoneNumber: function (val) {
       this.inputChanged();
     },
-    phoneCode  : function (val) {
+    phoneCode: function (val) {
       this.inputChanged();
     }
   },
   async mounted() {
-    this.loading  = true;
+    this.loading = true;
     let countries = await this.$axios.post('/api/search_country', {
       keyword: ''
     });
@@ -79,16 +79,16 @@ export default {
       for (let i = 0; i < countries.data.length; i++) {
         this.phoneCodes[i] = {
           title: countries.data[i].title,
-          code : countries.data[i].tel,
-          flag : countries.data[i].alpha2
+          code: countries.data[i].tel,
+          flag: countries.data[i].alpha2
         };
       }
       this.loading = false;
 
       //Set default value
-      if (this.phone){
-        this.phoneCode=this.phone.split('-')[0].replace('+','');
-        this.phoneNumber=this.phone.split('-')[1];
+      if (this.phone) {
+        this.phoneCode = this.phone.split('-')[0].replace('+', '');
+        this.phoneNumber = this.phone.split('-')[1];
       }
       //End set default value
       this.reRenderComponent();

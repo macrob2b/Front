@@ -202,6 +202,9 @@ export default {
       }
     ]
   },
+  env:{
+    geo_by_ip_key: config.geoByIpKey
+  },
   server: {
     host: '0.0.0.0',
     port: 3000

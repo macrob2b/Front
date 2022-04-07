@@ -80,24 +80,12 @@
                 <location-field
                   v-model="companyInfo.location"
                   label="Business Location"
-                  :defaultLocation="default_location"
+                  :defaultLocation="companyInfo.country"
                   @locationSelected="locationSelected"
                 ></location-field>
               </v-col>
             </v-row>
             <v-row>
-              <v-col
-                class="d-flex"
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="companyInfo.country"
-                  label="Country/Region"
-                  outlined
-                ></v-text-field>
-              </v-col>
-
               <v-col
                 cols="12"
                 md="4"
@@ -119,6 +107,19 @@
                   outlined
                 ></v-text-field>
               </v-col>
+
+              <v-col
+                class="d-flex"
+                cols="12"
+                md="4"
+              >
+                <v-text-field
+                  v-model="companyInfo.address"
+                  label="Street address"
+                  outlined
+                ></v-text-field>
+              </v-col>
+
             </v-row>
             <v-row>
               <v-col
@@ -373,6 +374,57 @@
     </div>
     <!--End Upload media section-->
 
+    <!--Social media section-->
+    <div class="social-media">
+      <div class="social-media-header">
+        <p>Social media</p>
+      </div>
+      <v-divider></v-divider>
+      <div class="social-media-body">
+        <v-container>
+          <v-row>
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                v-model="companyInfo.facebook_address"
+                outlined
+                append-icon="mdi-facebook"
+                label="Facebook"
+              />
+
+            </v-col>
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                v-model="companyInfo.instagram_address"
+                outlined
+                append-icon="mdi-instagram"
+                label="Instagram"
+              />
+
+            </v-col>
+            <v-col
+              cols="12"
+              md="4"
+            >
+              <v-text-field
+                v-model="companyInfo.linkedin_address"
+                outlined
+                append-icon="mdi-linkedin"
+                label="Linkedin"
+              />
+
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
+    </div>
+    <!--Social media section-->
+
     <v-btn
       class="submit mt-3 primary"
       :loading="submit_loading"
@@ -398,7 +450,6 @@ export default {
   props: ['companyLoadedInfo'],
   data() {
     return {
-      default_location: null,
       loaded: false,
 
 
@@ -413,10 +464,11 @@ export default {
         company_name: '',
         business_type: '',
         location: '',
-        country: '',
+        country: null,
         country_code: '',
         state: '',
         city: '',
+        address: '',
         description: '',
         employees_total: '',
         annual_revenue: '',
@@ -430,6 +482,9 @@ export default {
         images: [],
         brochures: [],
         video: null,
+        facebook_address: null,
+        instagram_address: null,
+        linkedin_address: null
       },
 
       //Uploaded name section
@@ -461,10 +516,12 @@ export default {
   },
   watch: {
     employeesTotal(val) {
-      this.companyInfo.employees_total = this.spilitter(val);
+      if (val && val!==null)
+        this.companyInfo.employees_total = this.spilitter(val);
     },
     revenue(val) {
-      this.revenue = this.spilitter(val);
+      if (val && val!==null)
+        this.revenue = this.spilitter(val);
     },
     companyLoadedInfo(val) {
       if (val.length !== 0 && this.loaded === false) {
@@ -503,14 +560,13 @@ export default {
       if (this.companyLoadedInfo && this.companyLoadedInfo.location) {
         this.companyInfo.location = this.companyLoadedInfo.location.coordinates[1] + ',' + this.companyLoadedInfo.location.coordinates[0];
 
-        this.reverseLocation(this.companyLoadedInfo.location.coordinates[1], this.companyLoadedInfo.location.coordinates[0]);
-
       }
 
       this.companyInfo.country = this.companyLoadedInfo.country;
       this.companyInfo.country_code = this.companyLoadedInfo.country_code;
       this.companyInfo.state = this.companyLoadedInfo.state;
       this.companyInfo.city = this.companyLoadedInfo.city;
+      this.companyInfo.address = this.companyLoadedInfo.address;
       this.companyInfo.description = this.companyLoadedInfo.description;
       this.companyInfo.phone = this.companyLoadedInfo.phone;
       this.companyInfo.fax = this.companyLoadedInfo.fax;
@@ -532,6 +588,12 @@ export default {
 
       if (this.companyLoadedInfo && this.companyLoadedInfo.video)
         this.company_video_name = this.companyLoadedInfo.video;
+
+
+      this.companyInfo.facebook_address = this.companyLoadedInfo.facebook_address;
+      this.companyInfo.instagram_address = this.companyLoadedInfo.instagram_address;
+      this.companyInfo.linkedin_address = this.companyLoadedInfo.linkedin_address;
+
 
     },
     spilitter(val) {
@@ -591,22 +653,6 @@ export default {
         }
         this.submit_loading = false;
       });
-    }
-    ,
-    async reverseLocation(lat, lng) {
-      await this.$axios.$post('/api/reverse_location', {
-        lat: lat,
-        lng: lng,
-      }).then(response => {
-        this.default_location = response;
-      }).catch(({response}) => {
-        if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 500 || response.status == 504) {
-          this.$toast.error(this.$t(`REQUEST_FAILED`));
-        }
-      });
-
     }
     ,
     async uploadFile(type) {
