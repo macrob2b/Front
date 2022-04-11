@@ -5,7 +5,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name:"container-card"
+};
 </script>
 
 <style scoped>

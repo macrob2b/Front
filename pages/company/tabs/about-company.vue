@@ -6,7 +6,7 @@
           <v-icon class="secondary-color">mdi-office-building</v-icon>
           About company
         </div>
-        <p>
+        <p class="text-justify">
           {{ companyInfo.description }}
         </p>
 
@@ -171,174 +171,189 @@
       <v-col cols="12" class="mb-8">
         <h2 class="title">
           <v-icon class="secondary-color">mdi-chart-pie</v-icon>
-          Performance overview
+          Products
         </h2>
       </v-col>
-      <v-col cols="6" lg="3" class="py-0 mb-8">
-        <v-card class="fill-height performance-card-item rounded-lg">
-          <div class="d-flex flex-column pa-2 sales">
-            <div class="card-header mb-1">
-              <span class="d-inline-block title font-weight-black primary-color py-3 px-6 rounded-lg"
-                    style="background-color: #304FFE24;">Sales</span>
-            </div>
-            <div class="d-flex justify-space-between align-center mb-2 card-body">
-              <span class="title font-weight-black">0 K</span>
-              <div class="d-flex align-center flex-wrap pa-2 rounded-lg bg-correct-color ">
-                <span class="body-1 font-weight-medium correct-color">+ 0</span>
-                <span>
-                    <svg id="chart_trending_up" data-name="chart / trending_up" xmlns="http://www.w3.org/2000/svg"
-                         xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
-                      <defs>
-                        <clipPath id="clip-path">
-                          <rect id="chart_trending_up_Background_Mask_"
-                                data-name="chart / trending_up (Background/Mask)" width="24" height="24" fill="none"/>
-                        </clipPath>
-                      </defs>
-                      <g id="chart_trending_up-2" data-name="chart / trending_up">
-                        <rect id="chart_trending_up_Background_Mask_2" data-name="chart / trending_up (Background/Mask)"
-                              width="24" height="24" fill="none"/>
-                        <g id="chart_trending_up-3" data-name="chart / trending_up" clip-path="url(#clip-path)">
-                          <path id="coolicon"
-                                d="M11.414,8.707H12a1,1,0,0,0,.707-.293l4.707-4.707L19.707,6V0h-6L16,2.293,11.707,6.586l-3-3A1,1,0,0,0,8,093H7.414a1,1,0,0,0-.707.293L0,10.293l1.414,1.414L7.707,5.414l3,3A1,1,0,0,0,11.414,8.707Z"
-                                transform="translate(2.293 5)" fill="#98cb00"/>
-                        </g>
-                      </g>
-                    </svg>
-                  </span>
-              </div>
-            </div>
-            <div class="mb-3 card-footer">
-              <span class="body-2">Last year 0 K</span>
-            </div>
-          </div>
-        </v-card>
-      </v-col>
-      <v-col cols="6" lg="3" class="py-0 mb-8">
-        <v-card class="fill-height performance-card-item rounded-lg">
-          <div class="d-flex flex-column pa-2 purchases">
-            <div class="card-header mb-1">
-              <span class="d-inline-block title font-weight-black primary-color py-3 px-6 rounded-lg">Purchases</span>
-            </div>
-            <div class="d-flex justify-space-between align-center mb-2 card-body">
-              <span class="title font-weight-black">0 K</span>
-              <div class="d-flex align-center flex-wrap pa-2 rounded-lg bg-correct-color ">
-                <span class="body-1 font-weight-medium correct-color">+ 0</span>
-                <span>
-                        <svg id="chart_trending_up" data-name="chart / trending_up" xmlns="http://www.w3.org/2000/svg"
-                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
-                          <defs>
-                            <clipPath id="clip-path">
-                              <rect id="chart_trending_up_Background_Mask_"
-                                    data-name="chart / trending_up (Background/Mask)" width="24" height="24"
-                                    fill="none"/>
-                            </clipPath>
-                          </defs>
-                          <g id="chart_trending_up-2" data-name="chart / trending_up">
-                            <rect id="chart_trending_up_Background_Mask_2"
-                                  data-name="chart / trending_up (Background/Mask)" width="24" height="24" fill="none"/>
-                            <g id="chart_trending_up-3" data-name="chart / trending_up" clip-path="url(#clip-path)">
-                              <path id="coolicon"
-                                    d="M11.414,8.707H12a1,1,0,0,0,.707-.293l4.707-4.707L19.707,6V0h-6L16,2.293,11.707,6.586l-3-3A1,1,0,0,0,8,093H7.414a1,1,0,0,0-.707.293L0,10.293l1.414,1.414L7.707,5.414l3,3A1,1,0,0,0,11.414,8.707Z"
-                                    transform="translate(2.293 5)" fill="#98cb00"/>
-                            </g>
-                          </g>
-                        </svg>
-                      </span>
-              </div>
-            </div>
-            <div class="mb-3 card-footer">
-              <span class="body-2">Last year 0 K</span>
-            </div>
-          </div>
-        </v-card>
-      </v-col>
-      <v-col cols="6" lg="3" class="py-0 mb-8">
-        <v-card class="fill-height performance-card-item rounded-lg">
-          <div class="d-flex flex-column pa-2 satisfaction">
-            <div class="card-header mb-1">
-              <span class="d-inline-block title font-weight-black primary-color py-3 px-6 rounded-lg">Overall satisfaction</span>
-            </div>
-            <div class="d-flex justify-space-between align-center mb-2 card-body">
-              <span class="title font-weight-black">0 K</span>
-              <div class="d-flex align-center flex-wrap pa-2 rounded-lg bg-correct-color ">
-                <span class="body-1 font-weight-medium correct-color">+ 0</span>
-                <span>
-                        <svg id="chart_trending_up" data-name="chart / trending_up" xmlns="http://www.w3.org/2000/svg"
-                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
-                          <defs>
-                            <clipPath id="clip-path">
-                              <rect id="chart_trending_up_Background_Mask_"
-                                    data-name="chart / trending_up (Background/Mask)" width="24" height="24"
-                                    fill="none"/>
-                            </clipPath>
-                          </defs>
-                          <g id="chart_trending_up-2" data-name="chart / trending_up">
-                            <rect id="chart_trending_up_Background_Mask_2"
-                                  data-name="chart / trending_up (Background/Mask)" width="24" height="24" fill="none"/>
-                            <g id="chart_trending_up-3" data-name="chart / trending_up" clip-path="url(#clip-path)">
-                              <path id="coolicon"
-                                    d="M11.414,8.707H12a1,1,0,0,0,.707-.293l4.707-4.707L19.707,6V0h-6L16,2.293,11.707,6.586l-3-3A1,1,0,0,0,8,093H7.414a1,1,0,0,0-.707.293L0,10.293l1.414,1.414L7.707,5.414l3,3A1,1,0,0,0,11.414,8.707Z"
-                                    transform="translate(2.293 5)" fill="#98cb00"/>
-                            </g>
-                          </g>
-                        </svg>
-                      </span>
-              </div>
-            </div>
-            <div class="mb-3 card-footer">
-              <span class="body-2">Last year 0 K</span>
-            </div>
-          </div>
-        </v-card>
-      </v-col>
-      <v-col cols="6" lg="3" class="py-0 mb-8">
-        <v-card class="fill-height performance-card-item rounded-lg">
-          <div class="d-flex flex-column pa-2 more-sales">
-            <div class="card-header mb-1">
-              <span class="d-inline-block title font-weight-black primary-color py-3 px-6 rounded-lg">Sales</span>
-            </div>
-            <div class="d-flex justify-space-between align-center mb-2 card-body">
-              <span class="title font-weight-black">0 K</span>
-              <div class="d-flex align-center flex-wrap pa-2 rounded-lg bg-correct-color ">
-                <span class="body-1 font-weight-medium correct-color">+ 0</span>
-                <span>
-                        <svg id="chart_trending_up" data-name="chart / trending_up" xmlns="http://www.w3.org/2000/svg"
-                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
-                          <defs>
-                            <clipPath id="clip-path">
-                              <rect id="chart_trending_up_Background_Mask_"
-                                    data-name="chart / trending_up (Background/Mask)" width="24" height="24"
-                                    fill="none"/>
-                            </clipPath>
-                          </defs>
-                          <g id="chart_trending_up-2" data-name="chart / trending_up">
-                            <rect id="chart_trending_up_Background_Mask_2"
-                                  data-name="chart / trending_up (Background/Mask)" width="24" height="24" fill="none"/>
-                            <g id="chart_trending_up-3" data-name="chart / trending_up" clip-path="url(#clip-path)">
-                              <path id="coolicon"
-                                    d="M11.414,8.707H12a1,1,0,0,0,.707-.293l4.707-4.707L19.707,6V0h-6L16,2.293,11.707,6.586l-3-3A1,1,0,0,0,8,093H7.414a1,1,0,0,0-.707.293L0,10.293l1.414,1.414L7.707,5.414l3,3A1,1,0,0,0,11.414,8.707Z"
-                                    transform="translate(2.293 5)" fill="#98cb00"/>
-                            </g>
-                          </g>
-                        </svg>
-                      </span>
-              </div>
-            </div>
-            <div class="mb-3 card-footer">
-              <span class="body-2">Last year 0 K</span>
-            </div>
-          </div>
-        </v-card>
+      <v-col cols="12" class="mb-8">
+         <ProductSlider :new-products="company_products"></ProductSlider>
       </v-col>
     </v-row>
+<!--    <v-row>-->
+<!--      <v-col cols="12" class="mb-8">-->
+<!--        <h2 class="title">-->
+<!--          <v-icon class="secondary-color">mdi-chart-pie</v-icon>-->
+<!--          Performance overview-->
+<!--        </h2>-->
+<!--      </v-col>-->
+<!--      <v-col cols="6" lg="3" class="py-0 mb-8">-->
+<!--        <v-card class="fill-height performance-card-item rounded-lg">-->
+<!--          <div class="d-flex flex-column pa-2 sales">-->
+<!--            <div class="card-header mb-1">-->
+<!--              <span class="d-inline-block title font-weight-black primary-color py-3 px-6 rounded-lg"-->
+<!--                    style="background-color: #304FFE24;">Sales</span>-->
+<!--            </div>-->
+<!--            <div class="d-flex justify-space-between align-center mb-2 card-body">-->
+<!--              <span class="title font-weight-black">0 K</span>-->
+<!--              <div class="d-flex align-center flex-wrap pa-2 rounded-lg bg-correct-color ">-->
+<!--                <span class="body-1 font-weight-medium correct-color">+ 0</span>-->
+<!--                <span>-->
+<!--                    <svg id="chart_trending_up" data-name="chart / trending_up" xmlns="http://www.w3.org/2000/svg"-->
+<!--                         xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">-->
+<!--                      <defs>-->
+<!--                        <clipPath id="clip-path">-->
+<!--                          <rect id="chart_trending_up_Background_Mask_"-->
+<!--                                data-name="chart / trending_up (Background/Mask)" width="24" height="24" fill="none"/>-->
+<!--                        </clipPath>-->
+<!--                      </defs>-->
+<!--                      <g id="chart_trending_up-2" data-name="chart / trending_up">-->
+<!--                        <rect id="chart_trending_up_Background_Mask_2" data-name="chart / trending_up (Background/Mask)"-->
+<!--                              width="24" height="24" fill="none"/>-->
+<!--                        <g id="chart_trending_up-3" data-name="chart / trending_up" clip-path="url(#clip-path)">-->
+<!--                          <path id="coolicon"-->
+<!--                                d="M11.414,8.707H12a1,1,0,0,0,.707-.293l4.707-4.707L19.707,6V0h-6L16,2.293,11.707,6.586l-3-3A1,1,0,0,0,8,093H7.414a1,1,0,0,0-.707.293L0,10.293l1.414,1.414L7.707,5.414l3,3A1,1,0,0,0,11.414,8.707Z"-->
+<!--                                transform="translate(2.293 5)" fill="#98cb00"/>-->
+<!--                        </g>-->
+<!--                      </g>-->
+<!--                    </svg>-->
+<!--                  </span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="mb-3 card-footer">-->
+<!--              <span class="body-2">Last year 0 K</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </v-card>-->
+<!--      </v-col>-->
+<!--      <v-col cols="6" lg="3" class="py-0 mb-8">-->
+<!--        <v-card class="fill-height performance-card-item rounded-lg">-->
+<!--          <div class="d-flex flex-column pa-2 purchases">-->
+<!--            <div class="card-header mb-1">-->
+<!--              <span class="d-inline-block title font-weight-black primary-color py-3 px-6 rounded-lg">Purchases</span>-->
+<!--            </div>-->
+<!--            <div class="d-flex justify-space-between align-center mb-2 card-body">-->
+<!--              <span class="title font-weight-black">0 K</span>-->
+<!--              <div class="d-flex align-center flex-wrap pa-2 rounded-lg bg-correct-color ">-->
+<!--                <span class="body-1 font-weight-medium correct-color">+ 0</span>-->
+<!--                <span>-->
+<!--                        <svg id="chart_trending_up" data-name="chart / trending_up" xmlns="http://www.w3.org/2000/svg"-->
+<!--                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">-->
+<!--                          <defs>-->
+<!--                            <clipPath id="clip-path">-->
+<!--                              <rect id="chart_trending_up_Background_Mask_"-->
+<!--                                    data-name="chart / trending_up (Background/Mask)" width="24" height="24"-->
+<!--                                    fill="none"/>-->
+<!--                            </clipPath>-->
+<!--                          </defs>-->
+<!--                          <g id="chart_trending_up-2" data-name="chart / trending_up">-->
+<!--                            <rect id="chart_trending_up_Background_Mask_2"-->
+<!--                                  data-name="chart / trending_up (Background/Mask)" width="24" height="24" fill="none"/>-->
+<!--                            <g id="chart_trending_up-3" data-name="chart / trending_up" clip-path="url(#clip-path)">-->
+<!--                              <path id="coolicon"-->
+<!--                                    d="M11.414,8.707H12a1,1,0,0,0,.707-.293l4.707-4.707L19.707,6V0h-6L16,2.293,11.707,6.586l-3-3A1,1,0,0,0,8,093H7.414a1,1,0,0,0-.707.293L0,10.293l1.414,1.414L7.707,5.414l3,3A1,1,0,0,0,11.414,8.707Z"-->
+<!--                                    transform="translate(2.293 5)" fill="#98cb00"/>-->
+<!--                            </g>-->
+<!--                          </g>-->
+<!--                        </svg>-->
+<!--                      </span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="mb-3 card-footer">-->
+<!--              <span class="body-2">Last year 0 K</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </v-card>-->
+<!--      </v-col>-->
+<!--      <v-col cols="6" lg="3" class="py-0 mb-8">-->
+<!--        <v-card class="fill-height performance-card-item rounded-lg">-->
+<!--          <div class="d-flex flex-column pa-2 satisfaction">-->
+<!--            <div class="card-header mb-1">-->
+<!--              <span class="d-inline-block title font-weight-black primary-color py-3 px-6 rounded-lg">Overall satisfaction</span>-->
+<!--            </div>-->
+<!--            <div class="d-flex justify-space-between align-center mb-2 card-body">-->
+<!--              <span class="title font-weight-black">0 K</span>-->
+<!--              <div class="d-flex align-center flex-wrap pa-2 rounded-lg bg-correct-color ">-->
+<!--                <span class="body-1 font-weight-medium correct-color">+ 0</span>-->
+<!--                <span>-->
+<!--                        <svg id="chart_trending_up" data-name="chart / trending_up" xmlns="http://www.w3.org/2000/svg"-->
+<!--                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">-->
+<!--                          <defs>-->
+<!--                            <clipPath id="clip-path">-->
+<!--                              <rect id="chart_trending_up_Background_Mask_"-->
+<!--                                    data-name="chart / trending_up (Background/Mask)" width="24" height="24"-->
+<!--                                    fill="none"/>-->
+<!--                            </clipPath>-->
+<!--                          </defs>-->
+<!--                          <g id="chart_trending_up-2" data-name="chart / trending_up">-->
+<!--                            <rect id="chart_trending_up_Background_Mask_2"-->
+<!--                                  data-name="chart / trending_up (Background/Mask)" width="24" height="24" fill="none"/>-->
+<!--                            <g id="chart_trending_up-3" data-name="chart / trending_up" clip-path="url(#clip-path)">-->
+<!--                              <path id="coolicon"-->
+<!--                                    d="M11.414,8.707H12a1,1,0,0,0,.707-.293l4.707-4.707L19.707,6V0h-6L16,2.293,11.707,6.586l-3-3A1,1,0,0,0,8,093H7.414a1,1,0,0,0-.707.293L0,10.293l1.414,1.414L7.707,5.414l3,3A1,1,0,0,0,11.414,8.707Z"-->
+<!--                                    transform="translate(2.293 5)" fill="#98cb00"/>-->
+<!--                            </g>-->
+<!--                          </g>-->
+<!--                        </svg>-->
+<!--                      </span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="mb-3 card-footer">-->
+<!--              <span class="body-2">Last year 0 K</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </v-card>-->
+<!--      </v-col>-->
+<!--      <v-col cols="6" lg="3" class="py-0 mb-8">-->
+<!--        <v-card class="fill-height performance-card-item rounded-lg">-->
+<!--          <div class="d-flex flex-column pa-2 more-sales">-->
+<!--            <div class="card-header mb-1">-->
+<!--              <span class="d-inline-block title font-weight-black primary-color py-3 px-6 rounded-lg">Sales</span>-->
+<!--            </div>-->
+<!--            <div class="d-flex justify-space-between align-center mb-2 card-body">-->
+<!--              <span class="title font-weight-black">0 K</span>-->
+<!--              <div class="d-flex align-center flex-wrap pa-2 rounded-lg bg-correct-color ">-->
+<!--                <span class="body-1 font-weight-medium correct-color">+ 0</span>-->
+<!--                <span>-->
+<!--                        <svg id="chart_trending_up" data-name="chart / trending_up" xmlns="http://www.w3.org/2000/svg"-->
+<!--                             xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">-->
+<!--                          <defs>-->
+<!--                            <clipPath id="clip-path">-->
+<!--                              <rect id="chart_trending_up_Background_Mask_"-->
+<!--                                    data-name="chart / trending_up (Background/Mask)" width="24" height="24"-->
+<!--                                    fill="none"/>-->
+<!--                            </clipPath>-->
+<!--                          </defs>-->
+<!--                          <g id="chart_trending_up-2" data-name="chart / trending_up">-->
+<!--                            <rect id="chart_trending_up_Background_Mask_2"-->
+<!--                                  data-name="chart / trending_up (Background/Mask)" width="24" height="24" fill="none"/>-->
+<!--                            <g id="chart_trending_up-3" data-name="chart / trending_up" clip-path="url(#clip-path)">-->
+<!--                              <path id="coolicon"-->
+<!--                                    d="M11.414,8.707H12a1,1,0,0,0,.707-.293l4.707-4.707L19.707,6V0h-6L16,2.293,11.707,6.586l-3-3A1,1,0,0,0,8,093H7.414a1,1,0,0,0-.707.293L0,10.293l1.414,1.414L7.707,5.414l3,3A1,1,0,0,0,11.414,8.707Z"-->
+<!--                                    transform="translate(2.293 5)" fill="#98cb00"/>-->
+<!--                            </g>-->
+<!--                          </g>-->
+<!--                        </svg>-->
+<!--                      </span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="mb-3 card-footer">-->
+<!--              <span class="body-2">Last year 0 K</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </v-card>-->
+<!--      </v-col>-->
+<!--    </v-row>-->
   </div>
 </template>
 
 <script>
+import ProductSlider   from "../../../components/product/ProductSlider";
 import companyInfo from "../../../components/company-details/company-info";
 
 export default {
   props: ['companyInfo'],
+  components:{
+    ProductSlider
+  },
   data() {
     return {
       company: [
@@ -352,8 +367,12 @@ export default {
       videoPosters: [
         {poster: 'poster.png'},
         {poster: 'poster.png'}
-      ]
+      ],
+      company_products:[],
     }
+  },
+  mounted() {
+    this.getCompanyProducts();
   },
   methods: {
     getFile(item, type) {
@@ -361,6 +380,18 @@ export default {
         return "https://dl.macrob2b.com/companies/" + this.companyInfo._id + "/images/" + item;
       else if (type == 'video')
         return "https://dl.macrob2b.com/companies/" + this.companyInfo._id + "/video/" + item;
+    },
+    getCompanyProducts() {
+      this.new_product_loading = true;
+      this.$axios.$post('/api/get_company_products',
+        {company_id:this.companyInfo._id})
+        .then(response => {
+          this.company_products = response;
+        }).catch(err => {
+        console.log(err);
+      }).finally(msg => {
+        this.new_product_loading = false;
+      })
     }
   }
 }

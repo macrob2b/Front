@@ -95,9 +95,9 @@
           <div class="d-lg-inline-block">
 
             <!--    Navigation Trigger      -->
-            <v-btn v-if="$vuetify.breakpoint.smAndDown"
+            <v-btn
                    @click="drawer = !drawer"
-                   class="menuIcon white--text mt-2"
+                   class="d-inline-flex d-md-none menuIcon white--text mt-2"
                    color="accent">
               <v-icon>mdi-menu</v-icon>
             </v-btn>
@@ -138,8 +138,8 @@
                    nuxt>
               <v-icon>mdi-account</v-icon>
             </v-btn>
-            <v-btn v-if="$vuetify.breakpoint.mdAndUp"
-                   class="menuIcon text--white mx-sm-2 mx-md-2 mt-2"
+            <v-btn
+                   class="d-none d-md-inline-flex menuIcon text--white mx-sm-2 mx-md-2 mt-2"
                    color="accent"
                    to="/company-list"
                    width="20px"
