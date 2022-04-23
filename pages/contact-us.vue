@@ -192,6 +192,11 @@ export default {
       userPhone: '',
       userAttachFile: []
     }
-  }
+  },
+  head() {
+    return {
+      title: "Contact us"
+    }
+  },
 }
 </script>

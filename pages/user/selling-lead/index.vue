@@ -1,11 +1,11 @@
 <template>
-  <div class="product">
+  <div class="selling_lead">
     <v-container>
       <v-row>
         <v-col
           cols="12"
         >
-          <h2>Product list</h2>
+          <h2>Selling lead list</h2>
         </v-col>
       </v-row>
       <v-divider class="my-3"></v-divider>
@@ -13,15 +13,15 @@
       <v-row class="mt-12 mb-12" v-if="loading">
         <v-col cols="12" class="text-center">
           <v-progress-circular
-            :size="40"
-            :width="4"
+            :size="50"
+            :width="5"
             color="orange"
             indeterminate
           ></v-progress-circular>
         </v-col>
       </v-row>
       <v-row v-else>
-        <v-row v-if="product_list.length>0">
+        <v-row v-if="selling_leads_list.length>0">
           <v-col
             cols="12"
           >
@@ -42,7 +42,7 @@
                 </thead>
                 <tbody>
                 <tr
-                  v-for="item in product_list"
+                  v-for="item in selling_leads_list"
                   :key="item.title"
                 >
                   <td>{{ item.title }}</td>
@@ -53,7 +53,7 @@
                   </td>
                   <td>
                     <v-btn icon
-                           :to="'/product-details/'+item._id"
+                           :to="'/selling_lead-details/'+item._id"
 
                     >
                       <v-icon small
@@ -62,7 +62,7 @@
                       </v-icon>
                     </v-btn>
                     <v-btn icon
-                           :to="'/user/product/edit/'+item._id"
+                           :to="'/user/selling_lead/edit/'+item._id"
                     >
                       <v-icon small
                               class="mr-2">mdi-pencil
@@ -109,7 +109,7 @@
                         color="green darken-1"
                         text
                         :loading="delete_loading"
-                        @click="deleteProduct()"
+                        @click="deleteSellingLead()"
                       >
                         Agree
                       </v-btn>
@@ -131,7 +131,7 @@
         </v-row>
         <v-row v-else>
           <v-col cols="12">
-            <strong>No products have been created yet</strong>
+            <strong>No selling lead have been created yet</strong>
           </v-col>
         </v-row>
       </v-row>
@@ -142,57 +142,54 @@
 <script>
 export default {
   layout: "user_dashboard",
-  name: "index",
+  name: "selling-lead",
   head() {
     return {
-      title: "Product list"
+      title: "Selling leads list"
     }
   },
   data() {
     return {
-      product_list: [],
+      selling_leads_list: [],
       page: 1,
       total_page: 0,
       deleteConfirmDialog: false,
       loading: false,
-      delete_loading: false,
-      delete_item: null,
+      delete_loading:false,
+      delete_item:null,
     }
   },
   mounted() {
     this.$auth.user;
-    this.getProductList();
+    this.getSellingLeadsList();
   },
   watch: {
     page(val) {
-      this.getProductList();
+      this.getSellingLeadsList();
     }
   },
   methods: {
-    getProductList() {
+    getSellingLeadsList() {
 
       this.loading = true;
-      this.$axios.$post('/api/user_product_list',
+      this.$axios.$post('/api/user_selling_leads_list',
         {
           page: this.page
         })
         .then(res => {
-          this.product_list = res.data;
+          this.selling_leads_list = res.data;
           this.total_page = Math.ceil(res.total / res.per_page);
           this.loading = false;
         })
         .catch(err => {
             this.loading = false;
-            if (err.response.status === 401)
-              this.$auth.logout();
-
-            this.$toast.error(err.status);
+            this.$toast.error(err);
           }
         )
     },
-    deleteProduct() {
-      this.delete_loading = true;
-      this.$axios.$delete('/api/delete_product',
+    deleteSellingLead() {
+      this.delete_loading=true;
+      this.$axios.$delete('/api/delete_selling_lead',
         {
           params:
             {id: this.delete_item._id}
@@ -206,9 +203,9 @@ export default {
             }
           } else {
             this.$toast.success("Deleted successfully");
-            this.getProductList();
-            this.delete_loading = false;
-            this.deleteConfirmDialog = false;
+            this.getSellingLeadsList();
+            this.delete_loading=false;
+            this.deleteConfirmDialog=false;
           }
         }).catch(({response}) => {
         if (response.status == 401) {
@@ -216,8 +213,8 @@ export default {
         } else if (response.status == 500 || response.status == 504) {
           this.$toast.error(this.$t(`REQUEST_FAILED`));
         }
-        this.delete_loading = false;
-        this.deleteConfirmDialog = false;
+        this.delete_loading=false;
+        this.deleteConfirmDialog=false;
       });
     },
     openDeleteConfirmDialog(item) {

@@ -82,7 +82,7 @@
       color="primary"
       elevation="4"
       :prominent="$vuetify.breakpoint.mdAndUp"
-      :height="$vuetify.breakpoint.smAndDown ? '70' : '130'"
+      :height="$vuetify.breakpoint.smAndDown ? '75' : '130'"
       fixed>
 
       <v-row>
@@ -285,7 +285,7 @@
           <v-btn color="white" tile text>Buying Leads</v-btn>
           <v-btn color="white" tile text>Selling Leads</v-btn>
           <v-btn color="white" tile text>Services</v-btn>
-          <v-btn color="white" tile text>Help</v-btn>
+          <v-btn nuxt to="/help" color="white" tile text>Help</v-btn>
 
         </v-col>
 
@@ -360,6 +360,20 @@ export default {
           children: [
             {name: 'Update company info', link: '/user/company'},
             {name: 'My message', link: '/messenger'},
+          ]
+        },
+        {
+          name: 'My selling leads',
+          children: [
+            {name: 'Add new selling lead', link: '/user/selling-lead/add'},
+            {name: 'Selling leads list', link: '/user/selling-lead'},
+          ]
+        },
+        {
+          name: 'My buying leads',
+          children: [
+            {name: 'Add new buying lead', link: '/user/buying-lead/add'},
+            {name: 'Buying leads list', link: '/user/buying-lead'},
           ]
         },
       ],

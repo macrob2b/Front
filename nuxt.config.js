@@ -33,6 +33,7 @@ export default {
     {src: 'plugins/vee-validate.js', ssr: true},
     {src: 'plugins/persistedState.client.js'},
     {src: 'plugins/vueFlags.js'},
+    {src: 'plugins/filters.js'},
     {src: 'plugins/axios.js'}
   ],
 
@@ -60,11 +61,10 @@ export default {
 
   axios: {
     proxy: true,
-    headers: {}
+    headers: {},
   },
 
   auth: {
-    cookie:false,
     strategies: {
       google: {
         clientId: config.googleClientId,
@@ -207,7 +207,8 @@ export default {
     ]
   },
   env:{
-    geo_by_ip_key: config.geoByIpKey
+    geo_by_ip_key: config.geoByIpKey,
+    baseUrl:"https://dl.macrob2b.com",
   },
   server: {
     host: '0.0.0.0',

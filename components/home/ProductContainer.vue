@@ -1,5 +1,5 @@
 <template>
-  <div class="cont">
+  <div class="cont mt-8">
     <div class="d-flex justify-space-between">
       <div class="d-flex justify-start align-end">
         <div>
@@ -41,7 +41,7 @@ export default {
     },
     link: {
       type: String,
-      default: '/product_list'
+      default: '/product-list'
     },
   }
 };

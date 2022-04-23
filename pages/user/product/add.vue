@@ -397,6 +397,8 @@
                 accept="image/*"
                 small-chips
                 multiple
+                persistent-hint
+                hint="Max: 200KB for every file, Max num of file: 5"
                 label="Images"
                 outlined
               ></v-file-input>
@@ -409,6 +411,8 @@
                 v-model="productItems.video"
                 accept="video/mp4,video/x-m4v,video/*"
                 label="Video"
+                persistent-hint
+                hint="Max: 1MB"
                 outlined
               ></v-file-input>
             </v-col>
@@ -720,7 +724,7 @@ export default {
     currencyTypeItems: [],
 
     fields: {},
-    mainAttr:{},
+    mainAttr: {},
     dynamicAttr: [],
     formLoader: false,
     category_parent_id: null,
@@ -990,7 +994,7 @@ export default {
 
     },
     updateAttrFromCustom() {//Update attribute from custom user attribute
-      this.productItems.attribute=this.mainAttr;
+      this.productItems.attribute = this.mainAttr;
       for (var i = 0; i < this.dynamicAttr.length; i++) {
         this.productItems.attribute[this.dynamicAttr[i].label] = this.dynamicAttr[i].value;
       }
@@ -1070,14 +1074,15 @@ export default {
     async getMeasurementUnit() {
       await this.$axios.post('/api/measurement_unit').then(response => {
         this.measurement_list = response.data;
-      }).catch(({response}) => {
-        if (response.status == 401) {
+      }).catch(({err}) => {
+        if (err.response.status == 401) {
+          this.$auth.logout();
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 400) {
+        } else if (err.response.status == 400) {
           this.$toast.error(this.$t(`Bad Request`));
-        } else if (response.status == 403) {
+        } else if (err.response.status == 403) {
           this.$toast.error(this.$t(`Forbidden`));
-        } else if (response.status == 404) {
+        } else if (err.response.status == 404) {
           this.$toast.error(this.$t(`not found`));
         }
       });

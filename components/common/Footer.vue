@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <div>
     <v-row class="d-none d-sm-flex">
       <v-col cols="12">
         <ContainerCard>
@@ -15,7 +15,7 @@
                 </nuxt-link>
 
                 <div>
-                  <div class="my-2" id="div1" >
+                  <div class="my-2" id="div1">
                     <div class="pt-2 pb-3">
                       <v-progress-linear
                         value="25"
@@ -24,15 +24,15 @@
                         class=""
                       ></v-progress-linear>
                     </div>
-                    <p  class="text-justify">
+                    <p class="text-justify">
                       We have the best services
                     </p>
                   </div>
                   <v-btn v-if="!this.$auth.loggedIn" to="/login" color="primary" width="55%">
-                    <span  id="span1"> SIGNIN </span>
+                    <span class="span1"> SIGN IN </span>
                   </v-btn>
                   <v-btn v-else to="/user-dashboard" color="primary" width="55%">
-                    <span  id="span1"> Hi, {{$auth.user.first_name}} </span>
+                    <span class="span1"> Hi, {{ $auth.user.first_name }} </span>
                   </v-btn>
                 </div>
               </div>
@@ -42,7 +42,7 @@
                 <v-row>
                   <v-col v-for="item in footerLinks">
                     <div class="pa-2">
-                      <h3 class="py-2">{{item.title}}</h3>
+                      <h3 class="py-2">{{ item.title }}</h3>
                       <v-progress-linear
                         value="25"
                         color="primary"
@@ -54,7 +54,7 @@
                           <li
                             v-for="link in item.links"
                             class="py-2">
-                            <nuxt-link :to="link.link">{{link.label}}</nuxt-link>
+                            <nuxt-link :to="link.link">{{ link.label }}</nuxt-link>
                           </li>
                         </ul>
                       </div>
@@ -67,77 +67,76 @@
                   <v-btn href="https://facebook.com/macrob2b"
                          target="_blank"
                          color="primary" min-width="0" width="40" class="mx-2">
-                    <v-icon color="white"> mdi-facebook </v-icon>
+                    <v-icon color="white"> mdi-facebook</v-icon>
                   </v-btn>
                   <v-btn
                     href="https://www.instagram.com/macrob2b"
                     target="_blank"
                     color="primary" min-width="0" width="40" class="mx-2">
-                    <v-icon color="white"> mdi-instagram </v-icon>
+                    <v-icon color="white"> mdi-instagram</v-icon>
                   </v-btn>
                   <v-btn
                     href="https://www.linkedin.com/company/macrob2b"
                     target="_blank"
                     color="primary" min-width="0" width="40" class="mx-2">
-                    <v-icon color="white"> mdi-linkedin </v-icon>
+                    <v-icon color="white"> mdi-linkedin</v-icon>
                   </v-btn>
                   <v-btn
                     href="https://t.me/macrob2b"
                     target="_blank"
                     color="primary" min-width="0" width="40" class="mx-2">
-                    <v-icon class="mdi-rotate-315"  color="white" > mdi-send </v-icon>
+                    <v-icon class="mdi-rotate-315" color="white"> mdi-send</v-icon>
                   </v-btn>
                 </div>
-                <div  id="div2">
+                <div id="div2">
                   Copyright (c)1997-2025. All Rights Reserved
                 </div>
               </div>
             </v-col>
           </v-row>
-<!--          <v-divider></v-divider><v-divider></v-divider>-->
-<!--          <div class="end-footer pa-6 mt-7">-->
-<!--            <div class="d-flex justify-start">-->
-<!--              <span class="px-5"> Deutsch </span>-->
-<!--              <v-divider vertical />-->
-<!--              <span class="px-5"> Deutsch </span>-->
-<!--              <v-divider vertical />-->
-<!--              <span class="px-5"> Deutsch </span>-->
-<!--              <v-divider vertical />-->
-<!--              <span class="px-5"> Deutsch </span>-->
-<!--              <v-divider vertical />-->
-<!--              <span class="px-5"> Deutsch </span>-->
-<!--            </div>-->
-<!--          </div>-->
+          <!--          <v-divider></v-divider><v-divider></v-divider>-->
+          <!--          <div class="end-footer pa-6 mt-7">-->
+          <!--            <div class="d-flex justify-start">-->
+          <!--              <span class="px-5"> Deutsch </span>-->
+          <!--              <v-divider vertical />-->
+          <!--              <span class="px-5"> Deutsch </span>-->
+          <!--              <v-divider vertical />-->
+          <!--              <span class="px-5"> Deutsch </span>-->
+          <!--              <v-divider vertical />-->
+          <!--              <span class="px-5"> Deutsch </span>-->
+          <!--              <v-divider vertical />-->
+          <!--              <span class="px-5"> Deutsch </span>-->
+          <!--            </div>-->
+          <!--          </div>-->
         </ContainerCard>
       </v-col>
     </v-row>
 
 
-
-    <div  class="d-flex d-sm-none footer-mobile justify-start">
-      <div class="pa-6">
+    <div class="d-flex d-sm-none footer-mobile justify-start">
+      <div class="pa-8">
         <div>
           <nuxt-link
             tag="img"
-            :src="require('../../assets/img/color-logo.png')" width="50%" class="pointer" to="/" />
+            :src="require('../../assets/img/color-logo.png')" width="50%" class="pointer" to="/"/>
         </div>
-        <div class="mt-2 mb-2"  id="div3">
+        <div class="mt-2 mb-2" id="div3">
           {{ brand }}
         </div>
-        <v-divider />
-        <v-divider />
+        <v-divider/>
+        <v-divider/>
 
         <div class="mt-2">
-          <p  id="p2">
+          <p id="p2">
             {{ description }}
           </p>
         </div>
         <div>
-          <v-btn to="/login" min-width="0" color="primary" width="50%" height="40px">
-            <span  id="span2"> SIGN IN </span>
+          <v-btn to="/login" min-width="0" color="primary" width="50%" height="40px" class="mt-4">
+            <span id="span2"> SIGN IN </span>
           </v-btn>
         </div>
-        <div class="d-flex mt-5"  id="div4">
+        <div class="d-flex mt-5" id="div4">
           <div
 
             id="div5"
@@ -145,8 +144,8 @@
             :key="idx2"
           >
             <h4>{{ item.title }}</h4>
-            <div  id="div6">
-              <v-progress-linear value="40" color="primary" height="1.5px" />
+            <div id="div6">
+              <v-progress-linear value="40" color="primary" height="1.5px"/>
             </div>
 
             <div>
@@ -168,7 +167,7 @@
             height="30"
             class="mx-2"
           >
-            <v-icon color="white" small> mdi-facebook </v-icon>
+            <v-icon color="white" small> mdi-facebook</v-icon>
           </v-btn>
           <v-btn
             href="https://www.instagram.com/macrob2b"
@@ -179,7 +178,7 @@
             height="30"
             class="mx-2"
           >
-            <v-icon color="white" small> mdi-instagram </v-icon>
+            <v-icon color="white" small> mdi-instagram</v-icon>
           </v-btn>
           <v-btn
             href="https://www.linkedin.com/company/macrob2b"
@@ -190,26 +189,24 @@
             height="30"
             class="mx-2"
           >
-            <v-icon color="white" small> mdi-linkedin </v-icon>
+            <v-icon color="white" small> mdi-linkedin</v-icon>
           </v-btn>
           <v-btn
             href="https://t.me/macrob2b"
             target="_blank"
-            color="primary"
             min-width="0"
             width="20"
             height="30"
-            class="mx-2"
-          >
-            <v-icon color="white" small> telegram</v-icon>
+            color="primary" class="mx-2">
+            <v-icon class="mdi-rotate-315" color="white"> mdi-send</v-icon>
           </v-btn>
         </div>
-        <div  id="div7" class="mt-2">
+        <div id="div7" class="mt-2">
           Copyright (c)1997-2021. All Rights Reserved
         </div>
       </div>
 
-      <div class="foot"  id="div8">
+      <div class="foot" id="div8">
         <div class="pa-5 d-flex justify-center">
           <div
             class="d-flex justify-center mx-1"
@@ -219,18 +216,18 @@
             <span class="mx-1">
               {{ lang }}
             </span>
-            <v-divider vertical />
+            <v-divider vertical/>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-
-  </v-container>
 </template>
 
 <script>
 import ContainerCard from "../home/ContainerCard.vue";
+
 export default {
   data() {
     return {
@@ -242,36 +239,36 @@ export default {
         {
           title: 'About us',
           links: [
-               {label:'About me',link:'/about-me'},
-               {label:'Contact us',link:'/contact-us'},
-               {label:'Terms and Conditions',link:'/terms-and-conditions'},
-               {label:'Privacy Policy',link:'/privacy-policy'},
-            ],
-        },{
+            {label: 'About me', link: '/about-me'},
+            {label: 'Contact us', link: '/contact-us'},
+            {label: 'Terms and Conditions', link: '/terms-and-conditions'},
+            {label: 'Privacy Policy', link: '/privacy-policy'},
+          ],
+        }, {
           title: 'Source',
           links: [
-               {label:'Resources',link:'/resources'},
-               {label:'All Categories',link:'/category-list'},
-               {label:'Request for Quotation',link:'/request_quotation'},
-               {label:'Buyer Partners',link:'/buyer_partners'},
-            ],
-        },{
+            {label: 'Resources', link: '/resources'},
+            {label: 'All Categories', link: '/category-list'},
+            {label: 'Request for Quotation', link: '/request_quotation'},
+            {label: 'Buyer Partners', link: '/buyer_partners'},
+          ],
+        }, {
           title: 'Selling ',
           links: [
-               {label:'Post products',link:'/user/product/add'},
-               {label:'Manage products',link:'/user/product'},
-            ],
-        },{
+            {label: 'Post products', link: '/user/product/add'},
+            {label: 'Manage products', link: '/user/product'},
+          ],
+        }, {
           title: 'Services',
           links: [
-               {label:'Trade Assurance',link:'/trade-assurance'},
-               {label:'Business Identity',link:'/business-identity'},
-            ],
+            {label: 'Trade Assurance', link: '/trade-assurance'},
+            {label: 'Business Identity', link: '/business-identity'},
+          ],
         },
       ],
     };
   },
-  components: { ContainerCard },
+  components: {ContainerCard},
 };
 </script>
 
@@ -281,65 +278,83 @@ export default {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+
 .footer-mobile {
   background-color: #f0f0f0;
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
 }
+
 li {
   font-size: medium;
 }
+
 span {
   color: white;
 }
+
 hr.v-divider--vertical {
   border-color: white !important;
 }
+
 .end-footer {
   background-color: var(--v-primary-base);
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
 }
+
 #div1 {
   width: 70%;
 }
+
 #div2 {
   color: #999;
   font-size: 13px;
 }
+
 #div3 {
   font-size: 15px;
   font-weight: 500;
 }
+
 #div4 {
   flex-wrap: wrap;
 }
+
 #div5 {
   width: 47%;
   margin-left: 5px;
 }
-#div6{
+
+#div6 {
   width: 100%
 }
-#div7{
-  font-size: 12px; text-align: center
+
+#div7 {
+  font-size: 12px;
+  text-align: center
 }
-#div8{
+
+#div8 {
   font-size: 11px;
 }
+
 #h3 {
   color: var(--v-primary-base);
 }
+
 #p1 {
   font-weight: 350;
 }
+
 #p2 {
   font-size: smaller;
 }
-#span1 {
+
+.span1 {
   color: white;
 }
+
 #span2 {
   font-size: 14px;
 }

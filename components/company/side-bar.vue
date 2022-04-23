@@ -38,6 +38,20 @@
               {title: 'My message', link: '/messenger'},
             ]
           },
+          {
+            name: 'My selling leads',
+            data: [
+              {title: 'Add new selling lead', link: '/user/selling-lead/add'},
+              {title: 'Selling leads list', link: '/user/selling-lead'},
+            ]
+          },
+          {
+            name: 'My buying leads',
+            data: [
+              {title: 'Add new buying lead', link: '/user/buying-lead/add'},
+              {title: 'Buying leads list', link: '/user/buying-lead'},
+            ]
+          }
           // {name: 'My Inquiries', data: [{title:'Add a New Buying Lead',link:'/'}, 'Add a New Buying Lead', 'Add a New Buying Lead']},
           // {name: 'My Storefront', data: ['Add a New Buying Lead']},
           // {name: 'My Buying Tools', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},

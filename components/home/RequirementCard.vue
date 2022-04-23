@@ -1,7 +1,5 @@
 <template>
-  <div class="container">
-    <v-card class="card" color="transparent">
-      <div class="card-inner">
+    <v-card class="card" color="transparent" height="100%">
         <div class="header py-5">
           <span>Tell us your <span> Buying </span> Requirement</span>
         </div>
@@ -27,9 +25,7 @@
         <div class="px-5 pt-1 pb-10">
           <v-btn color="primary" width="100%"><span  id="span1"> Submit </span> </v-btn>
         </div>
-      </div>
     </v-card>
-  </div>
 </template>
 
 <script>
@@ -49,14 +45,10 @@ export default {};
   font-style: normal;
   font-weight: 400;
 }
-.card-inner {
-  background-color: #f0f0f0;
-}
-.container {
-  height: 100%;
-}
+
+
 .card {
-  background-color: #f0f0f0;
+  background-color: #f0f0f0!important;
 }
 .v-input >>> .v-text-field__details {
   display: none;

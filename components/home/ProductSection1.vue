@@ -1,18 +1,7 @@
 <template>
   <div class="d-flex justify-space-between">
-    <div class="d-none d-sm-block">
-      <div class="tit">Title goes here</div>
-      <div class="banner-container">
-        <img src="banner-bg.png"/>
-      </div>
-    </div>
     <div class="slider-sheet">
-      <div class="d-none d-sm-block">
         <ProductSlider :newProducts="new_products" :loading="new_product_loading"/>
-      </div>
-      <div class="d-block d-sm-none">
-        <ProductSlider :newProducts="new_products" :loading="new_product_loading"/>
-      </div>
     </div>
   </div>
   <!-- <div class="pa-3">
@@ -35,18 +24,44 @@ import ProductSlider1 from "../product/ProductSlider1.vue";
 
 export default {
   props: {
+    mediaList: {
+      type: Array,
+      default: []
+    },
     id: 0,
   },
   data() {
     return {
       new_products: null,
-      new_product_loading:false
+      new_product_loading: false,
+      newProductsSideImage: null,
     }
   },
-  components: {ProductSlider, ProductSlider1},
+  watch: {
+    'mediaList': {
+      handler(val) {
+        if (!(val == null || val == "null" || val == [])) {
+          //Product side image
+          var new_products_side_image = this.mediaList.filter(item => {
+            return item.file_section == "new_products_side_image"
+          });
+          if (new_products_side_image && new_products_side_image[0] && new_products_side_image[0]['file'])
+            this.newProductsSideImage = (`${process.env.baseUrl}/general/${new_products_side_image[0]['file']}`);
+          //End product side image
+        }
+      },
+      deep: true
+    }
+  }
+  ,
+  components: {
+    ProductSlider, ProductSlider1
+  }
+  ,
   mounted() {
     this.getNewProducts();
-  },
+  }
+  ,
   methods: {
     getNewProducts() {
       this.new_product_loading = true;
@@ -60,7 +75,8 @@ export default {
       })
     }
   }
-};
+}
+;
 </script>
 
 <style scoped>

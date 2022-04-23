@@ -1,21 +1,14 @@
 <template>
   <div class="mx-2 card"  >
-    <v-card min-width="0" elevation="0">
+    <v-card min-width="0" height="160"
+            :to="'/product-details/'+product._id"
+            width="125px"
+            elevation="0">
       <div class="pa-2">
         <img
           :src="getImgFile(product)" />
       </div>
-      <div class="text-center">{{product.title.length<=25 ? product.title : product.title.substring(0,22)+"..."}}</div>
-<!--      <div class="text-center"  id="div1">-->
-<!--        250 <span  id="span1">$</span>-->
-<!--      </div>-->
-      <div class="pb-3 pa-4 btn">
-        <v-btn color="primary" width="100%"
-               :to="'/product-details/'+product._id"
-        >
-          <span  id="span2">Order</span>
-        </v-btn>
-      </div>
+      <div class="text-center">{{product.title.length<=15 ? product.title : product.title.substring(0,12)+"..."}}</div>
     </v-card>
   </div>
 </template>
@@ -65,7 +58,8 @@ export default {
 }
 
 .card img{
-  width: 200px;
-  height: 162px;
+  width: 110px;
+  height: 110px;
+  border-radius: 5px;
 }
 </style>

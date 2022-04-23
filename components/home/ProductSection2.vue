@@ -1,7 +1,6 @@
 <template>
   <v-row>
-    <v-col>
-      <ContainerCard width="100%">
+    <v-col cols="12" md="6">
         <ProductContainer
           title="CUSTOMIZED PRODUCTS"
           link="/product-list?product_type=customize"
@@ -11,7 +10,7 @@
             <ProductCard2 />
             <ProductCard2 />
           </div> -->
-          <div class="px-6">
+          <div class="px-md-6">
             <v-simple-table>
               <tbody>
               <tr class="mt-12 mb-12" v-if="customized_loading">
@@ -56,10 +55,8 @@
             </v-simple-table>
           </div>
         </ProductContainer>
-      </ContainerCard>
     </v-col>
-    <v-col>
-      <ContainerCard width="100%">
+    <v-col cols="12" md="6">
         <ProductContainer
           title="READY-TO-SHIP PRODUCTS"
           link="/product-list?product_type=ready-to-ship"
@@ -69,7 +66,7 @@
             <ProductCard2 />
             <ProductCard2 />
           </div> -->
-          <div class="px-6">
+          <div class="px-md-6">
             <v-simple-table>
               <tbody>
               <tr class="mt-12 mb-12" v-if="ready_to_ship_loading">
@@ -113,18 +110,16 @@
             </v-simple-table>
           </div>
         </ProductContainer>
-      </ContainerCard>
     </v-col>
   </v-row>
 </template>
 
 <script>
 import ProductCard2 from "../product/ProductCard2.vue";
-import ContainerCard from "./ContainerCard.vue";
 import ProductContainer from "./ProductContainer.vue";
 
 export default {
-  components: {ContainerCard, ProductContainer, ProductCard2},
+  components: {ProductContainer, ProductCard2},
   data() {
     return {
       customized_products: {},

@@ -1,27 +1,16 @@
 <template>
-  <v-container>
-    <!--    <div class="d-block" v-if="true" >-->
-    <!--      <v-row class="mt-12 mb-12 " >-->
-    <!--        <v-col cols="12"  class="text-center d-block">-->
-    <!--          <v-progress-circular-->
-    <!--            :size="40"-->
-    <!--            :width="4"-->
-    <!--            color="orange"-->
-    <!--            indeterminate-->
-    <!--          ></v-progress-circular>-->
-    <!--        </v-col>-->
-    <!--      </v-row>-->
-    <!--    </div>-->
     <div>
       <v-row>
-        <v-slide-group class="pa-2"
-                       :continuous="true"
-                       v-model="slideVal"
-                       center-active show-arrows>
-          <v-slide-item v-for="(product,index) in newProducts" :key="index">
-            <ProductCard1 :product="product"/>
-          </v-slide-item>
-        </v-slide-group>
+        <v-col cols="12">
+          <v-slide-group class="pa-2"
+                         :continuous="true"
+                         v-model="slideVal"
+                         center-active show-arrows="desktop">
+            <v-slide-item v-for="(product,index) in newProducts" :key="index">
+              <ProductCard1 :product="product"/>
+            </v-slide-item>
+          </v-slide-group>
+        </v-col>
       </v-row>
       <div class="d-flex justify-end px-5">
         <v-btn
@@ -47,7 +36,6 @@
         </v-btn>
       </div>
     </div>
-  </v-container>
 </template>
 
 <script>
@@ -75,7 +63,7 @@ export default {
             this.slideVal = 0
           else
             this.slideVal++;
-        },2000)
+        },5000)
       }
     }
   },

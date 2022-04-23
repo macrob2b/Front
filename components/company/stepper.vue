@@ -14,6 +14,7 @@
 import DesktopStepper from "~/components/company/desktop-stepper"
 import MobileStepper from "~/components/company/mobile-stepper"
 import companyInfo from "../company-details/company-info";
+
 export default {
   components: {
     DesktopStepper,
@@ -21,7 +22,7 @@ export default {
   },
   data() {
     return {
-      companyInfo:[],
+      companyInfo: [],
       step: 1
     }
   },
@@ -29,19 +30,20 @@ export default {
     this.loadCompanyInfo();
   },
   methods: {
-    currentStep (currentStepNumber) {
+    currentStep(currentStepNumber) {
       // alert(currentStepNumber)
     },
     async loadCompanyInfo() {
-      await this.$axios.$post('/api/get_company_info',{
-        id:this.$auth.user.company._id
+      await this.$axios.$post('/api/get_company_info', {
+        id: this.$auth.user.company._id
       }).then(response => {
         this.companyInfo = response;
 
-      }).catch(({response}) => {
-        if (response.status == 401) {
+      }).catch(({err}) => {
+        if (err.response.status == 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 500 || response.status == 504) {
+          this.$auth.logout();
+        } else if (err.response.status == 500 || response.status == 504) {
           this.$toast.error(this.$t(`REQUEST_FAILED`));
         }
       });

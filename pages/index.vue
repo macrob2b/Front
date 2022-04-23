@@ -2,72 +2,77 @@
   <!-- <Tutorial/> -->
   <div>
     <v-app>
-      <Requirement/>
-      <ContainerCard>
-        <ProductContainer title="New products">
-          <ProductSection1 :id="1"/>
-        </ProductContainer>
-      </ContainerCard>
-<!--      <div v-show="!$vuetify.breakpoint.xs">-->
-<!--        <Ads/>-->
-<!--      </div>-->
-<!--      <div v-show="$vuetify.breakpoint.xs">-->
-<!--        <CarouselResponsive/>-->
-<!--      </div>-->
-<!--      <div v-show="$vuetify.breakpoint.xs">-->
-<!--        <ContainerCard>-->
-<!--          <ProductContainer title="popular products">-->
-<!--            <ProductSlider1 :id="2"/>-->
-<!--          </ProductContainer>-->
-<!--        </ContainerCard>-->
-<!--      </div>-->
+      <div >
+        <Requirement :mediaList="media_list"/>
+      </div>
+
+      <ProductContainer title="New products">
+        <ProductSection1 :id="1" :mediaList="media_list"/>
+      </ProductContainer>
+      <!--      <div v-show="!$vuetify.breakpoint.xs">-->
+      <!--        <Ads/>-->
+      <!--      </div>-->
+      <!--      <div v-show="$vuetify.breakpoint.xs">-->
+      <!--        <CarouselResponsive/>-->
+      <!--      </div>-->
+      <!--      <div v-show="$vuetify.breakpoint.xs">-->
+      <!--        <ContainerCard>-->
+      <!--          <ProductContainer title="popular products">-->
+      <!--            <ProductSlider1 :id="2"/>-->
+      <!--          </ProductContainer>-->
+      <!--        </ContainerCard>-->
+      <!--      </div>-->
       <br/>
       <ProductSection2/>
       <br/>
-<!--      <div class="pa-2 ma-5">-->
-<!--        <ProductSection3/>-->
-<!--      </div>-->
-<!--      <div v-show="!$vuetify.breakpoint.xs">-->
-<!--        <Banner/>-->
-<!--        <Ads/>-->
-<!--      </div>-->
+      <ProductContainer title="Suggested companies">
+          <CompanyCarousel/>
+      </ProductContainer>
+      <!--      <div class="pa-2 ma-5">-->
+      <!--        <ProductSection3/>-->
+      <!--      </div>-->
+      <!--      <div v-show="!$vuetify.breakpoint.xs">-->
+      <!--        <Banner/>-->
+      <!--        <Ads/>-->
+      <!--      </div>-->
 
-<!--      <div v-show="$vuetify.breakpoint.xs">-->
-<!--        <CarouselResponsive/>-->
-<!--      </div>-->
+      <!--      <div v-show="$vuetify.breakpoint.xs">-->
+      <!--        <CarouselResponsive/>-->
+      <!--      </div>-->
 
-<!--      <ContainerCard>-->
-<!--        <ProductContainer title="Similar to searched before">-->
-<!--          <ProductSection1 :id="3"/>-->
-<!--        </ProductContainer>-->
-<!--      </ContainerCard>-->
+      <!--      <ContainerCard>-->
+      <!--        <ProductContainer title="Similar to searched before">-->
+      <!--          <ProductSection1 :id="3"/>-->
+      <!--        </ProductContainer>-->
+      <!--      </ContainerCard>-->
 
-<!--      <ContainerCard>-->
-<!--        <ProductContainer title="Similar to searched before">-->
-<!--          <ProductSlider1 :id="4"/>-->
-<!--        </ProductContainer>-->
-<!--      </ContainerCard>-->
+      <!--      <ContainerCard>-->
+      <!--        <ProductContainer title="Similar to searched before">-->
+      <!--          <ProductSlider1 :id="4"/>-->
+      <!--        </ProductContainer>-->
+      <!--      </ContainerCard>-->
 
-<!--      <div class="pa-2 ma-5" v-show="!$vuetify.breakpoint.xs">-->
-<!--        <Logo />-->
-<!--      </div>-->
+      <!--      <div class="pa-2 ma-5" v-show="!$vuetify.breakpoint.xs">-->
+      <!--        <Logo />-->
+      <!--      </div>-->
     </v-app>
   </div>
 </template>
 
 <script>
-import ContainerCard      from "../components/home/ContainerCard.vue";
-import ProductContainer   from "../components/home/ProductContainer.vue";
-import Requirement        from "../components/home/RequirementSection.vue";
-import ProductSection1    from "../components/home/ProductSection1.vue";
-import ProductSlider      from "../components/product/ProductSlider.vue";
-import ProductSlider1     from "../components/product/ProductSlider1.vue";
-import Ads                from "../components/home/Ads.vue";
-import ProductCard2       from "../components/product/ProductCard2.vue";
-import ProductSection2    from "../components/home/ProductSection2.vue";
-import ProductSection3    from "../components/home/ProductSection3.vue";
+import ContainerCard from "../components/home/ContainerCard.vue";
+import ProductContainer from "../components/home/ProductContainer.vue";
+import Requirement from "../components/home/RequirementSection.vue";
+import ProductSection1 from "../components/home/ProductSection1.vue";
+import ProductSlider from "../components/product/ProductSlider.vue";
+import ProductSlider1 from "../components/product/ProductSlider1.vue";
+import Ads from "../components/home/Ads.vue";
+import ProductCard2 from "../components/product/ProductCard2.vue";
+import ProductSection2 from "../components/home/ProductSection2.vue";
+import ProductSection3 from "../components/home/ProductSection3.vue";
 import CarouselResponsive from "../components/home/CarouselResponsive.vue";
-import Banner             from "../components/home/Banner.vue";
+import Banner from "../components/home/Banner.vue";
+import CompanyCarousel from "../components/company/company-carousel";
 
 export default {
   name: 'index',
@@ -77,7 +82,16 @@ export default {
       title: this.$t('Main_PAGE_TITLE')
     }
   },
+  mounted() {
+    this.getMediaList();
+  },
+  data() {
+    return {
+      media_list: null
+    }
+  },
   components: {
+    CompanyCarousel,
     Requirement,
     ContainerCard,
     ProductContainer,
@@ -92,5 +106,21 @@ export default {
     CarouselResponsive,
     Banner,
   },
+  methods: {
+    async getMediaList() {
+      let mediaApiURL = `/api/media_list`;
+      await this.$axios.$post(mediaApiURL,
+        {
+          "keyword": this.search,
+        }
+      ).then(response => {
+        if (response)
+          this.media_list = response;
+      })
+        .catch(e => {
+          console.log('error');
+        })
+    }
+  }
 };
 </script>
