@@ -281,10 +281,10 @@
             </v-card>
           </v-menu>
 
-          <v-btn color="teal accent-4 text-lowercase" tile text>Deals</v-btn>
-          <v-btn color="white" tile text>Buying Leads</v-btn>
-          <v-btn color="white" tile text>Selling Leads</v-btn>
-          <v-btn color="white" tile text>Services</v-btn>
+<!--          <v-btn color="teal accent-4 text-lowercase" tile text>Deals</v-btn>-->
+          <v-btn nuxt to="/buying-leads" color="white" tile text>Buying Leads</v-btn>
+          <v-btn nuxt to="/selling-leads" color="white" tile text>Selling Leads</v-btn>
+<!--          <v-btn color="white" tile text>Services</v-btn>-->
           <v-btn nuxt to="/help" color="white" tile text>Help</v-btn>
 
         </v-col>
@@ -359,7 +359,7 @@ export default {
           name: 'My company',
           children: [
             {name: 'Update company info', link: '/user/company'},
-            {name: 'My message', link: '/messenger'},
+            // {name: 'My message', link: '/messenger'},
           ]
         },
         {

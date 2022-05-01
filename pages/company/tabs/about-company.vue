@@ -94,7 +94,7 @@
                 <span class="body-2">Annual Revenue</span>
               </v-col>
               <v-col cols="6" md="8" class="px-4">
-                <span class="body-2">{{ companyInfo.annual_revenue }}</span>
+                <span class="body-2">${{ companyInfo.annual_revenue | currency}}</span>
               </v-col>
             </v-row>
           </div>

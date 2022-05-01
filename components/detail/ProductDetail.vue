@@ -13,13 +13,12 @@
       </v-row>
     </section>
     <section class="product-info pa-md-5" v-else>
-      <h1 class="text-h4">
+      <h1 class="text-md-h5 font-weight-bold text-h6">
         {{ productDetails.title }}
       </h1>
 
       <!--  Product Rate  -->
       <v-rating
-        class="d-none d-md-block"
         v-model="rating"
         color="yellow darken-3"
         background-color="grey darken-1"
@@ -45,14 +44,10 @@
         </v-list-item>
       </v-list>
 
-      <!--Share-->
-      <Share v-show="!$vuetify.breakpoint.xs"
-             :companyId="productDetails.company_id"
-      />
 
-      <v-row v-show="$vuetify.breakpoint.xs">
-        <v-col
-          cols="6" lg="auto"
+      <v-row >
+        <v-btn
+          :to="`/company/${productDetails.company.username ? productDetails.company.username : productDetails.company_id}`"
           align-self="center"
           class="d-flex mx-lg-4 pa-2 rounded-lg  justify-space-between align-center grey lighten-2 text-md-body-2"
         >
@@ -66,10 +61,7 @@
             mdi-phone
           </v-icon>
           Contact supplier
-        </v-col>
-        <v-col cols="6" class="px-0">
-          <Stars/>
-        </v-col>
+        </v-btn>
       </v-row>
 
 
@@ -107,7 +99,7 @@
       <v-row class="ml-md-4 mt-8 d-flex align-center justify-space-between justify-lg-start px-0">
         <v-col cols="3" lg="4" class="px-lg-0 mb-lg-5 mb-lg-0 mr-lg-8">
           <v-btn
-            :to="'/trade-order/'+this.$route.params.id"
+            :to="`/company/${productDetails.company.username ? productDetails.company.username : productDetails.company_id}`"
             block
             color="grey darken-2 "
             dark
@@ -131,13 +123,11 @@
 
 <script>
 import Count from "./Count";
-import Stars from "./Stars";
 import Share from "./Share";
 
 export default {
   components: {
     Count,
-    Stars,
     Share
   },
   props: ['productDetails'],
@@ -151,33 +141,6 @@ export default {
   },
   data() {
     return {
-      infos: [
-        {
-          label: "Brand Name",
-          value: "AAA"
-        },
-        {
-          label: "Place Of Origin",
-          value: "AAA"
-        },
-        {
-          label: "Condition",
-          value: "AAA"
-        },
-        {
-          label: "Model Number",
-          value: "AAA"
-        },
-        {
-          label: "Supply Type",
-          value: "AAA"
-        },
-        {
-          label: "Color",
-          value: "AAA"
-        },
-      ],
-      price: "195.562 $",
       loading: false,
       rating: 5,
     }

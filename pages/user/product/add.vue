@@ -411,6 +411,7 @@
                 v-model="productItems.video"
                 accept="video/mp4,video/x-m4v,video/*"
                 label="Video"
+                :rules="fileSizeRule"
                 persistent-hint
                 hint="Max: 1MB"
                 outlined
@@ -755,6 +756,14 @@ export default {
       'Others'
     ],
 
+    fileSizeRule: [
+      (value) =>
+        !value ||
+        value.size < 1024*1024 ||
+        "File is too big",
+    ],
+
+
 
   }),
   mounted() {
@@ -840,6 +849,9 @@ export default {
           this.categoryTree[this.categoryTreeIndex].items = res;
         })
         .catch(err => {
+          if (err.response.status == 401) {
+            this.$auth.logout();
+          }
           console.log(err)
         })
         .finally(() => {
@@ -887,6 +899,9 @@ export default {
           this.categoryTree[index].loading = false;
 
         }).catch(err => {
+          if (err.response.status == 401) {
+            this.$auth.logout();
+          }
           this.$toast.error(err);
           this.property_section = false;
           this.categoryTree[index].loading = false;
@@ -906,6 +921,9 @@ export default {
             this.cate_not_exist = true;
         })
         .catch(err => {
+          if (err.response.status == 401) {
+            this.$auth.logout();
+          }
           console.log(err)
         }).finally(() => {
           this.property_loading = false;
@@ -955,6 +973,8 @@ export default {
 
       }
 
+
+
       formData.append("video", this.productItems.video);
 
 
@@ -988,6 +1008,9 @@ export default {
           }
 
         }).catch(err => {
+        if (err.response.status == 401) {
+          this.$auth.logout();
+        }
         this.formLoader = false;
         this.$toast.error(err);
       });
@@ -1009,6 +1032,9 @@ export default {
       ).then(response => {
         this.currencyTypeItems = response;
       }).catch(err => {
+        if (err.response.status == 401) {
+          this.$auth.logout();
+        }
         console.log(err);
       });
     },
@@ -1018,6 +1044,9 @@ export default {
       ).then(response => {
         this.weightUnitList = response;
       }).catch(err => {
+        if (err.response.status == 401) {
+          this.$auth.logout();
+        }
         console.log(err);
       }).finally(res => {
         this.weight_unit_loading = false;
@@ -1029,7 +1058,10 @@ export default {
       ).then(response => {
         this.dimensionUnitList = response;
       }).catch(err => {
-        console.log(err);
+        this.$toast.error(err);
+        if (err.response.status == 401) {
+          this.$auth.logout();
+        }
       }).finally(res => {
         this.dimension_unit_loading = false;
       });
@@ -1040,7 +1072,10 @@ export default {
       ).then(response => {
         this.shippingCarrierList = response;
       }).catch(err => {
-        console.log(err);
+        this.$toast.error(err);
+        if (err.response.status == 401) {
+          this.$auth.logout();
+        }
       }).finally(res => {
         this.shipping_carrier_loading = false;
       });

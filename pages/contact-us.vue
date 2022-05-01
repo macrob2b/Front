@@ -2,32 +2,27 @@
   <v-container class="" fluid>
     <div class="contact-us-holder">
       <div class="d-block d-md-none pa-3 pa-sm-5 rounded-lg office-address">
-        <h4>Where to find us</h4>
-        <p class="mb-4">
-          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in
-          some form, by injected humour,
-        </p>
+<!--        <h4>Where to find us</h4>-->
+<!--        <p class="mb-4">-->
+<!--          There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in-->
+<!--          some form, by injected humour,-->
+<!--        </p>-->
         <v-row class="ma-0 mb-4">
-          <v-col cols="4">
+          <v-col cols="12">
             <div>
               <h4>Address</h4>
               <p class="caption">{{ address }}</p>
             </div>
-          </v-col>
-          <v-col cols="8">
             <div class="mb-4">
               <h4>Telephone</h4>
-              <p>{{ phone }}</p>
+              <a :href="`tel:${phone}`" target="_blank" class="caption" >{{ phone }}</a>
             </div>
             <div>
               <h4>Email</h4>
-              <p class="caption">{{ email }}</p>
+              <a :href="`mailto:${email}`" target="_blank" class="caption">{{ email }}</a>
             </div>
           </v-col>
         </v-row>
-        <div>
-          <v-btn>Sample btn</v-btn>
-        </div>
       </div>
       <div class="mb-md-15 mb-4 mapbox ">
         <client-only>
@@ -46,32 +41,27 @@
           </l-map>
         </client-only>
         <div class="d-none d-md-block pa-3 pa-sm-5 rounded-lg office-address">
-          <h4>Where to find us</h4>
-          <p class="mb-4">
-            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in
-            some form, by injected humour,
-          </p>
+<!--          <h4>Where to find us</h4>-->
+<!--          <p class="mb-4">-->
+<!--            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in-->
+<!--            some form, by injected humour,-->
+<!--          </p>-->
           <v-row class="ma-0 mb-4">
-            <v-col cols="4">
-              <div>
+            <v-col cols="12">
+              <div class="mb-4">
                 <h4>Address</h4>
                 <p class="caption">{{ address }}</p>
               </div>
-            </v-col>
-            <v-col cols="8">
               <div class="mb-4">
                 <h4>Telephone</h4>
-                <p>{{ phone }}</p>
+                <a :href="`tel:${phone}`" target="_blank" class="caption" >{{ phone }}</a>
               </div>
               <div>
                 <h4>Email</h4>
-                <p class="caption">{{ email }}</p>
+                <a :href="`mailto:${email}`" target="_blank" class="caption">{{ email }}</a>
               </div>
             </v-col>
           </v-row>
-          <div>
-            <v-btn>Sample btn</v-btn>
-          </div>
         </div>
       </div>
       <div class="contact-form-holder">
@@ -170,11 +160,11 @@ export default {
   auth:false,
   data() {
     return {
-      address: 'Line17,st sample',
-      phone: '+44 101 102 103',
+      address: 'Mecidiyekoy, Mecidiyekoy Yolu Cd. No:9, 34387 Sisli/Istanbul',
+      phone: '+90 5350384909',
       email: 'info@macrob2b.com',
-      lat: 55.9464418,
-      lng: 8.1277591,
+      lat: 41.067369,
+      lng: 28.9929992,
       userName: '',
       nameRules: [
         name => !!name || 'name is required'

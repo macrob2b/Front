@@ -2,8 +2,8 @@
   <v-row class="mt-12 mb-12" v-if="!loaded">
     <v-col cols="12" class="text-center">
       <v-progress-circular
-        :size="50"
-        :width="5"
+        :size="40"
+        :width="4"
         color="orange"
         indeterminate
       ></v-progress-circular>
@@ -272,6 +272,8 @@
                   :clearable="false"
                   :loading="logo_uploading"
                   @change="uploadFile('logo')"
+                  ref="logo"
+                  @click:append="$refs.logo.$refs.input.click()"
                   append-icon="mdi-cloud-upload"
                   label="Business Logo"
                 ></v-file-input>
@@ -296,6 +298,8 @@
                   multiple
                   :clearable="false"
                   outlined
+                  ref="images"
+                  @click:append="$refs.images.$refs.input.click()"
                   :loading="images_uploading"
                   accept="image/png,image/webp,"
                   @change="uploadFile('images')"
@@ -323,6 +327,8 @@
                   multiple
                   :clearable="false"
                   outlined
+                  ref="brochures"
+                  @click:append="$refs.brochures.$refs.input.click()"
                   :loading="brochures_uploading"
                   accept="image/jpeg,image/gif,image/png,image/webp,application/pdf"
                   @change="uploadFile('brochures')"
@@ -349,6 +355,8 @@
               >
                 <v-file-input
                   v-model="companyInfo.video"
+                  ref="video"
+                  @click:append="$refs.video.$refs.input.click()"
                   :loading="video_uploading"
                   label="Video"
                   accept="video/mp4,video/x-m4v,video/*"
@@ -643,10 +651,11 @@ export default {
             this.$toast.success("Update data successfully");
           }
           this.submit_loading = false;
-        }).catch(({response}) => {
-        if (response.status == 401) {
+        }).catch(err => {
+        if (err.response.status === 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 500 || response.status == 504) {
+          this.$auth.logout();
+        } else if (err.response.status === 500 || response.status == 504) {
           this.$toast.error(this.$t(`REQUEST_FAILED`));
         } else {
           this.$toast.error("Please fill all fields");

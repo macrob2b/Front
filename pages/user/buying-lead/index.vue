@@ -1,11 +1,11 @@
 <template>
-  <div class="selling_lead">
+  <div class="buying_lead">
     <v-container>
       <v-row>
         <v-col
           cols="12"
         >
-          <h2>Selling lead list</h2>
+          <h2>Buying lead list</h2>
         </v-col>
       </v-row>
       <v-divider class="my-3"></v-divider>
@@ -21,7 +21,7 @@
         </v-col>
       </v-row>
       <v-row v-else>
-        <v-row v-if="selling_leads_list.length>0">
+        <v-row v-if="buying_leads_list.length>0">
           <v-col
             cols="12"
           >
@@ -42,7 +42,7 @@
                 </thead>
                 <tbody>
                 <tr
-                  v-for="item in selling_leads_list"
+                  v-for="item in buying_leads_list"
                   :key="item.subject"
                 >
                   <td>{{ item.subject }}</td>
@@ -53,7 +53,7 @@
                   </td>
                   <td>
 <!--                    <v-btn icon-->
-<!--                           :to="'/selling_lead-details/'+item._id"-->
+<!--                           :to="'/buying_lead-details/'+item._id"-->
 
 <!--                    >-->
 <!--                      <v-icon small-->
@@ -62,7 +62,7 @@
 <!--                      </v-icon>-->
 <!--                    </v-btn>-->
 <!--                    <v-btn icon-->
-<!--                           :to="'/user/selling_lead/edit/'+item._id"-->
+<!--                           :to="'/user/buying_lead/edit/'+item._id"-->
 <!--                    >-->
 <!--                      <v-icon small-->
 <!--                              class="mr-2">mdi-pencil-->
@@ -109,7 +109,7 @@
                         color="green darken-1"
                         text
                         :loading="delete_loading"
-                        @click="deleteSellingLead()"
+                        @click="deleteBuyingLead()"
                       >
                         Agree
                       </v-btn>
@@ -130,8 +130,8 @@
           </v-col>
         </v-row>
         <v-row v-else>
-          <v-col cols="12">
-            <strong>No selling lead have been created yet</strong>
+          <v-col cols="12" class="mt-2">
+            <strong >No buying lead have been created yet</strong>
           </v-col>
         </v-row>
       </v-row>
@@ -142,15 +142,15 @@
 <script>
 export default {
   layout: "user_dashboard",
-  name: "selling-lead",
+  name: "buying-lead",
   head() {
     return {
-      title: "Selling leads list"
+      title: "Buying leads list"
     }
   },
   data() {
     return {
-      selling_leads_list: [],
+      buying_leads_list: [],
       page: 1,
       total_page: 0,
       deleteConfirmDialog: false,
@@ -161,36 +161,34 @@ export default {
   },
   mounted() {
     this.$auth.user;
-    this.getSellingLeadsList();
+    this.getBuyingLeadsList();
   },
   watch: {
     page(val) {
-      this.getSellingLeadsList();
+      this.getBuyingLeadsList();
     }
   },
   methods: {
-    getSellingLeadsList() {
+    getBuyingLeadsList() {
 
       this.loading = true;
       this.$axios.$post('/api/user_trading_leads',
         {
-          page: this.page,
-          type:'sell'
+          type:'buy',
+          page: this.page
         })
         .then(res => {
-          this.selling_leads_list = res.data;
+          this.buying_leads_list = res.data;
           this.total_page = Math.ceil(res.total / res.per_page);
           this.loading = false;
         })
         .catch(err => {
             this.loading = false;
             this.$toast.error(err);
-            if (err.response.status===401)
-              this.$auth.logout();
           }
         )
     },
-    deleteSellingLead() {
+    deleteBuyingLead() {
       this.delete_loading=true;
       this.$axios.$delete('/api/delete_trading_lead',
         {
@@ -206,7 +204,7 @@ export default {
             }
           } else {
             this.$toast.success("Deleted successfully");
-            this.getSellingLeadsList();
+            this.getBuyingLeadsList();
             this.delete_loading=false;
             this.deleteConfirmDialog=false;
           }

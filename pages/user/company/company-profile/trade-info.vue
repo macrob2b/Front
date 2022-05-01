@@ -418,18 +418,19 @@ export default {
         .then(response => {
           this.update_loading = false;
           window.scrollTo(0, 0)
-          if (response.length == 0)
+          if (response.length === 0)
             this.$toast.success("Update data successfully");
           else
             this.$toast.error("Please fill required fields");
-        }).catch(({response}) => {
-        if (response.status == 401) {
+        }).catch(err => {
+        if (err.response.status === 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 400) {
+          this.$auth.logout();
+        } else if (err.response.status === 400) {
           this.$toast.error(this.$t(`Bad Request`));
-        } else if (response.status == 403) {
+        } else if (err.response.status === 403) {
           this.$toast.error(this.$t(`Forbidden`));
-        } else if (response.status == 404) {
+        } else if (err.response.status === 404) {
           this.$toast.error(this.$t(`not found`));
         }
 

@@ -1,16 +1,6 @@
 <template>
   <div class="company-details">
-    <v-row class="mt-12 mb-12"  v-if="loading">
-      <v-col cols="12" class="text-center">
-        <v-progress-circular
-          :size="50"
-          :width="5"
-          color="orange"
-          indeterminate
-        ></v-progress-circular>
-      </v-col>
-    </v-row>
-    <v-row v-else>
+    <v-row>
       <v-col cols="12">
         <company-info :companyInfo="company_info"></company-info>
         <company-details-tabs :companyInfo="company_info"></company-details-tabs>
@@ -25,35 +15,27 @@ import companyDetailsTabs from '../../components/company-details/company-details
 
 export default {
   auth:false,
+  async asyncData({params, $axios}) {
+    const company_info = await $axios.$post('/api/get_company_info',
+      {
+        id: params.id
+      });
+    return {company_info};
+
+  },
+  head() {
+    return {
+      title: this.company_info.company_name,
+    };
+  },
+
   components: {
     companyInfo,
     companyDetailsTabs
   },
   data() {
     return {
-      loading:false,
       company_info:[]
-    }
-  },
-  mounted() {
-    this.getCompanyInfo();
-  },
-  methods:{
-    getCompanyInfo(){
-      this.loading=true;
-      this.$axios.$post('/api/get_company_info',
-        {
-          id:this.$route.params.id
-        })
-        .then(res=>
-        {
-          this.company_info=res;
-          this.loading=false;
-          console.log("is ok")
-        })
-        .catch(err=>{
-          this.$toast.error(err);
-        })
     }
   }
 

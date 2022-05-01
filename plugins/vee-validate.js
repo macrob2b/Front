@@ -1,5 +1,5 @@
 import {extend, localize}                from "vee-validate";
-import {required, email, confirmed, min} from "vee-validate/dist/rules";
+import {required, email, confirmed, min,size} from "vee-validate/dist/rules";
 
 let phoneRegex = /^\+(?:[0-9\-] ?){6,14}[0-9]$/;
 const phone    = {
@@ -16,11 +16,13 @@ const dictionary = {
       confirmed: () => `Password does not match`,
       min      : (_, {length}) => `This field must be at least ${length} characters`,
       phone    : () => `Phone is not valid`,
+      size    : (_, {size}) => `Max size is ${size}KB`,
     },
   },
 };
 
 extend("required", required);
+extend("size", size);
 extend("email", email);
 extend("confirmed", confirmed);
 extend("min", min);

@@ -43,7 +43,7 @@
             name: 'My company',
             data: [
               {title:'Update company info',link:'/user/company'},
-              {title: 'My message', link: '/messenger'},
+              // {title: 'My message', link: '/messenger'},
             ]
           },
         ],

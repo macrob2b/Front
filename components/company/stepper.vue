@@ -34,16 +34,23 @@ export default {
       // alert(currentStepNumber)
     },
     async loadCompanyInfo() {
-      await this.$axios.$post('/api/get_company_info', {
+      await this.$axios.$post('/api/user_company_info', {
         id: this.$auth.user.company._id
       }).then(response => {
         this.companyInfo = response;
 
-      }).catch(({err}) => {
-        if (err.response.status == 401) {
+      }).catch(err => {
+        console.log(err.response.status);
+        if (err.response.status === 401) {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
           this.$auth.logout();
-        } else if (err.response.status == 500 || response.status == 504) {
+          if (!this.$auth.loggedIn){
+            this.$router.push(
+              {
+                path:'/login'
+              });
+          }
+        } else if (err.response.status == 500 || err.response.status == 504) {
           this.$toast.error(this.$t(`REQUEST_FAILED`));
         }
       });

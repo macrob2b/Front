@@ -2,7 +2,7 @@
   <!-- <Tutorial/> -->
   <div>
     <v-app>
-      <div >
+      <div>
         <Requirement :mediaList="media_list"/>
       </div>
 
@@ -26,8 +26,10 @@
       <ProductSection2/>
       <br/>
       <ProductContainer title="Suggested companies">
-          <CompanyCarousel/>
+        <CompanyCarousel/>
       </ProductContainer>
+
+      <BuyingLeadsBanner/>
       <!--      <div class="pa-2 ma-5">-->
       <!--        <ProductSection3/>-->
       <!--      </div>-->
@@ -73,6 +75,7 @@ import ProductSection3 from "../components/home/ProductSection3.vue";
 import CarouselResponsive from "../components/home/CarouselResponsive.vue";
 import Banner from "../components/home/Banner.vue";
 import CompanyCarousel from "../components/company/company-carousel";
+import BuyingLeadsBanner from "../components/home/BuyingLeadsBanner";
 
 export default {
   name: 'index',
@@ -91,6 +94,7 @@ export default {
     }
   },
   components: {
+    BuyingLeadsBanner,
     CompanyCarousel,
     Requirement,
     ContainerCard,
@@ -124,3 +128,5 @@ export default {
   }
 };
 </script>
+
+

@@ -1,23 +1,23 @@
 <template>
-  <div class="selling-lead">
+  <div class="buying-lead">
     <v-container>
       <v-row>
         <v-col
           cols="12"
         >
-          <h2>Add a New Selling Lead</h2>
+          <h2>Add a New Buying Lead</h2>
         </v-col>
       </v-row>
     </v-container>
     <v-divider></v-divider>
-    <div class="selling-lead-info-body">
+    <div class="buying-lead-info-body">
       <validation-observer ref="observer" v-slot="{invalid}">
         <v-form @submit.prevent="submitLead">
           <v-row class="mt-3">
             <v-col cols="12" md="4">
               <validation-provider rules="required|min:4" name="subject" v-slot="{errors}">
                 <v-text-field
-                  v-model="sellItems.subject"
+                  v-model="buyItems.subject"
                   outlined
                   :error-messages="errors"
                   label="Subject"
@@ -31,7 +31,7 @@
               <validation-provider rules="required" name="keywords" v-slot="{errors}">
                 <v-combobox
                   hide-selected
-                  v-model="sellItems.keywords"
+                  v-model="buyItems.keywords"
                   :error-messages="errors"
                   hint="Maximum of 3 keyword"
                   label="Keywords"
@@ -63,7 +63,7 @@
             >
               <validation-provider rules="required|size:200" name="image" v-slot="{errors,validate}">
                 <v-file-input
-                  v-model="sellItems.image"
+                  v-model="buyItems.image"
                   @change="validate"
                   :error-messages="errors"
                   hint="Max size: 200KB"
@@ -101,7 +101,7 @@
               md="12"
             >
               <v-radio-group
-                v-model="sellItems.expire_status"
+                v-model="buyItems.expire_status"
                 row
               >
                 <v-radio
@@ -114,10 +114,10 @@
                 />
               </v-radio-group>
               <v-date-picker
-                v-if="sellItems.expire_status==='has_expire_date'"
+                v-if="buyItems.expire_status==='has_expire_date'"
                 ref="picker"
                 :allowed-dates="allowedDate"
-                v-model="sellItems.expire_date"
+                v-model="buyItems.expire_date"
                 full-width
               ></v-date-picker>
             </v-col>
@@ -126,7 +126,7 @@
                 <v-textarea
                   outlined
                   :error-messages="errors"
-                  v-model="sellItems.details"
+                  v-model="buyItems.details"
                   label="Details"
                 />
               </ValidationProvider>
@@ -141,7 +141,7 @@
               >
                 Submit
               </v-btn>
-              <v-btn class="default" nuxt to="/user/selling-lead">
+              <v-btn class="default" nuxt to="/user/buying-lead">
                 Cancel
               </v-btn>
             </v-col>
@@ -162,7 +162,7 @@ export default {
   name: "add",
   head() {
     return {
-      title: "Add new selling lead"
+      title: "Add new buying lead"
     }
   },
   layout: "user_dashboard",
@@ -179,8 +179,8 @@ export default {
     categoryTreeIndex: 0,
     cateItems: [],
 
-    sellItems: {
-      type: `sell`,
+    buyItems: {
+      type: `buy`,
       all_related_category: [],
       cate_id: '',
       expire_status: `has_expire_date`,
@@ -195,7 +195,7 @@ export default {
     this.loadCateList();
     let expire_date = new Date();
     expire_date.setDate(expire_date.getDate() + 6);
-    this.sellItems.expire_date = expire_date.toISOString().substr(0, 10);
+    this.buyItems.expire_date = expire_date.toISOString().substr(0, 10);
   },
   watch: {},
   methods: {
@@ -250,11 +250,11 @@ export default {
             //En create new child category based on parent
           } else {
             //Category select for product
-            this.sellItems.all_related_category=[];
+            this.buyItems.all_related_category=[];
             for (let i in this.categoryTree) {
-              this.sellItems.all_related_category.push(this.categoryTree[i].value);
+              this.buyItems.all_related_category.push(this.categoryTree[i].value);
             }
-            this.sellItems.cate_id = val;
+            this.buyItems.cate_id = val;
 
           }
           this.categoryTree[index].loading = false;
@@ -272,16 +272,16 @@ export default {
       this.formLoader = true;
 
       let formData = new FormData();
-      for (let key in this.sellItems) {
+      for (let key in this.buyItems) {
         if (!(key === 'image')) {
-          if (!(this.sellItems[key] === "" || this.sellItems[key] === null ||
-            this.sellItems[key].length === 0))
-            formData.append(key, JSON.stringify(this.sellItems[key]));
+          if (!(this.buyItems[key] === "" || this.buyItems[key] === null ||
+            this.buyItems[key].length === 0))
+            formData.append(key, JSON.stringify(this.buyItems[key]));
         }
 
       }
 
-      formData.append("image", this.sellItems.image);
+      formData.append("image", this.buyItems.image);
 
 
       this.$axios.$post('/api/create_trading_lead'
@@ -303,7 +303,7 @@ export default {
           } else {
             this.$toast.success("Product create successfully");
             this.$router.push({
-              path: '/user/selling-lead'
+              path: '/user/buying-lead'
             });
           }
 

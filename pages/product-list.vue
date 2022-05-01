@@ -14,6 +14,11 @@ import Main_tabs from "../components/main_tabs";
 export default {
   name: 'product-list',
   auth: false,
+  head() {
+    return {
+      title: 'Product list',
+    };
+  },
   components: {
     Main_tabs,
     productsTab,

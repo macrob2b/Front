@@ -14,12 +14,6 @@
       </v-icon>
     </a>
 
-      <v-btn
-        class="mx-2"
-        small
-        :to="'/company/'+companyId">
-        Contact supplier
-      </v-btn>
   </v-row>
 </template>
 

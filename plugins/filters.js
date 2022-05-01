@@ -2,9 +2,9 @@ import Vue from 'vue'
 
 export default () => {
   Vue.filter('currency', function (value) {
-    return Number(value).toLocaleString("fa-IR", {
+    return Number(value).toLocaleString("en-US", {
       // style: "currency",
-      currency: "IRR"
+      currency: "USD"
     });
   })
 }

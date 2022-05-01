@@ -17,8 +17,18 @@ export default {
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/macrob2b.ico'}
-    ]
+    ],
+    script: [
+      {
+        type: 'text/javascript',
+        src: '/hotjar.js',
+        body: true,
+      },
+    ],
   },
+
+  loading: '@/components/LoadingBar',
+
 
   ssr: true,
 
@@ -46,6 +56,8 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/google-analytics',
+    '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -205,6 +217,9 @@ export default {
         }
       }
     ]
+  },
+  googleAnalytics: {
+    id: process.env.GOOGLE_ANALYTICS_ID
   },
   env:{
     geo_by_ip_key: config.geoByIpKey,
