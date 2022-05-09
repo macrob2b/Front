@@ -47,7 +47,7 @@
 
       <v-row >
         <v-btn
-          :to="`/company/${productDetails.company.username ? productDetails.company.username : productDetails.company_id}`"
+          :to="`/company/${productDetails.company.username ? productDetails.company.username : productDetails.company._id}`"
           align-self="center"
           class="d-flex mx-lg-4 pa-2 rounded-lg  justify-space-between align-center grey lighten-2 text-md-body-2"
         >
@@ -99,7 +99,7 @@
       <v-row class="ml-md-4 mt-8 d-flex align-center justify-space-between justify-lg-start px-0">
         <v-col cols="3" lg="4" class="px-lg-0 mb-lg-5 mb-lg-0 mr-lg-8">
           <v-btn
-            :to="`/company/${productDetails.company.username ? productDetails.company.username : productDetails.company_id}`"
+            :to="`/company/${productDetails.company.username ? productDetails.company.username : productDetails.company._id}`"
             block
             color="grey darken-2 "
             dark

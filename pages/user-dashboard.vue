@@ -237,11 +237,14 @@
 
 
 export default {
-  layout:'user_dashboard',
-  name:"user-dashboard",
-  middleware:'is_user',
-  components: {
-
+  layout: 'user_dashboard',
+  name: "user-dashboard",
+  middleware: 'is_user',
+  components: {},
+  head() {
+    return {
+      title: 'Dashboard'
+    }
   },
   data() {
     return {
@@ -271,8 +274,8 @@ export default {
       ]
     }
   },
-  methods:{
-    logout(){
+  methods: {
+    logout() {
       this.$auth.logout();
     }
   }

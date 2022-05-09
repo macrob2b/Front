@@ -12,7 +12,6 @@ export default {
 
   axiosBaseUrl:'http://localhost:3000/api',
 
-  geoByIpKey:'284jfjipf2pltq4esadeq'
 
 
 }

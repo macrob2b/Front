@@ -1,16 +1,16 @@
 <template>
   <div className="market">
-    <v-block>
+    <div>
       <main_tabs/>
-    </v-block>
+    </div>
     <div className="market-items">
       <v-row class="mt-8 no-gutters">
         <v-col lg="2 " class="filter-container d-none d-lg-block">
-          <FiltersContainer/>
+          <FiltersContainer @filterChanged="applyFilter"/>
         </v-col>
         <v-col lg="10">
           <SortCompanies v-if="!$vuetify.breakpoint.xs"/>
-          <CompanyItem :companyList="company_list" :loadingStatus="loading" />
+          <CompanyItem :companyList="company_list" :loadingStatus="loading"/>
           <div class="text-center mt-8" v-if="total_page>1">
             <v-pagination
               circle
@@ -44,9 +44,11 @@ export default {
   data() {
     return {
       loading: false,
-      page:1,
-      total_page:0,
-      company_list:[]
+      page: 1,
+      total_page: 0,
+      market: [],
+      employee: [],
+      company_list: []
     }
   },
   mounted() {
@@ -59,26 +61,28 @@ export default {
     Companies,
     SortCompanies
   },
-  watch:{
-    page(val){
+  watch: {
+    page(val) {
       this.getData();
     }
   },
   methods: {
     async getData() {
-      window.scrollTo(0,0)
+      window.scrollTo(0, 0)
       this.loading = true;
       //Get brand list
       let companyApiURL = `/api/company_list`;
       await this.$axios.$post(companyApiURL,
         {
-          page:this.page,
-          paginate: true
+          page: this.page,
+          paginate: true,
+          market: this.market,
+          employee:this.employee
         }
       ).then(response => {
 
         this.company_list = response.data;
-        this.total_page=Math.ceil(response.total/response.per_page);
+        this.total_page = Math.ceil(response.total / response.per_page);
         this.loading = false;
       })
         .catch(e => {
@@ -86,6 +90,11 @@ export default {
           console.log('error');
         })
     },
+    applyFilter(event) {
+      this.market = event.market;
+      this.employee = event.employee;
+      this.getData();
+    }
   }
 }
 </script>

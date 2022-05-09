@@ -9,7 +9,7 @@
                   hide-details="true"
                   multiple
                   class="small"
-      ></v-checkbox>
+      />
     </div>
 
     <div v-if="type==='text'">

@@ -101,7 +101,7 @@ export default {
   },
   methods: {
     getSuggestedCompanies() {
-      this.$axios.$post('/api/get_suggested companies')
+      this.$axios.$post('/api/get_suggested_companies')
         .then(response => {
           this.companies = response;
         })

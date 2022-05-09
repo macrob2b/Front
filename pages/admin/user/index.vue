@@ -67,6 +67,9 @@
           Email
         </th>
         <th>
+          Company
+        </th>
+        <th>
           Action
         </th>
 
@@ -87,7 +90,11 @@
           {{ user.email }}
         </td>
         <td>
+          <nuxt-link v-if="user.company" :to="`/company/${user.company._id}`" target="_blank">View company</nuxt-link>
+        </td>
+        <td>
           <v-btn icon
+                 color="green"
                  :to="'/admin/user/'+user._id"
           >
             <v-icon small
@@ -101,12 +108,14 @@
                     class="mr-2">mdi-pencil
             </v-icon>
           </v-btn>
-          <!--          <v-icon-->
-          <!--            small-->
-          <!--            @click="deleteItem(user)"-->
-          <!--          >-->
-          <!--            mdi-delete-->
-          <!--          </v-icon>-->
+          <v-btn icon
+                 color="error"
+                 @click.stop="openDeleteConfirmDialog(user)"
+          >
+            <v-icon small
+                    class="mr-2">mdi-delete
+            </v-icon>
+          </v-btn>
         </td>
       </tr>
       <InfiniteScroll :enough="enough" @load-more="getData()"/>
@@ -114,6 +123,48 @@
       </tbody>
     </v-simple-table>
 
+
+
+    <v-dialog
+      v-model="deleteConfirmDialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+          Are you sure?
+        </v-card-title>
+
+        <v-card-text>
+          Click AGREE if you are sure
+        </v-card-text>
+        <v-col cols="12">
+          <v-text-field
+            v-model="admin_delete_pass"
+            label="Admin pass"
+          />
+        </v-col>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            text
+            @click="deleteConfirmDialog = false"
+          >
+            Disagree
+          </v-btn>
+
+          <v-btn
+            color="green darken-1"
+            text
+            :loading="delete_loading"
+            @click="deleteUser()"
+          >
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
   </div>
 </template>
@@ -124,6 +175,11 @@ export default {
   middleware: ['auth', 'is_admin'],
   name: "user.vue",
   layout: "admin",
+  head(){
+    return{
+      title:"User manage"
+    }
+  },
   data() {
     return {
       table_status: 'Loading information ...',
@@ -135,6 +191,11 @@ export default {
       //=====================
       users: [],
       user_list_title: null,
+
+      delete_item:null,
+      delete_loading:false,
+      deleteConfirmDialog: false,
+      admin_delete_pass:null,
 
       //To create new item button
       new_item_parent: null
@@ -184,7 +245,50 @@ export default {
 
     goBack() {
       this.$router.go(-1);
-    }
+    },
+    deleteUser() {
+      if (this.admin_delete_pass!=="195256"){
+        this.$toast.error(this.$t(`Password is wrong`));
+      }else{
+        this.delete_loading=true;
+        this.$axios.$delete('/api/delete_user',
+          {
+            params:
+              {id: this.delete_item._id}
+          })
+          .then(response => {
+            if (typeof response.data === 'object') {
+              for (let i in response.data) {
+                let error = response.data[i][0];
+                this.$toast.error(error);
+                // break;
+              }
+            } else {
+              this.$toast.success("Deleted successfully");
+              this.page = 1;
+              this.users = [];
+              this.getData();
+              this.delete_loading=false;
+              this.deleteConfirmDialog=false;
+              this.admin_delete_pass=null;
+            }
+          }).catch(({response}) => {
+          if (response.status == 401) {
+            this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          } else if (response.status == 500 || response.status == 504) {
+            this.$toast.error(this.$t(`REQUEST_FAILED`));
+          }
+          this.delete_loading=false;
+          this.deleteConfirmDialog=false;
+          this.admin_delete_pass=null;
+        });
+      }
+
+    },
+    openDeleteConfirmDialog(item) {
+      this.deleteConfirmDialog = true;
+      this.delete_item = item;
+    },
   }
 }
 </script>

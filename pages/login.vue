@@ -43,9 +43,11 @@
                   :type="showPassword ? 'text' : 'password'"
                   @click:append="showPassword = !showPassword"
                   :error-messages="errors"
+                  hide-details
                   :label="$t(`PASSWORD`)"
                   outlined>
                 </v-text-field>
+                <nuxt-link class="ma-2 d-inline-block" to="/forget_pass">Forgot password?</nuxt-link>
               </validation-provider>
             </v-col>
 

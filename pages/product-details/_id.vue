@@ -49,6 +49,14 @@ export default {
       product_details:{},
     }
   },
+  mounted() {
+    this.updateProductViewsCount();
+  },
+  methods:{
+    updateProductViewsCount(){
+      this.$axios.$post('/api/update_product_views',{id:this.$route.params.id});
+    }
+  },
   components: {
     ProductInfo,
     SupplierInfo,

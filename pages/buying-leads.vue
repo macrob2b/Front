@@ -10,8 +10,8 @@
         ></v-progress-circular>
       </v-col>
     </v-row>
-    <v-row v-else-if="selling_leads.length>0">
-      <v-col cols="12" v-for="lead in selling_leads">
+    <v-row v-else-if="buying_leads.length>0">
+      <v-col cols="12" v-for="lead in buying_leads">
         <v-card class="pa-4" :to="`/company/${lead.company.username ? lead.company.username : lead.company_id}`">
           <v-row>
             <v-col cols="12" sm="4" md="2">
@@ -51,25 +51,25 @@
 <script>
 
 export default {
-  name: 'selling-leads',
+  name: 'buying-leads',
   auth: false,
   head() {
     return {
-      title: 'Selling leads',
+      title: 'buying leads',
     };
   },
   data() {
     return {
-      selling_leads: [],
+      buying_leads: [],
       loading: false,
       page: 1,
     }
   },
   mounted() {
-    this.getSellingLeads();
+    this.getBuyingLeads();
   },
   methods: {
-    getSellingLeads() {
+    getBuyingLeads() {
       this.loading = true;
       this.$axios.$post('/api/trading_leads',
         {
@@ -77,7 +77,7 @@ export default {
           page: this.page
         })
         .then(res => {
-          this.selling_leads = res.data;
+          this.buying_leads = res.data;
           // this.total_page = Math.ceil(res.total / res.per_page);
           this.loading = false;
         })

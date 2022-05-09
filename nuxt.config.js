@@ -222,7 +222,6 @@ export default {
     id: process.env.GOOGLE_ANALYTICS_ID
   },
   env:{
-    geo_by_ip_key: config.geoByIpKey,
     baseUrl:"https://dl.macrob2b.com",
   },
   server: {

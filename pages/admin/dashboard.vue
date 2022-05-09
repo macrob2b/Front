@@ -98,32 +98,39 @@ export default {
   middleware: ['auth','is_admin'],
   name: "dashboard",
   layout:"admin",
-  data: () => ({
-    value: [
-      423,
-      446,
-      675,
-      510,
-      590,
-      610,
-      760,
-    ],
-    items: [
-      {
-        color: '#1F7087',
-        src: require("../../assets/img/category.png"),
-        title: 'Category manage',
-        artist: 'View',
-        link: '/admin/category',
-      },{
-        color: 'purple',
-        src: require("../../assets/img/sale.png"),
-        title: 'Company manage',
-        artist: 'View',
-        link: '/admin/company',
-      }
-    ],
-  }),
+  head(){
+    return{
+      title:"Admin dashboard"
+    }
+  },
+  data() {
+    return {
+      value: [
+        423,
+        446,
+        675,
+        510,
+        590,
+        610,
+        760,
+      ],
+      items: [
+        {
+          color: '#1F7087',
+          src: require("../../assets/img/category.png"),
+          title: 'Category manage',
+          artist: 'View',
+          link: '/admin/category',
+        }, {
+          color: 'purple',
+          src: require("../../assets/img/sale.png"),
+          title: 'Company manage',
+          artist: 'View',
+          link: '/admin/company',
+        }
+      ],
+    }
+  }
 }
 </script>
 

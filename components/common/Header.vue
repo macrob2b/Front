@@ -305,14 +305,20 @@
           <!--    Search Field      -->
           <v-text-field class="black--text"
                         label="Search..."
+                        :loading="search_loading"
+                        loader-height="4"
+                        @keyup="searchSubmit"
+                        v-model="search_keyword"
                         prepend-inner-icon="mdi-magnify"
                         full-width>
           </v-text-field>
 
           <!--     List Search     -->
           <v-list color="white" v-if="searchItems.length > 0">
-            <v-list-item v-for="i in 5">
-              <v-list-item-title class="black--text">Loaded item {{ i }}</v-list-item-title>
+            <v-list-item v-for="item in searchItems" class="pointer" @click="goToItemLink(item._id)">
+              <v-list-item-title  class="black--text">
+                  {{item.title}}
+              </v-list-item-title>
             </v-list-item>
           </v-list>
 
@@ -378,7 +384,10 @@ export default {
         },
       ],
       searchActive: false,
-      searchItems: [1]
+      searchItems: [],
+      timer:0,
+      search_keyword:null,
+      search_loading:false
     };
   },
   mounted() {
@@ -436,6 +445,41 @@ export default {
     },
     toggleSearch() {
       this.searchActive = !this.searchActive;
+    },
+    searchSubmit(){
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }
+      this.timer = setTimeout(() => {
+        this.getItems();
+      }, 800);
+    },
+    getItems(){
+      if (this.search_keyword==="" || this.search_keyword===null){
+        this.searchItems=[];
+      }else{
+        this.search_loading=true;
+        this.$axios.$post('/api/product_list',
+          {
+            keyword:this.search_keyword,
+            take:8
+          }).then(response=>{
+          this.searchItems=response
+        }).catch(err=>{
+          this.$toast.error("An error occured");
+        }).finally(()=>{
+          this.search_loading=false;
+        })
+      }
+    },
+    goToItemLink(id){
+      this.searchActive=false;
+      this.search_keyword=null;
+      this.searchItems=[];
+      this.$router.push({
+        path:`/product-details/${id}`
+      });
     }
   },
 };
@@ -446,5 +490,9 @@ export default {
   width: 40px !important;
   min-width: 40px !important;
   height: 36px !important;
+}
+
+.pointer{
+  cursor: pointer!important;
 }
 </style>

@@ -78,6 +78,9 @@ export default {
   watch: {
     page(val){
     this.getProductList();
+    },
+    "$route.query.cate_id"(val) {
+      this.getProductList();
     }
   },
   methods: {
@@ -85,7 +88,8 @@ export default {
       this.loading=true;
       this.$axios.$post('/api/product_list',
         {
-          page: this.page
+          page: this.page,
+          cate_id:this.$route.query.cate_id
         })
         .then(res => {
           this.product_list = res.data;

@@ -112,7 +112,7 @@ export default {
       this.location_loading = true;
       await this.$axios.$get('https://api.ipregistry.co', {
         params: {
-          key: process.env.geo_by_ip_key
+          key: process.env.GEO_BY_IP_KEY
         }
       })
         .then(response => {
