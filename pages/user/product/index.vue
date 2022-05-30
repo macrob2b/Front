@@ -3,9 +3,14 @@
     <v-container>
       <v-row>
         <v-col
-          cols="12"
+          cols="6"
         >
           <h2>Product list</h2>
+        </v-col>
+        <v-col cols="6" class="premium text-right">
+           <v-btn to="/user/product/add" class="subtitle-1 white--text text-capitalize " >
+             Add product
+           </v-btn>
         </v-col>
       </v-row>
       <v-divider class="my-3"></v-divider>
@@ -61,13 +66,13 @@
                               class="mr-2">mdi-eye
                       </v-icon>
                     </v-btn>
-<!--                    <v-btn icon-->
-<!--                           :to="'/user/product/edit/'+item._id"-->
-<!--                    >-->
-<!--                      <v-icon small-->
-<!--                              class="mr-2">mdi-pencil-->
-<!--                      </v-icon>-->
-<!--                    </v-btn>-->
+                    <v-btn icon
+                           :to="'/user/product/edit/'+item._id"
+                    >
+                      <v-icon small
+                              class="mr-2">mdi-pencil
+                      </v-icon>
+                    </v-btn>
                     <v-btn icon
                            color="error"
                            @click.stop="openDeleteConfirmDialog(item)"

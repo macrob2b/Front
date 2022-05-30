@@ -30,6 +30,7 @@
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn
+              class="blink"
               text
               color="white"
               :loading="loading"
@@ -145,5 +146,13 @@ export default {
 </script>
 
 <style scoped>
+.blink {
+  animation: blinker 4s linear infinite;
+}
 
+@keyframes blinker {
+  60% {
+    background: orangered;
+  }
+}
 </style>

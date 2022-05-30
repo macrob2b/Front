@@ -46,25 +46,27 @@
                 cols="6"
                 md="3"
               >
-                <div class="d-flex flex-column justify-center align-center rounded-lg part-item-content storefront">
+                <nuxt-link
+                  to="/user/product"
+                  class="d-flex flex-column justify-center align-center rounded-lg part-item-content storefront">
                   <div>
                     <v-icon>mdi-storefront</v-icon>
                   </div>
-                  <p class="title">My storefront</p>
-                </div>
+                  <p class="title">My products</p>
+                </nuxt-link>
               </v-col>
-              <v-col
-                class="rounded-lg part-item"
-                cols="6"
-                md="3"
-              >
-                <div class="d-flex flex-column justify-center align-center rounded-lg part-item-content basket">
-                  <div>
-                    <v-icon class="mdi mdi-basket"></v-icon>
-                  </div>
-                  <p class="title">My basket</p>
-                </div>
-              </v-col>
+<!--              <v-col-->
+<!--                class="rounded-lg part-item"-->
+<!--                cols="6"-->
+<!--                md="3"-->
+<!--              >-->
+<!--                <div class="d-flex flex-column justify-center align-center rounded-lg part-item-content basket">-->
+<!--                  <div>-->
+<!--                    <v-icon class="mdi mdi-basket"></v-icon>-->
+<!--                  </div>-->
+<!--                  <p class="title">My basket</p>-->
+<!--                </div>-->
+<!--              </v-col>-->
               <v-col
                 class="rounded-lg part-item"
                 cols="6"
@@ -79,29 +81,28 @@
                   <p class="title">Company profile</p>
                 </nuxt-link>
               </v-col>
-              <v-col
-                class="rounded-lg part-item"
-                cols="6"
-                md="3"
-              >
-                <div class="d-flex flex-column justify-center align-center rounded-lg part-item-content premium">
-                  <div>
-                    <v-icon>mdi-pyramid</v-icon>
-                  </div>
-                  <p class="title">Premium</p>
-                </div>
-              </v-col>
+<!--              <v-col-->
+<!--                class="rounded-lg part-item"-->
+<!--                cols="6"-->
+<!--                md="3"-->
+<!--              >-->
+<!--                <div class="d-flex flex-column justify-center align-center rounded-lg part-item-content premium">-->
+<!--                  <div>-->
+<!--                    <v-icon>mdi-pyramid</v-icon>-->
+<!--                  </div>-->
+<!--                  <p class="title">Premium</p>-->
+<!--                </div>-->
+<!--              </v-col>-->
             </v-row>
           </div>
-          <div class="d-flex justify-md-space-between justify-center pa-10 rounded-lg statistics">
-            <div v-for="item in statisticsList" class="statistics-item">
+          <v-row class="d-flex justify-md-space-between justify-center pa-10 rounded-lg statistics">
+            <v-col cols="6" md="3" v-for="item in statisticsList" class="statistics-item">
               <div class="d-flex flex-column justify-center align-center statistics-item-content">
                 <p class="statistics-count">{{ item.count }}</p>
                 <p class="statistics-name">{{ item.name }}</p>
               </div>
-            </div>
-
-          </div>
+            </v-col>
+          </v-row>
           <div class="rounded-lg notifications">
             <h3 class="headline font-weight-bold">Notifications</h3>
             <div class="notifications-holder">
@@ -251,33 +252,77 @@ export default {
       drawer: null,
       statisticsList: [
         {
-          count: '54',
-          name: 'Enquiries'
+          key:'company_views',
+          count: '...',
+          name: 'Company views'
         },
         {
-          count: '27',
-          name: 'Buying leads'
-        },
-        {
-          count: '31',
-          name: 'Selling leads'
-        },
-        {
-          count: '135',
-          name: 'Profile views'
-        },
-        {
-          count: '135',
+          key:'product_views',
+          count: '...',
           name: 'Product views'
         },
+        {
+          key:'selling_leads_views',
+          count: '...',
+          name: 'Selling leads views'
+        },
+        {
+          key:'buying_leads_views',
+          count: '...',
+          name: 'Buying leads views'
+        }
 
       ]
     }
   },
+  mounted() {
+    this.getProductViewsCount();
+    this.getCompanyViewsCount();
+  },
   methods: {
     logout() {
       this.$auth.logout();
+    },
+    async getProductViewsCount() {
+      await this.$axios.$post('/api/user_product_views_count')
+        .then(response => {
+          this.statisticsList.filter(function (elem){
+            if (elem.key==='product_views')
+              elem.count=response
+          })
+        }).catch(err => {
+            if (err.response.status===401){
+              this.$auth.logout();
+              this.$toast.err(err);
+            }
+        });
+    },
+    async getCompanyViewsCount() {
+      await this.$axios.$post('/api/user_company_views_count')
+        .then(response => {
+          this.statisticsList.filter(function (elem){
+            if (elem.key==='company_views')
+              elem.count=response
+          })
+        }).catch(err => {
+            if (err.response.status===401){
+              this.$auth.logout();
+              this.$toast.err(err);
+            }
+        });
     }
   }
 }
 </script>
+
+<style scoped>
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+</style>

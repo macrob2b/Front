@@ -1,6 +1,6 @@
 <template>
   <section class="product-gallery rounded-lg overflow-hidden ">
-    <Share v-show="$vuetify.breakpoint.xs"
+    <Share
            :companyId="productDetails.company_id"
            class="mobile-share"/>
     <div class="card-carousel">
@@ -85,7 +85,7 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 50;
+  z-index: 1;
 }
 
 

@@ -117,8 +117,8 @@
               <v-row class="mt-12 mb-12"  v-if="loadingStatus">
                 <v-col cols="12" class="text-center">
                   <v-progress-circular
-                    :size="50"
-                    :width="5"
+                    :size="40"
+                    :width="4"
                     color="orange"
                     indeterminate
                   ></v-progress-circular>

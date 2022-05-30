@@ -85,6 +85,7 @@ export default {
   },
   methods: {
     getProductList() {
+      window.scrollTo(0,0);
       this.loading=true;
       this.$axios.$post('/api/product_list',
         {

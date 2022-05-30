@@ -400,10 +400,24 @@
                 v-model="productItems.images"
                 accept="image/*"
                 small-chips
+                @change="uploadFile('images')"
+                :loading="images_uploading"
                 multiple
                 label="Images"
                 outlined
-              ></v-file-input>
+              />
+
+              <v-chip
+                v-for="item in images_names"
+                small
+                class="my-1"
+                @click:close="deleteFile('images',item)"
+                text-color="white"
+                color="green"
+                close>
+                {{ item.substring(0, 15) }}
+              </v-chip>
+
             </v-col>
             <v-col
               cols="12"
@@ -413,8 +427,21 @@
                 v-model="productItems.video"
                 accept="video/mp4,video/x-m4v,video/*"
                 label="Video"
+                :loading="video_uploading"
+                @change="uploadFile('video')"
                 outlined
-              ></v-file-input>
+              />
+              <v-chip
+                v-if="video_name"
+                small
+                class="my-1"
+                @click:close="deleteFile('video')"
+                text-color="white"
+                color="green"
+                close>
+                {{ video_name.substring(0, 30) }}
+              </v-chip>
+
             </v-col>
 
             <v-col cols="12">
@@ -621,13 +648,28 @@
 
 <script>
 export default {
-  name: "add",
+  name: "edit-product",
   async asyncData({params, $axios}) {
     const productItems = await $axios.$post('/api/product_details',
       {
         id: params.id
       });
-    return {productItems};
+
+    //Fill images and video
+    let images_names=[];
+    let video_name='';
+
+    if (productItems && productItems.images)
+      images_names=productItems.images;
+
+    if (productItems && productItems.video)
+      video_name=productItems.video;
+
+    //End fill images and video
+    productItems.images=[];
+    productItems.video=[];
+
+    return {productItems,images_names,video_name};
 
   },
 
@@ -652,7 +694,7 @@ export default {
       payment_terms: [],
       ready_display: "yes",
       images: [],
-      video: null,
+      video: [],
       certificates: {
         CCC: {
           value: false,
@@ -694,6 +736,12 @@ export default {
       supply_ability: null,
       shipping_carrier: null
     },
+
+    images_names:[],
+    images_uploading:false,
+    video_uploading:false,
+
+    video_name:'',
 
     cateItems: [],
     cate_search: null,
@@ -767,6 +815,10 @@ export default {
 
   }),
   mounted() {
+    if (this.productItems.user_id !== this.$auth.user._id)
+      this.$router.push({
+        path: "/user/product"
+      });
     this.getCurrencyType();
     this.getDimensionUnit();
     this.getShippingCarrier();
@@ -774,6 +826,13 @@ export default {
     this.loadCateList();
     this.getMeasurementUnit();
     this.fillCategoryTree();
+    this.initPrice();
+
+    //Fill attr holder
+    if (this.productItems && this.productItems.attribute)
+      this.mainAttr = this.productItems.attribute;
+    //End fill holder
+
 
   },
   filters: {
@@ -802,7 +861,6 @@ export default {
     },
     'price_set.0.min_qty': {
       handler: function (val) {
-        console.log(val);
         this.productItems.min_order = val;
       },
       deep: true
@@ -851,7 +909,6 @@ export default {
           this.categoryTree[this.categoryTreeIndex].items = res;
         })
         .catch(err => {
-          console.log(err)
         })
         .finally(() => {
           this.categoryTree[0].loading = false;
@@ -910,14 +967,42 @@ export default {
         cate_id: catid
       })
         .then(res => {
+          let custom_attr = [];
           if (res.length > 0) {
             this.cate_not_exist = false;
             this.cateProperty = res;
-          } else
-            this.cate_not_exist = true;
+
+            //Apply custom attribute to main attr when main attr is not empty
+            if (this.productItems && this.productItems.attribute) {
+              let index = 0;
+              for (let key in this.productItems.attribute) {
+                if (this.cateProperty[index].label !== key)
+                  custom_attr.push({
+                    label: key,
+                    field_type: "Text",
+                  })
+                index++;
+              }
+              this.cateProperty = this.cateProperty.concat(custom_attr);
+            }
+            //End apply custom attribute to main attr
+          } else {
+            //Apply custom attribute to main attr when main attr is empty
+            for (let key in this.productItems.attribute) {
+              custom_attr.push({
+                label: key,
+                field_type: "Text",
+              })
+            }
+            this.cateProperty = custom_attr;
+            //End apply custom attribute to main attr
+
+            if (!(this.cateProperty.length > 0))
+              this.cate_not_exist = true;
+          }
         })
         .catch(err => {
-          console.log(err)
+          // console.log(err)
         }).finally(() => {
           this.property_loading = false;
         });
@@ -956,6 +1041,8 @@ export default {
       this.formLoader = true;
       this.updateAttrFromCustom();
 
+      this.productItems.price = (this.productItems.price_type === 'base_on_qty' ? this.price_set : this.price_range);
+
       let formData = new FormData();
       for (let key in this.productItems) {
         if (!(key === 'images' || key === 'video')) {
@@ -965,7 +1052,7 @@ export default {
         }
 
       }
-
+      formData.append("product_id", this.$route.params.id)
       formData.append("video", this.productItems.video);
 
 
@@ -992,7 +1079,7 @@ export default {
               // break;
             }
           } else {
-            this.$toast.success("Product create successfully");
+            this.$toast.success("Product updated successfully");
             this.$router.push({
               path: '/user/product'
             });
@@ -1020,7 +1107,7 @@ export default {
       ).then(response => {
         this.currencyTypeItems = response;
       }).catch(err => {
-        console.log(err);
+        // console.log(err);
       });
     },
     getWeightUnit() {
@@ -1029,7 +1116,7 @@ export default {
       ).then(response => {
         this.weightUnitList = response;
       }).catch(err => {
-        console.log(err);
+        // console.log(err);
       }).finally(res => {
         this.weight_unit_loading = false;
       });
@@ -1040,7 +1127,7 @@ export default {
       ).then(response => {
         this.dimensionUnitList = response;
       }).catch(err => {
-        console.log(err);
+        // console.log(err);
       }).finally(res => {
         this.dimension_unit_loading = false;
       });
@@ -1051,7 +1138,7 @@ export default {
       ).then(response => {
         this.shippingCarrierList = response;
       }).catch(err => {
-        console.log(err);
+        // console.log(err);
       }).finally(res => {
         this.shipping_carrier_loading = false;
       });
@@ -1103,7 +1190,7 @@ export default {
       if (this.productItems.all_related_category && this.productItems.all_related_category.length)
         for (let key in this.productItems.all_related_category) {
           this.categoryTree[key].value = this.productItems.all_related_category[key];
-          console.log(this.productItems.all_related_category[key]);
+          // console.log(this.productItems.all_related_category[key]);
 
           var val = this.productItems.all_related_category[key];
           await this.$axios.$post('/api/find_category', {id: val})
@@ -1140,8 +1227,122 @@ export default {
           //     item_val: 'id'
           //   }
         }
-    }
+    },
+    initPrice() {
+      if (this.productItems.price_type === "range") {
+        this.price_range.currency = this.productItems.price.currency;
+        this.price_range.min_value = this.productItems.price.min_value.toString();
+        this.price_range.max_value = this.productItems.price.max_value.toString();
+      } else if (this.productItems.price_type === "base_on_qty") {
+        if (this.productItems && this.productItems.price)
+          this.price_set = [];
+        for (let key in this.productItems.price) {
+          if (key + 1 === this.productItems.price.length) {
+            this.price_set.push({
+              min_qty: this.productItems.price[key].min_qty.toString(),
+              max_qty: this.productItems.price[key].max_qty.toString(),
+              currency: this.productItems.price[key].currency,
+              value: this.productItems.price[key].value.toString()
+            });
+          } else {
+            this.price_set.push({
+              min_qty: this.productItems.price[key].min_qty.toString(),
+              currency: this.productItems.price[key].currency,
+              value: this.productItems.price[key].value.toString()
+            });
+          }
 
+        }
+
+      }
+    },
+
+    async uploadFile(type) {
+      let formData = new FormData();
+      formData.append('product_id',this.$route.params.id);
+
+      if (type === 'images') {
+        if (this.productItems.images) {
+          this.images_uploading = true;
+          this.formLoader = true;
+
+          var ins = this.productItems.images.length;
+          for (var x = 0; x < ins; x++) {
+            formData.append("file[]", this.productItems.images[x]);
+          }
+          formData.append('field', 'images');
+          formData.append('directory', '/images');
+          formData.append('type', 'multiple');
+
+          this.handleUpload(formData, type);
+
+        }
+      } else if (type === 'video') {
+        if (this.productItems.video) {
+          this.video_uploading = true;
+          this.formLoader = true;
+
+          formData.append('file', this.productItems.video);
+          formData.append('field', 'video');
+          formData.append('directory', '/video');
+          formData.append('type', 'single');
+
+          this.handleUpload(formData, type);
+        }
+      }
+
+
+    },
+    async handleUpload(formData, type = '') {
+      await this.$axios.$post('/api/upload_product_file',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        })
+        .then(response => {
+          if (type === 'images')
+            this.images_names = response
+          else if (type === "video")
+            this.video_name = response;
+
+          this.images_uploading = false;
+          this.video_uploading = false;
+
+          this.formLoader = false;
+          // this.companyInfo.logo_name = response;
+        }).catch(({err}) => {
+          this.$toast.error(err)
+
+          this.images_uploading = false;
+          this.video_uploading = false;
+
+          this.formLoader = false;
+        });
+    },
+    async deleteFile(type, filename = '') {
+      this.$toast.info("Delete in progress ...");
+      await this.$axios.$delete('/api/delete_product_file',
+        {
+          params: {
+            product_id:this.$route.params.id,
+            field: type,
+            filename: filename
+          }
+        }
+      )
+        .then(response => {
+          if (type === "images")
+            this.images_names = response;
+          else if (type === "video")
+            this.video_name = response;
+
+          this.$toast.error("Deleted successfully");
+        }).catch(({err}) => {
+          this.$toast.error(err)
+        });
+    }
   }
 
 }

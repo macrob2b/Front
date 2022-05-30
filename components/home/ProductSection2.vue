@@ -2,8 +2,8 @@
   <v-row>
     <v-col cols="12" md="6">
         <ProductContainer
-          title="CUSTOMIZED PRODUCTS"
-          link="/product-list?product_type=customize"
+          title="Buying leads"
+          link="/product-list?lead_type=buy"
         >
           <!-- <div class="d-flex justify-center">
             <ProductCard2 />
@@ -13,7 +13,7 @@
           <div class="px-md-6">
             <v-simple-table>
               <tbody>
-              <tr class="mt-12 mb-12" v-if="customized_loading">
+              <tr class="mt-12 mb-12" v-if="buying_loading">
                 <td colspan="3" class="text-center">
                   <v-progress-circular
                     :size="40"
@@ -23,29 +23,29 @@
                   ></v-progress-circular>
                 </td>
               </tr>
-              <tr v-else v-for="item in customized_products">
+              <tr v-else v-for="item in buying_leads">
                 <td>
                   <nuxt-link class="d-flex justify-start ml-1 align-center"
-                             :to="'/product-details/'+item._id"
+                             :to="'/buying-leads'"
                   >
                     <gb-flag
-                      :code="item.company.country_code" class="mr-2"/>
+                      :code="item.company && item.company.country_code ? item.company.country_code  : ''" class="mr-2"/>
 
-                    <div class="mx-3">{{ item.company.country }}</div>
+                    <div class="mx-3">{{ item.company.country ? item.company.country  : '' }}</div>
                     <v-divider class="my-3" vertical></v-divider>
                   </nuxt-link>
                 </td>
 
                 <td id="td1">
-                  <nuxt-link :to="'/product-details/'+item._id">
-                    {{ item.title }}
+                  <nuxt-link :to="'/buying-leads/'">
+                    {{ item.subject }}
                   </nuxt-link>
                 </td>
 
                 <td id="td2">
                   <div class="d-flex justify-end ml-5 align-center">
                     <v-divider class="mx-2" vertical></v-divider>
-                    <nuxt-link :to="'/product-details/'+item._id">
+                    <nuxt-link :to="'/buying-leads/'">
                       {{ item.created_at }}
                     </nuxt-link>
                   </div>
@@ -58,8 +58,8 @@
     </v-col>
     <v-col cols="12" md="6">
         <ProductContainer
-          title="READY-TO-SHIP PRODUCTS"
-          link="/product-list?product_type=ready-to-ship"
+          title="Selling leads"
+          link="/product-list?lead_type=ready-to-ship"
         >
           <!-- <div class="d-flex justify-center">
             <ProductCard2 />
@@ -69,7 +69,7 @@
           <div class="px-md-6">
             <v-simple-table>
               <tbody>
-              <tr class="mt-12 mb-12" v-if="ready_to_ship_loading">
+              <tr class="mt-12 mb-12" v-if="selling_loading">
                 <td colspan="3" class="text-center">
                   <v-progress-circular
                     :size="40"
@@ -79,28 +79,28 @@
                   ></v-progress-circular>
                 </td>
               </tr>
-              <tr v-else v-for="item in ready_to_ship_products">
+              <tr v-else v-for="item in selling_leads">
                 <td>
                   <nuxt-link
-                    :to="'/product-details/'+item._id"
+                    :to="'/selling-leads'"
                     class="d-flex justify-start ml-1 align-center">
-                    <gb-flag :code="item.company.country_code" class="mr-2"/>
+                    <gb-flag :code="item.company && item.company.country_code ? item.company.country_code  : ''" class="mr-2"/>
 
-                    <div class="mx-3">{{ item.company.country }}</div>
+                    <div class="mx-3">{{ item.company.country ? item.company.country  : ''  }}</div>
                     <v-divider class="my-3" vertical></v-divider>
                   </nuxt-link>
                 </td>
 
                 <td>
-                  <nuxt-link :to="'/product-details/'+item._id">
-                    {{ item.title }}
+                  <nuxt-link :to="'/selling-leads'">
+                    {{ item.subject }}
                   </nuxt-link>
                 </td>
 
                 <td>
                   <div class="d-flex justify-end ml-5 align-center">
                     <v-divider class="mx-2" vertical></v-divider>
-                    <nuxt-link :to="'/product-details/'+item._id">
+                    <nuxt-link :to="'/selling-leads/'">
                       {{ item.created_at }}
                     </nuxt-link>
                   </div>
@@ -122,37 +122,36 @@ export default {
   components: {ProductContainer, ProductCard2},
   data() {
     return {
-      customized_products: {},
-      ready_to_ship_products: {},
+      buying_leads: {},
+      selling_leads: {},
 
-      customized_loading: false,
-      ready_to_ship_loading: false,
+      buying_loading: false,
+      selling_loading: false,
     };
   },
   mounted() {
-    this.getProducts('customize');
-    this.getProducts('ready_to_ship');
+    this.getLeads('buy');
+    this.getLeads('sell');
   },
   methods: {
-    async getProducts(product_type) {
-      if (product_type == 'customize')
-        this.customized_loading = true;
-      else if (product_type == 'ready_to_ship')
-        this.ready_to_ship_loading = true;
+    async getLeads(lead_type) {
+      if (lead_type == 'buy')
+        this.buying_loading = true;
+      else if (lead_type == 'sell')
+        this.selling_loading = true;
 
-      await this.$axios.$post('/api/product_list'
+      await this.$axios.$post('/api/trading_leads'
         , {
           take: 6,
-          by_company: true,
-          product_type: product_type
+          type: lead_type
         })
         .then(response => {
-          if (product_type == 'customize') {
-            this.customized_products = response;
-            this.customized_loading = false;
-          } else if (product_type == 'ready_to_ship') {
-            this.ready_to_ship_products = response;
-            this.ready_to_ship_loading = false;
+          if (lead_type == 'buy') {
+            this.buying_leads = response;
+            this.buying_loading = false;
+          } else if (lead_type == 'sell') {
+            this.selling_leads = response;
+            this.selling_loading = false;
           }
         }).catch(err => {
           console.error(err);

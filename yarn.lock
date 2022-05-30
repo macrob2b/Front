@@ -2423,6 +2423,11 @@
     "postcss" "^7.0.32"
     "postcss-value-parser" "^4.1.0"
 
+"awesome-phonenumber@^2.15.0":
+  "integrity" "sha512-zirkzWFUheNnnPY1QE05PQd+5drn+5kVy76gZ3WyXnLwzXOguw6sqksyZGO1qyNnYj3Y/SDITXnS/TCk/hJXpQ=="
+  "resolved" "https://registry.npmjs.org/awesome-phonenumber/-/awesome-phonenumber-2.73.0.tgz"
+  "version" "2.73.0"
+
 "axios-retry@^3.1.9":
   "integrity" "sha512-Co3UXiv4npi6lM963mfnuH90/YFLKWWDmoBYfxkHT5xtkSSWNqK9zdG3fw5/CP/dsoKB5aMMJCsgab+tp1OxLQ=="
   "resolved" "https://registry.npmjs.org/axios-retry/-/axios-retry-3.2.4.tgz"
@@ -10062,6 +10067,15 @@
     "hash-sum" "^1.0.2"
     "loader-utils" "^1.0.2"
 
+"vue-tel-input-vuetify@^1.5.3":
+  "integrity" "sha512-46VIIkxSPZ2o+APyO3SBTXW7i1KHCV3YXRcvDuJpddBRqVcQRFVlqW+O/pLD+RKgVjKUsvi+L/pgUTu3Fh+mYg=="
+  "resolved" "https://registry.npmjs.org/vue-tel-input-vuetify/-/vue-tel-input-vuetify-1.5.3.tgz"
+  "version" "1.5.3"
+  dependencies:
+    "awesome-phonenumber" "^2.15.0"
+    "vuetify" "^2.2.11"
+    "whatwg-fetch" "^3.2.0"
+
 "vue-template-compiler@^2.6.12", "vue-template-compiler@^2.6.14":
   "integrity" "sha512-ODQS1SyMbjKoO1JBJZojSw6FE4qnh9rIpUZn2EUT86FKizx9uH5z6uXiIrm4/Nb/gwxTi/o17ZDEGWAXHvtC7g=="
   "resolved" "https://registry.npmjs.org/vue-template-compiler/-/vue-template-compiler-2.6.14.tgz"
@@ -10099,7 +10113,7 @@
     "file-loader" "^6.2.0"
     "loader-utils" "^2.0.0"
 
-"vuetify@^2.5.3", "vuetify@^2.5.5":
+"vuetify@^2.2.11", "vuetify@^2.5.3", "vuetify@^2.5.5":
   "integrity" "sha512-a3gClGGY8FYIHvHtqDDmVnmTg8D5pPPcs3HYqdrmJ7b3RrF+bWlpqpAhUPVvD9ByYYWVKba4viAlhOc74meGsg=="
   "resolved" "https://registry.npmjs.org/vuetify/-/vuetify-2.6.0.tgz"
   "version" "2.6.0"
@@ -10233,6 +10247,11 @@
     "std-env" "^2.2.1"
     "text-table" "^0.2.0"
     "wrap-ansi" "^6.0.0"
+
+"whatwg-fetch@^3.2.0":
+  "integrity" "sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA=="
+  "resolved" "https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-3.6.2.tgz"
+  "version" "3.6.2"
 
 "whatwg-url@^5.0.0":
   "integrity" "sha1-lmRU6HZUYuN2RNNib2dCzotwll0="

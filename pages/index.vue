@@ -28,8 +28,94 @@
       <ProductContainer title="Suggested companies">
         <CompanyCarousel/>
       </ProductContainer>
-
       <BuyingLeadsBanner/>
+
+
+      <v-row class="mt-8">
+        <v-col cols="12" md="6">
+          <v-card class="pa-6">
+            <v-row>
+              <v-col cols="9">
+                <h3>Customized products</h3>
+                <p>
+                  manufacturing ability to offer a variety of designs or details for one product, made specifically to a buyer's liking ...
+                </p>
+              </v-col>
+              <v-col cols="3" >
+                <v-img max-width="100px" max-height="100px" :src="require('assets/img/customized.png')"/>
+              </v-col>
+
+              <v-col cols="12">
+<!--                <h4>Show all</h4>-->
+                <v-slide-group
+                  class="py-4"
+                  active-class="success"
+                  show-arrows
+                >
+                  <v-slide-item
+                    v-for="item in customized_products"
+                    class="mx-2"
+                    v-slot="{ active, toggle }"
+                  >
+                    <v-card
+                      :to="`/product-details/${item._id}`"
+                      width="70"
+                      height="70"
+                    >
+                      <v-img
+                        :src="getImg(item)"
+                        height="70px"
+                      ></v-img>
+                    </v-card>
+                  </v-slide-item>
+                </v-slide-group>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-card class="pa-6">
+              <v-row>
+                <v-col cols="9" >
+                  <h3>Ready-to-ship products</h3>
+                  <p>
+                    Source from Macrob2b products that are ready to ship
+                  </p>
+                </v-col>
+                <v-col cols="3" class="text-right">
+                  <v-img max-width="120px" max-height="100px" height="auto" :src="require('assets/img/ready-to-ship.png')"/>
+                </v-col>
+                <v-col cols="12">
+<!--                  <h4>Show all</h4>-->
+                  <v-slide-group
+                    class="py-4"
+                    active-class="success"
+                    show-arrows
+                  >
+                    <v-slide-item
+                      v-for="item in ready_to_ship_products"
+                      class="mx-2"
+                      v-slot="{ active, toggle }"
+                    >
+                      <v-card
+                        :to="`/product-details/${item._id}`"
+                        width="70"
+                        height="auto"
+                        max-height="70"
+                      >
+                        <v-img
+                          :src="getImg(item)"
+                          height="70px"
+                        ></v-img>
+                      </v-card>
+                    </v-slide-item>
+                  </v-slide-group>
+                </v-col>
+              </v-row>
+          </v-card>
+        </v-col>
+      </v-row>
+
       <!--      <div class="pa-2 ma-5">-->
       <!--        <ProductSection3/>-->
       <!--      </div>-->
@@ -76,6 +162,7 @@ import CarouselResponsive from "../components/home/CarouselResponsive.vue";
 import Banner from "../components/home/Banner.vue";
 import CompanyCarousel from "../components/company/company-carousel";
 import BuyingLeadsBanner from "../components/home/BuyingLeadsBanner";
+import img from "../assets/img/no-image.png";
 
 export default {
   name: 'index',
@@ -87,10 +174,18 @@ export default {
   },
   mounted() {
     this.getMediaList();
+
+    this.getProducts('customize');
+    this.getProducts('ready_to_ship');
   },
   data() {
     return {
-      media_list: null
+      media_list: null,
+      customized_products: {},
+      ready_to_ship_products: {},
+
+      customized_loading: false,
+      ready_to_ship_loading: false,
     }
   },
   components: {
@@ -124,6 +219,36 @@ export default {
         .catch(e => {
           console.log('error');
         })
+    },
+    async getProducts(product_type) {
+      if (product_type == 'customize')
+        this.customized_loading = true;
+      else if (product_type == 'ready_to_ship')
+        this.ready_to_ship_loading = true;
+
+      await this.$axios.$post('/api/product_list'
+        , {
+          take: 16,
+          by_company: true,
+          product_type: product_type
+        })
+        .then(response => {
+          if (product_type == 'customize') {
+            this.customized_products = response;
+            this.customized_loading = false;
+          } else if (product_type == 'ready_to_ship') {
+            this.ready_to_ship_products = response;
+            this.ready_to_ship_loading = false;
+          }
+        }).catch(err => {
+          console.error(err);
+        });
+    },
+    getImg(item){
+      var img = require('assets/img/no-image.png');
+      if (item.images && item.images.length > 0)
+        img = "https://dl.macrob2b.com/products/" + item._id + "/images/" + item.images[0];
+      return img;
     }
   }
 };
