@@ -3,7 +3,10 @@
 
     <div class="searchbar-pagination-container">
 
-      <searchBar :productList="product_list" :loadingStatus="loading"></searchBar>
+      <searchBar :productList="product_list" :loadingStatus="loading"
+                 @sortChanged="applySort"
+                 @filterChanged="applyFilter"
+      />
       <div class="text-center mt-4" v-if="length>1">
         <v-pagination
           v-model="page"
@@ -69,15 +72,16 @@ export default {
         firstDescription: 'Description goes here',
         secondDescription: 'Description goes here'
       },
-      loading:false
+      loading: false,
+      page_load_option: {},
     }
   },
   mounted() {
     this.getProductList();
   },
   watch: {
-    page(val){
-    this.getProductList();
+    page(val) {
+      this.getProductList();
     },
     "$route.query.cate_id"(val) {
       this.getProductList();
@@ -85,22 +89,35 @@ export default {
   },
   methods: {
     getProductList() {
-      window.scrollTo(0,0);
-      this.loading=true;
+      window.scrollTo(0, 0);
+      this.loading = true;
+
+      this.page_load_option.page = this.page;
+      this.page_load_option.cate_id = this.$route.query.cate_id;
+
       this.$axios.$post('/api/product_list',
-        {
-          page: this.page,
-          cate_id:this.$route.query.cate_id
-        })
+        this.page_load_option)
         .then(res => {
           this.product_list = res.data;
           this.length = Math.ceil(res.total / res.per_page);
-          this.loading=false;
+          this.loading = false;
         })
         .catch(err => {
-          this.loading=false;
+          this.loading = false;
           this.$toast.error(err);
         })
+    },
+    applyFilter(event) {
+      for (var key in event) {
+        this.page_load_option[key] = event[key];
+      }
+      // this.market = event.market;
+      // this.employee = event.employee;
+      this.getProductList();
+    },
+    applySort(event) {
+      this.page_load_option.created_at_sort = event.register_date;
+      this.getProductList();
     }
   }
 }

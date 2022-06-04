@@ -148,16 +148,16 @@
             </v-btn>
             <span class="d-none d-md-inline">
               <v-btn
-                class="mt-2 "
+                class="mt-2"
                 dark
-                v-if="!this.$auth.loggedIn" to="/login" min-width="0" width="100" color="#fb641e">
+                v-if="!this.$auth.loggedIn" to="/login" min-width="0"  color="#fb641e">
                {{ signin_btn }}
             </v-btn>
                <v-btn v-else
                       to="/user-dashboard"
                       class="mt-2 "
                       dark
-                      min-width="0" width="100" color="#fb641e">
+                       min-width="100" color="#fb641e">
                Hi, {{ $auth.user.first_name }}
             </v-btn>
             </span>
@@ -335,7 +335,7 @@ export default {
   data() {
     return {
       drawer: false,
-      signin_btn: 'Sign In',
+      signin_btn: 'Join us for FREE',
       categoriesMenu: false,
       categories: [],
       selectedCategory: '',

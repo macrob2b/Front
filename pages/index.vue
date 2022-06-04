@@ -38,7 +38,7 @@
               <v-col cols="9">
                 <h3>Customized products</h3>
                 <p>
-                  manufacturing ability to offer a variety of designs or details for one product, made specifically to a buyer's liking ...
+                  Manufacturing ability to offer a variety of designs or details for one product, made specifically to a buyer's liking ...
                 </p>
               </v-col>
               <v-col cols="3" >
