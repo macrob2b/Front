@@ -38,15 +38,16 @@
               <v-col cols="9">
                 <h3>Customized products</h3>
                 <p>
-                  Manufacturing ability to offer a variety of designs or details for one product, made specifically to a buyer's liking ...
+                  Manufacturing ability to offer a variety of designs or details for one product, made specifically to a
+                  buyer's liking ...
                 </p>
               </v-col>
-              <v-col cols="3" >
+              <v-col cols="3">
                 <v-img max-width="100px" max-height="100px" :src="require('assets/img/customized.png')"/>
               </v-col>
 
               <v-col cols="12">
-<!--                <h4>Show all</h4>-->
+                <!--                <h4>Show all</h4>-->
                 <v-slide-group
                   class="py-4"
                   active-class="success"
@@ -75,43 +76,44 @@
         </v-col>
         <v-col cols="12" md="6">
           <v-card class="pa-6">
-              <v-row>
-                <v-col cols="9" >
-                  <h3>Ready-to-ship products</h3>
-                  <p>
-                    Source from Macrob2b products that are ready to ship
-                  </p>
-                </v-col>
-                <v-col cols="3" class="text-right">
-                  <v-img max-width="120px" max-height="100px" height="auto" :src="require('assets/img/ready-to-ship.png')"/>
-                </v-col>
-                <v-col cols="12">
-<!--                  <h4>Show all</h4>-->
-                  <v-slide-group
-                    class="py-4"
-                    active-class="success"
-                    show-arrows
+            <v-row>
+              <v-col cols="9">
+                <h3>Ready-to-ship products</h3>
+                <p>
+                  Source from Macrob2b products that are ready to ship
+                </p>
+              </v-col>
+              <v-col cols="3" class="text-right">
+                <v-img max-width="120px" max-height="100px" height="auto"
+                       :src="require('assets/img/ready-to-ship.png')"/>
+              </v-col>
+              <v-col cols="12">
+                <!--                  <h4>Show all</h4>-->
+                <v-slide-group
+                  class="py-4"
+                  active-class="success"
+                  show-arrows
+                >
+                  <v-slide-item
+                    v-for="item in ready_to_ship_products"
+                    class="mx-2"
+                    v-slot="{ active, toggle }"
                   >
-                    <v-slide-item
-                      v-for="item in ready_to_ship_products"
-                      class="mx-2"
-                      v-slot="{ active, toggle }"
+                    <v-card
+                      :to="`/product-details/${item._id}`"
+                      width="70"
+                      height="auto"
+                      max-height="70"
                     >
-                      <v-card
-                        :to="`/product-details/${item._id}`"
-                        width="70"
-                        height="auto"
-                        max-height="70"
-                      >
-                        <v-img
-                          :src="getImg(item)"
-                          height="70px"
-                        ></v-img>
-                      </v-card>
-                    </v-slide-item>
-                  </v-slide-group>
-                </v-col>
-              </v-row>
+                      <v-img
+                        :src="getImg(item)"
+                        height="70px"
+                      ></v-img>
+                    </v-card>
+                  </v-slide-item>
+                </v-slide-group>
+              </v-col>
+            </v-row>
           </v-card>
         </v-col>
       </v-row>
@@ -169,7 +171,24 @@ export default {
   auth: false,
   head() {
     return {
-      title: this.$t('Main_PAGE_TITLE')
+      title: this.$t('Main_PAGE_TITLE'),
+      meta: [
+        {
+          hid: `description`,
+          name: 'description',
+          content: "Global B2B marketplace connecting buyers with suppliers all over the world"
+        },
+        {
+          hid: `keywords`,
+          name: 'keywords',
+          keywords: 'business to business, free product advertising, free company advertising'
+        },
+        {
+          hid: 'og:title',
+          name: 'og:title',
+          content: this.$t('Main_PAGE_TITLE'),
+        }
+      ]
     }
   },
   mounted() {
@@ -244,7 +263,7 @@ export default {
           console.error(err);
         });
     },
-    getImg(item){
+    getImg(item) {
       var img = require('assets/img/no-image.png');
       if (item.images && item.images.length > 0)
         img = "https://dl.macrob2b.com/products/" + item._id + "/images/" + item.images[0];

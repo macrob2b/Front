@@ -5,7 +5,7 @@
            class="mobile-share"/>
     <div class="card-carousel">
       <v-carousel
-        height="auto"
+        :height="$vuetify.breakpoint.xsOnly ? 300 : 500"
         v-model="carouselVal"
         hide-delimiters>
         <v-carousel-item

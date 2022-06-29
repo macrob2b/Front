@@ -8,7 +8,7 @@
             :width="5"
             color="orange"
             indeterminate
-          ></v-progress-circular>
+          />
         </v-col>
       </v-row>
     </section>

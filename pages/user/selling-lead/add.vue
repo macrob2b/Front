@@ -268,50 +268,54 @@ export default {
     },
 
 
-    submitLead() {
-      this.formLoader = true;
+    async submitLead() {
+      const isValid = await this.$refs.observer.validate();
+      if (!isValid) {
+        // ABORT!!
+      }else {
+        this.formLoader = true;
 
-      let formData = new FormData();
-      for (let key in this.sellItems) {
-        if (!(key === 'image')) {
-          if (!(this.sellItems[key] === "" || this.sellItems[key] === null ||
-            this.sellItems[key].length === 0))
-            formData.append(key, JSON.stringify(this.sellItems[key]));
-        }
-
-      }
-
-      formData.append("image", this.sellItems.image);
-
-
-      this.$axios.$post('/api/create_trading_lead'
-        , formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
+        let formData = new FormData();
+        for (let key in this.sellItems) {
+          if (!(key === 'image')) {
+            if (!(this.sellItems[key] === "" || this.sellItems[key] === null ||
+              this.sellItems[key].length === 0))
+              formData.append(key, JSON.stringify(this.sellItems[key]));
           }
+
         }
-      )
-        .then(res => {
-          this.formLoader = false;
-          if (typeof res === 'object') {
-            for (let i in res) {
-              let error = res[i][0];
-              this.$toast.error(error);
-              // break;
+
+        formData.append("image", this.sellItems.image);
+
+
+        this.$axios.$post('/api/create_trading_lead'
+          , formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
             }
-          } else {
-            this.$toast.success("Product create successfully");
-            this.$router.push({
-              path: '/user/selling-lead'
-            });
           }
+        )
+          .then(res => {
+            this.formLoader = false;
+            if (typeof res === 'object') {
+              for (let i in res) {
+                let error = res[i][0];
+                this.$toast.error(error);
+                // break;
+              }
+            } else {
+              this.$toast.success("Product create successfully");
+              this.$router.push({
+                path: '/user/selling-lead'
+              });
+            }
 
-        }).catch(err => {
-        this.formLoader = false;
-        this.$toast.error(err);
-      });
-
+          }).catch(err => {
+          this.formLoader = false;
+          this.$toast.error(err);
+        });
+      }
     },
     goBack() {
 

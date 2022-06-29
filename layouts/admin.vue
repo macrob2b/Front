@@ -47,7 +47,6 @@
         dense
       >
         <v-list-item-group
-          v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
           <v-list-item to="/admin/category">
@@ -64,6 +63,9 @@
           </v-list-item>
           <v-list-item to="/admin/media">
             <v-list-item-title>Media manage</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/admin/contact-us">
+            <v-list-item-title>Contact us manage</v-list-item-title>
           </v-list-item>
           <v-list-item to="/admin/dashboard">
             <v-list-item-title>Dashboard</v-list-item-title>

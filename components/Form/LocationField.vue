@@ -18,6 +18,7 @@
       v-model="locationDialog"
       transition="dialog-bottom-transition"
       fullscreen
+      style="z-index: 20001"
       hide-overlay
       eager>
       <v-card>

@@ -57,7 +57,8 @@ export default {
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
     '@nuxtjs/google-analytics',
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/pwa',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -165,8 +166,8 @@ export default {
     defaultLocale: 'en',
   },
   proxy: {
-    // '/api/': {target: "https://api.macrob2b.com", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
-    '/api/': {target: "http://localhost:8000", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
+    '/api/': {target: "https://api.macrob2b.com", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
+    // '/api/': {target: "http://localhost:8000", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
   },
 
   serverMiddleware:[
@@ -224,6 +225,17 @@ export default {
   env:{
     baseUrl:"https://dl.macrob2b.com",
   },
+
+  pwa: {
+    manifest: {
+      name: 'Macrob2b App',
+      short_name:'Macrob2b',
+      description:'Global B2B marketplace connecting buyers with suppliers all over the world.',
+      lang: 'en',
+      useWebmanifestExtension: false
+    }
+  },
+
   server: {
     host: '0.0.0.0',
     port: 3000

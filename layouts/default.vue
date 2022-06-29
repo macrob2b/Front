@@ -2,7 +2,6 @@
   <!-- App.vue -->
 
   <v-app>
-
     <Header/>
 
     <v-main class="mainContainer">
@@ -48,11 +47,11 @@ export default {
 
 <style>
 .mainContainer {
-  padding-top: 135px !important;
+  padding-top: 170px !important;
 }
 @media screen and (max-width: 960px) {
   .mainContainer {
-    padding-top: 75px !important;
+    padding-top: 125px !important;
   }
 }
 </style>

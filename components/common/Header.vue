@@ -1,9 +1,11 @@
 <template>
   <div>
 
+
     <!--  Navigation Drawer   -->
     <v-navigation-drawer v-model="drawer"
                          fixed
+                         style="z-index: 1001;"
                          temporary>
 
       <v-row class="mt-1">
@@ -77,28 +79,76 @@
 
     </v-navigation-drawer>
 
+
+    <!--  Alert for register-->
+    <v-card v-show="!$auth.loggedIn" flat class="transparent" style="position: fixed;top: 0;z-index: 1000">
+      <v-row>
+        <v-col cols="12">
+          <v-alert
+            width="100vw"
+            type="success"
+            dense
+            dark
+            class="text-body-2 ma-0"
+          >
+            Join us for free today and be a part of the fastest growing B2B platform
+            <v-btn
+              to="/register"
+              rounded x-small>
+              Join now
+            </v-btn>
+          </v-alert>
+        </v-col>
+      </v-row>
+    </v-card>
+    <v-card v-show="$auth.loggedIn" flat class="transparent" style="position: fixed;top: 0;z-index: 1000">
+      <v-row>
+        <v-col cols="12">
+          <v-alert
+            width="100vw"
+            type="info"
+            dense
+            dark
+            class="text-body-2 ma-0"
+          >
+            Complete your company profile such email, phone and ...
+            <v-btn
+              to="/user/company"
+              rounded x-small>
+              Start
+            </v-btn>
+          </v-alert>
+        </v-col>
+      </v-row>
+    </v-card>
+
+    <!--   End alert for register-->
     <!--  ToolBar  -->
+
     <v-app-bar
       color="primary"
       elevation="4"
       :prominent="$vuetify.breakpoint.mdAndUp"
       :height="$vuetify.breakpoint.smAndDown ? '75' : '130'"
-      fixed>
+      fixed
+      :style="`top:${$vuetify.breakpoint.smAndDown ? 50 : 40}px`"
+    >
+
 
       <v-row>
-
         <!--  Toolbar Items   -->
         <v-col cols="12" class="d-flex justify-space-between mx-0 mb-0"
                :class="$vuetify.breakpoint.smAndDown ? 'mt-1 mb-2' : 'mt-1'">
+
 
           <!--  Menu Buttons (Left Side)  -->
           <div class="d-lg-inline-block">
 
             <!--    Navigation Trigger      -->
             <v-btn
-                   @click="drawer = !drawer"
-                   class="d-inline-flex d-md-none menuIcon white--text mt-2"
-                   color="accent">
+              @click="drawer = !drawer"
+              class="d-inline-flex d-md-none menuIcon white--text mt-2"
+              color="accent">
               <v-icon>mdi-menu</v-icon>
             </v-btn>
 
@@ -139,25 +189,25 @@
               <v-icon>mdi-account</v-icon>
             </v-btn>
             <v-btn
-                   class="d-none d-md-inline-flex menuIcon text--white mx-sm-2 mx-md-2 mt-2"
-                   color="accent"
-                   to="/company-list"
-                   width="20px"
-                   nuxt>
+              class="d-none d-md-inline-flex menuIcon text--white mx-sm-2 mx-md-2 mt-2"
+              color="accent"
+              to="/company-list"
+              width="20px"
+              nuxt>
               <v-icon>mdi-earth</v-icon>
             </v-btn>
             <span class="d-none d-md-inline">
               <v-btn
                 class="mt-2"
                 dark
-                v-if="!this.$auth.loggedIn" to="/login" min-width="0"  color="#fb641e">
+                v-if="!this.$auth.loggedIn" to="/login" min-width="0" color="#fb641e">
                {{ signin_btn }}
             </v-btn>
                <v-btn v-else
                       to="/user-dashboard"
                       class="mt-2 "
                       dark
-                       min-width="100" color="#fb641e">
+                      min-width="100" color="#fb641e">
                Hi, {{ $auth.user.first_name }}
             </v-btn>
             </span>
@@ -167,7 +217,7 @@
         </v-col>
 
         <!--  Toolbar Menu MD   -->
-        <v-col class="pt-5 px-0 d-none d-md-block"  cols="12">
+        <v-col class="pt-5 px-0 d-none d-md-block" cols="12">
           <!--     Category menu     -->
           <v-menu
             :nudge-width="selectedCategory !== '' ? $vuetify.breakpoint.width - 350 : ($vuetify.breakpoint.width) / 12"
@@ -281,10 +331,10 @@
             </v-card>
           </v-menu>
 
-<!--          <v-btn color="teal accent-4 text-lowercase" tile text>Deals</v-btn>-->
+          <!--          <v-btn color="teal accent-4 text-lowercase" tile text>Deals</v-btn>-->
           <v-btn nuxt to="/buying-leads" color="white" tile text>Buying Leads</v-btn>
           <v-btn nuxt to="/selling-leads" color="white" tile text>Selling Leads</v-btn>
-<!--          <v-btn color="white" tile text>Services</v-btn>-->
+          <!--          <v-btn color="white" tile text>Services</v-btn>-->
           <v-btn nuxt to="/help" color="white" tile text>Help</v-btn>
 
         </v-col>
@@ -296,36 +346,41 @@
 
     <!--   Search Overlay   -->
     <v-overlay :value="searchActive"
-               z-index="2"
-               opacity="0.85">
-      <v-row :class="searchItems.length > 0 ? '' : 'mb-16'"
-             style="width: 75vw">
-        <v-col cols="12">
+               id="search_verlay"
+               opacity="0.98"
+               z-index="20001"
+               style="top: 0"
+    >
 
-          <!--    Search Field      -->
-          <v-text-field class="black--text"
-                        label="Search..."
-                        :loading="search_loading"
-                        loader-height="4"
-                        @keyup="searchSubmit"
-                        v-model="search_keyword"
-                        prepend-inner-icon="mdi-magnify"
-                        full-width>
-          </v-text-field>
+      <div class="search_close">
+        <v-btn icon @click="searchActive=!searchActive">
+          <v-icon dark>
+            mdi-close
+          </v-icon>
+        </v-btn>
+      </div>
+      <div class="search_area ">
+        <v-text-field class="black--text search-input"
+                      label="Search..."
+                      autocomplete="off"
+                      :loading="search_loading"
+                      loader-height="4"
+                      @keyup="searchSubmit"
+                      v-model="search_keyword"
+                      prepend-inner-icon="mdi-magnify"
+                      full-width>
+        </v-text-field>
+        <v-list class="mt-0" color="white" v-if="searchItems.length > 0">
+          <v-list-item v-for="item in searchItems" class="pointer" @click="goToItemLink(item._id)">
+            <v-list-item-title class="black--text">
+              {{ item.title }}
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
 
-          <!--     List Search     -->
-          <v-list color="white" v-if="searchItems.length > 0">
-            <v-list-item v-for="item in searchItems" class="pointer" @click="goToItemLink(item._id)">
-              <v-list-item-title  class="black--text">
-                  {{item.title}}
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-
-        </v-col>
-      </v-row>
-
+      </div>
     </v-overlay>
+
 
   </div>
 </template>
@@ -385,9 +440,9 @@ export default {
       ],
       searchActive: false,
       searchItems: [],
-      timer:0,
-      search_keyword:null,
-      search_loading:false
+      timer: 0,
+      search_keyword: null,
+      search_loading: false
     };
   },
   mounted() {
@@ -446,7 +501,7 @@ export default {
     toggleSearch() {
       this.searchActive = !this.searchActive;
     },
-    searchSubmit(){
+    searchSubmit() {
       if (this.timer) {
         clearTimeout(this.timer);
         this.timer = null;
@@ -455,30 +510,30 @@ export default {
         this.getItems();
       }, 800);
     },
-    getItems(){
-      if (this.search_keyword==="" || this.search_keyword===null){
-        this.searchItems=[];
-      }else{
-        this.search_loading=true;
+    getItems() {
+      if (this.search_keyword === "" || this.search_keyword === null) {
+        this.searchItems = [];
+      } else {
+        this.search_loading = true;
         this.$axios.$post('/api/product_list',
           {
-            keyword:this.search_keyword,
-            take:8
-          }).then(response=>{
-          this.searchItems=response
-        }).catch(err=>{
+            keyword: this.search_keyword,
+            take: 8
+          }).then(response => {
+          this.searchItems = response
+        }).catch(err => {
           this.$toast.error("An error occured");
-        }).finally(()=>{
-          this.search_loading=false;
+        }).finally(() => {
+          this.search_loading = false;
         })
       }
     },
-    goToItemLink(id){
-      this.searchActive=false;
-      this.search_keyword=null;
-      this.searchItems=[];
+    goToItemLink(id) {
+      this.searchActive = false;
+      this.search_keyword = null;
+      this.searchItems = [];
       this.$router.push({
-        path:`/product-details/${id}`
+        path: `/product-details/${id}`
       });
     }
   },
@@ -492,7 +547,28 @@ export default {
   height: 36px !important;
 }
 
-.pointer{
-  cursor: pointer!important;
+.pointer {
+  cursor: pointer !important;
 }
+
+
+#search_verlay {
+  position: fixed;
+  width: 100vw;
+}
+
+#search_verlay .search_close {
+  top: 10px;
+  z-index: 20002;
+  position: fixed;
+  right: 5vw;
+}
+
+#search_verlay .search_area {
+  top: 10px;
+  position: fixed;
+  width: 90vw;
+  left: 5vw;
+}
+
 </style>

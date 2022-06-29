@@ -70,6 +70,9 @@
           Company
         </th>
         <th>
+          Joined at
+        </th>
+        <th>
           Action
         </th>
 
@@ -91,6 +94,9 @@
         </td>
         <td>
           <nuxt-link v-if="user.company" :to="`/company/${user.company._id}`" target="_blank">View company</nuxt-link>
+        </td>
+        <td>
+           {{user.created_at}}
         </td>
         <td>
           <v-btn icon

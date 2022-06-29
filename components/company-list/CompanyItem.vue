@@ -116,7 +116,7 @@
                       <v-icon small color="deep-orange">
                         mdi-diamond
                       </v-icon>
-                      <div class="text-caption text-justify">{{ item.description.substring(0,350)+" ..." }}</div>
+                      <div class="text-caption text-justify">{{item.description ? item.description.substring(0,350)+" ..." : '' }}</div>
                     </v-col>
                   </v-row>
                 </v-list-item-content>
