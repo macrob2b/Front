@@ -166,8 +166,8 @@ export default {
     defaultLocale: 'en',
   },
   proxy: {
-    '/api/': {target: "https://api.macrob2b.com", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
-    // '/api/': {target: "http://localhost:8000", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
+    // '/api/': {target: "https://api.macrob2b.com", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
+    '/api/': {target: "http://localhost:8001", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
   },
 
   serverMiddleware:[
