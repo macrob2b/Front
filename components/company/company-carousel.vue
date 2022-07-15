@@ -14,7 +14,7 @@
         >
           <v-row>
             <v-col cols="4" class="pa-0">
-              <nuxt-link :to="'/company/'+(company.username ? company.username : company._id)">
+              <nuxt-link :to="'/company/'+((company.username && company.username!=='undefined') ? company.username : company._id)">
                 <v-img
                   v-if="company.images && company.images[0]" aspect-ratio="1"
                   :src="getFile(company._id,company.images[0],'image')"
@@ -25,7 +25,7 @@
             </v-col>
             <v-col cols="8" class="py-0 px-3">
               <v-col class="pa-0 text-caption font-weight-bold grey--text company-name">
-                <nuxt-link :to="'/company/'+(company.username ? company.username : company._id)">{{
+                <nuxt-link :to="'/company/'+((company.username && company.username!=='undefined') ? company.username : company._id)">{{
                     company.company_name
                   }}
                 </nuxt-link>
@@ -46,7 +46,7 @@
 
                 <v-col cols="12">
                   <v-btn
-                    :to="'/company/'+(company.username ? company.username : company._id)"
+                    :to="'/company/'+((company.username && company.username!=='undefined') ? company.username : company._id)"
                     outlined elevation="0" small class="grey--text text--darken-2 text-capitalize text-caption">
                     <v-icon small class="mr-3">mdi-message</v-icon>
                     contact supplier

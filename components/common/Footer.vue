@@ -113,29 +113,8 @@
     </v-row>
 
 
-    <div class="d-flex d-sm-none footer-mobile justify-start">
+    <div class="d-flex d-sm-none footer-mobile justify-start mt-10">
       <div class="pa-8">
-        <div>
-          <nuxt-link
-            tag="img"
-            :src="require('../../assets/img/color-logo.png')" width="50%" class="pointer" to="/"/>
-        </div>
-        <div class="mt-2 mb-2" id="div3">
-          {{ brand }}
-        </div>
-        <v-divider/>
-        <v-divider/>
-
-        <div class="mt-2">
-          <p id="p2">
-            {{ description }}
-          </p>
-        </div>
-        <div>
-          <v-btn to="/login" min-width="0" color="primary" width="50%" height="40px" class="mt-4">
-            <span id="span2"> SIGN IN </span>
-          </v-btn>
-        </div>
         <div class="d-flex mt-5" id="div4">
           <div
 
@@ -206,20 +185,6 @@
         </div>
       </div>
 
-      <div class="foot" id="div8">
-        <div class="pa-5 d-flex justify-center">
-          <div
-            class="d-flex justify-center mx-1"
-            v-for="(lang, idx) in languages"
-            :key="idx"
-          >
-            <span class="mx-1">
-              {{ lang }}
-            </span>
-            <v-divider vertical/>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -231,10 +196,6 @@ import ContainerCard from "../home/ContainerCard.vue";
 export default {
   data() {
     return {
-      brand: "Macrob2b.com",
-      description:
-        "Our company has maintained low competitive prices, good quality as well as timely deliveries. We are a gold supplier and assessed.",
-      languages: ["Deutsch", "Deutsch", "Deutsch", "Deutsch", "Deutsch"],
       footerLinks: [
         {
           title: 'About us',
@@ -244,27 +205,20 @@ export default {
             {label: 'Terms and Conditions', link: '/terms-and-conditions'},
             {label: 'Privacy Policy', link: '/privacy-policy'},
           ],
-        }, {
-          title: 'Source',
-          links: [
-            {label: 'Resources', link: '/resources'},
-            {label: 'All Categories', link: '/category-list'},
-            {label: 'Request for Quotation', link: '/request_quotation'},
-            {label: 'Buyer Partners', link: '/buyer_partners'},
-          ],
-        }, {
+        }
+        , {
           title: 'Selling ',
           links: [
             {label: 'Post products', link: '/user/product/add'},
             {label: 'Manage products', link: '/user/product'},
           ],
-        }, {
-          title: 'Services',
+        }
+        , {
+          title: 'Source',
           links: [
-            {label: 'Trade Assurance', link: '/trade-assurance'},
-            {label: 'Business Identity', link: '/business-identity'},
+            {label: 'All Categories', link: '/category-list'},
           ],
-        },
+        }
       ],
     };
   },

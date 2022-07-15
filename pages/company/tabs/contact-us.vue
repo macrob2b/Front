@@ -10,7 +10,21 @@
             Send message to supplier
           </div>
         </v-col>
+
         <v-col
+          v-show="!$auth.loggedIn"
+          cols="12"
+          sm="6"
+          class="order-sm-0 order-1 bg-white rounded-lg py-4  fill-height">
+          <p class="mb-2 font-weight-bold">
+            Please login first to send a message
+          </p>
+          <v-btn to="/login" class="secondary-btn px-10 mb-15">
+            Login here
+          </v-btn>
+        </v-col>
+        <v-col
+          v-show="$auth.loggedIn"
           cols="12"
           sm="6"
           class="order-sm-0 order-1 bg-white rounded-lg py-4  fill-height">

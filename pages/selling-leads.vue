@@ -12,7 +12,7 @@
     </v-row>
     <v-row v-else-if="selling_leads.length>0">
       <v-col cols="12" v-for="lead in selling_leads">
-        <v-card class="pa-4" :to="`/company/${lead.company.username ? lead.company.username : lead.company_id}`">
+        <v-card class="pa-4" :to="`/company/${(lead.company.username && lead.company.username!=='undefined') ? lead.company.username : lead.company_id}`">
           <v-row>
             <v-col cols="12" sm="4" md="2">
               <v-img :src="getImgFile(lead)" height="150" width="auto"/>

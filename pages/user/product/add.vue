@@ -223,7 +223,7 @@
                 <v-divider></v-divider>
               </v-col>
               <v-col
-                cols="4"
+                cols="12" md="4"
               >
                 <validation-provider
                   immediate
@@ -238,7 +238,7 @@
                 </validation-provider>
               </v-col>
               <v-col
-                cols="4"
+                cols="12" md="4"
               >
                 <v-autocomplete
                   outlined
@@ -269,7 +269,7 @@
               </v-col>
               <v-col cols="12" md="12">
                 <section v-if="productItems.price_type=='base_on_qty'">
-                  <v-row v-for="(item,index) in price_set">
+                  <v-row v-for="(item,index) in price_set" class="range_item">
                     <v-col cols="12" md="2">
                       <v-text-field
                         type="number"
@@ -299,7 +299,7 @@
                         label="Price"
                       />
                     </v-col>
-                    <v-col cols="12" md="2">
+                    <v-col cols="12" md="2" class="d-none d-md-block">
                       <v-btn
                         v-if="price_set.length===(index+1) & index!==3"
                         icon color="green" @click="addNewPriceRange()">
@@ -313,6 +313,26 @@
                         <v-icon>
                           mdi-minus
                         </v-icon>
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="12" md="2" class="d-md-none text-center">
+                      <v-btn
+                        class="white--text"
+                        v-if="price_set.length===(index+1) & index!==3"
+                         color="green" @click="addNewPriceRange()">
+                        <v-icon>
+                          mdi-plus
+                        </v-icon>
+                        Add range
+                      </v-btn>
+                      <v-btn
+                        class="white--text"
+                        v-if="index!==0"
+                        color="red" @click="removePriceRange(index)">
+                        <v-icon>
+                          mdi-minus
+                        </v-icon>
+                        Delete range
                       </v-btn>
                     </v-col>
                     <v-col cols="12" md="2" class="mt-4">
@@ -1171,5 +1191,11 @@ export default {
 <style scoped>
 .certificate_text {
   max-width: 300px;
+}
+.range_item{
+  background: #e1e2e3;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 2px;
 }
 </style>

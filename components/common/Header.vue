@@ -20,11 +20,42 @@
             </v-img>
           </nuxt-link>
         </v-col>
+        <v-col cols="12" class="d-flex justify-center py-0 my-0 font-weight-bold">
+          <!-- User info-->
+          <div v-if="!this.$auth.loggedIn">
+            <nuxt-link
+              dark
+               to="/login" min-width="0" color="#fb641e">
+              Login
+            </nuxt-link>
+            <span>&nbsp;|&nbsp; </span>
+            <nuxt-link
+              dark
+              v-show="!this.$auth.loggedIn" to="/register" min-width="0" color="#fb641e">
+              Join us for Free
+            </nuxt-link>
 
-        <v-divider></v-divider>
+          </div>
+          <div v-else>
+            <nuxt-link
+                       to="/user-dashboard"
+                       dark
+                       min-width="100" color="#fb641e">
+              Hi, {{ ($auth.user && $auth.user.first_name) ?  $auth.user.first_name : 'Dear friend'}}
+            </nuxt-link>
+            <span>&nbsp;|&nbsp; </span>
+            <span class="red--text" @click="logout">
+               Logout
+             </span>
+          </div>
+
+          <!-- End user info-->
+        </v-col>
+
 
         <!--   Navigation List     -->
         <v-col cols="12">
+          <v-divider></v-divider>
 
           <!--     Menu Buttons     -->
           <v-list dense>
@@ -151,6 +182,8 @@
               color="accent">
               <v-icon>mdi-menu</v-icon>
             </v-btn>
+
+
 
             <!--  Menu Buttons  -->
             <v-btn v-for="(button , i) in menuButtons"
@@ -406,6 +439,14 @@ export default {
         {
           title: this.$t(`COMPANY_LIST`),
           to: '/company-list'
+        },
+        {
+          title: 'Selling leads',
+          to: '/selling-leads'
+        },
+        {
+          title: 'Buying leads',
+          to: '/buying-leads'
         }
       ],
       user_menu: [
@@ -535,7 +576,11 @@ export default {
       this.$router.push({
         path: `/product-details/${id}`
       });
-    }
+    },
+    logout() {
+      this.$auth.logout();
+      this.drawer=!this.drawer;
+    },
   },
 };
 </script>

@@ -4,11 +4,11 @@
       <v-row class="pa-0 ma-0">
 
         <!--    List Tickets     -->
-        <v-col :class="selectedRoomId ? 'd-none d-md-block' : 'd-block'"
+        <v-col :class="selectedRoomId ? 'd-none' : 'd-block'"
                cols="12"
                sm="12"
-               md="4"
-               lg="3"
+               md="12"
+               lg="12"
                class="pa-0">
 
           <!--     Search Chat List     -->
@@ -93,8 +93,8 @@
         <v-col :class="selectedRoomId ? 'd-block' : 'd-none d-md-block'"
                cols="12"
                sm="12"
-               md="8"
-               lg="9"
+               md="12"
+               lg="12"
                class="pa-0">
 
           <!--     Properties Dialog     -->
@@ -162,10 +162,10 @@
                      height="100%">
 
               <!--     Header     -->
-              <v-toolbar elevation="0" outlined>
+              <v-toolbar elevation="0" outlined >
 
                 <!--      Back Button        -->
-                <v-btn class="mr-2 ml-n2 d-sm-block d-md-none"
+                <v-btn class="mr-2 ml-n2 "
                        @click="selectedRoomId = ''"
                        icon>
                   <v-icon>mdi-arrow-left</v-icon>

@@ -33,7 +33,7 @@ export default {
           describe:"You need complete your company profile such as phone, email and ... "
         },{
           title:"Submit your product",
-          describe:"Submit your product form product manage section"
+          describe:"Submit your product from product manage section"
         },
       ]
     }

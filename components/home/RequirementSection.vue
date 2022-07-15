@@ -50,8 +50,8 @@
         <!--        </v-carousel>-->
       </v-col>
 
-      <v-col  md="4" class="d-none d-md-block" >
-        <RequirementCard/>
+      <v-col  md="4" cols="12" >
+        <PromotedCompany/>
       </v-col>
     </v-row>
   </div>
@@ -59,9 +59,11 @@
 
 <script>
 import RequirementCard from "./RequirementCard.vue";
+import PromotedCompany from "./PromotedCompany";
 
 export default {
   components: {
+    PromotedCompany,
     RequirementCard,
   },
   props: ['mediaList'],

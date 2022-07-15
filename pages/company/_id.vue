@@ -26,6 +26,13 @@ export default {
   head() {
     return {
       title: this.company_info.company_name,
+      meta: [
+        {
+          hid: `description`,
+          name: 'description',
+          content: (this.company_info && this.company_info.description) ? this.company_info.description.replace(/<[^>]+>/g, '').replace("\n", " ").substr(0, 300) + '...' : ''
+        }
+      ]
     };
   },
 

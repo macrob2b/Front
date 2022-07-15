@@ -22,7 +22,7 @@
             <!--                </div>-->
             <!--              </v-col>-->
             <v-col cols="11" class="pa-0 text-h6 font-weight-bold primary--text company-name">
-              <nuxt-link :to="'/company/'+(item.username ? item.username : item._id)">{{ item.company_name }}</nuxt-link>
+              <nuxt-link :to="'/company/'+((item.username && item.username!=='undefined') ? item.username : item._id)">{{ item.company_name }}</nuxt-link>
             </v-col>
           </v-col>
           <v-col cols="3" class="pa-0">
@@ -70,7 +70,7 @@
         <v-row>
           <v-col cols="5">
             <v-row>
-              <nuxt-link :to="'/company/'+(item.username ? item.username : item._id)">
+              <nuxt-link :to="'/company/'+((item.username && item.username!=='undefined') ? item.username : item._id)">
                 <div v-if="item.images && item.images.length>0">
                   <div v-for="(img,index) in item.images" class="d-inline-block">
                     <div v-if="index<3">
@@ -132,13 +132,13 @@
             <v-row no-gutters class="mt-5">
               <v-tab>
                 <v-btn
-                  :to="'/company/'+(item.username ? item.username : item._id)"
+                  :to="'/company/'+((item.username && item.username!=='undefined') ? item.username : item._id)"
                   color="deep-orange" elevation="0" small class="white--text text-capitalize text-caption">
                   <v-icon small class="mr-3">mdi-message</v-icon>
                   contact supplier
                 </v-btn>
               </v-tab>
-              <nuxt-link class="text-caption primary--text text-capitalize" :to="'/company/'+(item.username ? item.username : item._id)">
+              <nuxt-link class="text-caption primary--text text-capitalize" :to="'/company/'+((item.username && item.username!=='undefined') ? item.username : item._id)">
                 leave messages
               </nuxt-link>
             </v-row>
@@ -150,7 +150,7 @@
       <v-col cols="12" v-for="item in companyList" class="py-5 company-item" v-if="$vuetify.breakpoint.xs">
         <v-row>
           <v-col cols="4" class="pa-0">
-            <nuxt-link :to="'/company/'+(item.username ? item.username : item._id)">
+            <nuxt-link :to="'/company/'+((item.username && item.username!=='undefined') ? item.username : item._id)">
               <v-img
                 v-if="item.images && item.images[0]" aspect-ratio="1" :src="getFile(item._id,item.images[0],'image')"
                 style="border:1px solid #eee"/>
@@ -160,7 +160,7 @@
           </v-col>
           <v-col cols="8" class="py-0 px-3">
             <v-col class="pa-0 text-caption font-weight-bold grey--text company-name">
-              <nuxt-link :to="'/company/'+(item.username ? item.username : item._id)">{{ item.company_name }}</nuxt-link>
+              <nuxt-link :to="'/company/'+((item.username && item.username!=='undefined') ? item.username : item._id)">{{ item.company_name }}</nuxt-link>
             </v-col>
             <v-col class="text-body-2 font-weight-bold pa-0 mt-0">
               US 0
@@ -183,7 +183,7 @@
             </v-row>
             <v-col class="px-0">
               <v-btn
-                :to="'/company/'+(item.username ? item.username : item._id)"
+                :to="'/company/'+((item.username && item.username!=='undefined') ? item.username : item._id)"
                 outlined elevation="0" small class="grey--text text--darken-2 text-capitalize text-caption">
                 <v-icon small class="mr-3">mdi-message</v-icon>
                 contact supplier
