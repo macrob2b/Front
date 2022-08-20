@@ -16,7 +16,8 @@ export default {
       {name: 'format-detection', content: 'telephone=no'}
     ],
     link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/macrob2b.ico'}
+      {rel: 'icon', type: 'image/x-icon', href: '/macrob2b.ico'},
+      { rel: "stylesheet", href: "/video.js/dist/video-js.min.css" },
     ],
     script: [
       {
@@ -166,8 +167,8 @@ export default {
     defaultLocale: 'en',
   },
   proxy: {
-    // '/api/': {target: "https://api.macrob2b.com", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
-    '/api/': {target: "http://localhost:8000", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
+    '/api/': {target: "https://api.macrob2b.com", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
+    // '/api/': {target: "http://localhost:8000", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
   },
 
   serverMiddleware:[

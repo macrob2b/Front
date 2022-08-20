@@ -7,6 +7,7 @@
       <Description :productInfo="productInfo" cardTitle="Description by Manufacturer"/>
     </v-col>
 
+
     <v-col cols="12" md="6" order="3">
       <v-col style="background-color: #f3f3f3;height: 100%;overflow:auto;" class="rounded-lg">
         <v-row justify="space-between" class="py-4 px-3">
@@ -143,6 +144,39 @@
       </div>
     </v-col>
 
+    <v-col cols="12" md="6" order="3" v-if="productInfo.certificates">
+      <v-col style="background-color: #f3f3f3;height: 100%;overflow:auto;" class="rounded-lg">
+        <v-row justify="space-between" class="py-4 px-3">
+          <v-col class="font-weight-black">Certificates Approval</v-col>
+          <!--      If Have Rate prop-->
+
+        </v-row>
+        <v-divider></v-divider>
+        <!--    If have description prop  -->
+        <v-col>
+          <v-simple-table dense class="detail-table">
+            <tbody>
+            <tr v-for="(cert,index) in productInfo.certificates">
+              <td class="detail-title">{{index}}</td>
+              <td class="detail-value">
+                <v-icon v-if="cert.value==true" color="green">
+                  mdi-check
+                </v-icon>
+                <v-icon v-else color="red">
+                  mdi-close
+                </v-icon>
+              </td>
+              <td>
+                {{cert.num ? cert.num : '-'}}
+              </td>
+            </tr>
+            </tbody>
+          </v-simple-table>
+
+        </v-col>
+      </v-col>
+    </v-col>
+
 
   </v-row>
 </template>
@@ -153,7 +187,7 @@ import Description from "./Description";
 
 export default {
   props: ['productInfo'],
-  components: {RequirementCard, Description},
+  components: { RequirementCard, Description},
   data(){
     return{
       payment_terms_list: [

@@ -34,6 +34,9 @@
                   <v-btn v-else to="/user-dashboard" color="primary" width="55%">
                     <span class="span1"> Hi, {{ $auth.user.first_name }} </span>
                   </v-btn>
+
+
+
                 </div>
               </div>
             </v-col>
@@ -87,9 +90,15 @@
                     color="primary" min-width="0" width="40" class="mx-2">
                     <v-icon class="mdi-rotate-315" color="white"> mdi-send</v-icon>
                   </v-btn>
+                  <a target="_blank" href="https://play.google.com/store/apps/details?id=com.macrob2b.twa">
+                    <v-img width="112" height="auto" class="ml-16"   :src="require('assets/img/googleplay.png')"/>
+                  </a>
+                  <!--                  <a >-->
+                  <!--                    <v-img width="150" height="auto" class="disabled"   :src="require('assets/img/applestore.png')"/>-->
+                  <!--                  </a>-->
                 </div>
                 <div id="div2">
-                  Copyright (c)1997-2025. All Rights Reserved
+                  Copyright (c)2020-2025. All Rights Reserved
                 </div>
               </div>
             </v-col>
@@ -115,6 +124,7 @@
 
     <div class="d-flex d-sm-none footer-mobile justify-start mt-10">
       <div class="pa-8">
+
         <div class="d-flex mt-5" id="div4">
           <div
 
@@ -136,53 +146,59 @@
             </div>
           </div>
         </div>
-        <div class="pa-3 d-flex justify-center">
-          <v-btn
-            href="https://facebook.com/macrob2b"
-            target="_blank"
-            color="primary"
-            min-width="0"
-            width="20"
-            height="30"
-            class="mx-2"
-          >
-            <v-icon color="white" small> mdi-facebook</v-icon>
-          </v-btn>
-          <v-btn
-            href="https://www.instagram.com/macrob2b"
-            target="_blank"
-            color="primary"
-            min-width="0"
-            width="20"
-            height="30"
-            class="mx-2"
-          >
-            <v-icon color="white" small> mdi-instagram</v-icon>
-          </v-btn>
-          <v-btn
-            href="https://www.linkedin.com/company/macrob2b"
-            target="_blank"
-            color="primary"
-            min-width="0"
-            width="20"
-            height="30"
-            class="mx-2"
-          >
-            <v-icon color="white" small> mdi-linkedin</v-icon>
-          </v-btn>
-          <v-btn
-            href="https://t.me/macrob2b"
-            target="_blank"
-            min-width="0"
-            width="20"
-            height="30"
-            color="primary" class="mx-2">
-            <v-icon class="mdi-rotate-315" color="white"> mdi-send</v-icon>
-          </v-btn>
-        </div>
-        <div id="div7" class="mt-2">
-          Copyright (c)1997-2021. All Rights Reserved
-        </div>
+        <v-row>
+          <v-col cols="12" md="6" class="pa-3 d-flex justify-center">
+            <v-btn
+              href="https://facebook.com/macrob2b"
+              target="_blank"
+              color="primary"
+              min-width="0"
+              width="20"
+              height="30"
+              class="mx-2"
+            >
+              <v-icon color="white" small> mdi-facebook</v-icon>
+            </v-btn>
+            <v-btn
+              href="https://www.instagram.com/macrob2b"
+              target="_blank"
+              color="primary"
+              min-width="0"
+              width="20"
+              height="30"
+              class="mx-2"
+            >
+              <v-icon color="white" small> mdi-instagram</v-icon>
+            </v-btn>
+            <v-btn
+              href="https://www.linkedin.com/company/macrob2b"
+              target="_blank"
+              color="primary"
+              min-width="0"
+              width="20"
+              height="30"
+              class="mx-2"
+            >
+              <v-icon color="white" small> mdi-linkedin</v-icon>
+            </v-btn>
+            <v-btn
+              href="https://t.me/macrob2b"
+              target="_blank"
+              min-width="0"
+              width="20"
+              height="30"
+              color="primary" class="mx-2">
+              <v-icon class="mdi-rotate-315" color="white"> mdi-send</v-icon>
+            </v-btn>
+
+            <a target="_blank" href="https://play.google.com/store/apps/details?id=com.macrob2b.twa">
+              <v-img width="106" height="auto" class="ml-10"   :src="require('assets/img/googleplay.png')"/>
+            </a>
+          </v-col>
+          <v-col cols="12" md="6" id="div7" class="mt-2">
+            Copyright (c)2020-2025. All Rights Reservedss
+          </v-col>
+        </v-row>
       </div>
 
     </div>
@@ -202,6 +218,7 @@ export default {
           links: [
             {label: 'About me', link: '/about-me'},
             {label: 'Contact us', link: '/contact-us'},
+            {label: 'Help', link: '/help'},
             {label: 'Terms and Conditions', link: '/terms-and-conditions'},
             {label: 'Privacy Policy', link: '/privacy-policy'},
           ],

@@ -12,46 +12,10 @@
         </v-col>
 
         <v-col
-          v-show="!$auth.loggedIn"
+          v-if="$auth.loggedIn && companyInfo.owner && companyInfo.owner._id!==$auth.user._id"
           cols="12"
           sm="6"
           class="order-sm-0 order-1 bg-white rounded-lg py-4  fill-height">
-          <p class="mb-2 font-weight-bold">
-            Please login first to send a message
-          </p>
-          <v-btn to="/login" class="secondary-btn px-10 mb-15">
-            Login here
-          </v-btn>
-        </v-col>
-        <v-col
-          v-show="$auth.loggedIn"
-          cols="12"
-          sm="6"
-          class="order-sm-0 order-1 bg-white rounded-lg py-4  fill-height">
-          <v-row>
-            <v-col
-              cols="12"
-              sm="6"
-            >
-              <v-text-field
-                v-model="name"
-                label="Name"
-                outlined
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col
-              cols="12"
-              sm="6"
-            >
-              <v-text-field
-                v-model="email"
-                label="Email address"
-                outlined
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
           <v-row>
             <v-col
               cols="12"
@@ -72,6 +36,29 @@
             </v-btn>
           </div>
         </v-col>
+
+        <v-col
+          v-else-if="$auth.loggedIn && companyInfo.owner && companyInfo.owner._id===$auth.user._id"
+          cols="12"
+          sm="6"
+          class="order-sm-0 order-1 bg-white rounded-lg py-4  fill-height">
+          <p class="mb-2 font-weight-bold">
+            You can't send message yourself
+          </p>
+        </v-col>
+        <v-col
+          v-else
+          cols="12"
+          sm="6"
+          class="order-sm-0 order-1 bg-white rounded-lg py-4  fill-height">
+          <p class="mb-2 font-weight-bold">
+            Please login first to send a message
+          </p>
+          <v-btn to="/login" class="secondary-btn px-10 mb-15">
+            Login here
+          </v-btn>
+        </v-col>
+
         <v-col
           cols="12"
           sm="6"
@@ -175,7 +162,6 @@ export default {
     return {
       valid: false,
       name: '',
-      email: '',
       message: '',
       submit_loading: false,
       img: 'message.png'
@@ -185,9 +171,8 @@ export default {
     async submitMsg() {
       this.submit_loading = true;
       await this.$axios.$post('/api/send_msg_to_company', {
-          company_id: this.companyInfo._id,
-          name: this.name,
-          email: this.email,
+          company_receiver_id: this.companyInfo._id,
+          user_receiver_id: this.companyInfo.owner._id,
           message: this.message
         }
       ).then(response => {
@@ -198,8 +183,6 @@ export default {
             // break;
           }
         } else {
-          this.name = '';
-          this.email = '';
           this.message = '';
           this.$toast.success('Your message sent successfully')
         }

@@ -31,7 +31,12 @@ export default {
           hid: `description`,
           name: 'description',
           content: (this.company_info && this.company_info.description) ? this.company_info.description.replace(/<[^>]+>/g, '').replace("\n", " ").substr(0, 300) + '...' : ''
-        }
+        },
+        {
+          hid: `keywords`,
+          name: 'keywords',
+          keywords: 'business to business,free product advertising,free company advertising,sales,b2b marketing,b2b,b2b sales,b2b services,b2b business,business,business analyst,startup,startup business,startup funding,sell,selling,sellers agent,sellers market,buyers agent,buyer,wholesale,trading'
+        },
       ]
     };
   },

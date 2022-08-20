@@ -1,13 +1,16 @@
 <template>
   <section class="product-gallery rounded-lg overflow-hidden ">
     <Share
-           :companyId="productDetails.company_id"
-           class="mobile-share"/>
+         :companyId="productDetails.company_id"
+         class="mobile-share"/>
     <div class="card-carousel">
       <v-carousel
         :height="$vuetify.breakpoint.xsOnly ? 300 : 500"
         v-model="carouselVal"
         hide-delimiters>
+        <v-carousel-item v-if="productDetails.video">
+          <video-player  :options="videoOptions"/>
+        </v-carousel-item>
         <v-carousel-item
           :value="active_img"
           v-for="(image, index) in  productDetails.images"
@@ -17,7 +20,7 @@
       </v-carousel>
 
 
-      <div class="thumbnails">
+      <div class="thumbnails" v-if="productDetails.images && productDetails.images.length>1">
         <v-slide-group
           class="pa-4"
 
@@ -45,11 +48,13 @@
 
 <script>
   import Share from "./Share";
-  import productDetail from "./ProductDetail";
-  import img from "../../assets/img/no-image.png";
+  import VideoPlayer from "../VideoPlayer";
+
+
   export default {
     components: {
-      Share
+      Share,
+      VideoPlayer
     },
     props:['productDetails'],
     mounted() {
@@ -68,6 +73,19 @@
     },
     data(){
       return{
+        videoOptions: {
+          autoplay: true,
+          muted:true,
+          loop:true,
+          sources: [
+            {
+              src:
+                `${process.env.baseUrl}/products/${this.productDetails._id}/video/${(this.productDetails && this.productDetails.video ? this.productDetails.video : '')}`,
+            }
+          ]
+        },
+
+
         carouselVal: null,
         images:[],
         active_img:null,

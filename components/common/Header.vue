@@ -461,7 +461,7 @@ export default {
           name: 'My company',
           children: [
             {name: 'Update company info', link: '/user/company'},
-            // {name: 'My message', link: '/messenger'},
+            {name: 'My message', link: '/user/messenger'},
           ]
         },
         {
@@ -501,7 +501,7 @@ export default {
           this.categories = response;
         })
         .catch(e => {
-          console.log('error in load categories');
+          console.log('Error in load categories');
         })
     },
     clearSubCategory() {
@@ -563,7 +563,7 @@ export default {
           }).then(response => {
           this.searchItems = response
         }).catch(err => {
-          this.$toast.error("An error occured");
+          this.$toast.error("An error occurred");
         }).finally(() => {
           this.search_loading = false;
         })

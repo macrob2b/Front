@@ -9,25 +9,58 @@
       <ProductContainer title="New products">
         <ProductSection1 :id="1" :mediaList="media_list"/>
       </ProductContainer>
-      <!--      <div v-show="!$vuetify.breakpoint.xs">-->
-      <!--        <Ads/>-->
-      <!--      </div>-->
-      <!--      <div v-show="$vuetify.breakpoint.xs">-->
-      <!--        <CarouselResponsive/>-->
-      <!--      </div>-->
-      <!--      <div v-show="$vuetify.breakpoint.xs">-->
-      <!--        <ContainerCard>-->
-      <!--          <ProductContainer title="popular products">-->
-      <!--            <ProductSlider1 :id="2"/>-->
-      <!--          </ProductContainer>-->
-      <!--        </ContainerCard>-->
-      <!--      </div>-->
+      <br>
+      <br>
+       <!--Promote section two-->
+       <v-row>
+         <v-col cols="12">
+           <v-card to="/company/agorsoftware.com" color="warning">
+             <v-row>
+               <v-col cols="12" md="6" class="py-0 d-none d-md-block">
+                 <v-img
+                   height="260"
+                   src="/ads/agorsoftware.webp"
+                 ></v-img>
+               </v-col>
+               <v-col cols="12" md="6">
+                 <div class="ma-4">
+                   <p class="text-h4 text-md-h2  black--text">Agorsoftware</p>
+                   <ul class="mt-2">
+                     <li>Web Software</li>
+                     <li>Project Consulting Service</li>
+                     <li>Marketplace Software</li>
+                     <li>Project Development</li>
+                   </ul>
+
+
+                   <div class="mt-5">
+                     <v-chip  color="info">
+                       24/7 Live Support
+                     </v-chip>
+                     <v-chip color="info">
+                       High Performance
+                     </v-chip>
+                   </div>
+
+                 </div>
+
+
+               </v-col>
+             </v-row>
+           </v-card>
+         </v-col>
+       </v-row>
+       <!--End promote section two-->
+
       <br/>
       <ProductSection2/>
       <br/>
+
+
       <ProductContainer title="Suggested companies">
         <CompanyCarousel/>
       </ProductContainer>
+
       <BuyingLeadsBanner/>
 
 
@@ -181,7 +214,7 @@ export default {
         {
           hid: `keywords`,
           name: 'keywords',
-          keywords: 'business to business, free product advertising, free company advertising'
+          keywords: 'business to business,free product advertising,free company advertising,sales,b2b marketing,b2b,b2b sales,b2b services,b2b business,business,business analyst,startup,startup business,startup funding,sell,selling,sellers agent,sellers market,buyers agent,buyer,wholesale,trading'
         },
         {
           hid: 'og:title',
@@ -266,7 +299,7 @@ export default {
     getImg(item) {
       var img = require('assets/img/no-image.png');
       if (item.images && item.images.length > 0)
-        img = "https://dl.macrob2b.com/products/" + item._id + "/images/" + item.images[0];
+        img = "https://dl.macrob2b.com/products/" + item._id + "/images/thumbnail/" + item.images[0];
       return img;
     }
   }
