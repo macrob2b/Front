@@ -102,6 +102,23 @@
                 </v-list-item-content>
               </v-list-item>
 
+
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>
+                    mdi-whatsapp
+                  </v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <a :href="`https://web.whatsapp.com/send?phone=${companyInfo.phone}&text=Message from https://macrob2b.com`" target="_blank">
+                      Whatsapp
+                    </a>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+
               <v-list-item>
                 <v-list-item-icon>
                   <v-icon>

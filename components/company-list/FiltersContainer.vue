@@ -1,37 +1,53 @@
 <template>
-  <div>
+  <div class=" mr-6">
 
-    <v-container class="filter-container">
-      <h3>Markets</h3>
-      <div>
-        <v-checkbox v-for="item in markets"
-                    v-model="filterForm.market"
-                    :label="item"
-                    :value="item"
-                    hide-details="true"
-                    multiple
-                    class="small"
-        />
-      </div>
-    </v-container>
-
-
-    <v-container class="filter-container">
-      <h3>Employees</h3>
-      <div>
-        <v-radio-group
-          v-model="filterForm.employee"
+    <!--Markets filter-->
+      <v-container
+        fluid
+        id="scroll-target"
+        style="max-height: 100%"
+        class="overflow-y-auto filter-container"
+      >
+        <v-row
+          v-scroll:#scroll-target="onScroll"
+          align="center"
+          justify="center"
+          style="height: 510px;overflow-x: hidden"
         >
-          <v-radio v-for="item in employees"
-                   :label="item"
-                   :value="item"
-                   hide-details="true"
-                   multiple
-                   class="small"
-          />
-        </v-radio-group>
-      </div>
-    </v-container>
+          <!--Markets filter-->
+          <v-col cols="12">
+            <h3>Markets</h3>
+            <v-divider class="mb-3"/>
+            <v-checkbox v-for="item in markets"
+                        v-model="filterForm.market"
+                        :label="item"
+                        :value="item"
+                        hide-details="true"
+                        multiple
+                        class="small"
+            />
+          </v-col>
+
+          <!--Employees filter-->
+          <v-col cols="12">
+            <h3>Employees</h3>
+            <div>
+              <v-radio-group
+                v-model="filterForm.employee"
+              >
+                <v-radio v-for="item in employees"
+                         :label="item"
+                         :value="item"
+                         hide-details="true"
+                         multiple
+                         class="small"
+                />
+              </v-radio-group>
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+
     <!--    <FilterItems type="text" title="Total Revenue" :list="['filterOne','filterTwo','filterThree','filterFour']"/>-->
     <!--    <FilterItems type="checkbox" title="Certification" :list="['filterOne','filterTwo','filterThree','filterFour']"/>-->
 
@@ -49,6 +65,7 @@ export default {
   },
   data() {
     return {
+      scrollInvoked:0,
       markets: [],
       employees:[
         'All',
@@ -78,6 +95,9 @@ export default {
     }
   },
   methods: {
+    onScroll() {
+      this.scrollInvoked++
+    },
     getMarkets() {
       this.$axios.$post('/api/company_country_filter')
         .then(response => {
