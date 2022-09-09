@@ -5,14 +5,14 @@
       <v-autocomplete
         class="countrySelect"
         style="position: absolute;top: 18px;left:14px;width: 24%;z-index: 1;"
-        v-model="phoneCode"
+        v-model="phoneCodeId"
         outlined
         dense
         :search-input.sync="keyword"
         no-filter
         :items="phoneCodes"
         item-text="title"
-        item-value="tel"
+        item-value="_id"
       >
         <template v-slot:selection="data" style="color: #000;">
           <gb-flag :code="data.item.alpha2" class="mr-2"/>
@@ -49,23 +49,26 @@ export default {
   data() {
     return {
       inputLabel: "",
+      phoneCodeId: "62825ee56bc62418c64887b2",
       phoneCode: '90',
       phoneNumber: '',
       finalNumber: '',
+      country_code: null,
       phoneCodes: [],
       render: true,
       loading: false,
-      keyword:'',
+      keyword: '',
 
     };
   },
+
   methods: {
     inputChanged() {
       this.$emit('numberEntered', '+' + this.phoneCode + '-' + this.phoneNumber);
     },
-    async searchCountry(){
+    async searchCountry() {
       this.loading = true;
-      let countries = await this.$axios.$post('/api/search_country',{keyword:this.keyword});
+      let countries = await this.$axios.$post('/api/search_country', {keyword: this.keyword});
       this.phoneCodes = countries;
 
       this.loading = false;
@@ -75,10 +78,24 @@ export default {
     phoneNumber: function (val) {
       this.inputChanged();
     },
+    country_code(val) {
+      if (val !== null){
+        var phoneCode = this.phoneCodes
+          .find(x => x.alpha2 === val);
+
+        if (phoneCode && phoneCode._id)
+          this.phoneCodeId=phoneCode._id
+      }
+
+    },
+    phoneCodeId(val) {
+      this.phoneCode = this.phoneCodes
+        .find(x => x._id === val).tel;
+    },
     phoneCode: function (val) {
       this.inputChanged();
     },
-    keyword(val){
+    keyword(val) {
       this.searchCountry();
     }
 

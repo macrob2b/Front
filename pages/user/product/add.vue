@@ -33,45 +33,6 @@
                 </validation-provider>
               </v-col>
 
-              <v-col
-                cols="12"
-                md="8"
-              >
-                <validation-provider
-                  immediate
-                  rules="required" name="keyword" v-slot="{errors}">
-                  <v-combobox
-                    v-model="productItems.keyword"
-                    :items="keywordItems"
-                    :search-input.sync="keyword_search"
-                    hide-selected
-                    hint="Maximum of 10 tags"
-                    :error-messages="errors"
-                    label="Keyword"
-                    multiple
-                    outlined
-                    persistent-hint
-                    small-chips
-                  >
-                    <template v-slot:no-data>
-                      <v-list-item>
-                        <v-list-item-content>
-                          <v-list-item-title>
-                            Press <kbd>enter</kbd> to
-                            create
-                            a
-                            new one
-                          </v-list-item-title>
-
-                        </v-list-item-content>
-                      </v-list-item>
-
-                    </template>
-
-
-                  </v-combobox>
-                </validation-provider>
-              </v-col>
 
               <v-col
                 cols="12"
@@ -131,7 +92,6 @@
                 <v-text-field
                   v-if="item.field_type=='Text'"
                   :label="item.label"
-                  :error-messages="errors"
                   outlined
                   @input="applyCatVal($event, item.label)"
                 />
@@ -142,7 +102,6 @@
                   :items="item.values"
                   :label="item.label"
                   :name="'property'+index"
-                  :error-messages="errors"
                   @input="applyCatVal($event, item.label)"
                   outlined/>
                 <div
@@ -151,7 +110,6 @@
                   <p style="font-size: 16px">{{ item.label }}</p>
                   <v-radio-group
                     class="mt-0"
-                    :error-messages="errors"
                     mandatory
                     row
                     @change="applyCatVal($event, item.label)"
@@ -169,7 +127,6 @@
                 <v-textarea
                   v-else-if="item.field_type=='Textarea'"
                   outlined
-                  :error-messages="errors"
                   :label="item.label"
                   @input="applyCatVal($event, item.label)"
                 ></v-textarea>
@@ -689,7 +646,6 @@ export default {
   data: () => ({
     productItems: {
       title: '',
-      keyword: '',
       all_related_category: [],
       cate_id: '',
       attribute: {},
@@ -776,8 +732,6 @@ export default {
     },
 
 
-    keywordItems: [],
-    keyword_search: null,
 
     currencyTypeItems: [],
 

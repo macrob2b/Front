@@ -27,38 +27,6 @@
               ></v-text-field>
             </v-col>
 
-            <v-col
-              cols="12"
-              md="8"
-            >
-              <v-combobox
-                v-model="productItems.keyword"
-                :items="keywordItems"
-                :search-input.sync="keyword_search"
-                hide-selected
-                hint="Maximum of 10 tags"
-                label="Keyword"
-                multiple
-                outlined
-                persistent-hint
-                small-chips
-              >
-                <template v-slot:no-data>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>
-                        No results matching "<strong>{{ keyword_search }}</strong>". Press <kbd>enter</kbd> to create a
-                        new one
-                      </v-list-item-title>
-
-                    </v-list-item-content>
-                  </v-list-item>
-
-                </template>
-
-
-              </v-combobox>
-            </v-col>
 
             <v-col
               cols="12"
@@ -703,7 +671,6 @@ export default {
   data: () => ({
     productItems: {
       title: '',
-      keyword: '',
       all_related_category: [],
       cate_id: '',
       attribute: {},
@@ -796,8 +763,6 @@ export default {
     },
 
 
-    keywordItems: [],
-    keyword_search: null,
 
     currencyTypeItems: [],
 

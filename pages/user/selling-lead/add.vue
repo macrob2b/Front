@@ -26,39 +26,6 @@
             </v-col>
             <v-col
               cols="12"
-              md="4"
-            >
-              <validation-provider rules="required" name="keywords" v-slot="{errors}">
-                <v-combobox
-                  hide-selected
-                  v-model="sellItems.keywords"
-                  :error-messages="errors"
-                  hint="Maximum of 3 keyword"
-                  label="Keywords"
-                  multiple
-                  outlined
-                  persistent-hint
-                  small-chips
-                >
-                  <template v-slot:no-data>
-                    <v-list-item>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          Type keyword and Press <kbd>enter</kbd> to create a
-                          new one
-                        </v-list-item-title>
-
-                      </v-list-item-content>
-                    </v-list-item>
-
-                  </template>
-
-
-                </v-combobox>
-              </validation-provider>
-            </v-col>
-            <v-col
-              cols="12"
               sm="4"
             >
               <validation-provider rules="required|size:200" name="image" v-slot="{errors,validate}">
@@ -305,7 +272,7 @@ export default {
                 // break;
               }
             } else {
-              this.$toast.success("Product create successfully");
+              this.$toast.success("Selling lead create successfully");
               this.$router.push({
                 path: '/user/selling-lead'
               });

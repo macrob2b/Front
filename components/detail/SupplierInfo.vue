@@ -34,8 +34,11 @@
             <tr>
               <td class="detail-title">Location</td>
               <td class="detail-value">
-                {{ productInfo.company && productInfo.company.country ? productInfo.company.country : '-' }}
-
+                <nuxt-link v-if="productInfo.company && productInfo.company.country"
+                           :to="`/country/${productInfo.company.country.toLowerCase().replace(/\s/g,'-')}`">
+                  {{productInfo.company.country}}
+                </nuxt-link>
+                <span v-else>-</span>
               </td>
             </tr>
             <tr>
@@ -190,6 +193,7 @@ export default {
   components: { RequirementCard, Description},
   data(){
     return{
+      test:'Iran test GFgg',
       payment_terms_list: [
         'Payoneer',
         'L/C',

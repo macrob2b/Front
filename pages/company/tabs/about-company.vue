@@ -49,7 +49,13 @@
                 <span class="body-2">Location</span>
               </v-col>
               <v-col cols="6" md="8" class="px-4">
-                <span class="body-2">{{ companyInfo.country }}</span>
+                <span class="body-2">
+                  <nuxt-link v-if="companyInfo.country "
+                             :to="`/country/${companyInfo.country.toLowerCase().replace(/\s/g,'-')}`">
+                  {{companyInfo.country}}
+                </nuxt-link>
+                <span v-else>-</span>
+                </span>
               </v-col>
             </v-row>
           </div>

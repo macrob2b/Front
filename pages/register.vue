@@ -57,15 +57,6 @@
               </validation-provider>
             </v-col>
 
-            <!--     Phone Number       -->
-            <v-col cols="12" md="6" lg="6" xl="6" class="pt-0 pb-0">
-              <validation-provider v-slot="{errors}" ref="phoneNumberProvider" name="phoneNumber"
-                                   rules="required|phone">
-                <!--       Hidden field for validation         -->
-                <input hidden v-model="phoneNumber">
-                <PhoneNumberInput @numberEntered="changePhoneNumber" :model="phoneNumber" :errors="errors"/>
-              </validation-provider>
-            </v-col>
 
             <!--     Gender       -->
             <v-col cols="12" md="6" lg="6" xl="6" class="ma-0 pt-0 pb-0">
@@ -114,6 +105,17 @@
                 <LocationField :label="$t(`BUSINESS_LOCATION`)" @locationSelected="selectLocation"/>
               </validation-provider>
             </v-col>
+
+            <!--     Phone Number       -->
+            <v-col cols="12" md="6" lg="6" xl="6" class="pt-0 pb-0">
+              <validation-provider v-slot="{errors}" ref="phoneNumberProvider" name="phoneNumber"
+                                   rules="required|phone">
+                <!--       Hidden field for validation         -->
+                <input hidden v-model="phoneNumber">
+                <PhoneNumberInput ref="phone_num_input" @numberEntered="changePhoneNumber" :model="phoneNumber" :errors="errors"/>
+              </validation-provider>
+            </v-col>
+
 
 
 
@@ -303,6 +305,7 @@ export default {
       this.businessLocation.country_code = location.country_code;
       this.businessLocation.country = location.country;
       this.businessLocation.state = location.state;
+      this.$refs.phone_num_input.country_code=location.country_code;
     },
     loginWithGoogle() {
       this.$auth.loginWith('google', {params: {prompt: "select_account"}})

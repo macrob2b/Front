@@ -61,6 +61,9 @@
           <v-list-item to="/admin/static-page">
             <v-list-item-title>Static page manage</v-list-item-title>
           </v-list-item>
+          <v-list-item to="/admin/country">
+            <v-list-item-title>Country manage</v-list-item-title>
+          </v-list-item>
           <v-list-item to="/admin/media">
             <v-list-item-title>Media manage</v-list-item-title>
           </v-list-item>

@@ -9,48 +9,7 @@
       <ProductContainer title="New products">
         <ProductSection1 :id="1" :mediaList="media_list"/>
       </ProductContainer>
-      <br>
-      <br>
-       <!--Promote section two-->
-       <v-row>
-         <v-col cols="12">
-           <v-card to="/company/agorsoftware.com" color="warning">
-             <v-row>
-               <v-col cols="12" md="6" class="py-0 d-none d-md-block">
-                 <v-img
-                   height="260"
-                   src="/ads/agorsoftware.webp"
-                 ></v-img>
-               </v-col>
-               <v-col cols="12" md="6">
-                 <div class="ma-4">
-                   <p class="text-h4 text-md-h2  black--text">Agorsoftware</p>
-                   <ul class="mt-2">
-                     <li>Web Software</li>
-                     <li>Project Consulting Service</li>
-                     <li>Marketplace Software</li>
-                     <li>Project Development</li>
-                   </ul>
 
-
-                   <div class="mt-5">
-                     <v-chip  color="info">
-                       24/7 Live Support
-                     </v-chip>
-                     <v-chip color="info">
-                       High Performance
-                     </v-chip>
-                   </div>
-
-                 </div>
-
-
-               </v-col>
-             </v-row>
-           </v-card>
-         </v-col>
-       </v-row>
-       <!--End promote section two-->
 
       <br/>
       <ProductSection2/>
@@ -61,7 +20,60 @@
         <CompanyCarousel/>
       </ProductContainer>
 
-      <BuyingLeadsBanner/>
+
+      <!--Promote section two-->
+<!--      <v-row>-->
+<!--        <v-col cols="12">-->
+<!--          <v-card to="/company/agorsoftware.com" color="warning">-->
+<!--            <v-row>-->
+<!--              <v-col cols="12" md="6" class="py-0 d-none d-md-block">-->
+<!--                <v-img-->
+<!--                  height="260"-->
+<!--                  src="/ads/agorsoftware.webp"-->
+<!--                ></v-img>-->
+<!--              </v-col>-->
+<!--              <v-col cols="12" md="6">-->
+<!--                <div class="ma-4">-->
+<!--                  <p class="text-h4 text-md-h2  black&#45;&#45;text">Agorsoftware</p>-->
+<!--                  <ul class="mt-2">-->
+<!--                    <li>Web Software</li>-->
+<!--                    <li>Project Consulting Service</li>-->
+<!--                    <li>Marketplace Software</li>-->
+<!--                    <li>Project Development</li>-->
+<!--                  </ul>-->
+
+
+<!--                  <div class="mt-5">-->
+<!--                    <v-chip color="info">-->
+<!--                      24/7 Live Support-->
+<!--                    </v-chip>-->
+<!--                    <v-chip color="info">-->
+<!--                      High Performance-->
+<!--                    </v-chip>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+
+
+<!--              </v-col>-->
+<!--            </v-row>-->
+<!--          </v-card>-->
+<!--        </v-col>-->
+<!--      </v-row>-->
+      <!--End promote section two-->
+      <v-row>
+        <v-col cols="12" md="12">
+          <BuyingLeadsBanner/>
+        </v-col>
+        <!--        <v-col cols="12" md="6">-->
+        <!--          <ExhibitionBanner/>-->
+        <!--        </v-col>-->
+      </v-row>
+
+
+      <!--Promote slides-->
+      <promoted-slider/>
+      <!--End promote slides-->
 
 
       <v-row class="mt-8">
@@ -198,6 +210,8 @@ import Banner from "../components/home/Banner.vue";
 import CompanyCarousel from "../components/company/company-carousel";
 import BuyingLeadsBanner from "../components/home/BuyingLeadsBanner";
 import img from "../assets/img/no-image.png";
+import ExhibitionBanner from "../components/home/ExhibitionBanner";
+import PromotedSlider from "../components/common/PromotedSlider";
 
 export default {
   name: 'index',
@@ -241,6 +255,8 @@ export default {
     }
   },
   components: {
+    PromotedSlider,
+    ExhibitionBanner,
     BuyingLeadsBanner,
     CompanyCarousel,
     Requirement,

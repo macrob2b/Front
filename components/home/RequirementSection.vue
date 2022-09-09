@@ -50,8 +50,9 @@
         <!--        </v-carousel>-->
       </v-col>
 
-      <v-col  md="4" cols="12" >
-        <PromotedCompany/>
+      <v-col  md="4" cols="12" class="d-none d-md-block" >
+        <RequirementCard/>
+<!--        <PromotedCompany/>-->
       </v-col>
     </v-row>
   </div>
