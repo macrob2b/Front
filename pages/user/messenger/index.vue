@@ -82,6 +82,10 @@
 
               </v-list-item>
 
+              <div v-show="!tickets.length"  class="text-center font-weight-bold">
+                No message received yet
+              </div>
+
             </v-list-item-group>
 
           </v-list>

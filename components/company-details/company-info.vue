@@ -7,16 +7,17 @@
           <img :src="logo" alt="company-logo">
         </div>
         <div class="company-name-info">
-          <p class="company-name">{{ companyInfo.company_name }}</p>
+          <p class="company-name">{{ companyInfo.company_name ? companyInfo.company_name : 'No name' }}</p>
           <p class="company-slogan">{{ companySlogan }}</p>
         </div>
       </div>
-      <div class="contact-info">
+      <div class="contact-info" v-if="companyInfo.phone || companyInfo.owner.mobile_num">
         <div class="phone">
           <span class="icon">
             <v-icon>mdi-phone</v-icon>
           </span>
-          <a :href="'tel:'+companyInfo.phone"  target="_blank" class="number">{{ companyInfo.phone }}</a>
+          <a :href="'tel:'+companyInfo.phone ? companyInfo.phone : companyInfo.owner.mobile_num" target="_blank" class="number">
+            {{ companyInfo.phone ? companyInfo.phone : companyInfo.owner.mobile_num }}</a>
         </div>
       </div>
     </div>
@@ -25,8 +26,8 @@
 
 <script>
 export default {
-  props:{
-    companyInfo:[],
+  props: {
+    companyInfo: [],
   },
   data() {
     return {
@@ -35,7 +36,10 @@ export default {
     }
   },
   mounted() {
-    this.logo="https://dl.macrob2b.com/companies/"+this.companyInfo._id+"/"+this.companyInfo.logo;
+    if (this.companyInfo.logo)
+      this.logo = "https://dl.macrob2b.com/companies/" + this.companyInfo._id + "/" + this.companyInfo.logo;
+    else
+      this.logo = '';
   }
 }
 </script>

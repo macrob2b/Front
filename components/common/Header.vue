@@ -75,17 +75,7 @@
           <!--   User menu-->
           <v-divider class="mb-3"></v-divider>
           <span class="text--black font-weight-bold mx-3 text--accent-4 teal--text">User menu</span>
-          <v-treeview :items="user_menu"
-                      class="overflow-y-auto"
-                      color="primary"
-                      shaped>
-            <template v-slot:label="{item,active,selected}">
-              <NuxtLink :class="item.children ? 'font-weight-black' : ''"
-                        :to="item.link!==undefined ? item.link : ''">
-                {{ item.name }}
-              </NuxtLink>
-            </template>
-          </v-treeview>
+          <user-menu/>
 
 
           <v-divider class="mb-3"></v-divider>
@@ -419,7 +409,9 @@
 </template>
 
 <script>
+import UserMenu from "../dashboard/user-menu";
 export default {
+  components: {UserMenu},
   data() {
     return {
       drawer: false,

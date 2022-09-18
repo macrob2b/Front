@@ -68,8 +68,32 @@ export default {
     },
     async searchCountry() {
       this.loading = true;
-      let countries = await this.$axios.$post('/api/search_country', {keyword: this.keyword});
-      this.phoneCodes = countries;
+      await this.$axios.$post('/api/search_country', {keyword: this.keyword})
+        .then(response=>{
+          this.phoneCodes = response;
+
+
+          //If phone initialized
+          if (this.phone!==null && this.phone.length>0){
+            var phoneSplit=this.phone.split('-');
+            if (phoneSplit.length>1){
+              this.phoneCode = phoneSplit[0].slice(1);
+              this.phoneNumber=phoneSplit[1];
+
+              var phoneCode = this.phoneCodes
+                .find(x => x.tel === this.phoneCode);
+
+
+
+              if (phoneCode && phoneCode._id){
+                this.phoneCodeId=phoneCode._id;
+              }
+            }
+
+          }
+
+        });
+
 
       this.loading = false;
     }
@@ -102,6 +126,7 @@ export default {
   },
   async mounted() {
     this.searchCountry();
+
   }
 
 

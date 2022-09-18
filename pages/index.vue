@@ -21,46 +21,7 @@
       </ProductContainer>
 
 
-      <!--Promote section two-->
-<!--      <v-row>-->
-<!--        <v-col cols="12">-->
-<!--          <v-card to="/company/agorsoftware.com" color="warning">-->
-<!--            <v-row>-->
-<!--              <v-col cols="12" md="6" class="py-0 d-none d-md-block">-->
-<!--                <v-img-->
-<!--                  height="260"-->
-<!--                  src="/ads/agorsoftware.webp"-->
-<!--                ></v-img>-->
-<!--              </v-col>-->
-<!--              <v-col cols="12" md="6">-->
-<!--                <div class="ma-4">-->
-<!--                  <p class="text-h4 text-md-h2  black&#45;&#45;text">Agorsoftware</p>-->
-<!--                  <ul class="mt-2">-->
-<!--                    <li>Web Software</li>-->
-<!--                    <li>Project Consulting Service</li>-->
-<!--                    <li>Marketplace Software</li>-->
-<!--                    <li>Project Development</li>-->
-<!--                  </ul>-->
 
-
-<!--                  <div class="mt-5">-->
-<!--                    <v-chip color="info">-->
-<!--                      24/7 Live Support-->
-<!--                    </v-chip>-->
-<!--                    <v-chip color="info">-->
-<!--                      High Performance-->
-<!--                    </v-chip>-->
-<!--                  </div>-->
-
-<!--                </div>-->
-
-
-<!--              </v-col>-->
-<!--            </v-row>-->
-<!--          </v-card>-->
-<!--        </v-col>-->
-<!--      </v-row>-->
-      <!--End promote section two-->
       <v-row>
         <v-col cols="12" md="12">
           <BuyingLeadsBanner/>
@@ -163,33 +124,7 @@
         </v-col>
       </v-row>
 
-      <!--      <div class="pa-2 ma-5">-->
-      <!--        <ProductSection3/>-->
-      <!--      </div>-->
-      <!--      <div v-show="!$vuetify.breakpoint.xs">-->
-      <!--        <Banner/>-->
-      <!--        <Ads/>-->
-      <!--      </div>-->
 
-      <!--      <div v-show="$vuetify.breakpoint.xs">-->
-      <!--        <CarouselResponsive/>-->
-      <!--      </div>-->
-
-      <!--      <ContainerCard>-->
-      <!--        <ProductContainer title="Similar to searched before">-->
-      <!--          <ProductSection1 :id="3"/>-->
-      <!--        </ProductContainer>-->
-      <!--      </ContainerCard>-->
-
-      <!--      <ContainerCard>-->
-      <!--        <ProductContainer title="Similar to searched before">-->
-      <!--          <ProductSlider1 :id="4"/>-->
-      <!--        </ProductContainer>-->
-      <!--      </ContainerCard>-->
-
-      <!--      <div class="pa-2 ma-5" v-show="!$vuetify.breakpoint.xs">-->
-      <!--        <Logo />-->
-      <!--      </div>-->
     </v-app>
   </div>
 </template>

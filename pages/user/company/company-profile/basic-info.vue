@@ -10,451 +10,470 @@
     </v-col>
   </v-row>
   <div v-else class="basic-info">
-    <!--User type-->
-    <div class="user-type">
-      <div class="user-type-header">
-        <p>I am</p>
-      </div>
-      <v-divider></v-divider>
-      <div class="user-type-body">
-        <v-checkbox
-          v-model="companyInfo.roles"
-          value="buyer"
-          label="Buyer"
-        ></v-checkbox>
-        <v-checkbox
-          v-model="companyInfo.roles"
-          value="seller"
-          label="Seller"
-        ></v-checkbox>
-        <v-checkbox
-          v-model="companyInfo.roles"
-          value="agent"
-          label="Agent"
-        ></v-checkbox>
-      </div>
-    </div>
-    <!--End user type-->
-    <!--Company info-->
-    <div class="company-info">
-      <div class="company-info-header">
-        <p>Company info</p>
-      </div>
-      <v-divider></v-divider>
+    <validation-observer ref="observer" v-slot="{invalid}">
+      <form @submit.prevent="submitCompanyInfo">
+        <!--User type-->
+        <div class="user-type">
+          <div class="user-type-header">
+            <p>I am</p>
+          </div>
+          <v-divider></v-divider>
+          <div class="user-type-body">
+            <v-checkbox
+              v-model="companyInfo.roles"
+              value="buyer"
+              label="Buyer"
+            ></v-checkbox>
+            <v-checkbox
+              v-model="companyInfo.roles"
+              value="seller"
+              label="Seller"
+            ></v-checkbox>
+            <v-checkbox
+              v-model="companyInfo.roles"
+              value="agent"
+              label="Agent"
+            ></v-checkbox>
+          </div>
+        </div>
+        <!--End user type-->
 
-      <div class="company-info-body">
-        <v-form>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="companyInfo.company_name"
-                  label="Company name"
-                  required
-                  outlined
-                ></v-text-field>
-              </v-col>
+        <!--Company info-->
+        <div class="company-info">
+          <div class="company-info-header">
+            <p>Company info</p>
+          </div>
+          <v-divider></v-divider>
 
-              <v-col
-                class="d-flex"
-                cols="12"
-                md="4"
-              >
-                <v-select
-                  v-model="companyInfo.business_type"
-                  :items="businessTypeArr"
-                  item-text="title"
-                  item-value="_id"
-                  label="Business type"
-                  outlined
-                ></v-select>
-              </v-col>
+          <div class="company-info-body">
+            <v-form>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    md="4"
+                  >
+                    <validation-provider name="companyName"
+                                         immediate
+                                         rules="required|min:2"
+                                         v-slot="{errors}">
 
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <location-field
-                  v-model="companyInfo.location"
-                  label="Business Location"
-                  :defaultLocation="companyInfo.country"
-                  @locationSelected="locationSelected"
-                ></location-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="companyInfo.state"
-                  label="State/Province"
-                  outlined
-                ></v-text-field>
-              </v-col>
+                      <v-text-field
+                        v-model="companyInfo.company_name"
+                        label="Company name"
+                        :error-messages="errors"
+                        required
+                        outlined
+                      ></v-text-field>
+                    </validation-provider>
 
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="companyInfo.city"
-                  label="City"
-                  outlined
-                ></v-text-field>
-              </v-col>
+                  </v-col>
 
-              <v-col
-                class="d-flex"
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="companyInfo.address"
-                  label="Street address"
-                  outlined
-                ></v-text-field>
-              </v-col>
+                  <v-col
+                    class="d-flex"
+                    cols="12"
+                    md="4"
+                  >
+                    <v-select
+                      v-model="companyInfo.business_type"
+                      :items="businessTypeArr"
+                      item-text="title"
+                      item-value="_id"
+                      label="Business type"
+                      outlined
+                    ></v-select>
+                  </v-col>
 
-            </v-row>
-            <v-row>
-              <v-col
-                cols="12"
-              >
-                <v-textarea
-                  v-model="companyInfo.description"
-                  outlined
-                  name="input-7-4"
-                  label="Company Description"
-                ></v-textarea>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="companyInfo.employees_total"
-                  label="Employees Total"
-                  outlined
-                ></v-text-field>
-              </v-col>
+                  <v-col
+                    cols="12"
+                    md="4"
+                  >
+                    <location-field
+                      v-model="companyInfo.location"
+                      label="Business Location"
+                      :defaultLocation="companyInfo.country"
+                      @locationSelected="locationSelected"
+                    ></location-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="companyInfo.state"
+                      label="State/Province"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
 
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="companyInfo.annual_revenue"
-                  label="Annual Revenue"
-                  :rules="revenueRules"
-                  append-icon="mdi-currency-usd"
-                  outlined
-                ></v-text-field>
-              </v-col>
+                  <v-col
+                    cols="12"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="companyInfo.city"
+                      label="City"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
 
-              <v-col
-                class="d-flex"
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="companyInfo.year_established"
-                  type="number"
-                  label="Year Established"
-                  :rules="yearEstablishedRule"
-                  outlined
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
-      </div>
-    </div>
-    <!--End company info-->
+                  <v-col
+                    class="d-flex"
+                    cols="12"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="companyInfo.address"
+                      label="Street address"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
 
-    <!--Contact info-->
-    <div class="contact-info">
-      <div class="contact-info-header">
-        <p>Contact info</p>
-      </div>
-      <v-divider></v-divider>
-      <div class="contact-info-body">
-        <v-form>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <phone-number-input
-                  @numberEntered="phoneNumberEntered" :phone="companyInfo.phone"></phone-number-input>
-              </v-col>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                  >
+                    <v-textarea
+                      v-model="companyInfo.description"
+                      outlined
+                      name="input-7-4"
+                      label="Company Description"
+                    ></v-textarea>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="companyInfo.employees_total"
+                      label="Employees Total"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
 
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <phone-number-input @numberEntered="faxNumberEntered" label="Fax"
-                                    :phone="companyInfo.fax"></phone-number-input>
-              </v-col>
+                  <v-col
+                    cols="12"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="companyInfo.annual_revenue"
+                      label="Annual Revenue"
+                      :rules="revenueRules"
+                      append-icon="mdi-currency-usd"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col
+                    class="d-flex"
+                    cols="12"
+                    md="4"
+                  >
+                    <validation-provider
+                      immediate
+                      v-slot="{errors}" name="yearEstablished" rules="min_value:1900|max_value:2023">
+                      <v-text-field
+                        v-model="companyInfo.year_established"
+                        label="Year Established"
+                        :error-messages="errors"
+                        outlined
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </div>
+        </div>
+        <!--End company info-->
+
+        <!--Contact info-->
+        <div class="contact-info">
+          <div class="contact-info-header">
+            <p>Contact info</p>
+          </div>
+          <v-divider></v-divider>
+          <div class="contact-info-body">
+            <v-form>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    md="4"
+                  >
+                    <phone-number-input
+                      ref="phone_num_input"
+                      @numberEntered="phoneNumberEntered" :phone="companyInfo.phone"></phone-number-input>
+                  </v-col>
+
+                  <v-col
+                    cols="12"
+                    md="4"
+                  >
+                    <phone-number-input ref="fax_num_input" @numberEntered="faxNumberEntered" label="Fax"
+                                        :phone="companyInfo.fax"></phone-number-input>
+                  </v-col>
 
 
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="companyInfo.email"
-                  label="Email"
-                  outlined
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="companyInfo.website"
-                  append-icon="mdi-web"
-                  label="Company Website URL"
-                  hint="Ex: https://macrob2b.com"
-                  persistent-hint
-                  outlined
-                  required
-                ></v-text-field>
-              </v-col>
+                  <v-col
+                    cols="12"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="companyInfo.email"
+                      label="Email"
+                      outlined
+                      required
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="companyInfo.website"
+                      append-icon="mdi-web"
+                      label="Company Website URL"
+                      hint="Ex: https://macrob2b.com"
+                      persistent-hint
+                      outlined
+                      required
+                    ></v-text-field>
+                  </v-col>
 
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="companyInfo.postal_code"
-                  label="Postal Code"
-                  outlined
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
-      </div>
-    </div>
-    <!--End Contact info-->
+                  <v-col
+                    cols="12"
+                    md="4"
+                  >
+                    <v-text-field
+                      v-model="companyInfo.postal_code"
+                      label="Postal Code"
+                      outlined
+                      required
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-form>
+          </div>
+        </div>
+        <!--End Contact info-->
 
-    <!--Upload media section-->
-    <div class="media">
-      <div class="media-header">
-        <p>Media</p>
-      </div>
-      <v-divider></v-divider>
-      <div class="media-body">
-        <v-form>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-file-input
-                  v-model="companyInfo.logo"
-                  accept="image/png,image/webp,"
-                  outlined
-                  :clearable="false"
-                  :loading="logo_uploading"
-                  @change="uploadFile('logo')"
-                  ref="logo"
-                  @click:append="$refs.logo.$refs.input.click()"
-                  append-icon="mdi-cloud-upload"
-                  label="Business Logo"
-                ></v-file-input>
-                <v-chip
-                  v-if="company_logo_name"
-                  small
-                  class="my-1"
-                  @click:close="deleteFile('logo')"
-                  text-color="white"
-                  color="green"
-                  close>
-                  {{ company_logo_name.substring(0, 30) }}
-                </v-chip>
-              </v-col>
+        <!--Upload media section-->
+        <div class="media">
+          <div class="media-header">
+            <p>Media</p>
+          </div>
+          <v-divider></v-divider>
+          <div class="media-body">
+            <v-container>
+              <v-row>
+                <v-col
+                  cols="12"
+                  md="4"
+                >
+                  <v-file-input
+                    v-model="companyInfo.logo"
+                    accept="image/png,image/webp,"
+                    outlined
+                    :clearable="false"
+                    :loading="logo_uploading"
+                    @change="uploadFile('logo')"
+                    ref="logo"
+                    @click:append="$refs.logo.$refs.input.click()"
+                    append-icon="mdi-cloud-upload"
+                    label="Business Logo"
+                  ></v-file-input>
+                  <v-chip
+                    v-if="company_logo_name"
+                    small
+                    class="my-1"
+                    @click:close="deleteFile('logo')"
+                    text-color="white"
+                    color="green"
+                    close>
+                    {{ company_logo_name.substring(0, 30) }}
+                  </v-chip>
+                </v-col>
 
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-file-input
-                  v-model="companyInfo.images"
-                  multiple
-                  :clearable="false"
-                  outlined
-                  ref="images"
-                  @click:append="$refs.images.$refs.input.click()"
-                  :loading="images_uploading"
-                  accept="image/png,image/webp,"
-                  @change="uploadFile('images')"
-                  append-icon="mdi-cloud-upload"
-                  label="Company Image"
-                ></v-file-input>
-                <v-chip
-                  v-for="item in company_images_name"
-                  small
-                  class="my-1"
-                  @click:close="deleteFile('images',item)"
-                  text-color="white"
-                  color="green"
-                  close>
-                  {{ item.substring(0, 15) }}
-                </v-chip>
-              </v-col>
+                <v-col
+                  cols="12"
+                  md="4"
+                >
+                  <v-file-input
+                    v-model="companyInfo.images"
+                    multiple
+                    :clearable="false"
+                    outlined
+                    ref="images"
+                    @click:append="$refs.images.$refs.input.click()"
+                    :loading="images_uploading"
+                    accept="image/png,image/webp,"
+                    @change="uploadFile('images')"
+                    append-icon="mdi-cloud-upload"
+                    label="Company Image"
+                  ></v-file-input>
+                  <v-chip
+                    v-for="item in company_images_name"
+                    small
+                    class="my-1"
+                    @click:close="deleteFile('images',item)"
+                    text-color="white"
+                    color="green"
+                    close>
+                    {{ item.substring(0, 15) }}
+                  </v-chip>
+                </v-col>
 
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-file-input
-                  v-model="companyInfo.brochures"
-                  multiple
-                  :clearable="false"
-                  outlined
-                  ref="brochures"
-                  @click:append="$refs.brochures.$refs.input.click()"
-                  :loading="brochures_uploading"
-                  accept="image/jpeg,image/gif,image/png,image/webp,application/pdf"
-                  @change="uploadFile('brochures')"
-                  append-icon="mdi-cloud-upload"
-                  label="Company Brochure"
-                ></v-file-input>
+                <v-col
+                  cols="12"
+                  md="4"
+                >
+                  <v-file-input
+                    v-model="companyInfo.brochures"
+                    multiple
+                    :clearable="false"
+                    outlined
+                    ref="brochures"
+                    @click:append="$refs.brochures.$refs.input.click()"
+                    :loading="brochures_uploading"
+                    accept="image/jpeg,image/gif,image/png,image/webp,application/pdf"
+                    @change="uploadFile('brochures')"
+                    append-icon="mdi-cloud-upload"
+                    label="Company Brochure"
+                  ></v-file-input>
 
-                <v-chip
-                  v-for="item in company_brochures_name"
-                  @click:close="deleteFile('brochures',item)"
-                  small
-                  class="my-1"
-                  text-color="white"
-                  color="green"
-                  close>
-                  {{ item.substring(0, 15) }}
-                </v-chip>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-file-input
-                  v-model="companyInfo.video"
-                  ref="video"
-                  @click:append="$refs.video.$refs.input.click()"
-                  :loading="video_uploading"
-                  label="Video"
-                  accept="video/mp4,video/x-m4v,video/*"
-                  @change="uploadFile('video')"
-                  outlined
-                  append-icon="mdi-cloud-upload"
-                ></v-file-input>
-                <v-chip
-                  v-if="company_video_name"
-                  small
-                  class="my-1"
-                  @click:close="deleteFile('video')"
-                  text-color="white"
-                  color="green"
-                  close>
-                  {{ company_video_name.substring(0, 30) }}
-                </v-chip>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
-      </div>
-    </div>
-    <!--End Upload media section-->
+                  <v-chip
+                    v-for="item in company_brochures_name"
+                    @click:close="deleteFile('brochures',item)"
+                    small
+                    class="my-1"
+                    text-color="white"
+                    color="green"
+                    close>
+                    {{ item.substring(0, 15) }}
+                  </v-chip>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col
+                  cols="12"
+                  md="4"
+                >
+                  <v-file-input
+                    v-model="companyInfo.video"
+                    ref="video"
+                    @click:append="$refs.video.$refs.input.click()"
+                    :loading="video_uploading"
+                    label="Video"
+                    accept="video/mp4,video/x-m4v,video/*"
+                    @change="uploadFile('video')"
+                    outlined
+                    append-icon="mdi-cloud-upload"
+                  ></v-file-input>
+                  <v-chip
+                    v-if="company_video_name"
+                    small
+                    class="my-1"
+                    @click:close="deleteFile('video')"
+                    text-color="white"
+                    color="green"
+                    close>
+                    {{ company_video_name.substring(0, 30) }}
+                  </v-chip>
+                </v-col>
+              </v-row>
+            </v-container>
+          </div>
+        </div>
+        <!--End Upload media section-->
 
-    <!--Social media section-->
-    <div class="social-media">
-      <div class="social-media-header">
-        <p>Social media</p>
-      </div>
-      <v-divider></v-divider>
-      <div class="social-media-body">
-        <v-container>
-          <v-row>
-            <v-col
-              cols="12"
-              md="4"
-            >
-              <v-text-field
-                v-model="companyInfo.facebook_address"
-                outlined
-                append-icon="mdi-facebook"
-                label="Facebook"
-              />
+        <!--Social media section-->
+        <div class="social-media">
+          <div class="social-media-header">
+            <p>Social media</p>
+          </div>
+          <v-divider></v-divider>
+          <div class="social-media-body">
+            <v-container>
+              <v-row>
+                <v-col
+                  cols="12"
+                  md="4"
+                >
+                  <v-text-field
+                    v-model="companyInfo.facebook_address"
+                    outlined
+                    append-icon="mdi-facebook"
+                    label="Facebook"
+                  />
 
-            </v-col>
-            <v-col
-              cols="12"
-              md="4"
-            >
-              <v-text-field
-                v-model="companyInfo.instagram_address"
-                outlined
-                append-icon="mdi-instagram"
-                label="Instagram"
-              />
+                </v-col>
+                <v-col
+                  cols="12"
+                  md="4"
+                >
+                  <v-text-field
+                    v-model="companyInfo.instagram_address"
+                    outlined
+                    append-icon="mdi-instagram"
+                    label="Instagram"
+                  />
 
-            </v-col>
-            <v-col
-              cols="12"
-              md="4"
-            >
-              <v-text-field
-                v-model="companyInfo.linkedin_address"
-                outlined
-                append-icon="mdi-linkedin"
-                label="Linkedin"
-              />
+                </v-col>
+                <v-col
+                  cols="12"
+                  md="4"
+                >
+                  <v-text-field
+                    v-model="companyInfo.linkedin_address"
+                    outlined
+                    append-icon="mdi-linkedin"
+                    label="Linkedin"
+                  />
 
-            </v-col>
-          </v-row>
-        </v-container>
-      </div>
-    </div>
-    <!--Social media section-->
+                </v-col>
+              </v-row>
+            </v-container>
+          </div>
+        </div>
+        <!--Social media section-->
 
-    <v-btn
-      class="submit mt-3 primary"
-      :loading="submit_loading"
-      @click="submitCompanyInfo"
+        <v-btn
+          class="submit mt-3 primary"
+          :loading="submit_loading"
+          :disabled="invalid"
+          type="submit"
+        >
+          Update
+        </v-btn>
 
-    >
-      Update
-    </v-btn>
+        <v-btn outlined class="mt-3">
+          Cancel
+        </v-btn>
 
-    <v-btn outlined class="mt-3">
-      Cancel
-    </v-btn>
+      </form>
+    </validation-observer>
+
 
   </div>
 </template>
 
 <script>
+import {ValidationObserver, ValidationProvider, validate} from "vee-validate";
 import LocationField from "~/components/Form/LocationField";
 import PhoneNumberInput from "~/components/phoneNumberInput";
 
 
 export default {
+  name:'companyBasicInfo',
   props: ['companyLoadedInfo'],
   data() {
     return {
@@ -502,13 +521,7 @@ export default {
       company_brochures_name: [],
 
       submit_loading: false,
-      yearEstablishedRule: [
-        value => {
-          if (!value.trim()) return true;
-          if (!isNaN(parseInt(value)) && value >= 1900 && value <= new Date().getFullYear()) return true;
-          return 'The year entered must be after 1900 to the present year';
-        },
-      ],
+
       revenueRules: [
         value => {
           const pattern = /^[-,0-9]+$/;
@@ -518,19 +531,19 @@ export default {
     }
   },
   computed: {
-    employeesTotal: function () {
-      return this.companyInfo.employees_total;
-    }
+    // employeesTotal: function () {
+    //   return this.companyInfo.employees_total;
+    // }
   },
   watch: {
-    employeesTotal(val) {
-      if (val && val!==null)
-        this.companyInfo.employees_total = this.spilitter(val);
-    },
-    revenue(val) {
-      if (val && val!==null)
-        this.revenue = this.spilitter(val);
-    },
+    // employeesTotal(val) {
+      // if (val && (val !== null || val !== ''))
+      //   this.companyInfo.employees_total = this.spilitter(val);
+    // },
+    // revenue(val) {
+    //   if (val && (val !== null || val !== ''))
+    //     this.revenue = this.spilitter(val);
+    // },
     companyLoadedInfo(val) {
       if (val.length !== 0 && this.loaded === false) {
         this.setCompanyData();
@@ -547,6 +560,8 @@ export default {
   components: {
     LocationField,
     PhoneNumberInput,
+    ValidationProvider,
+    ValidationObserver
   },
   methods: {
     async loadBusinessType() {
@@ -562,7 +577,7 @@ export default {
     },
     async setCompanyData() {
       this.companyInfo.roles = this.companyLoadedInfo.roles;
-      this.companyInfo.company_name = this.companyLoadedInfo.company_name;
+      this.companyInfo.company_name = this.companyLoadedInfo.company_name ? this.companyLoadedInfo.company_name : '';
       this.companyInfo.business_type = this.companyLoadedInfo.business_type;
 
       if (this.companyLoadedInfo && this.companyLoadedInfo.location) {
@@ -572,18 +587,18 @@ export default {
 
       this.companyInfo.country = this.companyLoadedInfo.country;
       this.companyInfo.country_code = this.companyLoadedInfo.country_code;
-      this.companyInfo.state = this.companyLoadedInfo.state;
-      this.companyInfo.city = this.companyLoadedInfo.city;
-      this.companyInfo.address = this.companyLoadedInfo.address;
-      this.companyInfo.description = this.companyLoadedInfo.description;
+      this.companyInfo.state = this.companyLoadedInfo.state ? this.companyLoadedInfo.state : '';
+      this.companyInfo.city = this.companyLoadedInfo.city ? this.companyLoadedInfo.city : '';
+      this.companyInfo.address = this.companyLoadedInfo.address ? this.companyLoadedInfo.address : '';
+      this.companyInfo.description = this.companyLoadedInfo.description ? this.companyLoadedInfo.description : '';
       this.companyInfo.phone = this.companyLoadedInfo.phone;
       this.companyInfo.fax = this.companyLoadedInfo.fax;
-      this.companyInfo.employees_total = this.companyLoadedInfo.employees_total;
-      this.companyInfo.annual_revenue = this.companyLoadedInfo.annual_revenue;
-      this.companyInfo.year_established = this.companyLoadedInfo.year_established;
+      this.companyInfo.employees_total = this.companyLoadedInfo.employees_total ? this.companyLoadedInfo.employees_total : '';
+      this.companyInfo.annual_revenue = this.companyLoadedInfo.annual_revenue ? this.companyLoadedInfo.annual_revenue : '';
+      this.companyInfo.year_established = this.companyLoadedInfo.year_established ? this.companyLoadedInfo.year_established : '';
       this.companyInfo.email = this.companyLoadedInfo.email;
-      this.companyInfo.website = this.companyLoadedInfo.website;
-      this.companyInfo.postal_code = this.companyLoadedInfo.postal_code;
+      this.companyInfo.website = this.companyLoadedInfo.website ? this.companyLoadedInfo.website : '';
+      this.companyInfo.postal_code = this.companyLoadedInfo.postal_code ? this.companyLoadedInfo.postal_code : '';
 
       if (this.companyLoadedInfo && this.companyLoadedInfo.logo)
         this.company_logo_name = this.companyLoadedInfo.logo;
@@ -598,9 +613,9 @@ export default {
         this.company_video_name = this.companyLoadedInfo.video;
 
 
-      this.companyInfo.facebook_address = this.companyLoadedInfo.facebook_address;
-      this.companyInfo.instagram_address = this.companyLoadedInfo.instagram_address;
-      this.companyInfo.linkedin_address = this.companyLoadedInfo.linkedin_address;
+      this.companyInfo.facebook_address = this.companyLoadedInfo.facebook_address ? this.companyLoadedInfo.facebook_address : '';
+      this.companyInfo.instagram_address = this.companyLoadedInfo.instagram_address ? this.companyLoadedInfo.instagram_address : '';
+      this.companyInfo.linkedin_address = this.companyLoadedInfo.linkedin_address ? this.companyLoadedInfo.linkedin_address : '';
 
 
     },
@@ -616,6 +631,8 @@ export default {
       this.companyInfo.country_code = location.country_code;
       this.companyInfo.state = location.state;
       this.companyInfo.city = location.city;
+      this.$refs.phone_num_input.country_code = location.country_code;
+      this.$refs.fax_num_input.country_code = location.country_code;
     }
     ,
     phoneNumberEntered(phoneEntered) {

@@ -37,8 +37,6 @@
               <v-card-text
               >
                 <v-btn
-
-
                   absolute
                   color="orange"
                   class="white--text"
@@ -52,9 +50,9 @@
                 <div class="font-weight-light grey--text text-h6 mb-2">
                   Best quality
                 </div>
-                <nuxt-link to="/company/allastone.com" class="text-h4 font-weight-light orange--text mb-2">
+                <div class="text-h4 font-weight-light orange--text mb-2">
                   Alla stone
-                </nuxt-link>
+                </div>
                 <div class="font-weight-light text-h6 mb-2">
                   Specialist in consulting and supplying all kinds of building stones
                   <br/>
@@ -76,7 +74,6 @@
 
               <v-card-actions class="d-block d-md-none">
                 <v-btn
-                  to="/company/allastone.com"
                   outlined
                   x-small
                   rounded
