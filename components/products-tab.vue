@@ -7,12 +7,16 @@
                  @sortChanged="applySort"
                  @filterChanged="applyFilter"
       />
-      <div class="text-center mt-4" v-if="length>1">
-        <v-pagination
-          v-model="page"
-          :length="length"
-          :total-visible="total"
-        ></v-pagination>
+      <div class="text-center mt-4" v-show="page_loading">
+        <v-col cols="12" class="text-center">
+          <v-progress-circular
+            :size="40"
+            :width="4"
+            class="mt-12 mb-12"
+            color="orange"
+            indeterminate
+          />
+        </v-col>
       </div>
     </div>
     <!--    <div class="box-margin">-->
@@ -53,8 +57,10 @@ export default {
     return {
       //Pagination
       page: 1,
+      page_loading: true,
       length: 1,
       total: 8,
+      all_files_loaded:false,
       //End pagination
 
       product_list: [],
@@ -78,18 +84,20 @@ export default {
   },
   mounted() {
     this.getProductList();
+    this.scroll();
   },
   watch: {
     page(val) {
       this.getProductList();
     },
     "$route.query.cate_id"(val) {
+      this.page=1;
+      this.product_list=[];
       this.getProductList();
     }
   },
   methods: {
     getProductList() {
-      window.scrollTo(0, 0);
       this.loading = true;
 
       this.page_load_option.page = this.page;
@@ -98,9 +106,11 @@ export default {
       this.$axios.$post('/api/product_list',
         this.page_load_option)
         .then(res => {
-          this.product_list = res.data;
+          this.product_list.push(...res.data);
           this.length = Math.ceil(res.total / res.per_page);
           this.loading = false;
+          if (res.data.length === 0)//For terminate auto load request
+            this.all_files_loaded = true;
         })
         .catch(err => {
           this.loading = false;
@@ -108,6 +118,8 @@ export default {
         })
     },
     applyFilter(event) {
+      this.page=1;
+      this.product_list=[];
       for (var key in event) {
         this.page_load_option[key] = event[key];
       }
@@ -116,9 +128,33 @@ export default {
       this.getProductList();
     },
     applySort(event) {
+      this.page=1;
+      this.product_list=[];
       this.page_load_option.created_at_sort = event.register_date;
       this.getProductList();
-    }
+    },
+    scroll() {//For infinite loading
+      window.onscroll = () => {
+        //Scroll position
+        var scrollPosition = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight + 50;
+        let bottomOfWindow = scrollPosition >= document.documentElement.offsetHeight
+
+        //Avoid the number of requests
+        if (this.timer) {
+          clearTimeout(this.timer);
+          this.timer = null;
+        }
+
+        //Load next page
+        if (bottomOfWindow && this.all_files_loaded === false) {
+          this.page_loading = true;
+          this.timer = setTimeout(() => {
+            this.page++
+            this.getProductList();
+          }, 800)
+        }
+      }
+    },
   }
 }
 </script>

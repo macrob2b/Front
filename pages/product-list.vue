@@ -13,6 +13,7 @@ import Main_tabs from "../components/main_tabs";
 
 export default {
   name: 'product-list',
+  layout:'search_layout',
   auth: false,
   head() {
     return {

@@ -45,17 +45,7 @@
                 </v-col>
                 <v-col lg="10">
                   <SortProduct v-if="!$vuetify.breakpoint.xs" @sortChanged="applySort"/>
-                  <v-row class="mt-10" v-if="loadingStatus">
-                    <v-col cols="12" class="text-center">
-                      <v-progress-circular
-                        :size="40"
-                        :width="4"
-                        color="orange"
-                        indeterminate
-                      ></v-progress-circular>
-                    </v-col>
-                  </v-row>
-                  <v-row v-else>
+                  <v-row >
                     <v-col
                       v-for="item in productList"
                       class="my-2"
