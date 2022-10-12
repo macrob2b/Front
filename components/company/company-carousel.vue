@@ -90,25 +90,16 @@
 <script>
 export default {
   name: "company-carousel",
+  props:['companies'],
   data() {
     return {
-      companies: [],
       slideVal: 0
     }
   },
   mounted() {
-    this.getSuggestedCompanies();
   },
   methods: {
-    getSuggestedCompanies() {
-      this.$axios.$post('/api/get_suggested_companies')
-        .then(response => {
-          this.companies = response;
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    },
+
     getFile(item_id, file_name, type) {
       if (type == 'image')
         return "https://dl.macrob2b.com/companies/" + item_id + "/images/" + file_name;

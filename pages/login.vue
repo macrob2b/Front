@@ -83,9 +83,9 @@
             <v-btn icon class="ml-2 mr-2" @click="loginWithGoogle()">
               <v-icon large color="red">mdi-google</v-icon>
             </v-btn>
-            <v-btn icon class="ml-2 mr-2" @click="loginWithFacebook()">
-              <v-icon large color="blue">mdi-facebook</v-icon>
-            </v-btn>
+<!--            <v-btn icon class="ml-2 mr-2" @click="loginWithFacebook()">-->
+<!--              <v-icon large color="blue">mdi-facebook</v-icon>-->
+<!--            </v-btn>-->
             <v-btn icon class="ml-2 mr-2" @click="loginWithLinkedIn()">
               <v-icon large color="blue">mdi-linkedin</v-icon>
             </v-btn>

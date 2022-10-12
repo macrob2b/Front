@@ -173,6 +173,7 @@
 <script>
 
 export default {
+  name:'contact-us-company',
   props: ['companyInfo'],
   components: {},
   data() {

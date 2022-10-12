@@ -1,5 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 import config from './config'
+const axios = require('axios')
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -69,7 +70,8 @@ export default {
     '@nuxtjs/auth-next',
     'nuxt-leaflet',
     '@nuxtjs/toast',
-    '@forked-prs/nuxt-infinite-scroll-module'
+    '@forked-prs/nuxt-infinite-scroll-module',
+    '@nuxtjs/sitemap'
   ],
 
 
@@ -166,9 +168,44 @@ export default {
     langDir: 'lang/',
     defaultLocale: 'en',
   },
+
+  sitemap: {
+    hostname: 'https://macrob2b.com',
+    gzip: true,
+    exclude: [
+      '/admin/**',
+      '/user/**',
+      '/auth/**'
+    ],
+    routes: async () => {
+      let {data: products} = await axios.post(process.env.API_URL+'/api/all_product_list');
+
+      let {data: companies} = await axios.post(process.env.API_URL+'/api/all_company_list');
+
+
+      products = products.map((product) => ({
+        url:`/product-details/${product._id}`,
+        lastmod:product.updated_at,
+        changefreq:'monthly'
+      }));
+      companies = companies.map((company) => ({
+        url:`/company/${company.username}`,
+        lastmod:company.updated_at,
+        changefreq:'monthly'
+      }));
+
+      return products.concat(companies);
+    },
+    defaults: {
+      changefreq: 'monthly',
+      priority: 1,
+      lastmod: new Date()
+    }
+  },
+
+
   proxy: {
-    '/api/': {target: "https://api.macrob2b.com", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
-    // '/api/': {target: "http://localhost:8000", pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
+    '/api/': {target: process.env.API_URL, pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
   },
 
   serverMiddleware:[
@@ -244,3 +281,4 @@ export default {
 
 
 }
+

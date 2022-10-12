@@ -352,10 +352,11 @@
 </template>
 
 <script>
-import ProductSlider   from "../../../components/product/ProductSlider";
-import companyInfo from "../../../components/company-details/company-info";
+import ProductSlider   from "../../product/ProductSlider";
+import companyInfo from "../../company-details/company-info";
 
 export default {
+  name:'about-company',
   props: ['companyInfo'],
   components:{
     ProductSlider

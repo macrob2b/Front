@@ -28,6 +28,7 @@
 
 import productBox from '~/components/product-box'
 export default {
+  name:'main-product-company',
   components: {
     productBox
   },

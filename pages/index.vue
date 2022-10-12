@@ -17,7 +17,7 @@
 
 
       <ProductContainer title="Suggested companies">
-        <CompanyCarousel/>
+        <CompanyCarousel :companies="companies"/>
       </ProductContainer>
 
 
@@ -178,6 +178,7 @@ export default {
 
     this.getProducts('customize');
     this.getProducts('ready_to_ship');
+    this.getSuggestedCompanies();
   },
   data() {
     return {
@@ -187,6 +188,8 @@ export default {
 
       customized_loading: false,
       ready_to_ship_loading: false,
+
+      companies:[]
     }
   },
   components: {
@@ -252,7 +255,16 @@ export default {
       if (item.images && item.images.length > 0)
         img = "https://dl.macrob2b.com/products/" + item._id + "/images/thumbnail/" + item.images[0];
       return img;
-    }
+    },
+    getSuggestedCompanies() {
+      this.$axios.$post('/api/get_suggested_companies')
+        .then(response => {
+          this.companies = response;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    },
   }
 };
 </script>

@@ -168,7 +168,6 @@
 </template>
 <script>
 import {ValidationObserver, ValidationProvider, validate} from "vee-validate";
-import contactUs from "./company/tabs/contact-us";
 
 export default {
   auth: false,

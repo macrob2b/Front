@@ -164,6 +164,7 @@
 
 <script>
 export default {
+  name:'factories-branches-company',
   data() {
     return {
       factories_loading: false,

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Users</h1>
+    <h1>Products</h1>
     <hr>
     <v-app-bar
     >
@@ -34,7 +34,7 @@
         </v-btn>
 
         <v-btn
-          :to="'/admin/user/add/'+new_item_parent"
+          :to="'/admin/product/add/'+new_item_parent"
           class="mx-2"
           fab
           dark
@@ -54,23 +54,19 @@
       <thead>
       <tr>
         <th>
-          First name
+          Title
         </th>
         <th>
-          Last name
-        </th>
-
-        <th>
-          Mobile number
+          Views
         </th>
         <th>
-          Email
+          Owner name
         </th>
         <th>
-          Company
+          Category
         </th>
         <th>
-          Joined at
+          Create at
         </th>
         <th>
           Action
@@ -79,44 +75,37 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(user,index) in users" :key="index">
+      <tr v-for="(product,index) in products" :key="index">
         <td>
-          {{ user.first_name }}
+          <nuxt-link :to="'/product-details/'+product._id">
+            {{ product.title }}
+          </nuxt-link>
         </td>
         <td>
-          {{ user.last_name }}
+          {{ product.views_count }}
         </td>
         <td>
-          {{ user.mobile_num }}
+          {{ product.company.company_name }}
         </td>
         <td>
-          {{ user.email }}
+          {{ product.category.title }}
         </td>
         <td>
-          <nuxt-link v-if="user.company" :to="`/company/${user.company._id}`" target="_blank">View company</nuxt-link>
-        </td>
-        <td>
-           {{user.created_at}}
+           {{product.created_at}}
         </td>
         <td>
           <v-btn icon
                  color="green"
-                 :to="'/admin/user/'+user._id"
+                 :to="'/product-details/'+product._id"
           >
             <v-icon small
                     class="mr-2">mdi-eye
             </v-icon>
           </v-btn>
-          <v-btn icon
-                 :to="'/admin/user/edit/'+user._id"
-          >
-            <v-icon small
-                    class="mr-2">mdi-pencil
-            </v-icon>
-          </v-btn>
+
           <v-btn icon
                  color="error"
-                 @click.stop="openDeleteConfirmDialog(user)"
+                 @click.stop="openDeleteConfirmDialog(product)"
           >
             <v-icon small
                     class="mr-2">mdi-delete
@@ -142,7 +131,7 @@
 
         <v-card-text>
           Click AGREE if you are sure to delete
-          <strong class="red--text">{{delete_item===null ? '' : delete_item.email}}</strong>
+          <strong class="red--text">{{delete_item===null ? '' : delete_item.title}}</strong>
         </v-card-text>
         <v-col cols="12">
           <v-text-field
@@ -165,7 +154,7 @@
             color="green darken-1"
             text
             :loading="delete_loading"
-            @click="deleteUser()"
+            @click="deleteProduct()"
           >
             Agree
           </v-btn>
@@ -180,11 +169,11 @@
 <script>
 export default {
   middleware: ['auth', 'is_admin'],
-  name: "user.vue",
+  name: "admin-product",
   layout: "admin",
   head(){
     return{
-      title:"User manage"
+      title:"Product manage"
     }
   },
   data() {
@@ -196,8 +185,8 @@ export default {
       page: 1,
       pageSize: 20,
       //=====================
-      users: [],
-      user_list_title: null,
+      products: [],
+      product_list_title: null,
 
       delete_item:null,
       delete_loading:false,
@@ -217,13 +206,13 @@ export default {
   methods: {
     searchData() {
       this.page = 1;
-      this.users = [];
+      this.products = [];
       this.getData();
     },
     async getData() {
       //Get brand list
-      let userApiURL = `/api/user_list`;
-      await this.$axios.$post(userApiURL,
+      let productApiURL = `/api/admin_product_list`;
+      await this.$axios.$post(productApiURL,
         {
           "paginate": true,
           "keyword": this.search,
@@ -231,7 +220,7 @@ export default {
         }
       ).then(response => {
         if (response)
-          this.users = this.users.concat(response.data);
+          this.products = this.products.concat(response.data);
         else
           this.table_status = "Not found"
       })
@@ -240,25 +229,16 @@ export default {
           console.log('error');
         })
     },
-    getUserListTitle() {
-      const response = this.$axios.$post('/api/find_user',
-        {id: this.$route.params.id}).then(response => {
-        this.user_list_title = response.title;
-      }).catch(e => {
-        this.$toast.error('Error on updating');
-
-      });
-    },
 
     goBack() {
       this.$router.go(-1);
     },
-    deleteUser() {
+    deleteProduct() {
       if (this.admin_delete_pass!=="195256"){
         this.$toast.error(this.$t(`Password is wrong`));
       }else{
         this.delete_loading=true;
-        this.$axios.$delete('/api/delete_user',
+        this.$axios.$delete('/api/delete_product',
           {
             params:
               {id: this.delete_item._id}
@@ -273,7 +253,7 @@ export default {
             } else {
               this.$toast.success("Deleted successfully");
               this.page = 1;
-              this.users = [];
+              this.products = [];
               this.getData();
               this.delete_loading=false;
               this.deleteConfirmDialog=false;
