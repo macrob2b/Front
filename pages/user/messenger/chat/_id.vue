@@ -12,12 +12,23 @@
 
       >
         <v-card-title>
-          {{(other_side_data.company_name && other_side_data.company_name!==null ? other_side_data.company_name : 'No name')}}
-        </v-card-title>
+          <v-skeleton-loader v-if="message_loading"
+                             type="list-item-avatar">
+          </v-skeleton-loader>
+          <div v-else>
+            {{(other_side_data.company_name && other_side_data.company_name!==null ? other_side_data.company_name : 'No name')}}
+          </div>
+         </v-card-title>
         <v-card-text style="max-height: 400px"
                      class="overflow-y-auto overflow-x-hidden">
 
+          <v-skeleton-loader v-show="message_loading"
+                             v-for="i in 5"
+                             :key="i"
+                             type="list-item-two-line">
+          </v-skeleton-loader>
           <v-row
+            v-show="!message_loading"
             v-scroll:#scroll-target="onScroll"
             align="center"
             justify="center"
@@ -29,7 +40,9 @@
                 group
                 hide-on-leave
               >
+
                 <v-timeline-item
+
                   v-for="(msg, i) in messages"
                   :key="msg._id"
                   :color="msgOwner(msg) ? 'info' : ''"
@@ -41,7 +54,7 @@
                   >
 
                     <v-card-text :class="msgOwner(msg) ? 'white--text' : ''">
-                      {{ msg.message }}
+                      <div v-html="msg.message"></div>
                     </v-card-text>
                     <v-card-actions :class="msgOwner(msg) ? 'white--text' : ''">
                       {{ msg.created_at }}
@@ -67,7 +80,15 @@
                     :loading="submit_loading"
                     v-on:keydown.enter="submitMessage"
                     outlined
+                    app
       >
+        <template slot="append">
+           <v-btn icon large class="mb-2" @click="submitMessage">
+             <v-icon>
+               mdi-send
+             </v-icon>
+           </v-btn>
+        </template>
       </v-text-field>
     </div>
 
@@ -83,6 +104,7 @@ export default {
   data() {
     return {
       submit_loading:false,
+      message_loading:false,
       offsetTop: 0,
       messages: '',
       other_side_data: '',
@@ -93,11 +115,17 @@ export default {
     this.getMessages();
     // this.$refs.scrollWrapper.scrollTop=600;
   },
+  head(){
+    return{
+      title:`Chat with ${(this.other_side_data.company_name && this.other_side_data.company_name!==null ? this.other_side_data.company_name : 'No name')}`
+    }
+  },
   methods: {
     onScroll(e) {
       this.offsetTop = e.target.scrollTop
     },
     getMessages() {
+      this.message_loading=true;
       this.$axios.$post('/api/get_company_chat_details',
         {chat_id: this.$route.params.id})
         .then(response => {
@@ -105,6 +133,8 @@ export default {
           this.other_side_data = response.other_side_data;
         }).catch(err => {
         this.$toast.error(err);
+      }).finally(()=>{
+        this.message_loading=false;
       })
     },
     msgOwner(msg) {

@@ -164,8 +164,7 @@ export default {
       delete_item: null,
     }
   },
-  mounted() {
-    this.$auth.user;
+  created() {
     this.getProductList();
   },
   watch: {

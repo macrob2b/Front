@@ -134,16 +134,18 @@ export default {
         }
       }).then(response => {
         this.formLoader = false;
-        this.$auth.setUserToken(response.data.token);
-        this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
-        this.$router.push({
-          path: "/user-dashboard"
-        })
+        if (response.data.msg==='UnAuthorised'){
+          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+        }else{
+          this.$auth.setUserToken(response.data.token);
+          this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
+          this.$router.push({
+            path: "/user-dashboard"
+          })
+        }
       }).catch(({response}) => {
         this.formLoader = false;
-        if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        } else if (response.status == 500 || response.status == 504) {
+         if (response.status == 500 || response.status == 504) {
           this.$toast.error(this.$t(`REQUEST_FAILED`));
         }
       });

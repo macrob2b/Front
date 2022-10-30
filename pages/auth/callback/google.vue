@@ -16,17 +16,21 @@ export default {
   async mounted() {
     await this.$axios.post('/api/google_login',
       {
-        code        : this.$route.query.code,
+        code: this.$route.query.code,
         redirect_uri: config.googleRedirectUri
       }).then(response => {
 
-      this.$auth.setUserToken(response.data.token).then(async () => {
-        this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
-        await this.$auth.fetchUser();
-        await this.$router.push({
-          path: "/user-dashboard"
+      if (response.data.msg === 'UnAuthorised') {
+        this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+      } else {
+        this.$auth.setUserToken(response.data.token).then(async () => {
+          this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
+          await this.$auth.fetchUser();
+          await this.$router.push({
+            path: "/user-dashboard"
+          });
         });
-      });
+      }
 
     }).catch(({response}) => {
       if (response.status == 401) {

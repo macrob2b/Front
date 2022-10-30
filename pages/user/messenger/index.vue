@@ -28,13 +28,13 @@
             <v-list-item-group>
 
               <!--      Skeleton Loading        -->
-              <v-skeleton-loader v-if="loadingChatList"
+              <v-skeleton-loader v-show="ticket_loading"
                                  v-for="i in 10"
                                  :key="i"
                                  type="list-item-avatar-two-line">
               </v-skeleton-loader>
 
-              <v-list-item v-if="!loadingChatList"
+              <v-list-item v-show="!ticket_loading"
                            v-for="(ticket,i) in tickets"
                            :key="i"
                            :to="`/user/messenger/chat/${ticket._id}`"
@@ -61,7 +61,7 @@
                   </v-list-item-title>
 
                   <!--        last Message          -->
-                  <v-list-item-subtitle v-text="ticket.last_message.message" class="mt-1"></v-list-item-subtitle>
+                  <v-list-item-subtitle v-if="ticket.last_message && ticket.last_message.message" v-html="ticket.last_message.message.substr(0,60)+'...'" class="mt-1"></v-list-item-subtitle>
 
                 </v-list-item-content>
 
@@ -73,16 +73,16 @@
                   <!--         has New Message         -->
                   <v-avatar class="green mr-1 white--text"
                             size="25"
-                            :class="!ticket.unread_msg ? 'd-none' : ''"
+                            :class="!calcUnread(ticket) ? 'd-none' : ''"
                             left>
-                    {{ ticket.unread_msg }}
+                    {{ calcUnread(ticket) }}
                   </v-avatar>
 
                 </v-list-item-action>
 
               </v-list-item>
 
-              <div v-show="!tickets.length"  class="text-center font-weight-bold">
+              <div v-show="!tickets.length && ticket_loading===false"  class="text-center font-weight-bold">
                 No message received yet
               </div>
 
@@ -107,14 +107,17 @@ export default {
   layout:"user_dashboard",
   name      : "messenger",
   components: {ChatTitle, ChatAvatar},
-  auth      : false,
+  head(){
+    return{
+      title:'Messenger'
+    }
+  },
   data() {
     return {
       tickets:'',
       roomId          : '',
       myId            : 'myId',
       loadingChatRoom : false,
-      loadingChatList : false,
       propertiesDialog: false,
       selectedRoomId  : '',
       messages        : {
@@ -139,7 +142,8 @@ export default {
           status   : 1,
           ticket   : ''
         }
-      }
+      },
+      ticket_loading:false,
     };
   },
   mounted() {
@@ -147,11 +151,14 @@ export default {
   },
   methods : {
     getTicketList(){
+      this.ticket_loading=true;
        this.$axios.$post('/api/get_company_msg')
          .then(res=>{
            this.tickets=res;
          }).catch(err=>{
            this.$toast.error(err);
+       }).finally(()=>{
+         this.ticket_loading=false;
        })
     },
 
@@ -217,6 +224,13 @@ export default {
       // **
 
       return usersData;
+    },
+
+    calcUnread(ticket){
+      if (this.$auth.user._id===ticket.user_sender_id)
+        return ticket.sender_unread_msg;
+      else
+        return ticket.receiver_unread_msg;
     }
   },
   computed: {

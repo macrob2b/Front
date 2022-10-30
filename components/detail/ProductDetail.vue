@@ -97,9 +97,9 @@
         </v-col>
       </v-row>
       <v-row class="ml-md-4 mt-8 d-flex align-center justify-space-between justify-lg-start px-0">
-        <v-col cols="3" lg="4" class="px-lg-0 mb-lg-5 mb-lg-0 mr-lg-8">
+        <v-col cols="12" lg="5" class="px-lg-0 mb-lg-5 mb-lg-0 mr-lg-8">
           <v-btn
-            :to="`/company/${(productDetails.company.username && productDetails.company.username!=='undefined') ? productDetails.company.username : productDetails.company._id}`"
+            :to="`/order/${productDetails._id}`"
             block
             color="grey darken-2 "
             dark
@@ -109,7 +109,7 @@
             <v-icon>
               mdi-cart-plus
             </v-icon>
-            <span class="d-none d-md-block">Start Order</span>
+            Start Order
           </v-btn>
         </v-col>
 

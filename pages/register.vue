@@ -191,9 +191,9 @@
               <v-btn icon class="ml-2 mr-2" @click="loginWithGoogle()">
                 <v-icon large color="red">mdi-google</v-icon>
               </v-btn>
-              <v-btn icon class="ml-2 mr-2" @click="loginWithFacebook()">
-                <v-icon large color="blue">mdi-facebook</v-icon>
-              </v-btn>
+<!--              <v-btn icon class="ml-2 mr-2" @click="loginWithFacebook()">-->
+<!--                <v-icon large color="blue">mdi-facebook</v-icon>-->
+<!--              </v-btn>-->
               <v-btn icon class="ml-2 mr-2" @click="loginWithLinkedIn()">
                 <v-icon large color="blue">mdi-linkedin</v-icon>
               </v-btn>
@@ -281,14 +281,17 @@ export default {
         "state": this.businessLocation.state,
       });
 
+
       // Handler of signup api
       if (checkRegister.status == 200) {
         if (typeof checkRegister.data === 'object' && checkRegister.data.token && checkRegister.data.token.length) {
-          await this.$auth.setUserToken(checkRegister.data.token);
-          this.$toast.success(this.$t(`REGISTER_SUCCESSFUL`));
-          this.$router.push({
-            path: "/user-dashboard"
-          })
+          this.$auth.setUserToken(checkRegister.data.token).then(async () => {
+            this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
+            await this.$auth.fetchUser();
+            await this.$router.push({
+              path: "/user-dashboard"
+            });
+          });
         } else if (typeof checkRegister.data === 'object') {
           for (let i in checkRegister.data) {
             let error = checkRegister.data[i][0];
