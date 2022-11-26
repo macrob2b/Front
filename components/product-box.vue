@@ -7,10 +7,10 @@
 
     >
       <v-img class="product-img mb-3 pointer"
-                 :src="getImgFile(productData)" alt="product-img"/>
-      <v-img class="product-name mb-3 font-weight-bold">
+                 :src="getImgFile(productData)" :alt="productData.title"/>
+      <p class="product-name mb-3 font-weight-bold">
         {{ productData.title }}
-      </v-img>
+      </p>
       <!--      <span class="product-price mb-3">{{productData.price}}$</span>-->
       <v-btn
         class="order-btn"

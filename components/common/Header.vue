@@ -441,36 +441,7 @@ export default {
           to: '/buying-leads'
         }
       ],
-      user_menu: [
-        {
-          name: 'My Products',
-          children: [
-            {name: 'Product list', link: '/user/product'},
-            {name: 'Add a new product', link: '/user/product/add'},
-          ]
-        },
-        {
-          name: 'My company',
-          children: [
-            {name: 'Update company info', link: '/user/company'},
-            {name: 'My message', link: '/user/messenger'},
-          ]
-        },
-        {
-          name: 'My selling leads',
-          children: [
-            {name: 'Add new selling lead', link: '/user/selling-lead/add'},
-            {name: 'Selling leads list', link: '/user/selling-lead'},
-          ]
-        },
-        {
-          name: 'My buying leads',
-          children: [
-            {name: 'Add new buying lead', link: '/user/buying-lead/add'},
-            {name: 'Buying leads list', link: '/user/buying-lead'},
-          ]
-        },
-      ],
+
       searchActive: false,
       searchItems: [],
       timer: 0,

@@ -8,7 +8,7 @@
           <div class="header">
             <div class="d-flex align-center header-title-holder mb-2">
               <v-icon class="mdi-rotate-90 me-3">mdi-triangle</v-icon>
-              <h1 class="text-h5 font-weight-bold header-title">Start Order</h1>
+              <h1 class="text-h5 font-weight-bold header-title">Start Chat</h1>
             </div>
             <div class="pa-10 rounded-lg mb-2 header-description">
               <p class="text-white ">

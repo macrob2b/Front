@@ -12,7 +12,8 @@
       </v-row>
       <v-row class="bbb_deals_slider_container">
         <v-col cols="12" class=" bbb_deals_item">
-          <v-img width="auto" height="200px" ><img src="https://i.imgur.com/9UYzfny.png" alt=""></v-img>
+          <v-img width="auto" height="200px" ><img src="https://i.imgur.com/9UYzfny.png"
+                                                   alt=""></v-img>
         </v-col>
       </v-row>
       <v-row class="px-4">

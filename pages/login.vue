@@ -83,9 +83,9 @@
             <v-btn icon class="ml-2 mr-2" @click="loginWithGoogle()">
               <v-icon large color="red">mdi-google</v-icon>
             </v-btn>
-<!--            <v-btn icon class="ml-2 mr-2" @click="loginWithFacebook()">-->
-<!--              <v-icon large color="blue">mdi-facebook</v-icon>-->
-<!--            </v-btn>-->
+            <!--            <v-btn icon class="ml-2 mr-2" @click="loginWithFacebook()">-->
+            <!--              <v-icon large color="blue">mdi-facebook</v-icon>-->
+            <!--            </v-btn>-->
             <v-btn icon class="ml-2 mr-2" @click="loginWithLinkedIn()">
               <v-icon large color="blue">mdi-linkedin</v-icon>
             </v-btn>
@@ -104,6 +104,10 @@ import {ValidationProvider, ValidationObserver} from "vee-validate";
 export default {
   name: 'login',
   auth: 'guest',
+  asyncData({from, store}) {
+    if (from && from.fullPath)
+      store.commit('user/setLastPath', from.fullPath);
+  },
   head() {
     return {
       title: this.$t('LOGIN')
@@ -113,11 +117,11 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
-  data      : () => ({
+  data: () => ({
     emailOrPhone: '',
-    password    : '',
+    password: '',
     showPassword: false,
-    formLoader  : false,
+    formLoader: false,
   }),
   mounted() {
   },
@@ -125,7 +129,7 @@ export default {
     async submit() {
       this.formLoader = true;
       await this.$auth.loginWith('local', {
-        data   : {
+        data: {
           username: this.emailOrPhone,
           password: this.password
         },
@@ -134,18 +138,27 @@ export default {
         }
       }).then(response => {
         this.formLoader = false;
-        if (response.data.msg==='UnAuthorised'){
+        if (response.data.msg === 'UnAuthorised') {
           this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
-        }else{
+        } else {
           this.$auth.setUserToken(response.data.token);
           this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
+
+          var path = "/user-dashboard";
+          //Check last path
+          if (this.$store && this.$store.state && this.$store.state.user && this.$store.state.user.lastPath
+            && !(this.$store.state.user.lastPath === ''
+              || this.$store.state.user.lastPath === '/'
+              || this.$store.state.user.lastPath === '/forget_pass'
+              || this.$store.state.user.lastPath === '/register'))
+            path = this.$store.state.user.lastPath;
           this.$router.push({
-            path: "/user-dashboard"
+            path: path
           })
         }
       }).catch(({response}) => {
         this.formLoader = false;
-         if (response.status == 500 || response.status == 504) {
+        if (response.status === 500 || response.status === 504) {
           this.$toast.error(this.$t(`REQUEST_FAILED`));
         }
       });

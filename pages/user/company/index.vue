@@ -31,22 +31,6 @@
     data() {
       return {
         drawer: null,
-        items: [
-          {
-            name: 'My Products',
-            data: [
-              {title:'Product list',link:'/user/product'},
-              {title:'Add a new product',link:'/user/product/add'},
-            ]
-          },
-          {
-            name: 'My company',
-            data: [
-              {title:'Update company info',link:'/user/company'},
-              {title: 'My message', link: '/user/messenger'},
-            ]
-          },
-        ],
       }
     },
   }

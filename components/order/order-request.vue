@@ -10,7 +10,8 @@
               <nuxt-link
                 :to="`/product-details/${productInfo._id}`"
                 class="product-img-holder me-3">
-                <img :src="getImgFile(productInfo)" alt="" class="product-image">
+                <img :src="getImgFile(productInfo)"
+                     :alt="productInfo.title" class="product-image">
               </nuxt-link>
               <nuxt-link :to="`/product-details/${productInfo._id}`"
                          class="font-weight-bold body-2">{{productInfo.title}}</nuxt-link>
@@ -145,8 +146,8 @@
             type="submit"
             :disabled="invalid"
             :loading="submit_loading"
-            class="text-capitalize text-md-h5 text-body-1 font-weight-bold text--white primary px-md-16 py-md-7">Start
-            Order Now
+            class="text-capitalize text-md-h5 text-body-1 font-weight-bold text--white primary px-md-16 py-md-7">
+            Send message
           </v-btn>
         </div>
         <v-row>

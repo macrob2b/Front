@@ -109,7 +109,7 @@
             <v-icon>
               mdi-cart-plus
             </v-icon>
-            Start Order
+            Start Chat
           </v-btn>
         </v-col>
 

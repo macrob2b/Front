@@ -4,6 +4,7 @@ export const state = () => ({
   userName: '',
   fName   : '',
   lName   : '',
+  lastPath: '',
 })
 
 // contains your actions
@@ -17,6 +18,9 @@ export const mutations = {
   setUserName(state, userName) {
     state.userName = userName;
   },
+  setLastPath(state, lastPath) {
+    state.lastPath = lastPath;
+  },
 }
 
 // your root getters
@@ -26,5 +30,8 @@ export const getters   = {
   },
   getUserName() {
     return state.userName;
+  },
+  getLastPath(state){
+    return state.lastPath;
   }
 }

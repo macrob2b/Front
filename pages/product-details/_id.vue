@@ -42,6 +42,28 @@ export default {
   head() {
     return {
       title: this.product_details.title,
+      __dangerouslyDisableSanitizers: ['script'],
+      script: [
+        {
+          innerHTML: JSON.stringify(
+            {
+              "@context": "http://schema.org",
+              "@type": "Product",
+              name: this.product_details.title,
+              description: this.product_details.details,
+              image: ((this.product_details.images && this.product_details.images!==null) ? this.product_details.images.map(x=>{
+                return `${process.env.baseUrl}/products/${this.product_details._id}/images/${x}`;
+              }) : []),
+              aggregateRating: {
+                "@type": "AggregateRating",
+                "ratingValue": (this.product_details.rate / this.product_details.rate_count),
+                "reviewCount": this.product_details.rate_count
+              }
+            }
+          ),
+          type: 'application/ld+json'
+        }
+      ],
       meta: [
         {
           hid: `keywords`,

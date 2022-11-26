@@ -22,6 +22,25 @@
 
 
     <v-container class="filter-container">
+      <h3>Color</h3>
+      <v-card
+        flat
+        v-scroll.self="onScroll"
+        class="overflow-y-auto"
+        max-height="150"
+      >
+        <v-checkbox v-for="item in color_list"
+                    :label="item"
+                    :value="item"
+                    hide-details="true"
+                    multiple
+                    v-model="filterForm.color"
+                    class="small"
+        />
+      </v-card>
+    </v-container>
+
+    <v-container class="filter-container">
       <div
         v-for="(item,index) in property_filters"
         cols="12"
@@ -143,11 +162,44 @@ export default {
         'Money Gram',
         'Others'
       ],
+      color_list:[
+        'Red',
+        'Blue',
+        'Green',
+        'Yellow',
+        'Purple',
+        'Pink',
+        'Orange',
+        'Brown',
+        'Black',
+        'White',
+        'Gray',
+        'Gold',
+        'Silver',
+        'Navy blue',
+        'Sky blue',
+        'Lime green',
+        'Teal',
+        'Indigo',
+        'Magenta',
+        'Violet',
+        'Khaki',
+        'Salmon',
+        'Crimson',
+        'Lavender',
+        'Plum',
+        'Blue violet',
+        'Olive',
+        'Cyan',
+        'Maroon',
+        'Beige'
+      ],
 
       property_filters: [],
       filterForm: {
         certificate_type: [],
-        payment_term: []
+        payment_term: [],
+        color:[]
       }
     }
   },

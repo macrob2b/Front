@@ -74,6 +74,13 @@ export default {
         },
         {title: 'My messages', link: '/user/messenger'},
 
+
+        {
+          title: 'My profile',
+          data: [
+            {title: 'Edit password', link: '/user/edit-pass'},
+          ]
+        },
         // {name: 'My Inquiries', data: [{title:'Add a New Buying Lead',link:'/'}, 'Add a New Buying Lead', 'Add a New Buying Lead']},
         // {name: 'My Storefront', data: ['Add a New Buying Lead']},
         // {name: 'My Buying Tools', data: ['Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead', 'Add a New Buying Lead']},

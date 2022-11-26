@@ -14,7 +14,7 @@ import companyInfo from '../../components/company-details/company-info'
 import companyDetailsTabs from '../../components/company-details/company-details-tabs'
 
 export default {
-  auth:false,
+  auth: false,
   async asyncData({params, $axios}) {
     const company_info = await $axios.$post('/api/get_company_info',
       {
@@ -26,6 +26,34 @@ export default {
   head() {
     return {
       title: this.company_info.company_name,
+      __dangerouslyDisableSanitizers: ['script'],
+      script: [
+        {
+          innerHTML: JSON.stringify(
+            {
+              "@context": "http://schema.org",
+              "@type": "Corporation",
+              name: this.company_info.company_name ? this.company_info.company_name : '',
+              email: this.company_info.email ? this.company_info.email : '',
+              telephone: this.company_info.phone ? this.company_info.phone : '',
+              logo: {
+                "@type": "ImageObject",
+                url:this.company_info.website ? this.company_info.website : '',
+                name: this.company_info.company_name ? this.company_info.company_name : '',
+                contentUrl:this.company_info.logo ? `${process.env.baseUrl}/companies/${this.company_info._id}/${this.company_info.logo}` : ''
+              },
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: this.company_info.address ? this.company_info.address : '',
+                addressLocality: this.company_info.city ? this.company_info.city : '',
+                addressRegion: this.company_info.state ? this.company_info.state : '',
+                country: this.company_info.country ? this.company_info.country : '',
+              }
+            }
+          ),
+          type: 'application/ld+json'
+        }
+      ],
       meta: [
         {
           hid: `description`,
@@ -47,7 +75,7 @@ export default {
   },
   data() {
     return {
-      company_info:[]
+      company_info: []
     }
   }
 

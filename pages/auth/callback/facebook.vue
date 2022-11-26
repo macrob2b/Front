@@ -21,8 +21,19 @@ export default {
       this.$auth.setUserToken(response.data.token).then(async () => {
         this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
         await this.$auth.fetchUser();
+
+        var path = "/user-dashboard";
+        //Check last path
+        if (this.$store && this.$store.state && this.$store.state.user && this.$store.state.user.lastPath
+          && !(this.$store.state.user.lastPath === ''
+            || this.$store.state.user.lastPath === '/'
+            || this.$store.state.user.lastPath === '/forget_pass'
+            || this.$store.state.user.lastPath === '/register'
+          ))
+          path = this.$store.state.user.lastPath;
+
         await this.$router.push({
-          path: "/user-dashboard"
+          path: path
         });
       });
 
