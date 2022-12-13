@@ -8,9 +8,8 @@
     <v-divider></v-divider>
     <!--    If have description prop  -->
     <v-col>
-      <p class="text-grey text-justify" v-if="productInfo && productInfo.details">
-        {{productInfo.details}}
-      </p>
+      <div class="text-grey text-justify" v-if="productInfo && productInfo.details" v-html="productInfo.details">
+      </div>
     </v-col>
   </v-col>
 </template>

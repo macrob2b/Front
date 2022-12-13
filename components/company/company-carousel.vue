@@ -102,9 +102,9 @@ export default {
 
     getFile(item_id, file_name, type) {
       if (type == 'image')
-        return "https://dl.macrob2b.com/companies/" + item_id + "/images/" + file_name;
+        return "/storage/companies/" + item_id + "/images/" + file_name;
       else if (type == 'video')
-        return "https://dl.macrob2b.com/companies/" + item_id + "/video/" + file_name;
+        return "/storage/companies/" + item_id + "/video/" + file_name;
     },
     clickLeft() {
       if (this.slideVal === 0)

@@ -180,11 +180,11 @@ export default {
     },
     getFile(item, type) {
       if (type == 'certificate')
-        return "https://dl.macrob2b.com/companies/" + item.company_id + "/certification/" + item.image;
+        return "/storage/companies/" + item.company_id + "/certification/" + item.image;
       else if (type == 'trademark')
-        return "https://dl.macrob2b.com/companies/" + item.company_id + "/trademark/" + item.image;
+        return "/storage/companies/" + item.company_id + "/trademark/" + item.image;
       else if (type == 'patent')
-        return "https://dl.macrob2b.com/companies/" + item.company_id + "/patent/" + item.image;
+        return "/storage/companies/" + item.company_id + "/patent/" + item.image;
     }
   }
 }

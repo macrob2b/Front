@@ -256,7 +256,7 @@ export default {
       this.$router.go(-1);
     },
     getImgFile(item) {
-      var img = "https://dl.macrob2b.com/general/" + item;
+      var img = "/storage/general/" + item;
       return img;
 
     }

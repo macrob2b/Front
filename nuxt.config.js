@@ -261,7 +261,7 @@ export default {
     id: process.env.GOOGLE_ANALYTICS_ID
   },
   env:{
-    baseUrl:"https://dl.macrob2b.com",
+    baseUrl:"/storage",
   },
 
   pwa: {
@@ -273,12 +273,6 @@ export default {
       useWebmanifestExtension: false
     }
   },
-
-  server: {
-    host: '0.0.0.0',
-    port: 3000
-  },
-
 
 }
 

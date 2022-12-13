@@ -253,7 +253,7 @@ export default {
     getImg(item) {
       var img = require('assets/img/no-image.png');
       if (item.images && item.images.length > 0)
-        img = "https://dl.macrob2b.com/products/" + item._id + "/images/thumbnail/" + item.images[0];
+        img = "/storage/products/" + item._id + "/images/thumbnail/" + item.images[0];
       return img;
     },
     getSuggestedCompanies() {

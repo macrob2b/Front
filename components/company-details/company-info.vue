@@ -37,7 +37,7 @@ export default {
   },
   mounted() {
     if (this.companyInfo.logo)
-      this.logo = "https://dl.macrob2b.com/companies/" + this.companyInfo._id + "/" + this.companyInfo.logo;
+      this.logo = "/storage/companies/" + this.companyInfo._id + "/" + this.companyInfo.logo;
     else
       this.logo = '';
   }

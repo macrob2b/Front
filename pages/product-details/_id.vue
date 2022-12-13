@@ -2,6 +2,11 @@
   <div>
     <v-app>
       <v-container>
+        <v-breadcrumbs :items="breadcrumbsItems">
+          <template v-slot:divider>
+            <v-icon>mdi-chevron-right</v-icon>
+          </template>
+        </v-breadcrumbs>
         <ProductInfo :productInfo="product_details" />
         <SupplierInfo :productInfo="product_details"/>
 <!--        <Banner />-->
@@ -36,7 +41,29 @@ export default {
       {
         id: params.id
       });
-    return {product_details};
+
+    //Create and arrange breadcrumbs
+    let cates_title=product_details.cates_title;
+    let breadcrumbsItems=[
+      {
+        text: 'Home',
+        disabled: false,
+        href: '/',
+      },
+    ];
+
+    for(var i in cates_title){
+      breadcrumbsItems.push(
+        {
+          text:cates_title[i].title,
+          disabled: false,
+          href: `/product-list?cate_id=${cates_title[i].id}`
+        });
+    }
+    //End create and arrange breadcrumbs
+
+
+    return {product_details,breadcrumbsItems};
 
   },
   head() {
@@ -76,10 +103,12 @@ export default {
   data(){
     return{
       product_details:{},
+      breadcrumbsItems:[],
     }
   },
   mounted() {
     this.updateProductViewsCount();
+
   },
   methods:{
     updateProductViewsCount(){

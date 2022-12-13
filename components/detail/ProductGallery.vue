@@ -66,7 +66,7 @@
       getImgFile(item) {
         var img = require('assets/img/no-image.png');
         if (item && item.length > 0)
-          img = "https://dl.macrob2b.com/products/" + this.$route.params.id + "/images/" + item;
+          img = "/storage/products/" + this.$route.params.id + "/images/" + item;
         return img;
 
       }
@@ -80,7 +80,7 @@
           sources: [
             {
               src:
-                `${process.env.baseUrl}/products/${this.productDetails._id}/video/${(this.productDetails && this.productDetails.video ? this.productDetails.video : '')}`,
+                `/storage/products/${this.productDetails._id}/video/${(this.productDetails && this.productDetails.video ? this.productDetails.video : '')}`,
             }
           ]
         },

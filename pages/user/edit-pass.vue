@@ -12,7 +12,7 @@
     <validation-observer ref="observer" v-slot="{invalid}">
       <form @submit.prevent="updatePass">
         <v-row class="mt-6 mb-12">
-          <v-col cols="3">
+          <v-col cols="12" md="3">
             <validation-provider name="old_password" v-slot="{errors}" rules="required|min:8">
               <v-text-field
                 type="password"
@@ -25,7 +25,7 @@
               />
             </validation-provider>
           </v-col>
-          <v-col cols="3">
+          <v-col cols="12" md="3">
             <validation-provider name="password" v-slot="{errors}" rules="required|min:8">
               <v-text-field v-model="form.password"
                             type="password"
@@ -38,7 +38,7 @@
               />
             </validation-provider>
           </v-col>
-          <v-col cols="3">
+          <v-col cols="12" md="3">
             <validation-provider rules="required|min:8|confirmed:password" v-slot="{errors}" name="password_confirmation">
               <v-text-field
                 :error-messages="errors"
@@ -50,7 +50,7 @@
               />
             </validation-provider>
           </v-col>
-          <v-col cols="3">
+          <v-col cols="12" md="3">
             <v-btn
               :disabled="invalid"
               class="primary"

@@ -384,9 +384,9 @@ export default {
   methods: {
     getFile(item, type) {
       if (type == 'image')
-        return "https://dl.macrob2b.com/companies/" + this.companyInfo._id + "/images/" + item;
+        return "/storage/companies/" + this.companyInfo._id + "/images/" + item;
       else if (type == 'video')
-        return "https://dl.macrob2b.com/companies/" + this.companyInfo._id + "/video/" + item;
+        return "/storage/companies/" + this.companyInfo._id + "/video/" + item;
     },
     getCompanyProducts() {
       this.new_product_loading = true;
