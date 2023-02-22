@@ -27,7 +27,7 @@
           color="primary"
           outlined
           dark>
-          <v-toolbar-title>{{ $t(`SELECT`) + ' ' + label }}</v-toolbar-title>
+          <v-toolbar-title>{{ 'Select ' + label }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn
@@ -36,7 +36,7 @@
               color="white"
               :loading="loading"
               @click="emitLocation">
-              {{ $t(`SELECT`) }}
+              Select
             </v-btn>
           </v-toolbar-items>
         </v-toolbar>

@@ -255,7 +255,7 @@ export default {
     },
     deleteUser() {
       if (this.admin_delete_pass!=="195256"){
-        this.$toast.error(this.$t(`Password is wrong`));
+        this.$toast.error(`Password is wrong`);
       }else{
         this.delete_loading=true;
         this.$axios.$delete('/api/delete_user',
@@ -281,9 +281,9 @@ export default {
             }
           }).catch(({response}) => {
           if (response.status == 401) {
-            this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+            this.$toast.error('The information entered is incorrect');
           } else if (response.status == 500 || response.status == 504) {
-            this.$toast.error(this.$t(`REQUEST_FAILED`));
+            this.$toast.error('An error occurred. Please try again');
           }
           this.delete_loading=false;
           this.deleteConfirmDialog=false;

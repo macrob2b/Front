@@ -66,11 +66,13 @@
           <v-card
             class="mx-auto"
           >
-            <v-img
+            <nuxt-img
+              format="webp"
+              alt="Contact with company"
               :src="require('~/assets/img/' + img)"
               dark
             >
-            </v-img>
+            </nuxt-img>
 
             <v-list>
               <v-list-item>

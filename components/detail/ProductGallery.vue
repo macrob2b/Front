@@ -15,8 +15,13 @@
           :value="active_img"
           v-for="(image, index) in  productDetails.images"
           :key="index"
+        >
+          <nuxt-img
+          format="webp"
+          :alt="productDetails.title"
           :src="getImgFile(image)"
-        ></v-carousel-item>
+          />
+        </v-carousel-item>
       </v-carousel>
 
 
@@ -30,12 +35,13 @@
             class="mx-2 thumbnail_itm"
             v-for="(image, index) in  productDetails.images"
             :key="index"
-
           >
-            <v-img
+            <nuxt-img
+              format="webp"
+              :alt="productDetails.title"
               :class="carouselVal==index ? 'active_slide' : ''"
               @click="changeSlide(index)"
-              :src="getImgFile(image)"/>
+              :src="getThumImgFile(image)"/>
 
           </v-slide-item>
         </v-slide-group>
@@ -64,9 +70,16 @@
         this.carouselVal = index;
       },
       getImgFile(item) {
-        var img = require('assets/img/no-image.png');
+        var img = '/img/no-image.png';
         if (item && item.length > 0)
           img = "/storage/products/" + this.$route.params.id + "/images/" + item;
+        return img;
+
+      },
+      getThumImgFile(item) {
+        var img = '/img/no-image.png';
+        if (item && item.length > 0)
+          img = "/storage/products/" + this.$route.params.id + "/images/thumbnail/" + item;
         return img;
 
       }
@@ -144,6 +157,13 @@
   border: 2px solid #fff;
   border-radius: 5px;
 }
-
+img {
+  width: 100%; /* or max-width: 100%; */
+  height: auto;
+}
+video {
+  width: 100%; /* or max-width: 100%; */
+  height: auto;
+}
 
 </style>

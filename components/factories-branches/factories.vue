@@ -161,9 +161,9 @@ export default {
           this.deleteConfirmDialog = false;
         }).catch(({response}) => {
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 500 || response.status == 504) {
-          this.$toast.error(this.$t(`REQUEST_FAILED`));
+          this.$toast.error('An error occurred. Please try again');
         }
         this.delete_loading = false;
         this.deleteConfirmDialog = false;
@@ -184,9 +184,9 @@ export default {
         }).catch(({response}) => {
         func(false, this);
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 500 || response.status == 504) {
-          this.$toast.error(this.$t(`REQUEST_FAILED`));
+          this.$toast.error('An error occurred. Please try again');
         }
         this.loading_data = false;
       });

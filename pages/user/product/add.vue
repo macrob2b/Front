@@ -1126,13 +1126,13 @@ export default {
       }).catch(({err}) => {
         if (err.response.status == 401) {
           this.$auth.logout();
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (err.response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
+          this.$toast.error('Bad Request');
         } else if (err.response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
+          this.$toast.error('Forbidden');
         } else if (err.response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
+          this.$toast.error('Not found');
         }
       });
     },

@@ -28,8 +28,12 @@
                   <nuxt-link class="d-flex justify-start ml-1 align-center"
                              :to="'/buying-leads'"
                   >
-                    <gb-flag
-                      :code="item.company && item.company.country_code ? item.company.country_code  : ''" class="mr-2"/>
+                    <nuxt-img
+                      width="30"
+                      height="30"
+                      format="webp"
+                      :src="`/Flags/${item.company && item.company.country_code ? item.company.country_code  : 'unknown'}.svg`"
+                      class="mr-2"/>
 
                     <div class="mx-3">{{ item.company.country ? item.company.country  : '' }}</div>
                     <v-divider class="my-3" vertical></v-divider>
@@ -84,7 +88,12 @@
                   <nuxt-link
                     :to="'/selling-leads'"
                     class="d-flex justify-start ml-1 align-center">
-                    <gb-flag :code="item.company && item.company.country_code ? item.company.country_code  : ''" class="mr-2"/>
+                    <nuxt-img
+                      width="30"
+                      height="30"
+                      format="webp"
+                      :src="`/Flags/${item.company && item.company.country_code ? item.company.country_code  : 'unknown'}.svg`"
+                      class="mr-2"/>
 
                     <div class="mx-3">{{ item.company.country ? item.company.country  : ''  }}</div>
                     <v-divider class="my-3" vertical></v-divider>

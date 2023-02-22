@@ -15,12 +15,17 @@
           <v-row>
             <v-col cols="4" class="pa-0">
               <nuxt-link :to="'/company/'+((company.username && company.username!=='undefined') ? company.username : company._id)">
-                <v-img
+                <nuxt-img
+                  format="webp"
+                  :alt="company.company_name"
+                  width="100"
+                  height="100"
                   v-if="company.images && company.images[0]" aspect-ratio="1"
                   :src="getFile(company._id,company.images[0],'image')"
                   style="border:1px solid #eee"/>
-                <v-img
-                  v-else aspect-ratio="1" :src="require('assets/img/no-image.png')"/>
+                <nuxt-img
+                  format="webp"
+                  v-else aspect-ratio="1" src="/img/no-image.png'"/>
               </nuxt-link>
             </v-col>
             <v-col cols="8" class="py-0 px-3">
@@ -31,19 +36,6 @@
                 </nuxt-link>
               </v-col>
               <v-row class="mt-0 d-flex align-center">
-                <v-col cols="2" class="pa-0 mt-0">
-                  <v-img src="/ico.png"></v-img>
-                </v-col>
-                <v-col cols="auto" class="px-0">
-                  <div class="years d-flex align-center text-caption">
-                    <v-img src="/ico-years.png" max-width="25px" contain ></v-img>
-                  </div>
-                </v-col>
-                <!--              <v-col cols="4" class="d-flex align-center">-->
-                <!--                <v-img src="/cn.png" max-width="20px" contain></v-img>-->
-                <!--                <div class=" pl-1 grey&#45;&#45;text text&#45;&#45;darken-1 text-caption">CN</div>-->
-                <!--              </v-col>-->
-
                 <v-col cols="12">
                   <v-btn
                     :to="'/company/'+((company.username && company.username!=='undefined') ? company.username : company._id)"

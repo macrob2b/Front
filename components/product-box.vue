@@ -6,8 +6,8 @@
       elevation="2"
 
     >
-      <v-img class="product-img mb-3 pointer"
-                 :src="getImgFile(productData)" :alt="productData.title"/>
+      <nuxt-img format="webp" class="product-img mb-3 pointer"
+                :src="getImgFile(productData)" :alt="productData.title"/>
       <p class="product-name mb-3 font-weight-bold">
         {{ productData.title }}
       </p>
@@ -50,3 +50,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+img {
+  width: 100%; /* or max-width: 100%; */
+  height: auto;
+}
+</style>

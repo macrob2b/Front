@@ -569,9 +569,9 @@ export default {
         this.businessTypeArr = response;
       }).catch(({response}) => {
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 500 || response.status == 504) {
-          this.$toast.error(this.$t(`REQUEST_FAILED`));
+          this.$toast.error('An error occurred. Please try again');
         }
       });
     },
@@ -670,10 +670,10 @@ export default {
           this.submit_loading = false;
         }).catch(err => {
         if (err.response.status === 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
           this.$auth.logout();
         } else if (err.response.status === 500 || response.status == 504) {
-          this.$toast.error(this.$t(`REQUEST_FAILED`));
+          this.$toast.error('An error occurred. Please try again');
         } else {
           this.$toast.error("Please fill all fields");
         }

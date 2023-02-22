@@ -344,13 +344,13 @@ export default {
         this.factorySizeArr = response;
       }).catch(({response}) => {
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
+          this.$toast.error('Bad Request');
         } else if (response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
+          this.$toast.error('Forbidden');
         } else if (response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
+          this.$toast.error('Not found');
         }
       });
     },
@@ -367,13 +367,13 @@ export default {
         this.measurementUnitArr = result;
       }).catch(({response}) => {
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
+          this.$toast.error('Bad Request');
         } else if (response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
+          this.$toast.error('Forbidden');
         } else if (response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
+          this.$toast.error('Not found');
         }
       });
     },
@@ -383,13 +383,13 @@ export default {
           this.annualArr = response;
         }).catch(({response}) => {
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
+          this.$toast.error('Bad Request');
         } else if (response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
+          this.$toast.error('Forbidden');
         } else if (response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
+          this.$toast.error('Not found');
         }
       });
     },
@@ -459,9 +459,9 @@ export default {
       }).catch(({response}) => {
         this.submit_loading = false;
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 500 || response.status == 504) {
-          this.$toast.error(this.$t(`REQUEST_FAILED`));
+          this.$toast.error('An error occurred. Please try again');
         }
       });
     },

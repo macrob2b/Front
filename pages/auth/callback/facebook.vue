@@ -2,7 +2,7 @@
   <v-container>
     <h2 class="text-center ma-16">
       <v-progress-circular color="primary" class="mr-2" size="30" indeterminate></v-progress-circular>
-      {{ $t(`LOGGING_IN`) }}
+      Logging in
     </h2>
   </v-container>
 </template>
@@ -19,7 +19,7 @@ export default {
       }).then(response => {
 
       this.$auth.setUserToken(response.data.token).then(async () => {
-        this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
+        this.$toast.success('You logged in successfully');
         await this.$auth.fetchUser();
 
         var path = "/user-dashboard";
@@ -39,9 +39,9 @@ export default {
 
     }).catch(({response}) => {
       if (response.status == 401) {
-        this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+        this.$toast.error('The information entered is incorrect');
       } else if (response.status == 500 || response.status == 504) {
-        this.$toast.error(this.$t(`REQUEST_FAILED`));
+        this.$toast.error('An error occurred. Please try again');
       }
     });
   }

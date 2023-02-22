@@ -1,5 +1,3 @@
-import colors from 'vuetify/es5/util/colors'
-import config from './config'
 const axios = require('axios')
 
 export default {
@@ -18,14 +16,15 @@ export default {
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/macrob2b.ico'},
-      { rel: "stylesheet", href: "/video.js/dist/video-js.min.css" },
+      { rel: "stylesheet", href: "/video.js/dist/video-js.min.css",defer:true },
+      { rel: "stylesheet", href: "/video.js/dist/video-js.min.css",defer:true },
     ],
     script: [
-      {
-        type: 'text/javascript',
-        src: '/hotjar.js',
-        body: true,
-      },
+      // {
+      //   type: 'text/javascript',
+      //   src: '/hotjar.js',
+      //   body: true,
+      // },
     ],
   },
 
@@ -37,16 +36,16 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@/assets/scss/style.scss',
-    '@/assets/scss/responsive.scss'
+    '@/assets/scss/responsive.scss',
+    '@mdi/font/css/materialdesignicons.min.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src: 'plugins/vee-validate.js', ssr: true},
-    {src: 'plugins/persistedState.client.js'},
-    {src: 'plugins/vueFlags.js'},
-    {src: 'plugins/filters.js'},
-    {src: 'plugins/axios.js'}
+    {src: 'plugins/axios.js',defer:true,async:true},
+    {src: 'plugins/vee-validate.js', ssr: true,defer:true,async:true},
+    {src: 'plugins/persistedState.client.js',defer:true,async:true},
+    {src: 'plugins/filters.js',defer:true,async:true},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -65,16 +64,18 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/i18n',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     'nuxt-leaflet',
     '@nuxtjs/toast',
-    '@forked-prs/nuxt-infinite-scroll-module',
-    '@nuxtjs/sitemap'
+    '@nuxtjs/sitemap',
+    '@nuxt/image',
   ],
 
 
+  image: {
+    dir: 'static',
+  },
   axios: {
     proxy: true,
     headers: {},
@@ -83,8 +84,8 @@ export default {
   auth: {
     strategies: {
       google: {
-        clientId: config.googleClientId,
-        redirectUri: config.googleRedirectUri,
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        redirectUri: process.env.GOOGLE_REDIRECT_URI,
         codeChallengeMethod: '',
         responseType: 'code',
         grantType: 'google',
@@ -98,8 +99,8 @@ export default {
         }
       },
       facebook: {
-        clientId: config.facebookClientId,
-        redirectUri: config.facebookRedirectUri,
+        clientId: process.env.FACEBOOK_CLIENT_ID,
+        redirectUri: process.env.FACEBOOK_REDIRECT_URI,
         responseType: 'code',
         codeChallengeMethod: '',
         grantType: 'facebook',
@@ -115,8 +116,8 @@ export default {
       },
       linkedin: {
         scheme: 'oauth2',
-        clientId: config.linkedinClientId,
-        redirectUri: config.linkedinRedirectUri,
+        clientId: process.env.LINKEDIN_CLIENT_ID,
+        redirectUri: process.env.LINKEDIN_REDIRECT_URI,
         endpoints: {
           authorization: 'https://www.linkedin.com/oauth/v2/authorization',
           token: '/api/linkedin_login',
@@ -160,14 +161,6 @@ export default {
     middleware: ['auth']
   },
 
-  i18n: {
-    locales: [
-      {code: 'en', file: 'en.js'},
-    ],
-    lazy: true,
-    langDir: 'lang/',
-    defaultLocale: 'en',
-  },
 
   sitemap: {
     hostname: 'https://macrob2b.com',
@@ -215,28 +208,32 @@ export default {
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
+    defaultAssets:false,
     theme: {
       dark  : false,
       themes: {
         dark : {
-          primary  : colors.blue.darken2,
-          accent   : colors.grey.darken3,
+          primary  : "#1976D2",
+          accent   : "#424242",
           secondary: "#FB641E",
-          info     : colors.teal.lighten1,
-          warning  : colors.amber.base,
-          error    : colors.deepOrange.accent4,
-          success  : colors.green.accent3
+          info     : "#26A69A",
+          warning  : "#FFC107",
+          error    : "#DD2C00",
+          success  : "#00E676"
         },
         light: {
           primary  : '#00394D',
           accent   : '#005270',
           secondary: "#D2D3D5",
-          info     : colors.teal.lighten1,
-          warning  : colors.amber.base,
-          error    : colors.deepOrange.accent4,
-          success  : colors.green.accent3
+          info     : "#26A69A",
+          warning  : "#FFC107",
+          error    : "#DD2C00",
+          success  : "#00E676"
         }
       }
+    },
+    icons: {
+      iconfont: 'mdi',
     }
   },
 

@@ -42,7 +42,7 @@ export default {
       }).catch(err => {
         console.log(err.response.status);
         if (err.response.status === 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
           this.$auth.logout();
           if (!this.$auth.loggedIn){
             this.$router.push(
@@ -51,7 +51,7 @@ export default {
               });
           }
         } else if (err.response.status == 500 || err.response.status == 504) {
-          this.$toast.error(this.$t(`REQUEST_FAILED`));
+          this.$toast.error('An error occurred. Please try again');
         }
       });
 

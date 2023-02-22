@@ -13,7 +13,7 @@
     </v-col>
     <v-col>
       <validation-observer ref="observer" v-slot="{ invalid }">
-        <h2>{{ $t(`LOGIN`) }}</h2>
+        <h2>Login</h2>
         <v-divider class="mt-2 mb-6"></v-divider>
         <form @submit.prevent="submit">
           <v-row>
@@ -25,7 +25,7 @@
                   v-model="emailOrPhone"
                   :disabled="formLoader"
                   :error-messages="errors"
-                  :label="$t(`E_MAIL`) + ' ' + $t(`OR`) + ' ' + $t(`PHONE_NUMBER`)"
+                  label="Email Address or Phone Number"
                   outlined
                   required>
                 </v-text-field>
@@ -44,7 +44,7 @@
                   @click:append="showPassword = !showPassword"
                   :error-messages="errors"
                   hide-details
-                  :label="$t(`PASSWORD`)"
+                  label="Password"
                   outlined>
                 </v-text-field>
                 <nuxt-link class="ma-2 d-inline-block" to="/forget_pass">Forgot password?</nuxt-link>
@@ -63,7 +63,7 @@
                 :loading="formLoader"
                 large
                 block>
-                {{ $t(`LOGIN`) }}
+                Login
               </v-btn>
             </v-col>
             <v-col cols="12" md="4" lg="4" xl="4">
@@ -73,13 +73,13 @@
                 large
                 block
                 nuxt>
-                {{ $t(`SIGN_UP`) }}
+                Sign up
               </v-btn>
             </v-col>
           </v-row>
 
           <div class="mt-5">
-            <p class="d-inline-block">{{ $t(`SIGN_IN_WITH`) + ':' }}</p>
+            <p class="d-inline-block">Sign in with</p>
             <v-btn icon class="ml-2 mr-2" @click="loginWithGoogle()">
               <v-icon large color="red">mdi-google</v-icon>
             </v-btn>
@@ -110,7 +110,7 @@ export default {
   },
   head() {
     return {
-      title: this.$t('LOGIN')
+      title: 'Login'
     }
   },
   components: {
@@ -139,10 +139,10 @@ export default {
       }).then(response => {
         this.formLoader = false;
         if (response.data.msg === 'UnAuthorised') {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else {
           this.$auth.setUserToken(response.data.token);
-          this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
+          this.$toast.success('You logged in successfully');
 
           var path = "/user-dashboard";
           //Check last path
@@ -159,7 +159,7 @@ export default {
       }).catch(({response}) => {
         this.formLoader = false;
         if (response.status === 500 || response.status === 504) {
-          this.$toast.error(this.$t(`REQUEST_FAILED`));
+          this.$toast.error('An error occurred. Please try again');
         }
       });
     },

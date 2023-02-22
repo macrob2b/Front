@@ -15,10 +15,18 @@
         item-value="_id"
       >
         <template v-slot:selection="data" style="color: #000;">
-          <gb-flag :code="data.item.alpha2" class="mr-2"/>
+          <nuxt-img
+            width="30"
+            height="30"
+            format="webp"
+            :src="`/Flags/${data.item.alpha2}.svg`" class="mr-2"/>
         </template>
         <template v-slot:item="data">
-          <gb-flag :code="data.item.alpha2" class="mr-2"/>
+          <nuxt-img
+            width="30"
+            height="30"
+            format="webp"
+            :src="`/Flags/${data.item.alpha2}.svg`" class="mr-2"/>
           {{ data.item.title }} (+{{ data.item.tel }})
         </template>
       </v-autocomplete>

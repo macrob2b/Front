@@ -10,6 +10,7 @@
         active-class="menu_active"
         v-if="!item.data"
         :to="item.link"
+
       >
         <v-list-item-title v-text="item.title" class="menu-title"/>
       </v-list-item>

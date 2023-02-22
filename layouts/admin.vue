@@ -70,6 +70,9 @@
           <v-list-item to="/admin/contact-us">
             <v-list-item-title>Contact us manage</v-list-item-title>
           </v-list-item>
+          <v-list-item to="/admin/blog">
+            <v-list-item-title>Blog manage</v-list-item-title>
+          </v-list-item>
           <v-list-item to="/admin/dashboard">
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item>

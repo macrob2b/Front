@@ -15,7 +15,7 @@
     <template v-slot:no-data>
       <v-list-item>
         <v-list-item-title>
-          {{ $t(`SEARCH_FOR`) }}
+          Search for
           <strong> {{ label }}</strong>
         </v-list-item-title>
       </v-list-item>

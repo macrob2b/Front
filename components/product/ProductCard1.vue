@@ -5,7 +5,9 @@
             width="125px"
             elevation="0">
       <div class="pa-2">
-        <img
+        <nuxt-img
+          :alt="product.title"
+           format="webp"
           :src="getImgFile(product)" />
       </div>
       <div class="text-center">{{product.title.length<=15 ? product.title : product.title.substring(0,12)+"..."}}</div>
@@ -20,7 +22,7 @@ export default {
   props:['product'],
   methods:{
     getImgFile(item) {
-      var img = require('assets/img/no-image.png');
+      var img = '/no-image.png';
       if (item.images && item.images.length > 0)
         img = "/storage/products/" + item._id + "/images/thumbnail/" + item.images[0];
       return img;

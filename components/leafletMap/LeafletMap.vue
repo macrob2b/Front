@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <LocationSearch :label="$t(`LOCATION`)"
+    <LocationSearch label="Location"
                     class="mapSearch"
                     @locationSelected="goToSearchLocation"
                     :solo="true"/>

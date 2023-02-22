@@ -13,11 +13,12 @@
         <!--    Navigation Icon    -->
         <v-col cols="12" class="d-flex justify-center">
           <nuxt-link to="/">
-            <v-img
+            <nuxt-img
+              format="webp"
               width="180"
               height="52"
-              :src="require('@/assets/img/color-logo.png')">
-            </v-img>
+              src="/img/color-logo.png">
+            </nuxt-img>
           </nuxt-link>
         </v-col>
         <v-col cols="12" class="d-flex justify-center py-0 my-0 font-weight-bold">
@@ -136,7 +137,7 @@
             <v-btn
               to="/user/company"
               rounded x-small>
-              Start
+              Company profile
             </v-btn>
           </v-alert>
         </v-col>
@@ -169,7 +170,9 @@
             <v-btn
               @click="drawer = !drawer"
               class="d-inline-flex d-md-none menuIcon white--text mt-2"
-              color="accent">
+              color="accent"
+              aria-label="Menu"
+            >
               <v-icon>mdi-menu</v-icon>
             </v-btn>
 
@@ -189,18 +192,21 @@
           </div>
 
           <!--    Main Icon     -->
-          <nuxt-link to="/">
-            <v-img
+          <nuxt-link to="/" aria-label="Macrob2b">
+            <nuxt-img
+              format="webp"
+              alt="Macrob2b"
               width="180"
               height="52"
-              :src="require('@/assets/img/color-logo.png')">
-            </v-img>
+              src="/img/color-logo.png">
+            </nuxt-img>
           </nuxt-link>
 
           <!--    Menu Buttons (Right Side)    -->
           <div class="ml-md-3">
             <v-btn class="menuIcon text--white mx-sm-2 mx-md-2 mt-2"
                    color="accent"
+                   aria-label="Search"
                    @click="toggleSearch">
               <v-icon>mdi-magnify</v-icon>
             </v-btn>
@@ -208,6 +214,7 @@
                    color="accent"
                    to="/user-dashboard"
                    width="20px"
+                   aria-label="User dashboard"
                    nuxt>
               <v-icon>mdi-account</v-icon>
             </v-btn>
@@ -240,7 +247,7 @@
         </v-col>
 
         <!--  Toolbar Menu MD   -->
-        <v-col class="pt-5 px-0 d-none d-md-block" cols="12">
+        <v-col class="pt-1 px-0 d-none d-md-block" cols="12">
           <!--     Category menu     -->
           <v-menu
             :nudge-width="selectedCategory !== '' ? $vuetify.breakpoint.width - 350 : ($vuetify.breakpoint.width) / 12"
@@ -257,7 +264,7 @@
                 tile
                 text>
                 <v-icon>mdi-format-list-checkbox</v-icon>
-                {{ $t(`CATEGORIES`) }}
+                Categories
               </v-btn>
             </template>
 
@@ -421,15 +428,15 @@ export default {
       selectedCategory: '',
       menuButtons: [
         {
-          title: this.$t(`BUY_NOW`),
+          title: 'Buy now',
           to: '/product-list'
         },
         {
-          title: this.$t(`SELL_NOW`),
+          title: 'Sell now',
           to: '/user/product/add'
         },
         {
-          title: this.$t(`COMPANY_LIST`),
+          title: 'Company list',
           to: '/company-list'
         },
         {

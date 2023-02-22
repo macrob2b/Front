@@ -14,7 +14,7 @@
     </v-col>
 
     <v-col>
-      <h2>{{ $t(`SIGN_UP`) }}</h2>
+      <h2>Sign up</h2>
       <v-divider class="mt-2 mb-6"></v-divider>
       <validation-observer ref="observer" v-slot="{ invalid }">
         <form @submit.prevent="submit">
@@ -27,7 +27,7 @@
                 <v-text-field
                   v-model="firstName"
                   :error-messages="errors"
-                  :label="$t(`FIRST_NAME`)"
+                  label="First name"
                   outlined>
                 </v-text-field>
               </validation-provider>
@@ -39,7 +39,7 @@
                 <v-text-field
                   v-model="lastName"
                   :error-messages="errors"
-                  :label="$t(`LAST_NAME`)"
+                  label="Last name"
                   outlined>
                 </v-text-field>
               </validation-provider>
@@ -51,7 +51,7 @@
                 <v-text-field
                   v-model="email"
                   :error-messages="errors"
-                  :label="$t(`E_MAIL`)"
+                  :label="'Email Address'"
                   outlined>
                 </v-text-field>
               </validation-provider>
@@ -66,7 +66,7 @@
                   :items="genders"
                   item-text="name"
                   item-value="value"
-                  :label="$t(`GENDER`)"
+                  label="Gender"
                   outlined>
                 </v-select>
               </validation-provider>
@@ -80,7 +80,7 @@
                   :items="businessTypes"
                   item-text="name"
                   item-value="value"
-                  :label="$t(`I_AM_A`)"
+                  label="I am a"
                   multiple
                   outlined>
                 </v-select>
@@ -93,7 +93,7 @@
                 <v-text-field
                   v-model="companyName"
                   :error-messages="errors"
-                  :label="$t(`COMPANY_NAME`)"
+                  label="Company name"
                   outlined>
                 </v-text-field>
               </validation-provider>
@@ -102,7 +102,7 @@
             <!--     MY Business Location       -->
             <v-col cols="12" md="6" lg="6" xl="6" class="ma-0 pt-0 pb-0">
               <validation-provider v-slot="{ errors }" name="businessLocation" rules="required">
-                <LocationField :label="$t(`BUSINESS_LOCATION`)" @locationSelected="selectLocation"/>
+                <LocationField label="Business location" @locationSelected="selectLocation"/>
               </validation-provider>
             </v-col>
 
@@ -130,7 +130,7 @@
                   :type="showPassword ? 'text' : 'password'"
                   @click:append="showPassword = !showPassword"
                   :error-messages="errors"
-                  :label="$t(`PASSWORD`)"
+                  label="Password"
                   outlined>
                 </v-text-field>
               </validation-provider>
@@ -143,7 +143,7 @@
                   v-model="confirmPassword"
                   type="password"
                   :error-messages="errors"
-                  :label="$t(`CONFIRM_PASSWORD`)"
+                  label="Confirm password"
                   outlined>
                 </v-text-field>
               </validation-provider>
@@ -154,7 +154,7 @@
           <!--     Accept Terms       -->
           <validation-provider v-slot="{errors}" name="acceptTerms" :rules="{ required: { allowFalse: false } }">
             <v-checkbox v-model="acceptTerms"
-                        :label="$t(`ACCEPT_TERMS`)">
+                        label="Accept terms">
             </v-checkbox>
           </validation-provider>
 
@@ -168,7 +168,7 @@
                 :loading="loading"
                 block
                 large>
-                {{ $t(`CREATE_MY_ACCOUNT`) }}
+                Create my account
               </v-btn>
             </v-col>
             <v-col cols="12" md="4" lg="4" xl="4" class="mx-md-10 mx-lg-2">
@@ -178,7 +178,7 @@
                 large
                 block
                 nuxt>
-                {{ $t(`SIGN_IN`) }}
+                Sign in
               </v-btn>
             </v-col>
           </v-row>
@@ -186,7 +186,7 @@
           <v-row class="pt-3">
             <v-col cols="12" class="ma-0 pl-3 pr-2 pb-0 pt-0">
               <p class="d-inline-block">
-                {{ $t(`OR`) + ' ' + $t(`SIGN_IN_WITH`) }}:
+                Or sign in with:
               </p>
               <v-btn icon class="ml-2 mr-2" @click="loginWithGoogle()">
                 <v-icon large color="red">mdi-google</v-icon>
@@ -224,7 +224,7 @@ export default {
   },
   head() {
     return {
-      title: this.$t(`SIGN_UP`)
+      title: 'Sign up'
     };
   },
   data() {
@@ -286,7 +286,7 @@ export default {
       if (checkRegister.status == 200) {
         if (typeof checkRegister.data === 'object' && checkRegister.data.token && checkRegister.data.token.length) {
           this.$auth.setUserToken(checkRegister.data.token).then(async () => {
-            this.$toast.success(this.$t(`LOGIN_SUCCESSFUL`));
+            this.$toast.success('You logged in successfully');
             await this.$auth.fetchUser();
             await this.$router.push({
               path: "/user-dashboard"

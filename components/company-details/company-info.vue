@@ -4,7 +4,8 @@
       <div class="d-flex align-center flex-wrap pe-sm-16">
         <span v-if="logo === ''" class="me-4 empty-logo">&nbsp;</span>
         <div v-else-if="logo !== ''" class="logo-container mx-4">
-          <img :src="logo" :alt="(companyInfo.company_name ? companyInfo.company_name : 'No name')">
+          <nuxt-img format="webp"
+                    :src="logo" :alt="(companyInfo.company_name ? companyInfo.company_name : 'No name')"/>
         </div>
         <div class="company-name-info">
           <p class="company-name">{{ companyInfo.company_name ? companyInfo.company_name : 'No name' }}</p>

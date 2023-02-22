@@ -16,8 +16,13 @@
           <v-carousel-item
             v-for="(item,i) in companyInfo.images"
             :key="i"
+          >
+            <nuxt-img
+            format="webp"
             :src="getFile(item,'image')"
-          ></v-carousel-item>
+            :alt="companyInfo.company_name"
+            />
+          </v-carousel-item>
         </v-carousel>
       </v-col>
     </v-row>
@@ -403,3 +408,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+img {
+  width: 100%; /* or max-width: 100%; */
+  height: auto;
+}
+</style>

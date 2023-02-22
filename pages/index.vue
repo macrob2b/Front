@@ -153,7 +153,7 @@ export default {
   auth: false,
   head() {
     return {
-      title: this.$t('Main_PAGE_TITLE'),
+      title: 'Largest online B2B marketplace',
       meta: [
         {
           hid: `description`,
@@ -168,7 +168,7 @@ export default {
         {
           hid: 'og:title',
           name: 'og:title',
-          content: this.$t('Main_PAGE_TITLE'),
+          content: 'Largest online B2B marketplace',
         }
       ]
     }

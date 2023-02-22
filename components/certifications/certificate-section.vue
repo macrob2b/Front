@@ -291,13 +291,13 @@ export default {
         this.certificateTypeArr = response.data;
       }).catch(({response}) => {
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
+          this.$toast.error('Bad Request');
         } else if (response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
+          this.$toast.error('Forbidden');
         } else if (response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
+          this.$toast.error('Not found');
         }
       });
     },
@@ -312,13 +312,13 @@ export default {
         this.certificateIssuerArr = result;
       }).catch(({response}) => {
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
+          this.$toast.error('Bad Request');
         } else if (response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
+          this.$toast.error('Forbidden');
         } else if (response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
+          this.$toast.error('Not found');
         }
       });
     },
@@ -361,13 +361,13 @@ export default {
           window.scrollTo(0,0);
         }).catch(({response}) => {
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 400) {
-          this.$toast.error(this.$t(`Bad Request`));
+          this.$toast.error('Bad Request');
         } else if (response.status == 403) {
-          this.$toast.error(this.$t(`Forbidden`));
+          this.$toast.error('Forbidden');
         } else if (response.status == 404) {
-          this.$toast.error(this.$t(`not found`));
+          this.$toast.error('Not found');
         }
         this.submit_loading=false;
       })
@@ -402,9 +402,9 @@ export default {
           }
         }).catch(({response}) => {
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 500 || response.status == 504) {
-          this.$toast.error(this.$t(`REQUEST_FAILED`));
+          this.$toast.error('An error occurred. Please try again');
         }
         this.delete_loading=false;
         this.deleteConfirmDialog=false;
@@ -420,9 +420,9 @@ export default {
       }).catch(({response}) => {
         func(false, this);
         if (response.status == 401) {
-          this.$toast.error(this.$t(`LOGIN_WRONG_DATA`));
+          this.$toast.error('The information entered is incorrect');
         } else if (response.status == 500 || response.status == 504) {
-          this.$toast.error(this.$t(`REQUEST_FAILED`));
+          this.$toast.error('An error occurred. Please try again');
         }
         this.loading_data=false;
       });

@@ -7,11 +7,12 @@
             <v-col cols="3">
               <div class="py-10">
                 <nuxt-link to="/">
-                  <v-img
+                  <nuxt-img
+                    format="webp"
                     width="180"
                     height="52"
-                    :src="require('@/assets/img/color-logo.png')">
-                  </v-img>
+                    src="/img/color-logo.png">
+                  </nuxt-img>
                 </nuxt-link>
 
                 <div>

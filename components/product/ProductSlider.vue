@@ -81,7 +81,6 @@ export default {
       else
         this.slideVal++;
     },
-
   },
 };
 </script>
