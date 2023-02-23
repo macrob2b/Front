@@ -78,7 +78,7 @@
         </td>
         <td>
           <v-btn icon
-                 :to="`/${blog.machine_name}`"
+                 :to="`/blog/${blog._id}`"
           >
             <v-icon small
                     color="green"

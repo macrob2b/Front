@@ -67,9 +67,9 @@ export default {
         placeholder: 'Describe',
         removePlugins: ['Title'],
         simpleUpload: {
-          uploadUrl: '/',
+          uploadUrl: '/api/editor_uploader/blog',
           headers: {
-            'Authorization': 'optional_token'
+            'Authorization': this.$auth.strategy.token.get()
           }
         }
       }
