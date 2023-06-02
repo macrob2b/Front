@@ -34,6 +34,11 @@
               value="agent"
               label="Agent"
             ></v-checkbox>
+            <v-checkbox
+              v-model="companyInfo.roles"
+              value="logistics"
+              label="Logistics"
+            ></v-checkbox>
           </div>
         </div>
         <!--End user type-->

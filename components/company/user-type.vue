@@ -20,6 +20,11 @@
         value="agent"
         label="Agent"
       ></v-checkbox>
+      <v-checkbox
+        v-model="roles"
+        value="logistics"
+        label="Logistics"
+      ></v-checkbox>
     </div>
   </div>
 </template>
