@@ -15,15 +15,12 @@
                 Try to make an offer to this seller. Please note that this is just making an offer, not final condition.<br>
                 When the seller check your order, the seller will either confirm this order as you offered, or readjust
                 the condition and send back to you.<br>
-                Also please make sure your contact information is correct
-                <nuxt-link to="/user/company">
-                  ( View and Edit )
-                </nuxt-link>
-                .<br>
+                Also please make sure your contact information is correct ( View and Edit ).<br>
+                Your order will be sent directly to the seller and will not be publicly displayed.
               </p>
             </div>
           </div>
-          <trade-order-tabs :productInfo="product_info"></trade-order-tabs>
+          <trade-order-tabs></trade-order-tabs>
         </div>
       </v-col>
     </v-row>
@@ -32,36 +29,13 @@
 
 <script>
 import SideBar from '../../components/company/side-bar'
-import tradeOrderTabs from '../../components/order/trade-order-tabs'
+import tradeOrderTabs from '../../components/trade-order/trade-order-tabs'
 
 export default {
-  name: "trade-order",
+  auth:false,
   components: {
     SideBar,
     tradeOrderTabs
-  },
-  head(){
-    return{
-      title:'Buy request'
-    }
-  },
-  data() {
-    return {
-      product_info: ''
-    }
-  },
-  mounted() {
-    this.getProductDetails();
-  },
-  methods:{
-    getProductDetails() {
-      this.$axios.$post('/api/product_details',
-        {
-          id: this.$route.params.id
-        }).then(response => {
-        this.product_info = response;
-      })
-    }
   }
 }
 </script>

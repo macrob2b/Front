@@ -281,11 +281,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 100%;
+      min-width: 8.75rem;
+      max-width: 90%;
       position: relative;
 
       .product-img {
-        width: 100%;
+        width: 8rem;
         height: 5.25rem;
       }
 
@@ -305,8 +306,7 @@
       }
 
       .order-btn {
-        width: 100%;
-
+        width: 2rem;
         background-color: $primary_color !important;
         color: $white !important;
         position: absolute;
@@ -766,11 +766,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 100%;
+      min-width: 7.75rem;
+      max-width: 90%;
       position: relative;
 
       .product-img {
-        width: 100%;
+        width: 7rem;
         height: 4.25rem;
       }
 
@@ -790,8 +791,7 @@
       }
 
       .order-btn {
-        width: 100%;
-
+        width: 2rem;
         background-color: $primary_color !important;
         color: $white !important;
         position: absolute;

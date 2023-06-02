@@ -90,7 +90,7 @@ export default {
     getImgFile(item) {
       var img = require('assets/img/no-image.png');
       if (item.image)
-        img = "/storage/trading_leads/" + item._id + "/image/" + item.image;
+        img = "https://dl.macrob2b.com/trading_leads/" + item._id + "/image/" + item.image;
       return img;
 
     }
