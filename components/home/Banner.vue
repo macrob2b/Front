@@ -7,10 +7,17 @@
     </div>
      <v-btn>
             {{button}}
+<<<<<<< HEAD
         </v-btn> 
      <div class="desc">{{ desc }}</div> 
   </div> -->
   <div class="pa-10">
+=======
+        </v-btn>
+     <div class="desc">{{ desc }}</div>
+  </div> -->
+  <div class="py-10">
+>>>>>>> 9ded16916b1bee121280f3ffae04a0f1c88386ed
     <div class="banner">
       <div class="py-10"  id="div1">
         {{ title }}
@@ -52,9 +59,15 @@ export default {
   padding-left: 300px;
   font-size: 14px;
   font-weight: 500; */
+<<<<<<< HEAD
   height: 100px;
   padding-right: 400px;
   padding-left: 400px;
+=======
+  /*height: 100px;*/
+  /*padding-right: 400px;*/
+  /*padding-left: 400px;*/
+>>>>>>> 9ded16916b1bee121280f3ffae04a0f1c88386ed
 }
 .banner {
   height: 350px;
@@ -69,8 +82,15 @@ export default {
   text-align: center;
 }
 #div2 {
+<<<<<<< HEAD
   font-size: 15px;
   text-align: center;
+=======
+  font-size: 13px;
+  text-align: center;
+  color:#777;
+  padding:0 10px
+>>>>>>> 9ded16916b1bee121280f3ffae04a0f1c88386ed
 }
 #div3 {
   color: white;
@@ -80,4 +100,8 @@ export default {
 #span1 {
   color: white;
 }
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> 9ded16916b1bee121280f3ffae04a0f1c88386ed

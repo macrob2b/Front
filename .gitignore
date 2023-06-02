@@ -88,3 +88,10 @@ sw.*
 
 # Vim swap files
 *.swp
+
+sw.*
+
+static/Signup.mp4
+static/CompanyProfile.mp4
+static/SubmitProduct.mp4
+

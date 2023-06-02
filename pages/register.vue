@@ -100,6 +100,7 @@
             </v-col>
 
             <!--     MY Business Location       -->
+<<<<<<< HEAD
 <!--            <v-col cols="12" md="6" lg="6" xl="6" class="ma-0 pt-0 pb-0">-->
 <!--              <validation-provider v-slot="{ errors }" name="businessLocation" rules="required">-->
 <!--                <LocationField label="Business location" @locationSelected="selectLocation"/>-->
@@ -115,6 +116,23 @@
 <!--                <PhoneNumberInput ref="phone_num_input" @numberEntered="changePhoneNumber" :model="phoneNumber" :errors="errors"/>-->
 <!--              </validation-provider>-->
 <!--            </v-col>-->
+=======
+            <v-col cols="12" md="6" lg="6" xl="6" class="ma-0 pt-0 pb-0">
+              <validation-provider v-slot="{ errors }" name="businessLocation" rules="required">
+                <LocationField label="Business location" @locationSelected="selectLocation"/>
+              </validation-provider>
+            </v-col>
+
+            <!--     Phone Number       -->
+            <v-col cols="12" md="6" lg="6" xl="6" class="pt-0 pb-0">
+              <validation-provider v-slot="{errors}" ref="phoneNumberProvider" name="phoneNumber"
+                                   rules="required|phone">
+                <!--       Hidden field for validation         -->
+                <input hidden v-model="phoneNumber">
+                <PhoneNumberInput ref="phone_num_input" @numberEntered="changePhoneNumber" :model="phoneNumber" :errors="errors"/>
+              </validation-provider>
+            </v-col>
+>>>>>>> 9ded16916b1bee121280f3ffae04a0f1c88386ed
 
 
 

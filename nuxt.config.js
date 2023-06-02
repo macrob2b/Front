@@ -46,7 +46,10 @@ export default {
     {src: 'plugins/vee-validate.js', ssr: true,defer:true,async:true},
     {src: 'plugins/persistedState.client.js',defer:true,async:true},
     {src: 'plugins/filters.js',defer:true,async:true},
+<<<<<<< HEAD
     {src: 'plugins/gtag.js',mode:"client"},
+=======
+>>>>>>> 9ded16916b1bee121280f3ffae04a0f1c88386ed
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -58,6 +61,10 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+<<<<<<< HEAD
+=======
+    '@nuxtjs/google-analytics',
+>>>>>>> 9ded16916b1bee121280f3ffae04a0f1c88386ed
     '@nuxtjs/dotenv',
     '@nuxtjs/pwa',
   ],
@@ -254,6 +261,12 @@ export default {
       }
     ]
   },
+<<<<<<< HEAD
+=======
+  googleAnalytics: {
+    id: process.env.GOOGLE_ANALYTICS_ID
+  },
+>>>>>>> 9ded16916b1bee121280f3ffae04a0f1c88386ed
   env:{
     baseUrl:"/storage",
   },

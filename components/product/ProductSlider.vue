@@ -81,7 +81,10 @@ export default {
       else
         this.slideVal++;
     },
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9ded16916b1bee121280f3ffae04a0f1c88386ed
   },
 };
 </script>

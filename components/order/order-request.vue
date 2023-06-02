@@ -199,7 +199,11 @@ export default {
     getImgFile(item) {
       var img = require('assets/img/no-image.png');
       if (item.images && item.images.length > 0)
+<<<<<<< HEAD
         img = "https://dl.macrob2b.com/products/" + item._id + "/images/thumbnail/" + item.images[0];
+=======
+        img = "/storage/products/" + item._id + "/images/thumbnail/" + item.images[0];
+>>>>>>> 9ded16916b1bee121280f3ffae04a0f1c88386ed
       return img;
 
     },
