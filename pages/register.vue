@@ -261,6 +261,7 @@ export default {
         'Buyer',
         'Seller',
         'Agent',
+        'Logistics',
       ];
     }
   },
