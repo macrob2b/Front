@@ -1,0 +1,9 @@
+[{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target" : { "namespace": "android_app", "package_name": "com.macrob2b.twa",
+                     "sha256_cert_fingerprints": [
+                       "B2:15:C4:4F:ED:90:F8:EC:BA:14:56:5A:20:23:71:3A:39:78:8D:0B:E8:88:ED:6B:B6:CE:4D:2C:2D:2E:95:EB",
+                       "6F:9E:17:17:E0:14:DF:FF:3B:5D:AA:6A:05:96:AF:41:22:E0:13:55:8D:19:E8:77:A8:F4:09:2B:27:D9:88:80"
+                     ] }
+      }
+]
