@@ -165,6 +165,7 @@
 <script>
 export default {
   name:'factories-branches-company',
+  props:['companyId'],
   data() {
     return {
       factories_loading: false,
@@ -223,7 +224,7 @@ export default {
       this.factories_loading = true;
       this.$axios.$post('/api/factory_list',
         {
-          company_id: this.$route.params.id
+          company_id: this.companyId
         })
         .then(response => {
           this.factory_list = response;
@@ -239,7 +240,7 @@ export default {
       this.branches_loading = true;
       this.$axios.$post('/api/branch_list',
         {
-          company_id: this.$route.params.id
+          company_id: this.companyId
         })
         .then(response => {
           this.branch_list = response;

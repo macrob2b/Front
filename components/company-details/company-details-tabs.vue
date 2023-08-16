@@ -36,13 +36,13 @@
           <aboutCompany :companyInfo="companyInfo"/>
         </v-tab-item>
         <v-tab-item>
-          <factoriesBranches/>
+          <factoriesBranches :companyId="companyInfo._id"/>
         </v-tab-item>
 <!--        <v-tab-item>-->
 <!--          <tradeCapacity/>-->
 <!--        </v-tab-item>-->
         <v-tab-item>
-          <certificates/>
+          <certificates :companyId="companyInfo._id"/>
         </v-tab-item>
 <!--        <v-tab-item>-->
 <!--          <mainProducts/>-->
