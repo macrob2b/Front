@@ -284,9 +284,10 @@
       min-width: 8.75rem;
       max-width: 90%;
       position: relative;
+      overflow: hidden;
 
       .product-img {
-        width: 8rem;
+        width: auto;
         height: 5.25rem;
       }
 
@@ -769,9 +770,10 @@
       min-width: 7.75rem;
       max-width: 90%;
       position: relative;
+      overflow-x: hidden;
 
       .product-img {
-        width: 7rem;
+        width: auto;
         height: 4.25rem;
       }
 
