@@ -1,4 +1,5 @@
 const axios = require('axios')
+const path = require('path');
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -198,7 +199,8 @@ export default {
 
 
   proxy: {
-    '/api/': {target: process.env.API_URL, pathRewrite: {'^/api/': '/api/'}, changeOrigin: true}
+    '/api/': {target: process.env.API_URL, pathRewrite: {'^/api/': '/api/'}, changeOrigin: true},
+    '/test_api/': {target: 'https://trade.smart-ledger.ir', pathRewrite: {'^/test_api/': '/api/'}, changeOrigin: true}
   },
 
   serverMiddleware:[
@@ -239,8 +241,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ["vee-validate"],
-  },
+    transpile: ["vee-validate"], 
+},
   toast: {
     position: 'top-center',
     duration: 3000,

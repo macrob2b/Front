@@ -76,7 +76,11 @@ export default {
     },
     async searchCountry() {
       this.loading = true;
-      await this.$axios.$post('/api/search_country', {keyword: this.keyword})
+      await this.$axios.$post('/api/search_country',
+       {
+        keyword: this.keyword
+      }
+       )
         .then(response=>{
           this.phoneCodes = response;
 
