@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-16">
+  <div id="school-list-edit" class="mt-16">
     <h2>Edit {{ form.schoolTitle }}</h2>
     <v-form ref="form" lazy-validation>
        
@@ -93,4 +93,7 @@ export default {
 </script>
 
 <style scoped>
+#school-list-edit{
+  direction: rtl;;
+}
 </style>

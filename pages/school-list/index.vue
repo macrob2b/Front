@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="school-list">
       <h1>school list</h1>
       <v-divider/>
       <v-row class="mt-3">
@@ -176,6 +176,9 @@
   </script>
   
   <style scoped>
-  
+  #school-list{
+    direction: rtl;
+    
+  }
   </style>
   
