@@ -69,7 +69,6 @@ export default {
     '@nuxtjs/auth-next',
     'nuxt-leaflet',
     '@nuxtjs/toast',
-    '@nuxtjs/sitemap',
     '@nuxt/image',
   ],
 
@@ -163,39 +162,7 @@ export default {
   },
 
 
-  sitemap: {
-    hostname: 'https://macrob2b.com',
-    gzip: true,
-    exclude: [
-      '/admin/**',
-      '/user/**',
-      '/auth/**'
-    ],
-    routes: async () => {
-      let {data: products} = await axios.post(process.env.API_URL+'/api/all_product_list');
-
-      let {data: companies} = await axios.post(process.env.API_URL+'/api/all_company_list');
-
-
-      products = products.map((product) => ({
-        url:`/product-details/${product._id}`,
-        lastmod:product.updated_at,
-        changefreq:'monthly'
-      }));
-      companies = companies.map((company) => ({
-        url:`/company/${company.username}`,
-        lastmod:company.updated_at,
-        changefreq:'monthly'
-      }));
-
-      return products.concat(companies);
-    },
-    defaults: {
-      changefreq: 'monthly',
-      priority: 1,
-      lastmod: new Date()
-    }
-  },
+ 
 
 
   proxy: {
@@ -269,6 +236,10 @@ export default {
       useWebmanifestExtension: false
     }
   },
+
+  serverMiddleware: [
+    '~/serverMiddleware/data-to-xml.js',
+  ],
 
 }
 
