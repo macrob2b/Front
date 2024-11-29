@@ -366,6 +366,7 @@
           <v-btn nuxt to="/selling-leads" color="white" tile text>Selling Leads</v-btn>
           <!--          <v-btn color="white" tile text>Services</v-btn>-->
           <v-btn nuxt to="/help" color="white" tile text>Help</v-btn>
+          <v-btn nuxt to="/mb2b-token" color="white" tile text>MB2B Token</v-btn>
 
         </v-col>
 
@@ -446,6 +447,10 @@ export default {
         {
           title: 'Buying leads',
           to: '/buying-leads'
+        },
+        {
+          title: 'MB2B Token',
+          to: '/mb2b-token'
         }
       ],
 
