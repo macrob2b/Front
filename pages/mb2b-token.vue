@@ -98,10 +98,7 @@
         <hr class="my-4" />
         <h3><strong>4. Technical Details</strong></h3>
         <ul>
-          <li>
-            <strong>Blockchain Platform</strong>: Solana (or specify another
-            platform).
-          </li>
+          <li><strong>Blockchain Platform</strong>: Solana</li>
           <li>
             <strong>Smart Contracts</strong>: Secure and auditable mechanisms
             for minting and governance.
