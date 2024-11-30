@@ -50,7 +50,7 @@
         <hr class="my-4" />
         <h3><strong>2. Tokenomics</strong></h3>
         <ul>
-          <li><strong>Initial Supply</strong>: 200 tokens.</li>
+          <li><strong>Initial Supply</strong>: 720 tokens.</li>
           <li>
             <strong>Mint Authority</strong>: Governed by MB2B governance tokens.
           </li>
@@ -172,7 +172,7 @@ export default {
   name: "mb2b-token",
   head() {
     return {
-      title: "mb2b-token",
+      title: "Mb2b Token",
     };
   },
 
