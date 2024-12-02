@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row align="center">
-      <v-col cols="6">
+      <v-col cols="12" md="6">
         <h1>MB2B Airdrop is coming Soon</h1>
         <v-text-field
           class="mt-4"
