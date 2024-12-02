@@ -12,6 +12,7 @@
           >Buy Token Now</v-btn
         >
         <v-btn href="#whitepaper" class="mb-8 ml-2">Whitepaper</v-btn>
+        <v-btn to="/airdrop" class="mb-8 ml-2">Airdrop Party</v-btn>
       </v-col>
     </v-row>
 

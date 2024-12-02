@@ -1,24 +1,32 @@
-const axios = require('axios')
-const path = require('path');
+const axios = require("axios");
+const path = require("path");
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s | MacroB2B',
-    title: 'MacroB2B',
+    titleTemplate: "%s | MacroB2B",
+    title: "MacroB2B",
     htmlAttrs: {
-      lang: 'en'
+      lang: "en",
     },
     meta: [
-      {charset: 'utf-8'},
-      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: ''},
-      {name: 'format-detection', content: 'telephone=no'}
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { hid: "description", name: "description", content: "" },
+      { name: "format-detection", content: "telephone=no" },
     ],
     link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/macrob2b.ico'},
-      { rel: "stylesheet", href: "/video.js/dist/video-js.min.css",defer:true },
-      { rel: "stylesheet", href: "/video.js/dist/video-js.min.css",defer:true },
+      { rel: "icon", type: "image/x-icon", href: "/macrob2b.ico" },
+      {
+        rel: "stylesheet",
+        href: "/video.js/dist/video-js.min.css",
+        defer: true,
+      },
+      {
+        rel: "stylesheet",
+        href: "/video.js/dist/video-js.min.css",
+        defer: true,
+      },
     ],
     script: [
       // {
@@ -29,25 +37,24 @@ export default {
     ],
   },
 
-  loading: '@/components/LoadingBar',
-
+  loading: "@/components/LoadingBar",
 
   ssr: true,
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '@/assets/scss/style.scss',
-    '@/assets/scss/responsive.scss',
-    '@mdi/font/css/materialdesignicons.min.css'
+    "@/assets/scss/style.scss",
+    "@/assets/scss/responsive.scss",
+    "@mdi/font/css/materialdesignicons.min.css",
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src: 'plugins/axios.js',defer:true,async:true},
-    {src: 'plugins/vee-validate.js', ssr: true,defer:true,async:true},
-    {src: 'plugins/persistedState.client.js',defer:true,async:true},
-    {src: 'plugins/filters.js',defer:true,async:true},
-    {src: 'plugins/gtag.js',mode:"client"},
+    { src: "plugins/axios.js", defer: true, async: true },
+    { src: "plugins/vee-validate.js", ssr: true, defer: true, async: true },
+    { src: "plugins/persistedState.client.js", defer: true, async: true },
+    { src: "plugins/filters.js", defer: true, async: true },
+    { src: "plugins/gtag.js", mode: "client" },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -56,25 +63,24 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
+    "@nuxt/typescript-build",
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify',
-    '@nuxtjs/dotenv',
-    '@nuxtjs/pwa',
+    "@nuxtjs/vuetify",
+    "@nuxtjs/dotenv",
+    "@nuxtjs/pwa",
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/auth-next',
-    'nuxt-leaflet',
-    '@nuxtjs/toast',
-    '@nuxt/image',
+    "@nuxtjs/axios",
+    "@nuxtjs/auth-next",
+    "nuxt-leaflet",
+    "@nuxtjs/toast",
+    "@nuxt/image",
   ],
 
-
   image: {
-    dir: 'static',
+    dir: "static",
   },
   axios: {
     proxy: true,
@@ -86,160 +92,158 @@ export default {
       google: {
         clientId: process.env.GOOGLE_CLIENT_ID,
         redirectUri: process.env.GOOGLE_REDIRECT_URI,
-        codeChallengeMethod: '',
-        responseType: 'code',
-        grantType: 'google',
+        codeChallengeMethod: "",
+        responseType: "code",
+        grantType: "google",
         endpoints: {
-          token: '/api/google_login',
-          userInfo: '/api/user'
+          token: "/api/google_login",
+          userInfo: "/api/user",
         },
         user: {
-          property: 'user',
-          autoFetch: false
-        }
+          property: "user",
+          autoFetch: false,
+        },
       },
       facebook: {
         clientId: process.env.FACEBOOK_CLIENT_ID,
         redirectUri: process.env.FACEBOOK_REDIRECT_URI,
-        responseType: 'code',
-        codeChallengeMethod: '',
-        grantType: 'facebook',
-        scope: ['public_profile', 'email'],
+        responseType: "code",
+        codeChallengeMethod: "",
+        grantType: "facebook",
+        scope: ["public_profile", "email"],
         endpoints: {
-          token: '/api/facebook_login',
-          userInfo: '/api/user'
+          token: "/api/facebook_login",
+          userInfo: "/api/user",
         },
         user: {
-          property: 'user',
-          autoFetch: false
-        }
+          property: "user",
+          autoFetch: false,
+        },
       },
       linkedin: {
-        scheme: 'oauth2',
+        scheme: "oauth2",
         clientId: process.env.LINKEDIN_CLIENT_ID,
         redirectUri: process.env.LINKEDIN_REDIRECT_URI,
         endpoints: {
-          authorization: 'https://www.linkedin.com/oauth/v2/authorization',
-          token: '/api/linkedin_login',
-          userInfo: '/api/user'
+          authorization: "https://www.linkedin.com/oauth/v2/authorization",
+          token: "/api/linkedin_login",
+          userInfo: "/api/user",
         },
-        responseType: 'code',
-        scope: ['r_liteprofile', 'r_emailaddress'],
-        codeChallengeMethod: '',
-        grantType: 'linkedin',
+        responseType: "code",
+        scope: ["r_liteprofile", "r_emailaddress"],
+        codeChallengeMethod: "",
+        grantType: "linkedin",
         user: {
-          property: 'user',
-          autoFetch: false
-        }
+          property: "user",
+          autoFetch: false,
+        },
       },
       local: {
         token: {
-          property: 'token',
+          property: "token",
           global: true,
         },
         refreshToken: {
-          property: 'refresh_token',
-          data: 'refresh_token',
-          maxAge: 60 * 60 * 24 * 30
+          property: "refresh_token",
+          data: "refresh_token",
+          maxAge: 60 * 60 * 24 * 30,
         },
         user: {
-          property: 'user',
-          autoFetch: true
+          property: "user",
+          autoFetch: true,
         },
         endpoints: {
-          login: {url: '/api/login', method: 'post'},
-          refresh: {url: '/api/refresh_token', method: 'post'},
-          user: {url: '/api/user'},
-          logout: {url: '/api/logout',method: 'post'}
-        }
-      }
-    }
+          login: { url: "/api/login", method: "post" },
+          refresh: { url: "/api/refresh_token", method: "post" },
+          user: { url: "/api/user" },
+          logout: { url: "/api/logout", method: "post" },
+        },
+      },
+    },
   },
-
 
   router: {
-    middleware: ['auth']
+    middleware: ["auth"],
   },
-
-
- 
-
 
   proxy: {
-    '/api/': {target: process.env.API_URL, pathRewrite: {'^/api/': '/api/'}, changeOrigin: true},
-    '/test_api/': {target: 'https://trade.smart-ledger.ir', pathRewrite: {'^/test_api/': '/api/'}, changeOrigin: true}
+    "/api/": {
+      target: process.env.API_URL,
+      pathRewrite: { "^/api/": "/api/" },
+      changeOrigin: true,
+    },
+    "/governance_api/": {
+      target: "https://governance.macrob2b.com",
+      pathRewrite: { "^/governance_api/": "/api/" },
+      changeOrigin: true,
+    },
   },
 
-  serverMiddleware:[
-    '~/middleware/redirects'
-  ],
-
+  serverMiddleware: ["~/middleware/redirects"],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
-    defaultAssets:false,
+    defaultAssets: false,
     theme: {
-      dark  : false,
+      dark: false,
       themes: {
-        dark : {
-          primary  : "#1976D2",
-          accent   : "#424242",
+        dark: {
+          primary: "#1976D2",
+          accent: "#424242",
           secondary: "#FB641E",
-          info     : "#26A69A",
-          warning  : "#FFC107",
-          error    : "#DD2C00",
-          success  : "#00E676"
+          info: "#26A69A",
+          warning: "#FFC107",
+          error: "#DD2C00",
+          success: "#00E676",
         },
         light: {
-          primary  : '#00394D',
-          accent   : '#005270',
+          primary: "#00394D",
+          accent: "#005270",
           secondary: "#D2D3D5",
-          info     : "#26A69A",
-          warning  : "#FFC107",
-          error    : "#DD2C00",
-          success  : "#00E676"
-        }
-      }
+          info: "#26A69A",
+          warning: "#FFC107",
+          error: "#DD2C00",
+          success: "#00E676",
+        },
+      },
     },
     icons: {
-      iconfont: 'mdi',
-    }
+      iconfont: "mdi",
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: ["vee-validate"], 
-},
-  toast: {
-    position: 'top-center',
-    duration: 3000,
-    register: [ // Register custom toasts
-      {
-        name: 'my-error',
-        message: 'Oops...Something went wrong',
-        options: {
-          type: 'error'
-        }
-      }
-    ]
+    transpile: ["vee-validate"],
   },
-  env:{
-    baseUrl:"/storage",
+  toast: {
+    position: "top-center",
+    duration: 3000,
+    register: [
+      // Register custom toasts
+      {
+        name: "my-error",
+        message: "Oops...Something went wrong",
+        options: {
+          type: "error",
+        },
+      },
+    ],
+  },
+  env: {
+    baseUrl: "/storage",
   },
 
   pwa: {
     manifest: {
-      name: 'Macrob2b App',
-      short_name:'Macrob2b',
-      description:'Global B2B marketplace connecting buyers with suppliers all over the world.',
-      lang: 'en',
-      useWebmanifestExtension: false
-    }
+      name: "Macrob2b App",
+      short_name: "Macrob2b",
+      description:
+        "Global B2B marketplace connecting buyers with suppliers all over the world.",
+      lang: "en",
+      useWebmanifestExtension: false,
+    },
   },
 
-  serverMiddleware: [
-    '~/serverMiddleware/data-to-xml.js',
-  ],
-
-}
-
+  serverMiddleware: ["~/serverMiddleware/data-to-xml.js"],
+};
