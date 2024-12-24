@@ -19,6 +19,7 @@
           color="primary"
           block
           class="mb-2"
+          :loading="loading"
         >
           Submit
         </v-btn>
