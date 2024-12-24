@@ -6,7 +6,7 @@
       </v-col>
       <v-col cols="12">
         <v-btn
-          href="https://www.orca.so/?tokenIn=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&tokenOut=BdLaNH3m6da2jXkx6XpGwLkUEKB4EbQWxLxntv5BuvAn"
+          href="https://raydium.io/swap/?inputMint=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&outputMint=BdLaNH3m6da2jXkx6XpGwLkUEKB4EbQWxLxntv5BuvAn"
           target="_blank"
           class="mb-8 primary"
           >Buy Token Now</v-btn
