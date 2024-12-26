@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" md="12" class="mb-2">
+      <v-col cols="12" md="12" lg="12" class="mb-2">
         <h1>MB2B Token</h1>
       </v-col>
       <v-col cols="12">
