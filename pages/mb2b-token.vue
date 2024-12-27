@@ -8,12 +8,18 @@
         <v-btn
           href="https://www.orca.so/?tokenIn=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&tokenOut=BdLaNH3m6da2jXkx6XpGwLkUEKB4EbQWxLxntv5BuvAn"
           target="_blank"
-          class="mb-8 primary"
+          class="mb-8 primary mr-2"
           >Buy Token Now</v-btn
         >
+        <v-btn
+          href="https://governance.macrob2b.com/"
+          target="_blank"
+          class="mb-8 primary mr-2"
+          >Governance System</v-btn
+        >
 
-        <v-btn href="#whitepaper" class="mb-8 ml-2">Whitepaper</v-btn>
-        <v-btn to="/airdrop" class="mb-8 ml-2">Airdrop Party</v-btn>
+        <v-btn href="#whitepaper" class="mb-8 mr-2">Whitepaper</v-btn>
+        <v-btn to="/airdrop" class="mb-8">Airdrop Party</v-btn>
       </v-col>
     </v-row>
 
